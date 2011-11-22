@@ -16,35 +16,7 @@ public class TemplateAssay extends TemplateCollection {
 		super(model.createClass(uri));
 		OntClass assay = ISA.ISAClass.Assay.createOntClass(model);
 		getModel().add(resource,RDFS.subClassOf,assay);
-		model.add(assay,RDFS.subClassOf,ISA.ISAClass.ISACollection.createOntClass(model));
 		
-		OntClass assayEntry = ISA.ISAClass.AssayEntry.createOntClass(model);
-		Property isPartOf = ISA.ISAObjectProperty.isPartOfAssay.createProperty(model);
-		model.add(isPartOf,RDFS.domain,assayEntry);
-		model.add(isPartOf,RDFS.range,assay);
-		Property isPartOfCollection = ISA.ISAObjectProperty.isPartOfCollection.createProperty(model);
-		getModel().add(isPartOf,RDFS.subPropertyOf,isPartOfCollection);
-		ISA.ISAObjectProperty.isPartOfAssay.createInverse(model);
-		
-		OntClass assayNode = ISA.ISAClass.AssayNode.createOntClass(model);
-		getModel().add(assayNode,RDFS.subClassOf,ISA.ISAClass.NamedNode.createOntClass(model));		
-		Property isPartOfEntry = ISA.ISAObjectProperty.isPartOfAssayEntry.createProperty(model);
-		model.add(isPartOfEntry,RDFS.domain,assayNode);
-		model.add(isPartOfEntry,RDFS.range,assayEntry);
-		Property pi = ISA.ISAObjectProperty.isPartOfAssayEntry.createInverse(model);
-		model.add(pi,RDFS.range,assayNode);
-		model.add(pi,RDFS.domain,assayEntry);	
-		
-		Property p = ISA.ISAObjectProperty.isPartOfEntry.createProperty(model);
-		getModel().add(isPartOfEntry,RDFS.subPropertyOf,p);
-		
-		OntClass entry = ISA.ISAClass.ISAEntry.createOntClass(model);
-		getModel().add(assayEntry,RDFS.subClassOf,entry);
-		
-		Property files = ISA.ISAObjectProperty.hasDataset.createProperty(getModel());
-		getModel().add(files,RDFS.domain,assayNode);
-		getModel().add(files,RDFS.range,ISA.ISAClass.Dataset.createOntClass(getModel()));		
-
 		if (name != null) model.add(resource,RDFS.label,name);
 	}
 	protected TemplateAssay(String uri,OntClass clazz) {

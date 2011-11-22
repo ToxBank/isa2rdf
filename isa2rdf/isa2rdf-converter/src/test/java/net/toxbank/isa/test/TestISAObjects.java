@@ -20,19 +20,19 @@ public class TestISAObjects {
 
 	
 	public void testCreateAnonymousStudy() throws Exception {
-		AStudy study = new AStudy(new TemplateStudy(ISA.createModel()));
+		AStudy study = new AStudy(new TemplateStudy(ISA.createModel(true)));
 		printModel(study.getModel());
 	}
 	
 	@Test
 	public void testCreateStudy() throws Exception {
+		int n = 3;
 		String uri = "http://example.com/study/";
-		OntModel model = ISA.createModel();
+		OntModel model = ISA.createModel(true);
 
 		//model.setNsPrefix("UO", "http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=UO");
 		model.setNsPrefix("CHEBI", "http://bioportal.bioontology.org/ontologies/46336/");
 		
-			
 
 		//model.setNsPrefix("", uri);
 		TemplateStudy ts = new TemplateStudy(String.format("%sDR",uri),"Dose Response study",model);
@@ -52,50 +52,9 @@ public class TestISAObjects {
 		
 		ts.parseHeader(headers1, String.format("%s/header",ts.getResource().getURI()));
 		
-		String[][] tabs = new String[8][11]; 
-		/*
-		{{
-				  "plate1", //1
-				  "paracetamol", //2
-				  "CHEBI", //3
-				  "46195", //4
-				  "2.5", //5
-				  "mg/l", //6
-				  "UO", //7
-				  "273", //8
-				  "1", //9
-				  "Prepare test concentrations", //10
-				  "C1-plate1" //11
-				  },
-				  {
-					  "plate1", //1
-					  "paracetamol", //2
-					  "CHEBI", //3
-					  "46195", //4
-					  "5", //5
-					  "mg/l", //6
-					  "UO", //7
-					  "273", //8
-					  "1", //9
-					  "Prepare test concentrations", //10
-					  "C2-plate1" //11
-				  }	,		
-				  {
-					  "plate1", //1
-					  "paracetamol", //2
-					  "CHEBI", //3
-					  "46195", //4
-					  "12.5", //5
-					  "mg/l", //6
-					  "UO", //7
-					  "273", //8
-					  "1", //9
-					  "Prepare test concentrations", //10
-					  "C3-plate1" //11
-				  }						  
-				  };
-				  */
-		for (int i=0;i < 8;i++) {
+		String[][] tabs = new String[n][11]; 
+	
+		for (int i=0;i < n;i++) {
 			tabs[i]= new String[]
 			  {
 				  "plate1", //1
@@ -130,44 +89,9 @@ public class TestISAObjects {
 				new ColumnHeader("Derived Data File", 8),
 		};
 		ta.parseHeader(headers2, String.format("%s/header",ta.getResource().getURI()));		
-		/*
-		tabs = new String[][] {{
-			  "C1-plate1", //1
-			  "B3", //2
-			  "r1", //3
-			  "Neutral Red Uptake (NRU) Cytotoxicity Test", //4
-			  "C1-plate1-B3", //5
-			  "acetaminophen-plate1-data.txt", //6
-			  "Hill function analysis", //7
-			  "acetaminophen-plate1-ic50", //8
-			  "ic50.txt" //9
-			  },
-			  {
-				  "C2-plate1", //1
-				  "B4", //2
-				  "r1", //3
-				  "Neutral Red Uptake (NRU) Cytotoxicity Test", //4
-				  "C2-plate1-B4", //5
-				  "acetaminophen-plate1-data.txt", //6
-				  "Hill function analysis", //7
-				  "acetaminophen-plate1-ic50", //8
-				  "ic50.txt" //9
-			  }	,		
-			  {
-				  "C3-plate1", //1
-				  "B5", //2
-				  "r1", //3
-				  "Neutral Red Uptake (NRU) Cytotoxicity Test", //4
-				  "C3-plate1-B5", //5
-				  "acetaminophen-plate1-data.txt", //6
-				  "Hill function analysis", //7
-				  "acetaminophen-plate1-ic50", //8
-				  "ic50.txt" //9
-			  }						  
-			  };
-		*/
-		tabs = new String[8][9];
-		for (int i=0;i < 8;i++) {
+	
+		tabs = new String[n][9];
+		for (int i=0;i < n;i++) {
 			tabs[i]= new String[]
 			  {
 					  String.format("C%d-plate1",i+1),
