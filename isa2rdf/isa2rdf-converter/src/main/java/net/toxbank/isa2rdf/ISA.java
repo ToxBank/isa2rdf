@@ -2,6 +2,8 @@ package net.toxbank.isa2rdf;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.URLEncoder;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
@@ -23,31 +25,115 @@ public class ISA {
 	/** <p>The RDF model that holds the vocabulary terms</p> */
 	private static Model m_model = ModelFactory.createDefaultModel();
 	/** <p>The namespace of the vocabalary as a string ({@value})</p> */
-	protected static final String _NS = "http://www.owl-ontologies.com/toxbank.owl#%s";
+	protected static final String _NS = "http://www.toxbank.net/isa.owl#%s";
+
 	public static final String NS = String.format(_NS,"");
 	
 	public static String getURI() {return NS;}
-	/** <p>The namespace of the vocabalary as a resource</p> */
+	/** <p>The namespace of the vocabulary as a resource</p> */
     public static final Resource NAMESPACE = m_model.createResource( NS );
 
     
 	public enum ISAClass {
-		ISACollection, //parent of Study and Assay
-		Study,
-		Assay,
-		ISAEntry, //parent of StudyEntrt and AssayEntry  (a row)
-		StudyEntry,
-		AssayEntry,
-		ISANode, //parent of NamedNode and Protocol
-		NamedNode, //parent of AssayNode and StudyNode
-		AssayNode,
-		StudyNode,
-		Value,
-		ValueFile,
-		Protocol;
+		/**
+	     * parent of Study and Assay
+		 */
+		ISACollection {
+			@Override
+			public String getComment() {
+				return "A Study or an Assay";
+			}			
+		},
+		Study {
+			@Override
+			public String getComment() {
+				return "ISA-TAB Study";
+			}
+		},
+		Assay {
+			public String getComment() {
+				return "ISA-TAB Assay";
+			}
+		},
+		/**
+		 * parent of StudyEntry and AssayEntry  (a row)
+		 */
+		ISAEntry {
+			public String getComment() {
+				return "A row (treatment) in a Study or Assay";
+			}
+		},
+		StudyEntry {
+			@Override
+			public String getComment() {
+				return "A row (treatment) in a Study";
+			}
+		},
+		AssayEntry {
+			@Override
+			public String getComment() {
+				return "A row in an ISA-TAB Assay";
+			}			
+		},
+		/**
+		 * parent of NamedNode and Protocol
+		 */
+		ISANode {
+			@Override
+			public String getComment() {
+				return "Node or edge in the experimental graph (namednode or a protocol).";
+			}
+		},
+		/**
+ 	     * parent of AssayNode and StudyNode
+		 */
+		NamedNode {
+			@Override
+			public String getComment() {
+				return "The nodes in the experimental graph in a Study or Assay (either [biological] material, such as a sample or an RNA extract, or a data object)";
+			}			
+		},
+		AssayNode {
+			@Override
+			public String getComment() {
+				return "The nodes in the experimental graph in an Assay";
+			}				
+		},
+		StudyNode {
+			@Override
+			public String getComment() {
+				return "The nodes in the experimental graph in a Study";
+			}				
+		},
+		Value {
+			@Override
+			public String getComment() {
+				return "A value, with units and assigned term from an ontology";
+			}			
+		},
+		Dataset {
+			@Override
+			public String getComment() {
+				return "A pointer to the data - file name or URI";
+			}				
+		},
+		Protocol {
+			@Override
+			public String getComment() {
+				return "A protocol takes one or more inputs (biological material or data) and generates one or more "+ 
+					   "outputs (biological material or data). The protocols correspond to edges in the experimental "+
+					   "graph, while materials and data correspond to the nodes. One or more Protocol REF columns should be used to specify the method used to transform a material or a data node";
+			}				
+		},
+		Parameter {
+			@Override
+			public String getComment() {
+				return "Protocol parameter";
+			}				
+		};
 		
 		public String getPrefix() {
-			return String.format("tb%s",name().toLowerCase().charAt(0));
+			return String.format("isa%s",name().toLowerCase().charAt(0));
 		}
 		public String getURI() {
 			return String.format("%s",name().toLowerCase());
@@ -64,20 +150,22 @@ public class ISA {
 		public OntClass getOntClass(OntModel model) {
 			OntClass c = model.getOntClass(getNS());
 			if (c==null) {
-				c = createOntClass(model);
+				c = model.createClass(getNS());
 				String label = getLabel();
-				if (label != null) model.add(c,RDFS.comment,getLabel());
+				if (label != null) model.add(c,RDFS.label,getLabel());
+				if (getComment() != null) model.add(c,RDFS.comment,getComment());
 			}
 			return c;
 		}
 		public OntClass createOntClass(OntModel model) {
-			return model.createClass(getNS());
+			return getOntClass(model);
 		}		
 		public void assignType(OntModel model,Individual individual) {
 			individual.addOntClass(getOntClass(model));
 		}	
 		public ISAObjectProperty getProperty() {return null;}
 		public String getLabel() { return null;}
+		public String getComment() { return null;}
 
 	};
 	
@@ -85,25 +173,139 @@ public class ISA {
      * Object properties
      */
     public enum ISAObjectProperty {
+    	hasAssay {
+    		
+    	},
  	   	hasCharacteristic,
-	   	hasFactor,
+	   	hasFactor {
+    		@Override
+    		public String getComment() {
+    			return 
+    		   	"A factor corresponds to an independent "+
+    		   	"variable manipulated by the experimentalist with the intention to affect biological systems in a way"+ 
+    		   	"that can be measured by an assay. The value of a factor is given in the Study or Assay file,"+ 
+    		   	"accordingly. If both Study and Assay have a  Factor Value, these must be different.";
+    		}
+    	},
 	   	hasComment,
 		hasParameter,
-    	isPartOf, //parent of isPartOf*
-    	isPartOfCollection,
-    	isPartOfEntry,
-    	hasNext,
+    	hasPart,
+		isPartOf {
+    		@Override
+    		public Property createInverse(OntModel model) {
+    			return hasPart.createProperty(model);
+    		}
+    	},
+    	hasEntry,
+    	isPartOfCollection {
+    		@Override
+    		public boolean isFunctional() {
+    			return true;
+    		}    
+    		@Override
+    		public ISAObjectProperty getInverse() {
+    			return hasEntry;
+    		}
+    		
+    	},
+    	hasStudyEntry,
+    	isPartOfStudy {
+    		@Override
+    		public boolean isFunctional() {
+    			return true;
+    		}
+    		@Override
+    		public ISAObjectProperty getInverse() {
+    			return hasStudyEntry;
+    		}
+    	},
+    	hasAssayEntry,
+    	isPartOfAssay {
+    		@Override
+    		public boolean isFunctional() {
+    			return true;
+    		}
+    		@Override
+    		public ISAObjectProperty getInverse() {
+    			return hasAssayEntry;
+    		}		
+    	},
+    	hasNode,
+    	isPartOfEntry {
+    		@Override
+    		public boolean isFunctional() {
+    			return true;
+    		}
+       		@Override
+    		public ISAObjectProperty getInverse() {
+    			return hasNode;
+    		}
+    	},
+    	hasStudyNode,
+    	isPartOfStudyEntry {
+    		@Override
+    		public boolean isFunctional() {
+    			return true;
+    		}
+    		@Override
+    		public ISAObjectProperty getInverse() {
+    			return hasStudyNode;
+    		}
+ 		
+    	},    
+    	hasAssayNode,
+    	isPartOfAssayEntry {
+    		@Override
+    		public boolean isFunctional() {
+    			return true;
+    		}
+    		@Override
+    		public ISAObjectProperty getInverse() {
+    			return hasAssayNode;
+    		}
+		
+    	},    	
+    	hasNext {
+    		@Override
+    		public boolean isFunctional() {
+    			return true;
+    		}    		
+    	},
     	//hasNextEntry,
     	//hasNextProtocol,
     	hasMember,
-    	hasFile;
+    	hasDataset {
+    		@Override
+    		public String getComment() {
+    			// TODO Auto-generated method stub
+    			return super.getComment();
+    		}
+    	};
 		   	public Property createProperty(OntModel model) {
 		   		Property p = model.getObjectProperty(String.format(_NS, toString()));
-		   		return p!= null?p:
-		   				model.createObjectProperty(String.format(_NS, toString()));
+		   		if (p==null)
+		   			p=	model.createObjectProperty(String.format(_NS, toString()),isFunctional());
+		   		if (getComment()!=null) {
+		   			model.add(p,RDFS.comment,getComment());
+		   			
+		   		}
+
+		   		return p;
 		   	}
 		   	public String getURI() {
 		   		return String.format(_NS, toString());
+		   	}
+		   	public boolean isFunctional() {return false;}
+		   	public String getComment() { return null;}
+		   	public ISAObjectProperty getInverse() {return null;}
+		   	public Property createInverse(OntModel model) {
+		   		ISAObjectProperty p = getInverse();
+				if (p != null) {
+					Property pi = p.createProperty(model);
+					model.add(createProperty(model),OWL.inverseOf,pi);
+					return pi;
+				}
+    			return null;		   		
 		   	}
     }
     /**
@@ -130,15 +332,17 @@ public class ISA {
 	public static OntModel createModel(OntModelSpec spec) throws Exception {
 		OntModel jenaModel = ModelFactory.createOntologyModel( spec,null);
 
-		jenaModel.setNsPrefix( "tb", ISA.NS );
+		jenaModel.setNsPrefix( "isa", ISA.NS );
 		jenaModel.setNsPrefix( "owl", OWL.NS );
 		jenaModel.setNsPrefix( "dc", DC.NS );
 		jenaModel.setNsPrefix( "dcterms", DCTerms.NS );
 		jenaModel.setNsPrefix("xsd", XSDDatatype.XSD+"#");
 		return jenaModel;
 	}
-	
-    public static void write(OntModel jenaModel, OutputStream output, String mediaType, boolean isXml_abbreviation) throws IOException {
+	public static void writeStream(Model jenaModel, OutputStream output, String mediaType, boolean isXml_abbreviation) throws IOException {
+		write(jenaModel,new OutputStreamWriter(output),mediaType,isXml_abbreviation);
+	}
+    public static void write(Model jenaModel, Writer output, String mediaType, boolean isXml_abbreviation) throws IOException {
     	try {
     		RDFWriter fasterWriter = null;
 			if ("application/rdf+xml".equals(mediaType)) {

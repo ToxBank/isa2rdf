@@ -7,7 +7,7 @@ import net.toxbank.isa2rdf.ISA.ISAClass;
 import com.hp.hpl.jena.ontology.OntModel;
 
 public class ParserStudy extends EntryParser {
-	public ParserStudy(Reader in, String prefix, String prefixURI, OntModel model) {
+	public ParserStudy(Reader in, String prefix, String prefixURI, ISAObject model) throws Exception {
 		super(in,prefix,prefixURI,model);
 	}
 	protected ISA.ISAClass getEntryClass() {

@@ -8,7 +8,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 
 public class ParserAssay extends EntryParser {
 
-	public ParserAssay(Reader in, String prefix, String prefixURI, OntModel model) {
+	public ParserAssay(Reader in, String prefix, String prefixURI, ISAObject model) throws Exception {
 		super(in,prefix,prefixURI,model);
 	}
 	protected ISA.ISAClass getEntryClass() {

@@ -13,7 +13,10 @@ public class ParserInvestigation extends TabsParser<Resource> {
 
 	@Override
 	protected Resource transform(String[] tabs) throws Exception {
-		// TODO Auto-generated method stub
+		for (String tab : tabs) {
+			System.out.println(String.format("%s\t",tab));
+			
+		}
 		return null;
 	}
 
