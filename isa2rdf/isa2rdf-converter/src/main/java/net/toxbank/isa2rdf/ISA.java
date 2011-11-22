@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.net.URLEncoder;
+
+import net.toxbank.isa.ISAClass;
+import net.toxbank.isa.ISAObjectProperty;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
-import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -25,7 +26,7 @@ public class ISA {
 	/** <p>The RDF model that holds the vocabulary terms</p> */
 	private static Model m_model = ModelFactory.createDefaultModel();
 	/** <p>The namespace of the vocabalary as a string ({@value})</p> */
-	protected static final String _NS = "http://www.toxbank.net/isa.owl#%s";
+	public static final String _NS = "http://www.toxbank.net/isa.owl#%s";
 
 	public static final String NS = String.format(_NS,"");
 	
@@ -34,297 +35,7 @@ public class ISA {
     public static final Resource NAMESPACE = m_model.createResource( NS );
 
     
-	public enum ISAClass {
-		/**
-	     * parent of Study and Assay
-		 */
-		ISACollection {
-			@Override
-			public String getComment() {
-				return "A Study or an Assay";
-			}			
-		},
-		Study {
-			@Override
-			public String getComment() {
-				return "ISA-TAB Study";
-			}
-		},
-		Assay {
-			public String getComment() {
-				return "ISA-TAB Assay";
-			}
-		},
-		/**
-		 * parent of StudyEntry and AssayEntry  (a row)
-		 */
-		ISAEntry {
-			public String getComment() {
-				return "A row (treatment) in a Study or Assay";
-			}
-		},
-		StudyEntry {
-			@Override
-			public String getComment() {
-				return "A row (treatment) in a Study";
-			}
-		},
-		AssayEntry {
-			@Override
-			public String getComment() {
-				return "A row in an ISA-TAB Assay";
-			}			
-		},
-		/**
-		 * parent of NamedNode and Protocol
-		 */
-		ISANode {
-			@Override
-			public String getComment() {
-				return "Node or edge in the experimental graph (namednode or a protocol).";
-			}
-		},
-		/**
- 	     * parent of AssayNode and StudyNode
-		 */
-		NamedNode {
-			@Override
-			public String getComment() {
-				return "The nodes in the experimental graph in a Study or Assay (either [biological] material, such as a sample or an RNA extract, or a data object)";
-			}			
-		},
-		AssayNode {
-			@Override
-			public String getComment() {
-				return "The nodes in the experimental graph in an Assay";
-			}				
-		},
-		StudyNode {
-			@Override
-			public String getComment() {
-				return "The nodes in the experimental graph in a Study";
-			}				
-		},
-		Value {
-			@Override
-			public String getComment() {
-				return "A value, with units and assigned term from an ontology";
-			}			
-		},
-		Dataset {
-			@Override
-			public String getComment() {
-				return "A pointer to the data - file name or URI";
-			}				
-		},
-		Protocol {
-			@Override
-			public String getComment() {
-				return "A protocol takes one or more inputs (biological material or data) and generates one or more "+ 
-					   "outputs (biological material or data). The protocols correspond to edges in the experimental "+
-					   "graph, while materials and data correspond to the nodes. One or more Protocol REF columns should be used to specify the method used to transform a material or a data node";
-			}				
-		},
-		Parameter {
-			@Override
-			public String getComment() {
-				return "Protocol parameter";
-			}				
-		};
-		
-		public String getPrefix() {
-			return String.format("isa%s",name().toLowerCase().charAt(0));
-		}
-		public String getURI() {
-			return String.format("%s",name().toLowerCase());
-		}	
-		public String getURI(String value) {
-			return String.format("%s/%s",getURI(),URLEncoder.encode(value));
-		}
-		public String getURI(int value) {
-			return String.format("%s/%s%s",getURI(),name().charAt(0), value);
-		}		
-		public String getNS() {
-			return String.format(_NS, toString());
-		}
-		public OntClass getOntClass(OntModel model) {
-			OntClass c = model.getOntClass(getNS());
-			if (c==null) {
-				c = model.createClass(getNS());
-				String label = getLabel();
-				if (label != null) model.add(c,RDFS.label,getLabel());
-				if (getComment() != null) model.add(c,RDFS.comment,getComment());
-			}
-			return c;
-		}
-		public OntClass createOntClass(OntModel model) {
-			return getOntClass(model);
-		}		
-		public void assignType(OntModel model,Individual individual) {
-			individual.addOntClass(getOntClass(model));
-		}	
-		public ISAObjectProperty getProperty() {return null;}
-		public String getLabel() { return null;}
-		public String getComment() { return null;}
-
-	};
 	
-    /**
-     * Object properties
-     */
-    public enum ISAObjectProperty {
-    	hasAssay {
-    		
-    	},
- 	   	hasCharacteristic,
-	   	hasFactor {
-    		@Override
-    		public String getComment() {
-    			return 
-    		   	"A factor corresponds to an independent "+
-    		   	"variable manipulated by the experimentalist with the intention to affect biological systems in a way"+ 
-    		   	"that can be measured by an assay. The value of a factor is given in the Study or Assay file,"+ 
-    		   	"accordingly. If both Study and Assay have a  Factor Value, these must be different.";
-    		}
-    	},
-	   	hasComment,
-		hasParameter,
-    	hasPart,
-		isPartOf {
-    		@Override
-    		public Property createInverse(OntModel model) {
-    			return hasPart.createProperty(model);
-    		}
-    	},
-    	hasEntry,
-    	isPartOfCollection {
-    		@Override
-    		public boolean isFunctional() {
-    			return true;
-    		}    
-    		@Override
-    		public ISAObjectProperty getInverse() {
-    			return hasEntry;
-    		}
-    		
-    	},
-    	hasStudyEntry,
-    	isPartOfStudy {
-    		@Override
-    		public boolean isFunctional() {
-    			return true;
-    		}
-    		@Override
-    		public ISAObjectProperty getInverse() {
-    			return hasStudyEntry;
-    		}
-    	},
-    	hasAssayEntry,
-    	isPartOfAssay {
-    		@Override
-    		public boolean isFunctional() {
-    			return true;
-    		}
-    		@Override
-    		public ISAObjectProperty getInverse() {
-    			return hasAssayEntry;
-    		}		
-    	},
-    	hasNode,
-    	isPartOfEntry {
-    		@Override
-    		public boolean isFunctional() {
-    			return true;
-    		}
-       		@Override
-    		public ISAObjectProperty getInverse() {
-    			return hasNode;
-    		}
-    	},
-    	hasStudyNode,
-    	isPartOfStudyEntry {
-    		@Override
-    		public boolean isFunctional() {
-    			return true;
-    		}
-    		@Override
-    		public ISAObjectProperty getInverse() {
-    			return hasStudyNode;
-    		}
- 		
-    	},    
-    	hasAssayNode,
-    	isPartOfAssayEntry {
-    		@Override
-    		public boolean isFunctional() {
-    			return true;
-    		}
-    		@Override
-    		public ISAObjectProperty getInverse() {
-    			return hasAssayNode;
-    		}
-		
-    	},    	
-    	hasNext {
-    		@Override
-    		public boolean isFunctional() {
-    			return true;
-    		}    		
-    	},
-    	//hasNextEntry,
-    	//hasNextProtocol,
-    	hasMember,
-    	hasDataset {
-    		@Override
-    		public String getComment() {
-    			// TODO Auto-generated method stub
-    			return super.getComment();
-    		}
-    	};
-		   	public Property createProperty(OntModel model) {
-		   		Property p = model.getObjectProperty(String.format(_NS, toString()));
-		   		if (p==null)
-		   			p=	model.createObjectProperty(String.format(_NS, toString()),isFunctional());
-		   		if (getComment()!=null) {
-		   			model.add(p,RDFS.comment,getComment());
-		   			
-		   		}
-
-		   		return p;
-		   	}
-		   	public String getURI() {
-		   		return String.format(_NS, toString());
-		   	}
-		   	public boolean isFunctional() {return false;}
-		   	public String getComment() { return null;}
-		   	public ISAObjectProperty getInverse() {return null;}
-		   	public Property createInverse(OntModel model) {
-		   		ISAObjectProperty p = getInverse();
-				if (p != null) {
-					Property pi = p.createProperty(model);
-					model.add(createProperty(model),OWL.inverseOf,pi);
-					return pi;
-				}
-    			return null;		   		
-		   	}
-    }
-    /**
-     * Data properties
-     */
-    public enum ISADataProperty {
-    	isFirstNode,
-    	hasPerformer,
-    	hasDate,
-    	hasUnit;
-	   	public Property createProperty(OntModel jenaModel) {
-	   		Property p = jenaModel.getDatatypeProperty(String.format(_NS, toString()));
-	   		return p!= null?p:
-	   				jenaModel.createDatatypeProperty(String.format(_NS, toString()));
-	   	}
-	   	public String getURI() {
-	   		return String.format(_NS, toString());
-	   	}
-    };
 
     public static OntModel createModel(boolean initOntology) throws Exception {
     	OntModel model = createModel(OntModelSpec.OWL_DL_MEM);
@@ -385,93 +96,93 @@ public class ISA {
     }
 	public static void initModel(OntModel model) throws Exception {
 		
-		OntClass node = ISA.ISAClass.ISANode.createOntClass(model);
-		OntClass namedNode = ISA.ISAClass.NamedNode.createOntClass(model);
+		OntClass node = ISAClass.ISANode.createOntClass(model);
+		OntClass namedNode = ISAClass.NamedNode.createOntClass(model);
 		model.add(namedNode,RDFS.subClassOf,node);
 		
-		OntClass study = ISA.ISAClass.Study.createOntClass(model);
-		OntClass assay = ISA.ISAClass.Assay.createOntClass(model);
+		OntClass study = ISAClass.Study.createOntClass(model);
+		OntClass assay = ISAClass.Assay.createOntClass(model);
 		
-		OntClass collection = ISA.ISAClass.ISACollection.createOntClass(model);
+		OntClass collection = ISAClass.ISACollection.createOntClass(model);
 		model.add(study,RDFS.subClassOf,collection);
-		Property hasAssay = ISA.ISAObjectProperty.hasAssay.createProperty(model);
+		Property hasAssay = ISAObjectProperty.hasAssay.createProperty(model);
 		model.add(hasAssay,RDFS.domain,study);
 		model.add(hasAssay,RDFS.range,assay);
 		
-		OntClass studyEntry = ISA.ISAClass.StudyEntry.createOntClass(model);
-		Property isPartOf = ISA.ISAObjectProperty.isPartOfStudy.createProperty(model);
+		OntClass studyEntry = ISAClass.StudyEntry.createOntClass(model);
+		Property isPartOf = ISAObjectProperty.isPartOfStudy.createProperty(model);
 		model.add(isPartOf,RDFS.domain,studyEntry);
 		model.add(isPartOf,RDFS.range,study);
-		Property pi = ISA.ISAObjectProperty.isPartOfStudy.createInverse(model);
+		Property pi = ISAObjectProperty.isPartOfStudy.createInverse(model);
 		model.add(pi,RDFS.range,studyEntry);
 		model.add(pi,RDFS.domain,study);
 		
-		Property isPartOfCollection = ISA.ISAObjectProperty.isPartOfCollection.createProperty(model);
+		Property isPartOfCollection = ISAObjectProperty.isPartOfCollection.createProperty(model);
 		model.add(isPartOf,RDFS.subPropertyOf,isPartOfCollection);
 
 		
-		OntClass studyNode = ISA.ISAClass.StudyNode.createOntClass(model);
+		OntClass studyNode = ISAClass.StudyNode.createOntClass(model);
 		model.add(studyNode,RDFS.subClassOf,namedNode);
-		Property isPartOfStudyEntry = ISA.ISAObjectProperty.isPartOfStudyEntry.createProperty(model);
+		Property isPartOfStudyEntry = ISAObjectProperty.isPartOfStudyEntry.createProperty(model);
 		model.add(isPartOfStudyEntry,RDFS.domain,studyNode);
 		model.add(isPartOfStudyEntry,RDFS.range,studyEntry);
-		pi = ISA.ISAObjectProperty.isPartOfStudyEntry.createInverse(model);
+		pi = ISAObjectProperty.isPartOfStudyEntry.createInverse(model);
 		model.add(pi,RDFS.range,studyNode);
 		model.add(pi,RDFS.domain,studyEntry);
 
-		Property partOfEntry = ISA.ISAObjectProperty.isPartOfEntry.createProperty(model);
+		Property partOfEntry = ISAObjectProperty.isPartOfEntry.createProperty(model);
 		model.add(isPartOfStudyEntry,RDFS.subPropertyOf,partOfEntry);
-		ISA.ISAObjectProperty.isPartOfEntry.createInverse(model);
+		ISAObjectProperty.isPartOfEntry.createInverse(model);
 
 		
-		OntClass entry = ISA.ISAClass.ISAEntry.createOntClass(model);
+		OntClass entry = ISAClass.ISAEntry.createOntClass(model);
 		model.add(studyEntry,RDFS.subClassOf,entry);
 		model.add(isPartOfCollection,RDFS.domain, entry);
 		model.add(isPartOfCollection,RDFS.range,collection);
 
-		OntClass protocol = ISA.ISAClass.Protocol.createOntClass(model);
+		OntClass protocol = ISAClass.Protocol.createOntClass(model);
 		model.add(protocol,RDFS.subClassOf,node);
 		
-		Property param = ISA.ISAObjectProperty.hasParameter.createProperty(model);
+		Property param = ISAObjectProperty.hasParameter.createProperty(model);
 		model.add(param,RDFS.domain,protocol);
-		model.add(param,RDFS.range,ISA.ISAClass.Parameter.createOntClass(model));			
+		model.add(param,RDFS.range,ISAClass.Parameter.createOntClass(model));			
 
 		
-		Property factors = ISA.ISAObjectProperty.hasFactor.createProperty(model);
+		Property factors = ISAObjectProperty.hasFactor.createProperty(model);
 		model.add(factors,RDFS.domain,namedNode);
-		model.add(factors,RDFS.range,ISA.ISAClass.Value.createOntClass(model));		
+		model.add(factors,RDFS.range,ISAClass.Value.createOntClass(model));		
 		
-		Property chars = ISA.ISAObjectProperty.hasCharacteristic.createProperty(model);
+		Property chars = ISAObjectProperty.hasCharacteristic.createProperty(model);
 		model.add(chars,RDFS.domain,namedNode);
-		model.add(chars,RDFS.range,ISA.ISAClass.Value.createOntClass(model));	
+		model.add(chars,RDFS.range,ISAClass.Value.createOntClass(model));	
 		
-		Property comm = ISA.ISAObjectProperty.hasCharacteristic.createProperty(model);
+		Property comm = ISAObjectProperty.hasCharacteristic.createProperty(model);
 		model.add(comm,RDFS.domain,namedNode);
-		model.add(comm,RDFS.range,ISA.ISAClass.Value.createOntClass(model));		
+		model.add(comm,RDFS.range,ISAClass.Value.createOntClass(model));		
 		
-		Property next = ISA.ISAObjectProperty.hasNext.createProperty(model);
+		Property next = ISAObjectProperty.hasNext.createProperty(model);
 		model.add(next,RDFS.domain,node);
 		model.add(next,RDFS.range,node);		
 		
 		///
 
-		model.add(assay,RDFS.subClassOf,ISA.ISAClass.ISACollection.createOntClass(model));
+		model.add(assay,RDFS.subClassOf,ISAClass.ISACollection.createOntClass(model));
 		
-		OntClass assayEntry = ISA.ISAClass.AssayEntry.createOntClass(model);
-		Property isPartOfAssay = ISA.ISAObjectProperty.isPartOfAssay.createProperty(model);
+		OntClass assayEntry = ISAClass.AssayEntry.createOntClass(model);
+		Property isPartOfAssay = ISAObjectProperty.isPartOfAssay.createProperty(model);
 		model.add(isPartOfAssay,RDFS.domain,assayEntry);
 		model.add(isPartOfAssay,RDFS.range,assay);
 		model.add(isPartOfAssay,RDFS.subPropertyOf,isPartOfCollection);
-		Property pia = ISA.ISAObjectProperty.isPartOfAssay.createInverse(model);
+		Property pia = ISAObjectProperty.isPartOfAssay.createInverse(model);
 		model.add(pia,RDFS.range,assayEntry);
 		model.add(pia,RDFS.domain,assay);
 		
-		OntClass assayNode = ISA.ISAClass.AssayNode.createOntClass(model);
-		model.add(assayNode,RDFS.subClassOf,ISA.ISAClass.NamedNode.createOntClass(model));		
-		Property isPartAssayOfEntry = ISA.ISAObjectProperty.isPartOfAssayEntry.createProperty(model);
+		OntClass assayNode = ISAClass.AssayNode.createOntClass(model);
+		model.add(assayNode,RDFS.subClassOf,ISAClass.NamedNode.createOntClass(model));		
+		Property isPartAssayOfEntry = ISAObjectProperty.isPartOfAssayEntry.createProperty(model);
 		model.add(isPartAssayOfEntry,RDFS.domain,assayNode);
 		model.add(isPartAssayOfEntry,RDFS.range,assayEntry);
-		pi = ISA.ISAObjectProperty.isPartOfAssayEntry.createInverse(model);
+		pi = ISAObjectProperty.isPartOfAssayEntry.createInverse(model);
 		model.add(pi,RDFS.range,assayNode);
 		model.add(pi,RDFS.domain,assayEntry);	
 		
@@ -479,9 +190,11 @@ public class ISA {
 		
 		model.add(assayEntry,RDFS.subClassOf,entry);
 		
-		Property files = ISA.ISAObjectProperty.hasDataset.createProperty(model);
+		Property files = ISAObjectProperty.hasDataset.createProperty(model);
 		model.add(files,RDFS.domain,assayNode);
-		model.add(files,RDFS.range,ISA.ISAClass.Dataset.createOntClass(model));		
+		model.add(files,RDFS.range,ISAClass.Dataset.createOntClass(model));		
 
 	}
+	
+	
 }

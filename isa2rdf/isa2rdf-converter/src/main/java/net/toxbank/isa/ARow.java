@@ -4,8 +4,6 @@ package net.toxbank.isa;
 import java.net.URLEncoder;
 
 import net.toxbank.isa2rdf.ColumnHeader;
-import net.toxbank.isa2rdf.ISA;
-import net.toxbank.isa2rdf.ISA.ISAClass;
 
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.ObjectProperty;
@@ -13,7 +11,6 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class ARow<CT extends TemplateCollection,T extends TemplateRow<CT>> extends AnyISAObject<Individual> {
@@ -23,7 +20,7 @@ public class ARow<CT extends TemplateCollection,T extends TemplateRow<CT>> exten
 		this.template = template;
 	}
 	protected Property getPartOfEntryProperty() {
-		return  ISA.ISAObjectProperty.isPartOfEntry.createProperty(getModel());
+		return  ISAObjectProperty.isPartOfEntry.createProperty(getModel());
 	}
 
 	public void parse(ColumnHeader[] header,String[] tabs) throws Exception {
@@ -76,7 +73,7 @@ public class ARow<CT extends TemplateCollection,T extends TemplateRow<CT>> exten
 						vi = getModel().createIndividual(uri,ISAClass.Value.createOntClass(getModel()));
 					getModel().add(node, header[i].getObjectProperty(), vi);
 					if (unit!=null)
-						getModel().add(vi,ISA.ISADataProperty.hasUnit.createProperty(getModel()),getModel().createTypedLiteral(unit));
+						getModel().add(vi,ISADataProperty.hasUnit.createProperty(getModel()),getModel().createTypedLiteral(unit));
 					if (term!=null) {
 						//if (term.startsWith("CHEBI:")) {
 						//	String chebi = getModel().getNsPrefixURI("CHEBI");
@@ -95,7 +92,7 @@ public class ARow<CT extends TemplateCollection,T extends TemplateRow<CT>> exten
 			}
 			
 			if (vi!=null) {
-				Property partOf = ISA.ISAObjectProperty.isPartOfEntry.createProperty(getModel());
+				Property partOf = ISAObjectProperty.isPartOfEntry.createProperty(getModel());
 				getModel().add(node,partOf,resource);
 				getModel().add(vi,RDFS.label,tabs[i]);
 			}

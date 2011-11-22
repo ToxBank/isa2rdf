@@ -3,9 +3,9 @@ package net.toxbank.isa2rdf;
 
 import java.util.Hashtable;
 
-import net.toxbank.isa2rdf.ISA.ISAClass;
-import net.toxbank.isa2rdf.ISA.ISADataProperty;
-import net.toxbank.isa2rdf.ISA.ISAObjectProperty;
+import net.toxbank.isa.ISAClass;
+import net.toxbank.isa.ISADataProperty;
+import net.toxbank.isa.ISAObjectProperty;
 
 import com.hp.hpl.jena.ontology.HasValueRestriction;
 import com.hp.hpl.jena.ontology.Individual;
@@ -23,7 +23,7 @@ public class ISAObject {
 	public OntModel getModel() {
 		return model;
 	}
-	protected Hashtable<String, String>[] attributes = new Hashtable[ISA.ISAClass.values().length];
+	protected Hashtable<String, String>[] attributes = new Hashtable[ISAClass.values().length];
 	
 	
 	public String getPrefixURI() {
@@ -33,13 +33,13 @@ public class ISAObject {
 		this.prefixURI = prefixURI;
 	}
 	public ISAObject(String prefix, String prefixURI) throws Exception {
-		this(ISA.createModel(),prefix,prefixURI);
+		this(ISA.createModel(false),prefix,prefixURI);
 	}
 	public ISAObject(OntModel model,String prefix, String prefixURI) {
 		this.model = model;
 		model.setNsPrefix("",ISA.NS);
 		this.prefixURI = prefixURI;
-		attributes = new Hashtable[ISA.ISAClass.values().length];
+		attributes = new Hashtable[ISAClass.values().length];
 		initModel(prefix);
 	}	
 	
@@ -54,26 +54,26 @@ public class ISAObject {
 		model.add(protocolNodeClass,RDFS.subClassOf,isaNodeClass);
 		
 		//File-level objects - study or assay file
-		OntClass fileClass = ISA.ISAClass.ISACollection.createOntClass(model);
+		OntClass fileClass = ISAClass.ISACollection.createOntClass(model);
 		//study file
-		model.add(ISA.ISAClass.Study.createOntClass(model),RDFS.subClassOf,fileClass);
+		model.add(ISAClass.Study.createOntClass(model),RDFS.subClassOf,fileClass);
 		//assay file
-		model.add(ISA.ISAClass.Assay.createOntClass(model),RDFS.subClassOf,fileClass);
+		model.add(ISAClass.Assay.createOntClass(model),RDFS.subClassOf,fileClass);
 		
 		//Row-level objects - a row of study or assay file
-		OntClass rowClass = ISA.ISAClass.ISAEntry.createOntClass(model);
+		OntClass rowClass = ISAClass.ISAEntry.createOntClass(model);
 		
 		//a row is part of a collection (study/assay)
-		Property isPartOf = ISA.ISAObjectProperty.isPartOf.createProperty(model);
+		Property isPartOf = ISAObjectProperty.isPartOf.createProperty(model);
 		model.add(isPartOf,RDF.type,OWL.TransitiveProperty); //an entry (row) is only part a of single collection
 
 		//and nodes are part of the row
-		Property isPartOfEntry = ISA.ISAObjectProperty.isPartOfEntry.createProperty(model);
-		Property isPartOfCollection = ISA.ISAObjectProperty.isPartOfCollection.createProperty(model);
+		Property isPartOfEntry = ISAObjectProperty.isPartOfEntry.createProperty(model);
+		Property isPartOfCollection = ISAObjectProperty.isPartOfCollection.createProperty(model);
 		model.add(isPartOfCollection,RDFS.subPropertyOf,isPartOf);
 		model.add(isPartOfEntry,RDFS.subPropertyOf,isPartOf);
 		//first node in a row
-		Property isFirstNode = ISA.ISADataProperty.isFirstNode.createProperty(model);
+		Property isFirstNode = ISADataProperty.isFirstNode.createProperty(model);
 		model.add(isFirstNode,RDFS.domain,namedNodeClass);
 		
 
@@ -111,9 +111,9 @@ public class ISAObject {
 		 */
 		
 		//and we have some internal chained structure
-		Property next = ISA.ISAObjectProperty.hasNext.createProperty(model);
-		model.add(next,RDFS.domain,ISA.ISAClass.ISANode.createOntClass(model));
-		model.add(next,RDFS.range,ISA.ISAClass.ISANode.createOntClass(model));
+		Property next = ISAObjectProperty.hasNext.createProperty(model);
+		model.add(next,RDFS.domain,ISAClass.ISANode.createOntClass(model));
+		model.add(next,RDFS.range,ISAClass.ISANode.createOntClass(model));
 /*
 SELECT *
 WHERE { 
@@ -180,7 +180,7 @@ order by ?entry ?a ?b
 		 */
 	private void setNext(String uri, OntClass node,OntClass nextNode) {
 		Property nextProperty = model.createObjectProperty(uri);
-		model.add(nextProperty,RDFS.subPropertyOf,ISA.ISAObjectProperty.hasNext.createProperty(model));
+		model.add(nextProperty,RDFS.subPropertyOf,ISAObjectProperty.hasNext.createProperty(model));
 		model.add(nextProperty,RDFS.domain,node);
 		model.add(nextProperty,RDFS.range,nextNode);
 		//model.createAllValuesFromRestriction(null, nextProperty, nextNode);
@@ -196,7 +196,7 @@ order by ?entry ?a ?b
 	 **/	
 	private void setFirst(OntClass node, boolean value) {
 		HasValueRestriction restriction = model.createHasValueRestriction(null, 
-							ISA.ISADataProperty.isFirstNode.createProperty(model),
+							ISADataProperty.isFirstNode.createProperty(model),
 							model.createTypedLiteral(value));
 		model.add(node,RDFS.subClassOf,restriction);
 	}
@@ -238,53 +238,53 @@ order by ?entry ?a ?b
 	}	
 	public Property addFactor(OntClass node,  ColumnHeader header, int i) throws Exception {
 		String uriPrefix = String.format("%s/F%s",prefixURI,i);
-		Property properties = getObjectProperty(model,uriPrefix,ISA.ISAObjectProperty.hasFactor.createProperty(model),header,true);
+		Property properties = getObjectProperty(model,uriPrefix,ISAObjectProperty.hasFactor.createProperty(model),header,true);
 		model.add(properties,RDFS.label,header.getTitle());
 		model.add(properties,RDFS.domain,node);
-		model.add(properties,RDFS.range,ISA.ISAClass.Value.createOntClass(model));
+		model.add(properties,RDFS.range,ISAClass.Value.createOntClass(model));
 		return properties;
 	}
 	
 	public Property addCharacteristic(OntClass node,  ColumnHeader header, int i) throws Exception {
 		String uriPrefix = String.format("%s/CH%s",prefixURI,i);
-		Property properties = getObjectProperty(model,uriPrefix,ISA.ISAObjectProperty.hasCharacteristic.createProperty(model),header,true);
+		Property properties = getObjectProperty(model,uriPrefix,ISAObjectProperty.hasCharacteristic.createProperty(model),header,true);
 		model.add(properties,RDFS.label,header.getTitle());
 		model.add(properties,RDFS.domain,node);
-		model.add(properties,RDFS.range,ISA.ISAClass.Value.createOntClass(model));
+		model.add(properties,RDFS.range,ISAClass.Value.createOntClass(model));
 		return properties;
 	}	
 	public Property addComment(OntClass node,  ColumnHeader header, int i) throws Exception {
 		String uriPrefix = String.format("%s/CM%s",prefixURI,i);
-		Property property = getObjectProperty(model,uriPrefix,ISA.ISAObjectProperty.hasComment.createProperty(model),header,false);
+		Property property = getObjectProperty(model,uriPrefix,ISAObjectProperty.hasComment.createProperty(model),header,false);
 		model.add(property,RDFS.label,header.getTitle());
 		model.add(property,RDFS.domain,node);
-		model.add(property,RDFS.range,ISA.ISAClass.Value.createOntClass(model));
+		model.add(property,RDFS.range,ISAClass.Value.createOntClass(model));
 		return property;
 	}		
 	public Property addPerformer(OntClass node,  ColumnHeader header, int i) throws Exception {
 		String uriPrefix = String.format("%s/PF%s",prefixURI,i);
-		Property dataProperty = getDataProperty(model,uriPrefix,ISA.ISADataProperty.hasPerformer.createProperty(model),header,false);
+		Property dataProperty = getDataProperty(model,uriPrefix,ISADataProperty.hasPerformer.createProperty(model),header,false);
 		model.add(dataProperty,RDFS.domain,node);
 		return dataProperty;
 	}	
 	public Property addParameter(OntClass node,  ColumnHeader header,int i) throws Exception {
 		String uriPrefix = String.format("%s/PRM%s",prefixURI,i);
-		Property properties  = getObjectProperty(model,uriPrefix,ISA.ISAObjectProperty.hasParameter.createProperty(model),header,true);
+		Property properties  = getObjectProperty(model,uriPrefix,ISAObjectProperty.hasParameter.createProperty(model),header,true);
 		model.add(properties,RDFS.domain,node);				
-		model.add(properties,RDFS.range,ISA.ISAClass.Value.createOntClass(model));
+		model.add(properties,RDFS.range,ISAClass.Value.createOntClass(model));
 		return properties;
 	}		
 	public Property addDate(OntClass node,  ColumnHeader header, int i) throws Exception {
 		String uriPrefix = String.format("%s/DATE%s",prefixURI,i);
-		Property dataProperty  = getDataProperty(model,uriPrefix,ISA.ISADataProperty.hasDate.createProperty(model),header,false);
+		Property dataProperty  = getDataProperty(model,uriPrefix,ISADataProperty.hasDate.createProperty(model),header,false);
 		model.add(dataProperty,RDFS.domain,node);		
 		return dataProperty;
 	}	
 	public Property addFile(OntClass node,  ColumnHeader header, int i) throws Exception {
 		String uriPrefix = String.format("%s/FILE%s",prefixURI,i);
-		Property files = getObjectProperty(model,uriPrefix,ISA.ISAObjectProperty.hasDataset.createProperty(model),header,true);
+		Property files = getObjectProperty(model,uriPrefix,ISAObjectProperty.hasDataset.createProperty(model),header,true);
 		model.add(files,RDFS.domain,node);
-		model.add(files,RDFS.range,ISA.ISAClass.Dataset.createOntClass(model));
+		model.add(files,RDFS.range,ISAClass.Dataset.createOntClass(model));
 		model.add(files,RDFS.domain,node);	
 		return files;
 	}	
@@ -302,7 +302,7 @@ order by ?entry ?a ?b
 	
 	public OntClass addProtocolNodeClass(OntClass prevNode,  ColumnHeader header, int i) throws Exception {
 		String uriPrefix = String.format("%s/P%d",prefixURI,i+1);
-		OntClass protocolClass = getOntClass(model,uriPrefix,ISA.ISAClass.Protocol.createOntClass(model));
+		OntClass protocolClass = getOntClass(model,uriPrefix,ISAClass.Protocol.createOntClass(model));
 		model.add(protocolClass,RDFS.label,header.getTitle());
 		if (prevNode!=null) setNext(String.format("%s/nextProtocol%d",prefixURI,i+1),prevNode, protocolClass);
 		setFirst(protocolClass,false);
@@ -316,8 +316,8 @@ order by ?entry ?a ?b
 
 	}
 	public Individual addRow( int count, Individual collection) throws Exception {
-		Individual row = model.createIndividual(String.format("%s/R%d",prefixURI,count), ISA.ISAClass.ISAEntry.createOntClass(model));
-		model.add(row,ISA.ISAObjectProperty.isPartOfCollection.createProperty(model),collection);
+		Individual row = model.createIndividual(String.format("%s/R%d",prefixURI,count), ISAClass.ISAEntry.createOntClass(model));
+		model.add(row,ISAObjectProperty.isPartOfCollection.createProperty(model),collection);
 		return row;
 	}
 	
@@ -325,7 +325,7 @@ order by ?entry ?a ?b
 		//String uri = String.format("%s/%s",prefix,tabs[i]);
 		String uri = generateURI(model, prefixURI, ISAClass.NamedNode, header, name);
 		Individual node = model.createIndividual(uri,header.getNamedNodeClass());
-		Property partOf = ISA.ISAObjectProperty.isPartOfEntry.createProperty(model);
+		Property partOf = ISAObjectProperty.isPartOfEntry.createProperty(model);
 		model.add(node,partOf,row);
 		return node;
 	}	
@@ -334,7 +334,7 @@ order by ?entry ?a ?b
 		String uri = generateURI(model, prefixURI, ISAClass.Protocol, header,value);
 		Individual node = model.createIndividual(uri,header.getProtocolClass());
 		model.add(node,RDFS.label,value);
-		Property partOf = ISA.ISAObjectProperty.isPartOfEntry.createProperty(model);
+		Property partOf = ISAObjectProperty.isPartOfEntry.createProperty(model);
 		model.add(node,partOf,row);
 		return node;
 	}			
@@ -361,7 +361,7 @@ order by ?entry ?a ?b
 		model.add(node, header.getObjectProperty(), vi);
 
 		if (unit!=null) {
-			model.add(vi,ISA.ISADataProperty.hasUnit.createProperty(model),model.createTypedLiteral(unit));
+			model.add(vi,ISADataProperty.hasUnit.createProperty(model),model.createTypedLiteral(unit));
 		}
 		if (term!=null) {
 			model.add(vi,RDFS.comment,model.createTypedLiteral(term));

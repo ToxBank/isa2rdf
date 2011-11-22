@@ -1,16 +1,12 @@
 package net.toxbank.isa2rdf;
 
 import java.io.Reader;
-import java.util.Hashtable;
 
-import net.toxbank.isa2rdf.ISA.ISAClass;
+import net.toxbank.isa.ISAClass;
 
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class EntryParser extends TabsParser<Resource> {
 	protected ISAObject model;
@@ -31,10 +27,10 @@ public class EntryParser extends TabsParser<Resource> {
 		collection = model.addCollection(getEntryClass(),prefix);
 	}
 	
-	protected ISA.ISAClass getEntryClass() {
+	protected ISAClass getEntryClass() {
 		return ISAClass.ISACollection;
 	}
-	protected ISA.ISAClass getNodeClass() {
+	protected ISAClass getNodeClass() {
 		return ISAClass.NamedNode;
 	}	
 	

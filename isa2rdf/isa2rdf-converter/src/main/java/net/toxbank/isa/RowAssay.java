@@ -1,7 +1,5 @@
 package net.toxbank.isa;
 
-import net.toxbank.isa2rdf.ISA;
-
 import com.hp.hpl.jena.rdf.model.Property;
 
 
@@ -16,11 +14,11 @@ public class RowAssay extends ARow<TemplateAssay,TemplateRowAssay> {
 
 	@Override
 	protected Property getPartOfEntryProperty() {
-		return  ISA.ISAObjectProperty.isPartOfAssayEntry.createProperty(getModel());
+		return  ISAObjectProperty.isPartOfAssayEntry.createProperty(getModel());
 	}	
 	protected NodeAssay addNode(String uri) throws Exception {
 		NodeAssay row = new NodeAssay(uri,template);
-		Property partOfEntry = ISA.ISAObjectProperty.isPartOfAssayEntry.createProperty(getModel());
+		Property partOfEntry = ISAObjectProperty.isPartOfAssayEntry.createProperty(getModel());
 		getModel().add(row.getResource(),partOfEntry,resource);
 		return row;
 	}

@@ -3,7 +3,6 @@ package net.toxbank.isa2rdf;
 import com.hp.hpl.jena.ontology.DatatypeProperty;
 import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
-import com.hp.hpl.jena.rdf.model.Resource;
 
 public class ColumnHeader<R> {
 	String title;

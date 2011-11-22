@@ -1,11 +1,9 @@
 package net.toxbank.isa;
 
 import net.toxbank.isa2rdf.ColumnHeader;
-import net.toxbank.isa2rdf.ISA;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class TemplateAssay extends TemplateCollection {
@@ -14,7 +12,7 @@ public class TemplateAssay extends TemplateCollection {
 	}
 	public TemplateAssay(String uri,String name,OntModel model) {
 		super(model.createClass(uri));
-		OntClass assay = ISA.ISAClass.Assay.createOntClass(model);
+		OntClass assay = ISAClass.Assay.createOntClass(model);
 		getModel().add(resource,RDFS.subClassOf,assay);
 		
 		if (name != null) model.add(resource,RDFS.label,name);

@@ -1,11 +1,6 @@
 package net.toxbank.isa;
 
-import net.toxbank.isa2rdf.ISA;
-import net.toxbank.isa2rdf.ISA.ISAClass;
-
-import com.hp.hpl.jena.ontology.HasValueRestriction;
 import com.hp.hpl.jena.ontology.OntClass;
-import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 

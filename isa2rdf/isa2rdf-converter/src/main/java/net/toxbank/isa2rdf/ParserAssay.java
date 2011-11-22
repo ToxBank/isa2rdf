@@ -2,16 +2,14 @@ package net.toxbank.isa2rdf;
 
 import java.io.Reader;
 
-import net.toxbank.isa2rdf.ISA.ISAClass;
-
-import com.hp.hpl.jena.ontology.OntModel;
+import net.toxbank.isa.ISAClass;
 
 public class ParserAssay extends EntryParser {
 
 	public ParserAssay(Reader in, String prefix, String prefixURI, ISAObject model) throws Exception {
 		super(in,prefix,prefixURI,model);
 	}
-	protected ISA.ISAClass getEntryClass() {
+	protected ISAClass getEntryClass() {
 		return ISAClass.Assay;
 	}
 	@Override

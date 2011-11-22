@@ -1,7 +1,6 @@
 package net.toxbank.isa;
 
 import net.toxbank.isa2rdf.ColumnHeader;
-import net.toxbank.isa2rdf.ISA;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -15,7 +14,7 @@ public abstract class TemplateCollection extends AnyISAObject<OntClass> {
 		this(null,model);
 	}
 	public TemplateCollection(String uri,OntModel model) {
-		super(uri,ISA.ISAClass.ISACollection.createOntClass(model));
+		super(uri,ISAClass.ISACollection.createOntClass(model));
 	}
 	protected TemplateCollection(OntClass resource) {
 		this(null,resource);
@@ -30,7 +29,7 @@ public abstract class TemplateCollection extends AnyISAObject<OntClass> {
 	protected void setNextNode(String uri,OntClass node,OntClass nextNode) {
 		
 		Property nextProperty = getModel().createObjectProperty(uri,true);
-		getModel().add(nextProperty,RDFS.subPropertyOf,ISA.ISAObjectProperty.hasNext.createProperty(getModel()));
+		getModel().add(nextProperty,RDFS.subPropertyOf,ISAObjectProperty.hasNext.createProperty(getModel()));
 		getModel().add(nextProperty,RDFS.domain,node);
 		getModel().add(nextProperty,RDFS.range,nextNode);
 		
@@ -114,7 +113,7 @@ public abstract class TemplateCollection extends AnyISAObject<OntClass> {
 	public OntClass addProtocolNodeClass(ColumnHeader header, String uri) throws Exception {
 
 		OntClass protocolClass = getModel().createClass(uri);
-		getModel().add(protocolClass,RDFS.subClassOf,ISA.ISAClass.Protocol.createOntClass(getModel()));
+		getModel().add(protocolClass,RDFS.subClassOf,ISAClass.Protocol.createOntClass(getModel()));
 		getModel().add(protocolClass,RDFS.label,header.getTitle());
 		
 		return protocolClass;

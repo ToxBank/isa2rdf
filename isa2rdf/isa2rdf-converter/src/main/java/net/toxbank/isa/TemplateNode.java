@@ -1,10 +1,7 @@
 package net.toxbank.isa;
 
 import net.toxbank.isa2rdf.ColumnHeader;
-import net.toxbank.isa2rdf.ISA;
-import net.toxbank.isa2rdf.ISA.ISAClass;
 
-import com.hp.hpl.jena.ontology.HasValueRestriction;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -53,31 +50,31 @@ public class TemplateNode<T extends TemplateRow<CT>,CT extends TemplateCollectio
 	}	
 */
 	public Property addFactor( ColumnHeader header,String uri) throws Exception {
-		Property properties = getObjectProperty(getModel(),uri,ISA.ISAObjectProperty.hasFactor.createProperty(getModel()),true);
+		Property properties = getObjectProperty(getModel(),uri,ISAObjectProperty.hasFactor.createProperty(getModel()),true);
 		
 		getModel().add(properties,RDFS.label,header.getTitle());
 		getModel().add(properties,RDFS.domain,resource);
-		getModel().add(properties,RDFS.range,ISA.ISAClass.Value.createOntClass(getModel()));
+		getModel().add(properties,RDFS.range,ISAClass.Value.createOntClass(getModel()));
 		return properties;
 	}
 	public Property addCharacteristics( ColumnHeader header,String uri) throws Exception {
-		Property properties = getObjectProperty(getModel(),uri,ISA.ISAObjectProperty.hasCharacteristic.createProperty(getModel()),true);
+		Property properties = getObjectProperty(getModel(),uri,ISAObjectProperty.hasCharacteristic.createProperty(getModel()),true);
 		
 		getModel().add(properties,RDFS.label,header.getTitle());
 		getModel().add(properties,RDFS.domain,resource);
-		getModel().add(properties,RDFS.range,ISA.ISAClass.Value.createOntClass(getModel()));
+		getModel().add(properties,RDFS.range,ISAClass.Value.createOntClass(getModel()));
 		return properties;
 	}	
 	public Property addComment( ColumnHeader header,String uri) throws Exception {
-		Property properties = getObjectProperty(getModel(),uri,ISA.ISAObjectProperty.hasComment.createProperty(getModel()),true);
+		Property properties = getObjectProperty(getModel(),uri,ISAObjectProperty.hasComment.createProperty(getModel()),true);
 		
 		getModel().add(properties,RDFS.label,header.getTitle());
 		getModel().add(properties,RDFS.domain,resource);
-		getModel().add(properties,RDFS.range,ISA.ISAClass.Value.createOntClass(getModel()));
+		getModel().add(properties,RDFS.range,ISAClass.Value.createOntClass(getModel()));
 		return properties;
 	}		
 	public Property addFile(ColumnHeader header,String uri) throws Exception {
-		Property files = getObjectProperty(getModel(),uri,ISA.ISAObjectProperty.hasDataset.createProperty(getModel()),true);
+		Property files = getObjectProperty(getModel(),uri,ISAObjectProperty.hasDataset.createProperty(getModel()),true);
 		getModel().add(files,RDFS.label,header.getTitle());
 		getModel().add(files,RDFS.domain,resource);
 

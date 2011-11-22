@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-import net.toxbank.isa2rdf.ISA;
 import net.toxbank.isa2rdf.ISAObject;
 import net.toxbank.isa2rdf.ISAParser;
 
