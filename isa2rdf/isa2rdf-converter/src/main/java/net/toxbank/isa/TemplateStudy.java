@@ -40,11 +40,16 @@ public class TemplateStudy extends TemplateCollection {
 	public AStudy parse(ColumnHeader[] headers,String[][] tabs) throws Exception {
 		AStudy study = new AStudy(String.format("%s/Study/S1",getResource().getURI()),this);
 		for (int i=0; i < tabs.length;i++) {
-			RowStudy row = study.addRow(String.format("%s/Row/R%d", study.getResource().getURI(),i+1));
+			RowStudy row = parse(study,headers,tabs[i],String.format("%s/Row/R%d", study.getResource().getURI(),i+1));
 			row.parse(headers,tabs[i]);
 			
 		}
 		return study;
 	}
 
+	public RowStudy parse(AStudy study, ColumnHeader[] headers,String[] tabs, String uri) throws Exception {
+		RowStudy row = study.addRow(uri);
+		row.parse(headers,tabs);
+		return row;
+	}	
 }

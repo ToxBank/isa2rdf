@@ -1,12 +1,21 @@
 package net.toxbank.isa2rdf;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import net.toxbank.isa.AStudy;
+import net.toxbank.isa.AnAssay;
 import net.toxbank.isa.ISAClass;
 import net.toxbank.isa.ISAObjectProperty;
+import net.toxbank.isa.RowAssay;
+import net.toxbank.isa.RowStudy;
+import net.toxbank.isa.TemplateAssay;
+import net.toxbank.isa.TemplateStudy;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -196,5 +205,84 @@ public class ISA {
 
 	}
 	
+	public void parse(File dir) throws Exception {
+		OntModel model = createModel(true);
+		initModel(model);
+		//final String prefixURI = String.format("http://toxbank.net/isa/%s",name);
+		String[] files = dir.list(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.startsWith("s_") && name.endsWith(".txt");
+			}
+		});
+		for (int i=0; i < files.length; i++) {
+			String file = files[i];
+			final TemplateStudy ts = new TemplateStudy(String.format("%sDR",uri),"Dose Response study",model);
+			final AStudy study = new AStudy(String.format("%s/Study/S1",getResource().getURI()),this);
+			TabsParser<RowStudy> parser = new TabsParser<RowStudy>(new FileReader(new File(dir,file))) {
+				@Override
+				protected void readHeader() throws Exception {
+					ts.parseHeader(header, String.format("%s/header",ts.getResource().getURI()));
+				}
+				@Override
+				protected RowStudy transform(String[] tabs) throws Exception {
+					return ts.parse(study, header, tabs,String.format("%s/Row/R%d", study.getResource().getURI(),i+1));
+				}
+			};
+			while (parser.hasNext()) {
+				RowStudy resource = parser.next();
+			}
+			parser.close();
+		}	
+		
+		files = dir.list(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.startsWith("a_") && name.endsWith(".txt");
+			}
+		});
+		for (int i=0; i < files.length; i++) {
+			String file = files[i];
+			
+			final TemplateAssay ta = new TemplateAssay(String.format("%s/assay1",ts.getResource().getURI()),
+					"Dose Response Assay",model);
+			AnAssay assay = new AnAssay(String.format("%s/Assay/A1",getResource().getURI()),this);
+
+			TabsParser<RowAssay> parser = new TabsParser<RowAssay>(new FileReader(new File(dir,file))) {
+				@Override
+				protected void readHeader() throws Exception {
+					ta.parseHeader(header, String.format("%s/header",ta.getResource().getURI()));		
+
+				}
+				@Override
+				protected RowAssay transform(String[] tabs) throws Exception {
+					RowAssay assay = ta.parse(header, tabs);
+				}
+			};
+			while (parser.hasNext()) {
+				RowAssay resource = parser.next();
+				//study.addAssay(assay);
+			}
+			parser.close();
+		}			
+	}
+		
+
+	public void parseStudy(OntModel model, ColumnHeader[] headers,String[][] tabs) throws Exception {
+		TemplateStudy ts = new TemplateStudy(String.format("%sDR",uri),"Dose Response study",model);
+		ts.parseHeader(headers, String.format("%s/header",ts.getResource().getURI()));
+		AStudy study = ts.parse(headers, tabs);
+	}
+	public void parseAssay(OntModel model,String studyURI, ColumnHeader[] headers,String[][] tabs) throws Exception {
+	
+		String uri = "http://example.com/study/";
+
+		TemplateAssay ta = new TemplateAssay(String.format("%s/assay1",ts.getResource().getURI()),
+				"Dose Response Assay",model);
+		ta.parseHeader(headers, String.format("%s/header",ta.getResource().getURI()));		
+	
+		AnAssay assay = ta.parse(headers, tabs);
+		study.addAssay(assay);
+	}
 	
 }

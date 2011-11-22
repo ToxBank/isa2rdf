@@ -46,12 +46,18 @@ public class TemplateAssay extends TemplateCollection {
 	public AnAssay parse(ColumnHeader[] headers,String[][] tabs) throws Exception {
 		AnAssay assay = new AnAssay(String.format("%s/Assay/A1",getResource().getURI()),this);
 		for (int i=0; i < tabs.length;i++) {
-			RowAssay row = assay.addRow(String.format("%s/Row/R%d", assay.getResource().getURI(),i+1));
-			row.parse(headers,tabs[i]);
-			
+			String uri = String.format("%s/Row/R%d", assay.getResource().getURI(),i+1);
+			RowAssay row = parse(assay,headers,tabs[i],uri);
 		}
 		return assay;
 	}	
+
+
+	public RowAssay parse(AnAssay assay, ColumnHeader[] headers,String[] tabs, String uri) throws Exception {
+		RowAssay row = assay.addRow(uri);
+		row.parse(headers,tabs);
+		return row;
+	}		
 	/*
 	@Override
 	public OntClass addProtocolNodeClass(ColumnHeader header, String uri) throws Exception {
