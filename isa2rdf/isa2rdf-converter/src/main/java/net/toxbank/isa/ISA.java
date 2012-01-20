@@ -56,13 +56,17 @@ public class ISA {
 			Model model = parser.parse(dir);
 			String filename = dir.getName();
 			if (!dir.isDirectory()) dir = dir.getParentFile();
-			FileWriter output = new FileWriter(new File(dir,String.format("%s.n3",filename)));
+			File file = new File(dir,String.format("%s.n3",filename));
+			FileWriter output = new FileWriter(file);
 			ISA.write(model, output, "text/n3", true);
 			output.close();
+			System.out.println(file);
 
-			output = new FileWriter(new File(dir,String.format("%s.owl",filename)));
+			file = new File(dir,String.format("%s.owl",filename));
+			output = new FileWriter(file);
 			ISA.write(model, output, "application/rdf+xml", true);
 			output.close();
+			System.out.println(file);
 		} catch (Exception x) {
 			x.printStackTrace();
 		} else 
