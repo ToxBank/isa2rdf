@@ -1,0 +1,26 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="./TemplateStudy.html" title="&lt;TABLE&gt;" alt="" coords="2089,1014,2650,1183"/>
+<area shape="rect" id="node2_1" href="./TemplateRowStudy.html" title="&lt;TABLE&gt;" alt="" coords="16,1046,389,1151"/>
+<area shape="rect" id="node3_2" href="./TemplateRowAssay.html" title="&lt;TABLE&gt;" alt="" coords="435,1046,816,1151"/>
+<area shape="rect" id="node4_3" href="./TemplateRow.html" title="&lt;TABLE&gt;" alt="" coords="443,753,808,890"/>
+<area shape="rect" id="node5_4" href="./TemplateNodeStudy.html" title="&lt;TABLE&gt;" alt="" coords="861,1062,1427,1135"/>
+<area shape="rect" id="node6_5" href="./TemplateNodeAssay.html" title="&lt;TABLE&gt;" alt="" coords="1472,1062,2043,1135"/>
+<area shape="rect" id="node7_6" href="./TemplateNode.html" title="&lt;TABLE&gt;" alt="" coords="1493,705,2022,938"/>
+<area shape="rect" id="node8_7" href="./TemplateCollection.html" title="&lt;TABLE&gt;" alt="" coords="2688,721,3245,922"/>
+<area shape="rect" id="node9_8" href="./TemplateAssay.html" title="&lt;TABLE&gt;" alt="" coords="2695,998,3273,1199"/>
+<area shape="rect" id="node10_9" href="./RowStudy.html" title="&lt;TABLE&gt;" alt="" coords="3319,1038,3660,1159"/>
+<area shape="rect" id="node11_10" href="./RowAssay.html" title="&lt;TABLE&gt;" alt="" coords="3705,1038,4052,1159"/>
+<area shape="rect" id="node12_11" href="./NodeStudy.html" title="&lt;TABLE&gt;" alt="" coords="4098,1062,4443,1135"/>
+<area shape="rect" id="node13_12" href="./NodeAssay.html" title="&lt;TABLE&gt;" alt="" coords="4489,1062,4841,1135"/>
+<area shape="rect" id="node14_13" href="./ISAObjectProperty.html" title="&lt;TABLE&gt;" alt="" coords="3412,115,3548,541"/>
+<area shape="rect" id="node15_14" href="./ISADataProperty.html" title="&lt;TABLE&gt;" alt="" coords="3593,259,3711,397"/>
+<area shape="rect" id="node16_15" href="./ISAClass.html" title="&lt;TABLE&gt;" alt="" coords="3757,179,3862,477"/>
+<area shape="rect" id="node17_16" href="./ISA.html" title="&lt;TABLE&gt;" alt="" coords="3907,195,4549,461"/>
+<area shape="rect" id="node18_17" href="./ColumnHeader.html" title="&lt;TABLE&gt;" alt="" coords="4594,11,4873,645"/>
+<area shape="rect" id="node19_18" href="./AStudy.html" title="&lt;TABLE&gt;" alt="" coords="4887,1030,5308,1167"/>
+<area shape="rect" id="node20_19" href="./ARow.html" title="&lt;TABLE&gt;" alt="" coords="3291,761,3720,882"/>
+<area shape="rect" id="node21_20" href="./AnyISAObject.html" title="&lt;TABLE&gt;" alt="" coords="3106,227,3366,429"/>
+<area shape="rect" id="node22_21" href="./ANode.html" title="&lt;TABLE&gt;" alt="" coords="4053,785,4488,858"/>
+<area shape="rect" id="node24_22" href="./ACollection.html" title="&lt;TABLE&gt;" alt="" coords="4947,777,5248,866"/>
+<area shape="rect" id="node23_23" href="./AnAssay.html" title="&lt;TABLE&gt;" alt="" coords="5354,1046,5667,1151"/>
+</map>
