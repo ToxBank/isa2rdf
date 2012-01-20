@@ -9,6 +9,14 @@
   <artifactId>isa2rdf-converter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>isa2rdf converter</name>
+      <licenses>
+  <license>
+    <name>LGPL3</name>
+    <url>http://www.gnu.org/licenses/lgpl.txt</url>
+    <distribution>repo</distribution>
+    <comments />
+  </license>
+</licenses>
 <dependencies>
     <dependency>
     	<groupId>com.hp.hpl.jena</groupId>
@@ -16,6 +24,17 @@
     	<version>2.6.4</version>
     </dependency>
 </dependencies>  
+<description>ISA-TAB to RDF conversion</description>
+  <organization>
+  	<name>ToxBank project</name>
+  	<url>http://toxbank.net</url>
+  </organization>
+  <scm>
+  	<developerConnection>scm:git:git@github.com:ToxBank/isa2rdf.git</developerConnection>
+  	<url>https://github.com/ToxBank/isa2rdf</url>
+  </scm>  
+<url>http://toxbank.github.com/isa2rdf</url>
+<inceptionYear>2011</inceptionYear>
 <build>
  <plugins>
  
@@ -95,4 +114,36 @@
 		    </plugins>
   </pluginManagement>
 </build>
+<reporting>
+    <plugins>
+          <plugin>
+          <!-- UML class diagrams  -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+			<version>2.7</version>            
+             <!-- <docletPath>/path/to/UmlGraph.jar</docletPath> -->
+	        <configuration>
+	          <source>1.5</source>
+	          <aggregate>false</aggregate>
+	          <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
+	          <docletArtifact>
+	            <groupId>gr.spinellis</groupId>
+	            <artifactId>UmlGraph</artifactId>
+	            <version>4.6</version>
+	          </docletArtifact>
+	          <additionalparam>
+	          <!--  http://www.umlgraph.org/doc/cd-opt.html 
+	          	-attributes
+	          	-views
+	          	-types 
+	            -inferrel -inferdep -quiet -hide java.*
+	            -collpackages java.util.* -qualify
+	            -postfixpackage 
+	            --> 
+	            -all
+	          </additionalparam>
+	        </configuration>
+         </plugin>
+    </plugins>
+</reporting>
 </project>
