@@ -1,0 +1,19 @@
+ -----
+ISA2RDF
+ -----
+ Background
+ -----
+ Jan 2012
+
+ISA2RDF
+~~~~~~~  
+  A java client library and a command line tool for ISA-TAB to RDF conversion.
+  
+
+ * Command line client  {{{https://github.com/downloads/ToxBank/isa2rdf/isa2rdf-0.0.1.jar}Download}}
+	
+---------------------------------------- 
+	>java -jar isa2rdf-0.0.1.jar  <ISA-TAB folder or investigation file>
+	
+
+---------------------------------------

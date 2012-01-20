@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="AMBIT2">
+  <bannerLeft>
+   <name>ISA2RDF</name>
+    <src>./images/tb.jpg</src>
+    <href>index.html</href>
+  </bannerLeft>
+  <bannerRight>
+    <src></src>
+  </bannerRight>
+
+  <body>
+    <links>
+      <item name="ToxBank" href="http://toxbank.net/"/>
+      <item name="ToxBank-beans" href="http://toxbank.github.com/toxbank-api-beans"/>
+      <item name="ToxBank-client" href="http://toxbank.github.com/toxbank-api-client"/>
+      <item name="ToxBank-server" href="http://toxbank.github.com/toxbank-api-server"/>
+      <item name="ToxBank ISA2RDF" href="http://toxbank.github.com/isa2rdf"/>
+      <item name="OpenTox AA" href="http://vedina.github.com/opentox-aa-cli"/>
+    </links>
+    
+  <menu name="Toxbank ISA2RDF">
+      <item name="Home" href="/index.html"/>
+      <item name="Maven dependency" href="/maven.html"/>
+      <!-- 
+      <item name="Command line" href="/cli.html"/>
+      -->
+    </menu>
+
+    <menu ref="reports"/>
+
+  </body>
+  <poweredBy>
+    <logo name="Toxbank" href="http://toxbank.net"/>
+  </poweredBy>    
+  <publishDate position="navigation-bottom" format="MM-dd-yy"/>
+
+</project>
