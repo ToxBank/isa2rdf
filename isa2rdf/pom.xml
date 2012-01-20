@@ -24,46 +24,7 @@
     </dependency>
   </dependencies>
   <build>
-   <plugins>
-   	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-   
-   		<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-2</version>
-				<executions>
-					<execution>
-						<id>create-executable-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<descriptorRefs>
-								<descriptorRef>
-								jar-with-dependencies
-								</descriptorRef>
-							</descriptorRefs>
-							<finalName>aacli-${project.version}</finalName>
-        					<appendAssemblyId>false</appendAssemblyId>
-							<archive>
-								<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-							</archive>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-   </plugins>
+  
     <resources>
       <resource>
         <directory>src/main/resources</directory>
