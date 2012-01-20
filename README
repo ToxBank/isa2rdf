@@ -1,7 +1,7 @@
 ISA-TAB to RDF conversion
 
 Build:
-mvn clean package
+isa2rdf>mvn clean package
 
 [INFO]
 [INFO] ------------------------------------------------------------------------
