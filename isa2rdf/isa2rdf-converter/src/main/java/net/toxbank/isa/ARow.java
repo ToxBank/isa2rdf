@@ -38,7 +38,7 @@ public class ARow<CT extends TemplateCollection,T extends TemplateRow<CT>> exten
 			} catch (Exception x) {}
 	
 			if (header[i].getResource() instanceof TemplateNode) { //named node
-				String uri = String.format("%s/Column/C%d",getResource().getURI(),i);
+				String uri = String.format("%s/C%d",getResource().getURI(),i);
 				node = ((TemplateNode)header[i].getResource()).createInstance(uri);
 				Property partOf = getPartOfEntryProperty();
 				getModel().add(node,partOf,resource);

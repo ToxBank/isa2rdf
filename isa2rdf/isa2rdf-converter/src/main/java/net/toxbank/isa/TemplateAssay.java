@@ -42,9 +42,9 @@ public class TemplateAssay extends TemplateCollection {
 	
 	
 	public AnAssay parse(ColumnHeader[] headers,String[][] tabs) throws Exception {
-		AnAssay assay = new AnAssay(String.format("%s/Assay/A1",getResource().getURI()),this);
+		AnAssay assay = new AnAssay(String.format("%s/Assay",getResource().getURI()),this);
 		for (int i=0; i < tabs.length;i++) {
-			String uri = String.format("%s/Row/R%d", assay.getResource().getURI(),i+1);
+			String uri = String.format("%s/R%d", assay.getResource().getURI(),i+1);
 			RowAssay row = parse(assay,headers,tabs[i],uri);
 		}
 		return assay;

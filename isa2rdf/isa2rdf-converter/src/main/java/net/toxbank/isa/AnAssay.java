@@ -7,7 +7,7 @@ public class AnAssay extends ACollection<TemplateAssay> {
 	protected AnAssay(TemplateAssay template) throws Exception {
 		this(null,template);
 	}	
-	protected AnAssay(String uri, TemplateAssay template) throws Exception {
+	public AnAssay(String uri, TemplateAssay template) throws Exception {
 		super(uri, template);
 	}
 	/**

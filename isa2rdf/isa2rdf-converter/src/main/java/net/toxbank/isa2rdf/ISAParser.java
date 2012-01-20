@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 
 import net.toxbank.isa.ISA;
+import net.toxbank.isa.RowAssay;
 import net.toxbank.isa.RowStudy;
 
 import com.hp.hpl.jena.ontology.OntModel;
@@ -50,8 +51,29 @@ public class ISAParser {
 		}
 		//Assays
 		files = dir.list(new AssayFileNameFilter());
-		//for (String file:files) System.out.println(file);
+		for (String file:files) {
+			String filename = file; //file.replace("-", "_");
+			String studyPrefix = String.format("%s%s",prefixDir,filename.replace(".txt", ""));
+			model.setNsPrefix(filename.replace(".txt", "F"), studyPrefix+"/Factor/");
+			model.setNsPrefix(filename.replace(".txt", "C"), studyPrefix+"/Char/");
+			model.setNsPrefix(filename.replace(".txt", "S"), studyPrefix+"/Study/");
+			model.setNsPrefix(filename.replace(".txt", "E"), studyPrefix+"/entry/");
+			model.setNsPrefix(filename.replace(".txt", "n"), studyPrefix+"/node/");
+			model.setNsPrefix(filename.replace(".txt", "P"), studyPrefix+"/Protocol/");
+			model.setNsPrefix(filename.replace(".txt", ""), studyPrefix+"/");
+			parseStudyFile(studyPrefix,new File(dir,file), model);
+		}
+		
 		return model;
+	}
+	
+	public void parseAssayFile(String prefixDir,File file,OntModel model) throws Exception {
+		FileReader reader = new FileReader(file);
+		AssayParser aparser = new AssayParser(prefixDir,file.getName(),reader, model);
+		while (aparser.hasNext()) {
+			RowAssay row = aparser.next();
+		}
+		reader.close();
 	}
 	
 	public void parseStudyFile(String prefixDir,File file,OntModel model) throws Exception {
