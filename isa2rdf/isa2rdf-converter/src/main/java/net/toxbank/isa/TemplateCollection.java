@@ -5,6 +5,11 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * Abstract template
+ * @author nina
+ *
+ */
 public abstract class TemplateCollection extends AnyISAObject<OntClass> {
 	protected TemplateRow rowTemplate;
 	

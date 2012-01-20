@@ -25,6 +25,11 @@ import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * Main ISA class
+ * @author nina
+ *
+ */
 public class ISA {
 	/** <p>The RDF model that holds the vocabulary terms</p> */
 	private static Model m_model = ModelFactory.createDefaultModel();

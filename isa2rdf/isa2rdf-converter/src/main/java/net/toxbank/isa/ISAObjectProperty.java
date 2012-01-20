@@ -5,6 +5,11 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * ISA RDF object properties
+ * @author nina
+ *
+ */
 public enum ISAObjectProperty {
 	hasAssay {
 		

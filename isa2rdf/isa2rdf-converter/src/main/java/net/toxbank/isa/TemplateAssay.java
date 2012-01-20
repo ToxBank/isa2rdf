@@ -4,6 +4,11 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * A template of an {@link Assay}
+ * @author nina
+ *
+ */
 public class TemplateAssay extends TemplateCollection {
 	public TemplateAssay(OntModel model) {
 		this(null,null,model);

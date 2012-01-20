@@ -10,6 +10,11 @@ import net.toxbank.isa.TemplateStudy;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Resource;
 
+/**
+ * Parser for ISA study files
+ * @author nina
+ *
+ */
 public class StudyParser extends TabsParser<RowStudy> {
 	private TemplateStudy ts;
 	private AStudy study;

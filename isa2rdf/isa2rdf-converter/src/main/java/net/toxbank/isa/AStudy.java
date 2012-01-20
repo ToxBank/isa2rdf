@@ -2,6 +2,11 @@ package net.toxbank.isa;
 
 import com.hp.hpl.jena.rdf.model.Property;
 
+/**
+ * A study
+ * @author nina
+ *
+ */
 public class AStudy extends ACollection<TemplateStudy> {
 
 	public AStudy(TemplateStudy template) throws Exception {

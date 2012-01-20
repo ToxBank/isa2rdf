@@ -5,6 +5,11 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * A template of an {@link Study}
+ * @author nina
+ *
+ */
 public class TemplateStudy extends TemplateCollection {
 	
 	public TemplateStudy(OntModel model) {

@@ -2,6 +2,11 @@ package net.toxbank.isa;
 
 import com.hp.hpl.jena.ontology.OntClass;
 
+/**
+ * A study row
+ * @author nina
+ *
+ */
 public class TemplateRowStudy extends TemplateRow<TemplateStudy> {
 
 	protected TemplateRowStudy(String uri, TemplateStudy collection)  throws Exception  {

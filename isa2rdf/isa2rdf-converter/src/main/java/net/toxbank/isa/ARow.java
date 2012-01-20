@@ -11,6 +11,13 @@ import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * A row in a study or assay.
+ * @author nina
+ *
+ * @param <CT>
+ * @param <T>
+ */
 public class ARow<CT extends TemplateCollection,T extends TemplateRow<CT>> extends AnyISAObject<Individual> {
 	protected T template;
 	public ARow(String uri,T template) throws Exception {

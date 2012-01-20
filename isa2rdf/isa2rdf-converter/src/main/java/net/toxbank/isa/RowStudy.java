@@ -3,7 +3,11 @@ package net.toxbank.isa;
 import com.hp.hpl.jena.rdf.model.Property;
 
 
-
+/**
+ * A row in an {@link Study}
+ * @author nina
+ *
+ */
 public class RowStudy extends ARow<TemplateStudy,TemplateRowStudy> {
 
 	protected RowStudy(TemplateRowStudy template) throws Exception {

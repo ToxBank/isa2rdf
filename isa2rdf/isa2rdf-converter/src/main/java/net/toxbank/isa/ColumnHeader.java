@@ -4,6 +4,12 @@ import com.hp.hpl.jena.ontology.DatatypeProperty;
 import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.ontology.OntClass;
 
+/**
+ * Headers in tab delimited files
+ * @author nina
+ *
+ * @param <R>
+ */
 public class ColumnHeader<R> {
 	String title;
 	String label;

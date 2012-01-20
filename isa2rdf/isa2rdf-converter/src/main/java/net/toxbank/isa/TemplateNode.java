@@ -5,6 +5,13 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * A node in a {@link TemplateCollection}
+ * @author nina
+ *
+ * @param <T>
+ * @param <CT>
+ */
 public class TemplateNode<T extends TemplateRow<CT>,CT extends TemplateCollection> extends AnyISAObject<OntClass> {
 
 	public TemplateNode(ColumnHeader header,String uri,T collection)  throws Exception {

@@ -3,6 +3,11 @@ package net.toxbank.isa;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Property;
 
+/**
+ * ISA RDF data properties
+ * @author nina
+ *
+ */
 public enum ISADataProperty {
 	isFirstNode,
 	hasPerformer,

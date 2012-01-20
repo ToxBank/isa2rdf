@@ -10,6 +10,11 @@ import net.toxbank.isa.TemplateAssay;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Resource;
 
+/**
+ * Parser for ISA assay files
+ * @author nina
+ *
+ */
 public class AssayParser extends TabsParser<RowAssay> {
 	private TemplateAssay ta;
 	private AnAssay assay;

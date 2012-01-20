@@ -6,6 +6,12 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
+/**
+ * A top class for ISA-TAB, holding Jena {@link Resource}
+ * @author nina
+ *
+ * @param <T>
+ */
 public class AnyISAObject<T extends Resource>  {
 	protected T resource;
 	

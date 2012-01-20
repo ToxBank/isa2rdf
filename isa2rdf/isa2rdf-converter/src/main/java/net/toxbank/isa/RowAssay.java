@@ -2,7 +2,11 @@ package net.toxbank.isa;
 
 import com.hp.hpl.jena.rdf.model.Property;
 
-
+/**
+ * A row in an {@link Assay}
+ * @author nina
+ *
+ */
 public class RowAssay extends ARow<TemplateAssay,TemplateRowAssay> {
 
 	protected RowAssay(TemplateRowAssay template) throws Exception {

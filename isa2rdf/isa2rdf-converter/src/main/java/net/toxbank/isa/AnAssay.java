@@ -2,6 +2,11 @@ package net.toxbank.isa;
 
 import com.hp.hpl.jena.rdf.model.Property;
 
+/**
+ * Assay
+ * @author nina
+ *
+ */
 public class AnAssay extends ACollection<TemplateAssay> {
 
 	protected AnAssay(TemplateAssay template) throws Exception {

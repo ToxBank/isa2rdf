@@ -10,6 +10,12 @@ import net.toxbank.isa.ColumnHeader;
 
 import com.hp.hpl.jena.rdf.model.Resource;
 
+/**
+ * Just tab-delimited files parser
+ * @author nina
+ *
+ * @param <E>
+ */
 
 public abstract class TabsParser<E> implements Iterator<E>, Closeable {
 	protected BufferedReader reader;

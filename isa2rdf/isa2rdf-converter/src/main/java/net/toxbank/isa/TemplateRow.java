@@ -3,7 +3,12 @@ package net.toxbank.isa;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
-
+/**
+ * A template row
+ * @author nina
+ *
+ * @param <T>
+ */
 public class TemplateRow<T extends TemplateCollection> extends AnyISAObject<OntClass> {
 
 	public TemplateRow(String uri,T collection)  throws Exception {
