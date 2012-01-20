@@ -1,8 +1,6 @@
 package net.toxbank.isa;
 
 
-import net.toxbank.isa2rdf.ColumnHeader;
-
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.vocabulary.RDFS;

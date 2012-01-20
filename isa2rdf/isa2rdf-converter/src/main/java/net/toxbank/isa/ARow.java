@@ -3,8 +3,6 @@ package net.toxbank.isa;
 
 import java.net.URLEncoder;
 
-import net.toxbank.isa2rdf.ColumnHeader;
-
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.ObjectProperty;
 import com.hp.hpl.jena.rdf.model.Literal;

@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Iterator;
 
+import net.toxbank.isa.ColumnHeader;
+
 import com.hp.hpl.jena.rdf.model.Resource;
 
 
@@ -61,13 +63,14 @@ public abstract class TabsParser<E> implements Iterator<E>, Closeable {
 	}
 	protected abstract E transform(String[] tabs) throws Exception;
 	
-	protected void readHeader() throws Exception {
-		if (count>0) return; 
+	protected ColumnHeader<Resource>[] readHeader() throws Exception {
+		if (count>0) return null;
 		String line = reader.readLine();
 		String[] h = line.split("\t");
 		header = new ColumnHeader[h.length];
 		for (int i=0;i< header.length;i++)
 			header[i] = new ColumnHeader(h[i],i);
+		return header;
 	}
 	
 }

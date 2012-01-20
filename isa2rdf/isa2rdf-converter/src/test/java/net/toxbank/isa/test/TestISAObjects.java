@@ -6,10 +6,10 @@ import java.io.StringWriter;
 
 import net.toxbank.isa.AStudy;
 import net.toxbank.isa.AnAssay;
+import net.toxbank.isa.ColumnHeader;
+import net.toxbank.isa.ISA;
 import net.toxbank.isa.TemplateAssay;
 import net.toxbank.isa.TemplateStudy;
-import net.toxbank.isa2rdf.ColumnHeader;
-import net.toxbank.isa2rdf.ISA;
 
 import org.junit.Test;
 

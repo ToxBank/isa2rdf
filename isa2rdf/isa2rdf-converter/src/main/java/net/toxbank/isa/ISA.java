@@ -1,21 +1,9 @@
-package net.toxbank.isa2rdf;
+package net.toxbank.isa;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
-import net.toxbank.isa.AStudy;
-import net.toxbank.isa.AnAssay;
-import net.toxbank.isa.ISAClass;
-import net.toxbank.isa.ISAObjectProperty;
-import net.toxbank.isa.RowAssay;
-import net.toxbank.isa.RowStudy;
-import net.toxbank.isa.TemplateAssay;
-import net.toxbank.isa.TemplateStudy;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -204,7 +192,7 @@ public class ISA {
 		model.add(files,RDFS.range,ISAClass.Dataset.createOntClass(model));		
 
 	}
-	
+	/*
 	public void parse(File dir) throws Exception {
 		OntModel model = createModel(true);
 		initModel(model);
@@ -284,5 +272,7 @@ public class ISA {
 		AnAssay assay = ta.parse(headers, tabs);
 		study.addAssay(assay);
 	}
+	
+	*/
 	
 }

@@ -1,6 +1,5 @@
 package net.toxbank.isa;
 
-import net.toxbank.isa2rdf.ColumnHeader;
 
 public class TemplateNodeStudy extends TemplateNode<TemplateRowStudy, TemplateStudy> {
 

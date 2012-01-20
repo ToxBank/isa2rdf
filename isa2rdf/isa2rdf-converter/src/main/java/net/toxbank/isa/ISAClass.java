@@ -2,14 +2,13 @@ package net.toxbank.isa;
 
 import java.net.URLEncoder;
 
-import net.toxbank.isa2rdf.ISA;
-
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public enum ISAClass {
+
 	/**
      * parent of Study and Assay
 	 */

@@ -1,4 +1,4 @@
-package net.toxbank.isa2rdf;
+package net.toxbank.isa;
 
 import com.hp.hpl.jena.ontology.DatatypeProperty;
 import com.hp.hpl.jena.ontology.ObjectProperty;
