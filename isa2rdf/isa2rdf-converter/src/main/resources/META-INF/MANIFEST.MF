@@ -1,0 +1,3 @@
+Package: net.toxbank.isa
+Main-Class: net.toxbank.isa.ISA
+Package-Version: ${project.version}

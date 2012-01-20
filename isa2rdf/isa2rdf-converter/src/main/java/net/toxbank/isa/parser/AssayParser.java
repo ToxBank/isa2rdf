@@ -1,4 +1,4 @@
-package net.toxbank.isa2rdf;
+package net.toxbank.isa.parser;
 
 import java.io.Reader;
 

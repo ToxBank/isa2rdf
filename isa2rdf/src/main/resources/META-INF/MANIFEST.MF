@@ -1,0 +1,3 @@
+Package: org.opentox.aa.cli
+Main-Class: org.opentox.aa.cli.aacli
+Package-Version: ${project.version}
