@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 
 import net.toxbank.isa.ISA;
-import net.toxbank.isa2rdf.ISAParser;
 
 import org.junit.Test;
 
@@ -19,8 +18,8 @@ public class TestConverter {
 	public void test(String path,String name) throws Exception {
 		
 		File dir = new File(path);
-		ISAParser parser = new ISAParser();
-		Model model = parser.parseDir(dir);
+		ISA isa = new ISA();
+		Model model = isa.parse(dir);
 	
 		FileWriter output = new FileWriter(new File(dir,"isatab.n3"));
 		ISA.write(model, output, "text/n3", true);
@@ -31,24 +30,7 @@ public class TestConverter {
 		output.close();
 		
 	}	
-	/*
-	public void test(String path,String name) throws Exception {
-		
-		File dir = new File(path);
-		ISAParser parser = new ISAParser();
-		ISAObject model = parser.parse(dir,name);
-		
-		OutputStream output = new FileOutputStream(new File(dir,"isatab.n3"));
-	//	ISA.write(model.getModel(), output, "text/n3", true);
-		output.close();
-		
-		output = new FileOutputStream(new File(dir,"isatab.owl"));
-	//	ISA.write(model.getModel(), output, "application/rdf+xml", true);
-		output.close();
-		
-		//TODO validate
-	}	
-	*/
+	
 	public void testBII_S_3() throws Exception {
 		String path= getClass().getClassLoader().getResource("BII-S-3").getFile();
 		test(path,"BII_S_3");

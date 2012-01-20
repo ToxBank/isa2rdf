@@ -1,9 +1,15 @@
 package net.toxbank.isa;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+
+import net.toxbank.isa2rdf.InvestigationParser;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.OntClass;
@@ -33,6 +39,63 @@ public class ISA {
 
     
 	
+	protected String prefix = "http://toxbank.net/isa/";
+	
+	public ISA()  {
+		
+	}
+	public ISA(String prefix)  {
+		this.prefix = prefix;
+	}
+	
+
+	public static void main(String[] args) {
+		if (args.length>0) try {
+			ISA parser = new ISA();
+			File dir = new File(args[0]);
+			Model model = parser.parse(dir);
+			String filename = dir.getName();
+			if (!dir.isDirectory()) dir = dir.getParentFile();
+			FileWriter output = new FileWriter(new File(dir,String.format("%s.n3",filename)));
+			ISA.write(model, output, "text/n3", true);
+			output.close();
+
+			output = new FileWriter(new File(dir,String.format("%s.owl",filename)));
+			ISA.write(model, output, "application/rdf+xml", true);
+			output.close();
+		} catch (Exception x) {
+			x.printStackTrace();
+		} else 
+			System.out.println(String.format("%s filename\nFilename: An ISA-TAB investigation file or i_*.txt file or a directory with ISA-TAB file", 
+							"ISAParser"));
+			
+	}
+	public Model parse(File dir) throws Exception {
+		String[] files;	
+		if (!dir.isDirectory()) {
+			InvestigationFileNameFilter filter = new InvestigationFileNameFilter();
+			if (filter.accept(dir,dir.getName())) {//ok, investigation file
+				files = new String[] {dir.getName()};
+				dir = dir.getParentFile();
+			} else
+				throw new Exception(String.format("%s is not a directory",dir));
+		} else 
+			files = dir.list(new InvestigationFileNameFilter());
+
+		OntModel model = ISA.createModel(true);
+		final String prefixDir = String.format("%s%s/",prefix,dir.getName());
+		model.setNsPrefix(dir.getName(), prefixDir);
+		//investigation
+		for (String filename:files) {
+			FileReader reader = new FileReader(new File(dir,filename));
+			InvestigationParser iparser = new InvestigationParser(dir,prefixDir,filename,reader, model);
+			while (iparser.hasNext()) {
+				iparser.next();
+			}
+			reader.close();
+		}
+		return model;
+	}
 
     public static OntModel createModel(boolean initOntology) throws Exception {
     	OntModel model = createModel(OntModelSpec.OWL_DL_MEM);
@@ -276,3 +339,37 @@ public class ISA {
 	*/
 	
 }
+
+
+class ISAFileNameFilter implements FilenameFilter {
+	String prefix = "i_";
+	public ISAFileNameFilter(String prefix) {
+		this.prefix = prefix;
+	}
+	@Override
+	public boolean accept(File dir, String name) {
+		return name.startsWith(prefix) && name.endsWith(".txt");
+	}
+}
+
+class AssayFileNameFilter extends ISAFileNameFilter {
+	
+	public AssayFileNameFilter() {
+		super("a_");
+	}
+}
+
+class StudyFileNameFilter extends ISAFileNameFilter {
+	
+	public StudyFileNameFilter() {
+		super("s_");
+	}
+}
+
+class InvestigationFileNameFilter extends ISAFileNameFilter {
+	
+	public InvestigationFileNameFilter() {
+		super("i_");
+	}
+}
+

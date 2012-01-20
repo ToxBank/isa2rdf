@@ -13,9 +13,13 @@ import com.hp.hpl.jena.rdf.model.Resource;
 public class AssayParser extends TabsParser<RowAssay> {
 	private TemplateAssay ta;
 	private AnAssay assay;
-	public AssayParser(String prefixDir,String name, Reader in, OntModel model) {
+	
+	public AssayParser(TemplateAssay templateAssay, Reader in) {
 		super(in);
-		ta = new TemplateAssay(prefixDir,name,model);
+		this.ta = templateAssay;
+	}
+	public AssayParser(String prefixDir,String name, Reader in, OntModel model) {
+		this(new TemplateAssay(prefixDir,name,model),in);
 	}
 
 	@Override
@@ -31,5 +35,8 @@ public class AssayParser extends TabsParser<RowAssay> {
 	protected RowAssay transform(String[] tabs) throws Exception {
 		String uri = String.format("%s/R%d", assay.getResource().getURI(),count);
 		return ta.parse(assay, header, tabs,uri);
+	}
+	public AnAssay getAssay() {
+		return assay;
 	}
 }

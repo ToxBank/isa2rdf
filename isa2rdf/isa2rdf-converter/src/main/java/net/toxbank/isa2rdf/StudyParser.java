@@ -15,8 +15,11 @@ public class StudyParser extends TabsParser<RowStudy> {
 	private AStudy study;
 	
 	public StudyParser(String prefixDir,String name, Reader in, OntModel model) {
+		this(new TemplateStudy(prefixDir,name,model),in);
+	}	
+	public StudyParser(TemplateStudy template,Reader in) {
 		super(in);
-		ts = new TemplateStudy(prefixDir,name,model);
+		this.ts = template;
 	}
 
 	@Override
@@ -33,5 +36,9 @@ public class StudyParser extends TabsParser<RowStudy> {
 		String uri = String.format("%s/R%d", study.getResource().getURI(),count);
 		return ts.parse(study,header, tabs,uri);
 	}
+	public AStudy getStudy() {
+		return study;
+	}
 
+	
 }

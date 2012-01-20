@@ -87,7 +87,7 @@ public class IsaClient {
 			}
 			@Override
 			public String getDescription() {
-				return "OpenTox Authentication and Authorization client";
+				return "ISA2RDF client";
 			}
 			@Override
 			public String getShortName() {
