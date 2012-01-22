@@ -1,2 +1,1 @@
-net.toxbank.isa.test
-net.toxbank.isa2rdf.test
+org.isa2rdf.cli
