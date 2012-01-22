@@ -19,6 +19,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends RDFGenerator<NODE,Model>{
@@ -36,13 +37,15 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	
 	public ProcessingPipelineRDFGenerator (  String prefix,  Collection<NODE> objects ) {
 		this(prefix, objects,ModelFactory.createDefaultModel());
-		model.setNsPrefix( "", prefix+"/" );
-		model.setNsPrefix( "isa", ISA.URI );
-		model.setNsPrefix( "owl", OWL.NS );
-		model.setNsPrefix( "dc", DC.NS );
-		model.setNsPrefix( "dcterms", DCTerms.NS );
-		model.setNsPrefix("xsd", XSDDatatype.XSD+"#");
-		ISA.init(model);
+		getModel().setNsPrefix( "", prefix+"/" );
+		getModel().setNsPrefix( "isa", ISA.URI );
+		getModel().setNsPrefix( "owl", OWL.NS );
+		getModel().setNsPrefix( "dc", DC.NS );
+		getModel().setNsPrefix( "dcterms", DCTerms.NS );
+		getModel().setNsPrefix( "rdfs", RDFS.getURI() );
+		getModel().setNsPrefix( "rdf", RDF.getURI() );
+		getModel().setNsPrefix("xsd", XSDDatatype.XSD+"#");
+		ISA.init(getModel());
 	}
 
 	/**
@@ -63,7 +66,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 				graphProcessing ( (DataProcessing) object );
 		}
 
-		return model;
+		return getModel();
 	}
 	
 	

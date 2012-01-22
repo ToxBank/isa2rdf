@@ -20,7 +20,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model> {
 	
 	protected Collection<NODE> objects;
-	protected MODEL model;
+	private MODEL model;
 	protected String prefix;
 	protected long tempIdCounter=1;
 	
