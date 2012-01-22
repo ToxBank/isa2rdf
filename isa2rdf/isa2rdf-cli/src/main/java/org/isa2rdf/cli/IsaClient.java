@@ -1,5 +1,13 @@
 package org.isa2rdf.cli;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -7,13 +15,60 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
+import org.isatools.isatab.ISATABValidator;
+import org.isatools.isatab.gui_invokers.GUIInvokerResult;
+import org.isatools.isatab_v1.ISATABLoader;
+import org.isatools.tablib.mapping.TabMappingContext;
+import org.isatools.tablib.schema.FormatSetInstance;
+import org.isatools.tablib.utils.BIIObjectStore;
+
+import uk.ac.ebi.bioinvindex.model.Identifiable;
+import uk.ac.ebi.bioinvindex.model.processing.Processing;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFWriter;
 
 
 public class IsaClient {
 	protected String dir;
 	
-	public void run() {
-		
+	public Model process() throws Exception {
+		return process(dir);
+	}
+	public Model process(String filesPath) throws Exception {
+		ISATABLoader loader = new ISATABLoader(filesPath);
+		FormatSetInstance isatabInstance = loader.load();
+		ISATABValidator validator = new ISATABValidator(isatabInstance);
+	    if (GUIInvokerResult.WARNING == validator.validate()) {
+	         //vlog.warn("ISA-Configurator Validation reported problems, see the messages above or the log file");
+	    }
+        BIIObjectStore store = validator.getStore();
+        
+        Set<Class<? extends Identifiable>> types = store.types();
+        //add id
+        long tempIdCounter = 1;
+        for (Class<? extends Identifiable> t : types) {
+            for (Identifiable c : store.values(t)) try {
+            	if (c instanceof TabMappingContext) continue;
+            	Object id = c.getId();
+            	if (id!=null) continue;
+            	c.setId(tempIdCounter);
+            	tempIdCounter++;
+            	//String prefix = "Node";
+            	//if (c instanceof DataNode) prefix = "DN_";
+            	//if (c instanceof MaterialNode) prefix = "MN_";
+            } catch (Exception x) {
+            	x.printStackTrace();
+            }
+           
+        }
+        
+        Collection<Identifiable> objects = new ArrayList<Identifiable>();
+        objects.addAll(store.values(Processing.class));
+        String prefix = String.format("%sTEST",ISA.URI,"TEST");
+        ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(prefix,objects);
+        gen.setTempIdCounter(tempIdCounter);
+        return gen.createGraph();
 	}
 	public static void main(String[] args) {
 
@@ -38,7 +93,7 @@ public class IsaClient {
 	    			return;
 	    		}
 	    	if (nooptions) printHelp(options,null);
-	    	else cli.run();	
+	    	else cli.process();
 	    		
 		} catch (Exception x ) {
 			x.printStackTrace();
@@ -179,4 +234,47 @@ public class IsaClient {
 		"\t-r https://ambit.uni-plovdiv.bg:8443/ambit2/dataset/1\n"+
 		"\t-c authorize";
 	}
+	
+	public static void writeStream(Model jenaModel, OutputStream output, String mediaType, boolean isXml_abbreviation) throws IOException {
+		write(jenaModel,new OutputStreamWriter(output),mediaType,isXml_abbreviation);
+	}
+    public static void write(Model jenaModel, Writer output, String mediaType, boolean isXml_abbreviation) throws IOException {
+    	try {
+    		RDFWriter fasterWriter = null;
+			if ("application/rdf+xml".equals(mediaType)) {
+				if (isXml_abbreviation)
+					fasterWriter = jenaModel.getWriter("RDF/XML-ABBREV");//lot smaller ... but could be slower
+				else
+					fasterWriter = jenaModel.getWriter("RDF/XML");
+				fasterWriter.setProperty("xmlbase",jenaModel.getNsPrefixURI(""));
+				fasterWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
+				fasterWriter.setProperty("showDoctypeDeclaration", Boolean.TRUE);
+			}
+			else if (mediaType.equals("application/x-turtle"))
+				fasterWriter = jenaModel.getWriter("TURTLE");
+			else if (mediaType.equals("text/n3"))
+				fasterWriter = jenaModel.getWriter("N3");
+			else if (mediaType.equals("text/n-triples"))
+				fasterWriter = jenaModel.getWriter("N-TRIPLE");	
+			else {
+				fasterWriter = jenaModel.getWriter("RDF/XML-ABBREV");
+				fasterWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
+				fasterWriter.setProperty("showDoctypeDeclaration", Boolean.TRUE);	//essential to get XSD prefixed
+				fasterWriter.setProperty("xmlbase",jenaModel.getNsPrefixURI(""));
+			}
+			
+			fasterWriter.write(jenaModel,output,ISA.URI);
+
+    	} catch (Exception x) {
+    		Throwable ex = x;
+    		while (ex!=null) {
+    			if (ex instanceof IOException) 
+    				throw (IOException)ex;
+    			ex = ex.getCause();
+    		}
+    	} finally {
+
+    		try {if (output !=null) output.flush(); } catch (Exception x) { x.printStackTrace();}
+    	}
+    }
 }

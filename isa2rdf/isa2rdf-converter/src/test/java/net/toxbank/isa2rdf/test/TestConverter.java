@@ -30,35 +30,43 @@ public class TestConverter {
 		output.close();
 		
 	}	
-	
+	@Test
 	public void testBII_S_3() throws Exception {
 		String path= getClass().getClassLoader().getResource("BII-S-3").getFile();
 		test(path,"BII_S_3");
 		
 	}	
-	
+	@Test
 	public void testBII_S_6() throws Exception {
 		String path= getClass().getClassLoader().getResource("BII-S-6").getFile();
 		test(path,"BII_S_6");
 	
 	}		
-	
+	@Test
 	public void testJNS() throws Exception {
 		String path= getClass().getClassLoader().getResource("JNS").getFile();
 		test(path,"JNS");
 		
 	}	
-	
+	@Test
 	public void testNERC_S_2() throws Exception {
 		String path= getClass().getClassLoader().getResource("NERC-S-2").getFile();
 		test(path,"NERC_S_2");
 
 		
 	}	
-	
+	@Test
 	public void testBII_S_9() throws Exception {
 		String path= getClass().getClassLoader().getResource("BII-S-9").getFile();
 		test(path,"BII_S_9");
 		
 	}
+	
+	@Test
+	public void testBII_HTS_LINCS_2() throws Exception {
+		String path= getClass().getClassLoader().getResource("HTS-LINCS-2").getFile();
+		test(path,"HTS-LINCS-2");
+		
+	}
+	
 }	
