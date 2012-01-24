@@ -19,6 +19,7 @@ Use:
 1) Download from https://github.com/ToxBank/isa2rdf/downloads
 
 2)
+
 ```
 >java -jar isa2rdf-0.0.1-SNAPSHOT.jar
 ISA-TAB to RDF conversion
@@ -26,6 +27,7 @@ usage: org.isa2rdf.cli.IsaClient
  -d,--dir <dir>               Directory with ISA-TAB files
  -h,--help                    ISA2RDF client
  -o,--output <output file>   Output file .n3|.rdf
+ 
 ```
 
 Example:
