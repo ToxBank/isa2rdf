@@ -34,9 +34,5 @@
     <logo name="Toxbank" href="http://toxbank.net"/>
   </poweredBy>    
   <publishDate position="navigation-bottom" format="MM-dd-yy"/>
-<skin>
-    <groupId>org.apache.maven.skins</groupId>
-    <artifactId>maven-default-skin</artifactId>
-    <version>maven-default-skin</version>
-  </skin>
+
 </project>
