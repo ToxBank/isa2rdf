@@ -1,1 +1,3 @@
+Package: org.isa2rdf.cli
+Main-Class: org.isa2rdf.cli.IsaClient
 Package-Version: ${project.version}

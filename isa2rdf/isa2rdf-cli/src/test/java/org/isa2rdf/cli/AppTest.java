@@ -1,12 +1,19 @@
 package org.isa2rdf.cli;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.net.URL;
+
+import junit.framework.Assert;
+
+import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
+import org.isatools.tablib.utils.BIIObjectStore;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+
+
 
 /**
  * Unit test for simple App.
@@ -14,10 +21,27 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 public class AppTest  {
 
 	@org.junit.Test
+	public void testValidate() throws Exception {
 
+		ISAConfigurationSet.setConfigPath(getClass().getClassLoader().getResource("isa-tab/config/isa_configurator").getFile());
+		//String filesPath = "D:\\src-pol\\isa2rdf\\isa2rdf\\isa2rdf-converter\\src\\test\\resources\\BII-S-3";
+		URL url = getClass().getClassLoader().getResource("isa-tab/DoseResponseISATAB");
+		Assert.assertNotNull(url);
+		String filesPath = url.getFile();
+		System.out.println(filesPath);
+		IsaClient cli = new IsaClient();
+		BIIObjectStore store = cli.validate(filesPath);
+		Assert.assertNotNull(store);
+	}	
+	@org.junit.Test
 	public void testRDF() throws Exception {
 
-		String filesPath = "D:\\src-pol\\isa2rdf\\isa2rdf\\isa2rdf-converter\\src\\test\\resources\\BII-S-3";
+		ISAConfigurationSet.setConfigPath(getClass().getClassLoader().getResource("isa-tab/config/isa_configurator").getFile());
+
+		URL url = getClass().getClassLoader().getResource("isa-tab/DoseResponseISATAB");
+		Assert.assertNotNull(url);
+		String filesPath = url.getFile();
+		System.out.println(filesPath);
 		IsaClient cli = new IsaClient();
 		Model model = cli.process(filesPath);
 
@@ -26,7 +50,7 @@ public class AppTest  {
 		IsaClient.writeStream(model, output, "application/rdf+xml", true);
 		output.close();
 
-		Model test = ModelFactory.createDefaultModel();
+		Model test = ModelFactory.createOntologyModel();
 		FileReader reader = new FileReader(out);
 		test.read(reader,null);
 		reader.close();

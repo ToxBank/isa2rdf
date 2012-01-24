@@ -1,8 +1,14 @@
 package org.isa2rdf.cli;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import org.isatools.tablib.utils.BIIObjectStore;
+
 import uk.ac.ebi.bioinvindex.model.Identifiable;
+import uk.ac.ebi.bioinvindex.model.Investigation;
+import uk.ac.ebi.bioinvindex.model.Study;
+import uk.ac.ebi.bioinvindex.model.processing.Assay;
 import uk.ac.ebi.bioinvindex.model.processing.DataAcquisition;
 import uk.ac.ebi.bioinvindex.model.processing.DataNode;
 import uk.ac.ebi.bioinvindex.model.processing.DataProcessing;
@@ -11,6 +17,8 @@ import uk.ac.ebi.bioinvindex.model.processing.MaterialProcessing;
 import uk.ac.ebi.bioinvindex.model.processing.Node;
 import uk.ac.ebi.bioinvindex.model.processing.Processing;
 import uk.ac.ebi.bioinvindex.model.processing.ProtocolApplication;
+import uk.ac.ebi.bioinvindex.model.term.ParameterValue;
+import uk.ac.ebi.bioinvindex.model.xref.ReferenceSource;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -23,7 +31,8 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends RDFGenerator<NODE,Model>{
-
+	
+	
 	/**
 	 * I will graph all the instances of {@link #objects} which are {@link Processing} (and nodes, materials, etc.).
 	 * WARNING: I need to assign a temporary IDs to the objecs, via {@link Identifiable#setId(Long)}, BE AWARE that
@@ -31,12 +40,12 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	 * are distinct.
 	 *
 	 */
-	public ProcessingPipelineRDFGenerator ( String prefix, Collection<NODE> objects, Model model) {
-		super(prefix,objects,model);
+	public ProcessingPipelineRDFGenerator ( String prefix,  BIIObjectStore store , Model model) {
+		super(prefix,store,model);
 	}
 	
-	public ProcessingPipelineRDFGenerator (  String prefix,  Collection<NODE> objects ) {
-		this(prefix, objects,ModelFactory.createDefaultModel());
+	public ProcessingPipelineRDFGenerator (  String prefix,  BIIObjectStore store ) {
+		this(prefix, store,ModelFactory.createDefaultModel());
 		getModel().setNsPrefix( "", prefix+"/" );
 		getModel().setNsPrefix( "isa", ISA.URI );
 		getModel().setNsPrefix( "owl", OWL.NS );
@@ -54,8 +63,9 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	 */
 	public Model createGraph () throws Exception
 	{
-	
-		for ( NODE object: objects )
+		Collection<Identifiable> objects = new ArrayList<Identifiable>();
+        objects.addAll(store.values(Processing.class));
+		for ( Identifiable object: objects )
 		{
 			if ( object == null ) continue;
 			if ( object instanceof MaterialProcessing )
@@ -65,7 +75,49 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 			else if ( object instanceof DataProcessing )
 				graphProcessing ( (DataProcessing) object );
 		}
-
+		objects.clear();
+		//why there are no URL for the ontologies???
+		//FIXME - use owl:ontology and ontology uri
+		
+        objects.addAll(store.values(ReferenceSource.class));
+	        for ( Identifiable object: objects )  {
+	        	ReferenceSource xs = ((ReferenceSource)object);
+	        	Resource xref = getResource(object, ISA.ReferenceSources);
+	        	getModel().add(xref,DCTerms.title,xs.getName());
+	        	if (xs.getDescription()!=null)
+	        		getModel().add(xref,DCTerms.description,xs.getDescription());
+	        	if (xs.getVersion() != null)
+	        		getModel().add(xref,DCTerms.hasVersion,xs.getVersion());
+	        	//getModel().add(xref,DCTerms.hasVersion,((ReferenceSource)object).getUrl());
+	      }		
+	    objects.clear();
+	    objects.addAll(store.values(Study.class));   
+	    for ( Identifiable object: objects )  {
+	    	Study xs = ((Study)object);
+	    	Resource xref = getResource(object, ISA.Study);
+	    	for (Assay assay :xs.getAssays()) {
+	    		Resource xassay = getResourceID(assay, ISA.Assay);	
+	    		getModel().add(xref,ISA.HASASSAY,xassay);
+	    	}
+	    	/*
+	    	for (Investigation inv :xs.getInvestigations()) {
+	    		Resource xinv = getResource(inv, ISA.Investigation);	
+	    		getModel().add(xref,ISA.HASASSAY,xassay);
+	    	}
+	    	*/
+	    }
+	    /*
+	    objects.clear();
+	    objects.addAll(store.values(Investigation.class));   
+	    for ( Identifiable object: objects )  {
+	    	Investigation xs = ((Investigation)object);
+	    	Resource xref = getResource(object, ISA.Investigation);
+	    	for (Study study :xs.getStudies()) {
+	    		Resource xstudy = getResourceID(study, ISA.Study);	
+	    		//getModel().add(xref,ISA.HASSTUDY,xstudy);
+	    	}
+	    }	   
+	    */ 
 		return getModel();
 	}
 	
@@ -99,17 +151,19 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		Resource processingNode = getResource(processing, resource);
 		
 		for ( ProtocolApplication protoApp: processing.getProtocolApplications () ) {
-			Resource protoAppNode = getResource(protoApp, resource);
+			Resource protoAppNode = getResource(protoApp, ISA.ProtocolApplication);
 			processingNode.addProperty(ISA.APPLIESPROTOCOLS, protoAppNode);
 			
 			Resource protocolNode = getResource(protoApp.getProtocol(), ISA.Protocol);
 			protocolNode.addLiteral(RDFS.label, protoApp.getProtocol ().getName ());
 			
 			protoAppNode.addProperty(ISA.HASPROTOCOL, protocolNode);
-			//for (ParameterValue paramValue: protoApp.getParameterValues()) {
-			//	paramValue.get
-			//}
-			//TODO
+			for (ParameterValue paramValue: protoApp.getParameterValues()) {
+				Resource xpv = getResource(paramValue, ISA.ParameterValue);
+				protoAppNode.addProperty(ISA.HASPARAMVALUE, xpv);
+			}
+			
+
 		}
 
 		// for each input: input -> processing

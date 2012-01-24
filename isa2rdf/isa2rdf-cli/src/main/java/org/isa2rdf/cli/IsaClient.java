@@ -1,11 +1,11 @@
 package org.isa2rdf.cli;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
@@ -17,13 +17,13 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 import org.isatools.isatab.ISATABValidator;
 import org.isatools.isatab.gui_invokers.GUIInvokerResult;
+import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.isatab_v1.ISATABLoader;
 import org.isatools.tablib.mapping.TabMappingContext;
 import org.isatools.tablib.schema.FormatSetInstance;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Identifiable;
-import uk.ac.ebi.bioinvindex.model.processing.Processing;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
@@ -31,18 +31,39 @@ import com.hp.hpl.jena.rdf.model.RDFWriter;
 
 public class IsaClient {
 	protected String dir;
+	protected String outfile;
 	
+	
+	public void  processAndSave() throws Exception {
+		Model model = process(dir);
+		Writer writer = null;
+		if (outfile==null) writer = new OutputStreamWriter(System.out);
+		else {
+			File out = new File(outfile);
+			writer = new FileWriter(out);
+		}
+		IsaClient.write(model, writer, (outfile==null)||outfile.endsWith(".n3")?"text/n3":"application/rdf+xml", true);
+		writer.close();
+		
+	}
 	public Model process() throws Exception {
 		return process(dir);
 	}
-	public Model process(String filesPath) throws Exception {
+	
+	public BIIObjectStore validate(String filesPath) throws Exception {
+		
 		ISATABLoader loader = new ISATABLoader(filesPath);
 		FormatSetInstance isatabInstance = loader.load();
 		ISATABValidator validator = new ISATABValidator(isatabInstance);
+		
 	    if (GUIInvokerResult.WARNING == validator.validate()) {
 	         //vlog.warn("ISA-Configurator Validation reported problems, see the messages above or the log file");
 	    }
-        BIIObjectStore store = validator.getStore();
+	    return validator.getStore();
+	}    
+	public Model process(String filesPath) throws Exception {
+		
+        BIIObjectStore store = validate(filesPath);
         
         Set<Class<? extends Identifiable>> types = store.types();
         //add id
@@ -63,10 +84,9 @@ public class IsaClient {
            
         }
         
-        Collection<Identifiable> objects = new ArrayList<Identifiable>();
-        objects.addAll(store.values(Processing.class));
+        
         String prefix = String.format("%sTEST",ISA.URI,"TEST");
-        ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(prefix,objects);
+        ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(prefix,store);
         gen.setTempIdCounter(tempIdCounter);
         return gen.createGraph();
 	}
@@ -93,7 +113,10 @@ public class IsaClient {
 	    			return;
 	    		}
 	    	if (nooptions) printHelp(options,null);
-	    	else cli.process();
+	    	else {
+	    		cli.processAndSave();
+	    		
+	    	}
 	    		
 		} catch (Exception x ) {
 			x.printStackTrace();
@@ -129,12 +152,45 @@ public class IsaClient {
 		    	Option option   = OptionBuilder.withLongOpt(name())
 		    	.withArgName(getArgName())
 		        .withDescription(getDescription())
+		        .hasArg()
 		        .create(getShortName());
 
 		    	return option;
 			}
 			
+			
 		},
+		output {
+
+			@Override
+			public String getArgName() {
+				return "ooutput file";
+			}
+
+			@Override
+			public String getDescription() {
+				return "Output file .n3|.rdf";
+			}
+
+			@Override
+			public String getShortName() {
+				return "o";
+			}
+			@Override
+			public String getDefaultValue() {
+				return null;
+			}
+			public Option createOption() {
+		    	Option option   = OptionBuilder.withLongOpt(name())
+		    	.withArgName(getArgName())
+		        .withDescription(getDescription())
+		        .hasArg()
+		        .create(getShortName());
+
+		    	return option;
+			}
+			
+		},		
 		help {
 			@Override
 			public String getArgName() {
@@ -191,10 +247,12 @@ public class IsaClient {
 		if (argument!=null) argument = argument.trim();
 		switch (option) {
 		case dir: {
-			if ((argument==null) || "".equals(argument.trim())) 
-
-				throw new IllegalArgumentException("Not a valid HTTP URI "+argument);
 			this.dir = argument;
+			break;
+		}
+		case output: {
+			this.outfile = argument;
+			break;			
 		}
 	
 		default: 
@@ -222,18 +280,6 @@ public class IsaClient {
 		Runtime.getRuntime().exit(0);	
 	}	
 	
-	
-	protected static String exampleAuth() {
-		return
-		"Verify authorization:\n"+
-		"\tjava -jar aacli\n"+
-		"\t-n http://opensso.in-silico.ch/opensso/identity\n"+
-		"\t-z http://opensso.in-silico.ch/Pol/opensso-pol\n"+			
-		"\t-u guest\n"+
-		"\t-p guest\n"+
-		"\t-r https://ambit.uni-plovdiv.bg:8443/ambit2/dataset/1\n"+
-		"\t-c authorize";
-	}
 	
 	public static void writeStream(Model jenaModel, OutputStream output, String mediaType, boolean isXml_abbreviation) throws IOException {
 		write(jenaModel,new OutputStreamWriter(output),mediaType,isXml_abbreviation);
