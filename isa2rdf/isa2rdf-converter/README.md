@@ -1,0 +1,1 @@
+This package is obsolete. Use https://github.com/ToxBank/isa2rdf/tree/master/isa2rdf/isa2rdf-cli module instead.
