@@ -3,6 +3,7 @@ package net.toxbank.isa.parser;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.Iterator;
 
@@ -49,7 +50,11 @@ public abstract class TabsParser<E> implements Iterator<E>, Closeable {
 			
 			return line != null;
 		} catch (Exception x) {
-			x.printStackTrace();
+			PrintWriter writer = new PrintWriter(System.err);
+			x.printStackTrace(writer);
+			writer.flush();
+			writer.close();
+			
 			return false;
 		}
 	}

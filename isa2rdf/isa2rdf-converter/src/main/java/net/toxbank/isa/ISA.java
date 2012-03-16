@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 
 import net.toxbank.isa.parser.InvestigationParser;
@@ -73,7 +74,11 @@ public class ISA {
 			output.close();
 			System.out.println(file);
 		} catch (Exception x) {
-			x.printStackTrace();
+			PrintWriter writer = new PrintWriter(System.err);
+			x.printStackTrace(writer);
+			writer.flush();
+			writer.close();
+			
 		} else 
 			System.out.println(String.format("%s filename\nFilename: An ISA-TAB investigation file or i_*.txt file or a directory with ISA-TAB file", 
 							"ISAParser"));
@@ -160,7 +165,13 @@ public class ISA {
     		}
     	} finally {
 
-    		try {if (output !=null) output.flush(); } catch (Exception x) { x.printStackTrace();}
+    		try {if (output !=null) output.flush(); } catch (Exception x) { 
+    			PrintWriter writer = new PrintWriter(System.err);
+    			x.printStackTrace(writer);
+    			writer.flush();
+    			writer.close();
+    			
+    		}
     	}
     }
 	public static void initModel(OntModel model) throws Exception {

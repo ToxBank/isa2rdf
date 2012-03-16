@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Set;
 
@@ -79,7 +80,11 @@ public class IsaClient {
             	//if (c instanceof DataNode) prefix = "DN_";
             	//if (c instanceof MaterialNode) prefix = "MN_";
             } catch (Exception x) {
-            	x.printStackTrace();
+    			PrintWriter writer = new PrintWriter(System.err);
+    			x.printStackTrace(writer);
+    			writer.flush();
+    			writer.close();
+    			
             }
            
         }
@@ -119,11 +124,15 @@ public class IsaClient {
 	    	}
 	    		
 		} catch (Exception x ) {
-			x.printStackTrace();
-			printHelp(options,x.getMessage());
+			PrintWriter writer = new PrintWriter(System.err);
+			x.printStackTrace(writer);
+			writer.flush();
+			writer.close();
+			System.exit(1);
 		} finally {
 			
 		}
+		System.exit(0);
 	}
 	
 	enum _option {
@@ -320,7 +329,12 @@ public class IsaClient {
     		}
     	} finally {
 
-    		try {if (output !=null) output.flush(); } catch (Exception x) { x.printStackTrace();}
+    		try {if (output !=null) output.flush(); } catch (Exception x) { 
+    			PrintWriter writer = new PrintWriter(System.err);
+    			x.printStackTrace(writer);
+    			writer.flush();
+    			writer.close();
+    		}
     	}
     }
 }
