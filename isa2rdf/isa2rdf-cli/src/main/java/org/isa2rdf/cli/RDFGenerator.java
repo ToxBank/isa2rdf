@@ -1,6 +1,8 @@
 package org.isa2rdf.cli;
 
 
+import java.util.Hashtable;
+
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.isatools.tablib.utils.BIIObjectStore;
@@ -41,7 +43,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 
 
 public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model> {
-	
+	protected Hashtable<String,Resource> affiliations = new Hashtable<String,Resource>();
 	protected BIIObjectStore store;
 	private MODEL model;
 	protected String prefix;
@@ -198,11 +200,17 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			*/
 		}
 
-		
-		//Persons , defined in the investigation file
+
+		/**
+		 * Persons , defined in the investigation file
+  Contact{ #3975, 'Stephen' ('G') 'Oliver' <null>
+  Roles: { 'NULL-ACCESSION' ( 'corresponding author' ) }
+  Phone: 'null', Fax: 'null'
+  Affiliation: 'Faculty of Life Sciences, Michael Smith Building, University of Manchester', URL: <null>, owner: Investigation: { #2225, 'BII-I-1', 'Growth control of the eukaryote cell: a systems biology study in yeast' } }
+
+		 */
 		if (node instanceof Contact) {
 			Contact contact = (Contact) node;
-			//Resource res = getResource(node,ISA.Contact);
 			System.out.println(contact);
 			getModel().add(resource, RDF.type, FOAF.Person); 
 			getModel().add(resource, RDF.type, TOXBANK.USER); //also could be a ToxBank user
@@ -211,6 +219,20 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (contact.getLastName() != null)
 				resource.addLiteral(FOAF.family_name, contact.getLastName());		
 			//TODO affiliations
+			
+			if (contact.getAffiliation()!=null) {
+				Resource affiliation = affiliations.get(contact.getAffiliation());
+				if (affiliation==null) { //don't want to assign URI
+	 				affiliation = getModel().createResource();
+					getModel().add(affiliation, RDF.type, TOXBANK.ORGANIZATION);
+					affiliation.addLiteral(DCTerms.title, contact.getAffiliation());
+					affiliations.put(contact.getAffiliation(), affiliation);
+				}
+				affiliation.addProperty(TOXBANK.HASMEMBER, resource);
+
+			}
+
+
 		}
 		
 		//GraphElement
