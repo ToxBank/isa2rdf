@@ -126,7 +126,7 @@ public class ISA {
     /**
      * STUDY HASPROTOCOL Protocol.
      */
-   // public static final Property HASPROTOCOL = property("hasProtocol");
+    public static final Property HASPROTOCOL = property("hasProtocol");
     
     public static final Property HASXREF = property("hasXref");
     

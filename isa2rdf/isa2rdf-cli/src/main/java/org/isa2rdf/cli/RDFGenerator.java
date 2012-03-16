@@ -210,10 +210,13 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				//resource.addProperty(DCTerms.abstract_,study.getObjective());
 			
 			if (inv.getStudies()!=null) for (Study study : inv.getStudies()) {
-				//Resource studyResource = getResourceID(study,ISA.Study);
+				Resource studyResource = getResourceID(study,ISA.Study);
+				System.out.println(studyResource);
 				//Studies are already added, but not their details
 				for (Protocol protocol : study.getProtocols()) {
-					//getModel().add(studyResource,ISA.HASPROTOCOL,getResourceID(protocol,ISA.Protocol));
+					Resource protocolResource = getResourceID(protocol,ISA.Protocol);
+					System.out.println(protocolResource);
+					getModel().add(studyResource,ISA.HASPROTOCOL,getResourceID(protocol,ISA.Protocol));
 				}
 			}
 				
