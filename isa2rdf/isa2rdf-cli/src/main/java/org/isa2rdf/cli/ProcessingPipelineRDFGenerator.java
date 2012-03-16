@@ -42,10 +42,6 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	 */
 	public ProcessingPipelineRDFGenerator ( String prefix,  BIIObjectStore store , Model model) {
 		super(prefix,store,model);
-	}
-	
-	public ProcessingPipelineRDFGenerator (  String prefix,  BIIObjectStore store ) {
-		this(prefix, store,ModelFactory.createDefaultModel());
 		getModel().setNsPrefix( "", prefix+"/" );
 		getModel().setNsPrefix( "isa", ISA.URI );
 		getModel().setNsPrefix( "owl", OWL.NS );
@@ -55,6 +51,11 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		getModel().setNsPrefix( "rdf", RDF.getURI() );
 		getModel().setNsPrefix("xsd", XSDDatatype.XSD+"#");
 		ISA.init(getModel());
+	}
+	
+	public ProcessingPipelineRDFGenerator (  String prefix,  BIIObjectStore store ) {
+		this(prefix, store,ModelFactory.createDefaultModel());
+
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	    	}
 	    	*/
 	    }
-	    /*
+
 	    objects.clear();
 	    objects.addAll(store.values(Investigation.class));   
 	    for ( Identifiable object: objects )  {
@@ -114,10 +115,10 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	    	Resource xref = getResource(object, ISA.Investigation);
 	    	for (Study study :xs.getStudies()) {
 	    		Resource xstudy = getResourceID(study, ISA.Study);	
-	    		//getModel().add(xref,ISA.HASSTUDY,xstudy);
+	    		getModel().add(xref,ISA.HASSTUDY,xstudy);
 	    	}
 	    }	   
-	    */ 
+
 		return getModel();
 	}
 	

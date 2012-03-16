@@ -18,7 +18,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 import org.isatools.isatab.ISATABValidator;
 import org.isatools.isatab.gui_invokers.GUIInvokerResult;
-import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.isatab_v1.ISATABLoader;
 import org.isatools.tablib.mapping.TabMappingContext;
 import org.isatools.tablib.schema.FormatSetInstance;
