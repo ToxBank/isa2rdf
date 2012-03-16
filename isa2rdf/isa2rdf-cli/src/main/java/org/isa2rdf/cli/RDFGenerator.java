@@ -163,7 +163,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (data.getFactorValues()!=null)
 				for (FactorValue fv : data.getFactorValues()) {
 					Resource xfv = getResourceID(fv, ISA.FactorValue);
-					System.out.println(xfv);
+					logger(xfv);
 					getModel().add(resource,ISA.HASFACTORVALUE,xfv);
 				}
 		}
@@ -247,4 +247,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	}
 	
 
+	public void logger(Object object) {
+		//System.err.println(object!=null?object.toString():"");
+	}
 }
