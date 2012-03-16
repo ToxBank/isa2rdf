@@ -1,9 +1,12 @@
 package org.isa2rdf.cli;
 
 
+import net.toxbank.client.io.rdf.TOXBANK;
+
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Accessible;
+import uk.ac.ebi.bioinvindex.model.Contact;
 import uk.ac.ebi.bioinvindex.model.Data;
 import uk.ac.ebi.bioinvindex.model.Identifiable;
 import uk.ac.ebi.bioinvindex.model.Investigation;
@@ -31,7 +34,9 @@ import uk.ac.ebi.bioinvindex.model.xref.ReferenceSource;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.sparql.vocabulary.FOAF;
 import com.hp.hpl.jena.vocabulary.DCTerms;
+import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 
@@ -193,6 +198,21 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			*/
 		}
 
+		
+		//Persons , defined in the investigation file
+		if (node instanceof Contact) {
+			Contact contact = (Contact) node;
+			//Resource res = getResource(node,ISA.Contact);
+			System.out.println(contact);
+			getModel().add(resource, RDF.type, FOAF.Person); 
+			getModel().add(resource, RDF.type, TOXBANK.USER); //also could be a ToxBank user
+			if (contact.getFirstName() != null)
+				resource.addLiteral(FOAF.givenname, contact.getFirstName());
+			if (contact.getLastName() != null)
+				resource.addLiteral(FOAF.family_name, contact.getLastName());		
+			//TODO affiliations
+		}
+		
 		//GraphElement
 		if (node instanceof Investigation) {
 			Investigation inv = (Investigation) node;
@@ -209,14 +229,22 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			//if (study.getContacts()!=null)
 				//resource.addProperty(DCTerms.abstract_,study.getObjective());
 			
+			for (Contact contact: inv.getContacts()) {
+
+				Resource contactResource = getResource(contact,ISA.Contact);
+				getModel().add(resource,ISA.HASOWNER,contactResource);
+			}
+			
 			if (inv.getStudies()!=null) for (Study study : inv.getStudies()) {
 				Resource studyResource = getResourceID(study,ISA.Study);
-				System.out.println(studyResource);
 				//Studies are already added, but not their details
 				for (Protocol protocol : study.getProtocols()) {
-					Resource protocolResource = getResourceID(protocol,ISA.Protocol);
-					System.out.println(protocolResource);
 					getModel().add(studyResource,ISA.HASPROTOCOL,getResourceID(protocol,ISA.Protocol));
+				}
+				for (Contact contact: study.getContacts()) {
+					Resource contactResource = getResource(contact,ISA.Contact);
+					getModel().add(studyResource,ISA.HASOWNER,contactResource);
+					
 				}
 			}
 				
@@ -253,4 +281,6 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	public void logger(Object object) {
 		//System.err.println(object!=null?object.toString():"");
 	}
+	
+	
 }

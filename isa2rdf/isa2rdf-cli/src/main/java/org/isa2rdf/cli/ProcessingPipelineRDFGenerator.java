@@ -3,6 +3,8 @@ package org.isa2rdf.cli;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import net.toxbank.client.io.rdf.TOXBANK;
+
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Identifiable;
@@ -24,6 +26,7 @@ import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.sparql.vocabulary.FOAF;
 import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
@@ -44,6 +47,8 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		super(prefix,store,model);
 		getModel().setNsPrefix( "", prefix+"/" );
 		getModel().setNsPrefix( "isa", ISA.URI );
+		getModel().setNsPrefix( "tb", TOXBANK.URI );
+		getModel().setNsPrefix( "foaf", FOAF.NS );
 		getModel().setNsPrefix( "owl", OWL.NS );
 		getModel().setNsPrefix( "dc", DC.NS );
 		getModel().setNsPrefix( "dcterms", DCTerms.NS );

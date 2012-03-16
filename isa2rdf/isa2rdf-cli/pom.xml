@@ -107,6 +107,13 @@
                 
       </exclusions>
     </dependency>
+    <dependency>
+    	<groupId>net.toxbank</groupId>
+    	<artifactId>toxbank-api-beans</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
   </dependencies>
   <inceptionYear>2011</inceptionYear>
   <scm>

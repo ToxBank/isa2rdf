@@ -15,6 +15,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 public class ISA {
 
 	public static final String URI ="http://onto.toxbank.net/isa/";
+	public static String FOAF = "http://xmlns.com/foaf/0.1/";
 
     private static final Resource resource(String local) {
         return ResourceFactory.createResource(String.format("%s%s",URI,local));
@@ -63,6 +64,10 @@ public class ISA {
     public static final Resource ProtocolApplication = resource("ProtocolApplication");
     public static final Resource Material = resource("Material"); 
     public static final Resource Data = resource("Data");
+    /**
+     * TODO : replace with ToxBank User object or FOAF: Person
+     */
+    public static final Resource Contact = resource("Contact");
     
     public static final Resource HASREFERENCES = resource("HASREFERENCES");
     public static final Resource Investigation = resource("Investigation");
@@ -142,6 +147,8 @@ public class ISA {
     public static final Property HASPROPERTY = property("hasProperty");
     public static final Property HASFACTOR = property("hasFactor");
     public static final Property HASPARAMETER = property("hasParameter");
+    //Contacts can be Investigation or Study owners
+    public static final Property HASOWNER = property("hasOwner");
 
     
     public static void init(Model model) {
@@ -182,6 +189,8 @@ public class ISA {
     	 resourceWithParent(model,Characteristic,Property);
     	 resourceWithParent(model,Factor,Property);
     	 resourceWithParent(model,Parameter,Property);
+    	 
+    	 resourceWithParent(model,Contact,ANNOTATABLE);
     	 
     	 //properties
     	 propertyWithDomainRange(model,hasAccessionID,ACCESSIBLE,null,OWL.DatatypeProperty,true);
@@ -239,7 +248,7 @@ public class ISA {
     	
     	propertyWithDomainRange(model,RDFS.isDefinedBy,null,null,OWL.AnnotationProperty,false);
     	
-    	
+    	propertyWithDomainRange(model,HASOWNER,null,Contact,OWL.AnnotationProperty,false);
 
     }
 }
