@@ -10,6 +10,19 @@
   <name>isa2rdf</name>
   <url>http://maven.apache.org</url>
 
+
+     <distributionManagement>
+
+    <snapshotRepository>
+  		<id>toxbank-snapshots</id>
+  		<url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-snapshots</url>
+	 </snapshotRepository>
+	<repository>
+        <id>toxbank-releases</id>
+        <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases</url>
+    </repository>
+  </distributionManagement>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      <junit.version>4.8.1</junit.version>
