@@ -211,7 +211,6 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		 */
 		if (node instanceof Contact) {
 			Contact contact = (Contact) node;
-			System.out.println(contact);
 			getModel().add(resource, RDF.type, FOAF.Person); 
 			getModel().add(resource, RDF.type, TOXBANK.USER); //also could be a ToxBank user
 			if (contact.getFirstName() != null)

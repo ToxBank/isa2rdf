@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
@@ -24,6 +26,7 @@ import org.isatools.tablib.schema.FormatSetInstance;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Identifiable;
+import uk.ac.ebi.bioinvindex.model.Investigation;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
@@ -88,8 +91,9 @@ public class IsaClient {
            
         }
         
-        
-        String prefix = String.format("%sTEST",ISA.URI,"TEST");
+ 
+        File file = new File(filesPath);
+        String prefix = String.format("%s%s",ISA.URI,file.getName().replace("-","").replace(" ","").trim());
         ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(prefix,store);
         gen.setTempIdCounter(tempIdCounter);
         return gen.createGraph();
