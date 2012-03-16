@@ -212,7 +212,7 @@ public class ISA {
     	propertyWithDomainRange(model,HASSTUDY,Investigation,Study,OWL.ObjectProperty,false);
     	propertyWithDomainRange(model,HASASSAY,Study,Assay,OWL.ObjectProperty,false);
     	
-    	//propertyWithDomainRange(model,HASPROTOCOL,Study,Protocol,OWL.ObjectProperty,false);
+    	propertyWithDomainRange(model,HASPROTOCOL,Study,Protocol,OWL.ObjectProperty,false);
     	
     	//propertyWithDomainRange(model,HASXREF,HASREFERENCES,null,OWL.DatatypeProperty,true);
     	
