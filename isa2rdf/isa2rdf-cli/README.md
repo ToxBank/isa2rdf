@@ -1,8 +1,36 @@
 # RDF example
 
+namespace: isa 'http://onto.toxbank.net/isa/'
+
 ## Investigation
 
-> "
+ Class isa:Investigation
+
+ * Title dc:title
+ 
+ * Abstract dc: description
+ 
+ * Keyword URI list (linked to keyword hierarchy)
+
+ * Protocol URI list (linked to Protocol service)
+ 
+ * File URL list (linked to the Investigation Service) - i.e. links for the user to download any of the specific ISA-Tab files
+   (these might be just URI of the investigation/study/assays )
+ 
+ * Consortium URI (linked to Project service)
+ 
+ * Author URI list (linked to User service)
+ 
+ * Organisation URI (linked to Organisation service)
+ 
+ * Version number
+ 
+ * Date of submission
+ 
+ * Last modified date
+
+Example
+`
 :I2225
       a       isa:Investigation ;
       isa:hasAccessionID "BII-I-1" ;
@@ -16,5 +44,5 @@ Conclusion
 This work constitutes a first comprehensive systems biology study on growth-rate control in the eukaryotic cell. The results have direct implications for advanced studies on cell growth, in vivo regulation of metabolic fluxes for comprehensive metabolic engineering, and for the design of genome-scale systems biology models of the eukaryotic cell.""" ;
       dcterms:issued "29 Apr 2007 21:00:00 GMT" ;
       dcterms:title "Growth control of the eukaryote cell: a systems biology study in yeast" . 
-"      
+`      
       
