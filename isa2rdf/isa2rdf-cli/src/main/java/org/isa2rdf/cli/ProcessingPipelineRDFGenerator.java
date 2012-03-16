@@ -153,12 +153,12 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		
 		for ( ProtocolApplication protoApp: processing.getProtocolApplications () ) {
 			Resource protoAppNode = getResource(protoApp, ISA.ProtocolApplication);
-			processingNode.addProperty(ISA.APPLIESPROTOCOLS, protoAppNode);
+			processingNode.addProperty(ISA.hasProtocolApplication, protoAppNode);
 			
 			Resource protocolNode = getResource(protoApp.getProtocol(), ISA.Protocol);
 			protocolNode.addLiteral(RDFS.label, protoApp.getProtocol ().getName ());
 			
-			protoAppNode.addProperty(ISA.HASPROTOCOL, protocolNode);
+			protoAppNode.addProperty(ISA.APPLIESPROTOCOL, protocolNode);
 			for (ParameterValue paramValue: protoApp.getParameterValues()) {
 				Resource xpv = getResource(paramValue, ISA.ParameterValue);
 				protoAppNode.addProperty(ISA.HASPARAMVALUE, xpv);

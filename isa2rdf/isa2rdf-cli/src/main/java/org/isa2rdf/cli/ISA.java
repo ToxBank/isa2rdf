@@ -101,13 +101,13 @@ public class ISA {
     public static final Property HASINPUT = property("hasInputNode");
     public static final Property HASOUTPUT = property("hasOutputNode");
     /**
-     * ProtocolApplication HASPROTOCOL Protocol.
+     * ProtocolApplication APPLIESPROTOCOL Protocol.
      */
-    public static final Property HASPROTOCOL = property("hasProtocol");
+    public static final Property APPLIESPROTOCOL = property("appliesProtocol");
     /**
      * PROCESSINGNODE APPLIESPROTOCOLS ProtocolApplication
      */
-    public static final Property APPLIESPROTOCOLS = property("hasProtocolApplication");
+    public static final Property hasProtocolApplication = property("hasProtocolApplication");
     
     /**
      * MaterialNode HASMATERIAL Material
@@ -122,6 +122,11 @@ public class ISA {
      */
     public static final Property HASSTUDY = property("hasStudy");
     public static final Property HASASSAY = property("hasAssay");
+    
+    /**
+     * STUDY HASPROTOCOL Protocol.
+     */
+   // public static final Property HASPROTOCOL = property("hasProtocol");
     
     public static final Property HASXREF = property("hasXref");
     
@@ -187,13 +192,13 @@ public class ISA {
     	 propertyWithDomainRange(model,HASINPUT,PROCESSINGNODE,NODE,OWL.ObjectProperty);
     	 propertyWithDomainRange(model,HASOUTPUT,PROCESSINGNODE,NODE,OWL.ObjectProperty);
     	    /**
-    	     * ProtocolApplication HASPROTOCOL Protocol.
+    	     * ProtocolApplication APPLIESPROTOCOL Protocol.
     	     */
-    	propertyWithDomainRange(model,HASPROTOCOL,ProtocolApplication,Protocol,OWL.ObjectProperty,true);
+    	propertyWithDomainRange(model,APPLIESPROTOCOL,ProtocolApplication,Protocol,OWL.ObjectProperty,true);
     	    /**
     	     * PROCESSINGNODE APPLIESPROTOCOLS ProtocolApplication
     	     */
-    	propertyWithDomainRange(model,APPLIESPROTOCOLS,PROCESSINGNODE,ProtocolApplication,OWL.ObjectProperty);
+    	propertyWithDomainRange(model,hasProtocolApplication,PROCESSINGNODE,ProtocolApplication,OWL.ObjectProperty);
     	    
     	    /**
     	     * MaterialNode HASMATERIAL Material
@@ -204,8 +209,10 @@ public class ISA {
     	     */
     	propertyWithDomainRange(model,HASDATA,DataNode,Data,OWL.ObjectProperty,true);     
     	    
-    	propertyWithDomainRange(model,HASSTUDY,GraphElement,Study,OWL.ObjectProperty,true);
+    	propertyWithDomainRange(model,HASSTUDY,Investigation,Study,OWL.ObjectProperty,false);
     	propertyWithDomainRange(model,HASASSAY,Study,Assay,OWL.ObjectProperty,false);
+    	
+    	//propertyWithDomainRange(model,HASPROTOCOL,Study,Protocol,OWL.ObjectProperty,false);
     	
     	//propertyWithDomainRange(model,HASXREF,HASREFERENCES,null,OWL.DatatypeProperty,true);
     	

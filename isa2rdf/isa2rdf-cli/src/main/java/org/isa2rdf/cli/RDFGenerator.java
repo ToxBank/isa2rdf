@@ -199,7 +199,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (inv.getTitle()!=null)
 			resource.addProperty(DCTerms.title,inv.getTitle());
 			if (inv.getDescription()!=null)
-			resource.addProperty(DCTerms.description,inv.getDescription());
+			resource.addProperty(DCTerms.abstract_,inv.getDescription());
 			if (inv.getSubmissionDate()!=null)
 			resource.addProperty(DCTerms.created,inv.getSubmissionDate().toGMTString());
 			if (inv.getReleaseDate()!=null)
@@ -208,9 +208,13 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			//resource.addProperty(DCTerms.abstract_,study.getObjective());
 			//if (study.getContacts()!=null)
 				//resource.addProperty(DCTerms.abstract_,study.getObjective());
-			//if (study.getReleaseDate())
+			
 			if (inv.getStudies()!=null) for (Study study : inv.getStudies()) {
-				//getModel().add(resource,ISA.HASSTUDY,getResourceID(study,ISA.Study));
+				//Resource studyResource = getResourceID(study,ISA.Study);
+				//Studies are already added, but not their details
+				for (Protocol protocol : study.getProtocols()) {
+					//getModel().add(studyResource,ISA.HASPROTOCOL,getResourceID(protocol,ISA.Protocol));
+				}
 			}
 				
 			/*
