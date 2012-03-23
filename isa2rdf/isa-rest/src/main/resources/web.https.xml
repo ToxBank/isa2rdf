@@ -1,0 +1,92 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<!--  can't make working multople restlet applications in single war -->
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" >
+	
+	<display-name>ISA-TAB REST</display-name>
+	<description>ISA-TAB REST</description>
+	
+	
+	<context-param>
+		<param-name>org.restlet.application</param-name>
+		<param-value>net.toxbank.isa.rest.ISARESTApplication</param-value>
+		
+	</context-param>
+	
+
+	<context-param>
+		<param-name>org.restlet.component</param-name>
+		<param-value>net.toxbank.isa.rest.ISARESTComponent</param-value>
+	</context-param>	
+			
+		
+<!-- javamelody 
+       <filter>
+                <filter-name>monitoring</filter-name>
+                <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+        </filter>
+        <filter-mapping>
+                <filter-name>monitoring</filter-name>
+                <url-pattern>/*</url-pattern>
+        </filter-mapping>
+        <listener>
+                <listener-class>net.bull.javamelody.SessionListener</listener-class>
+        </listener>
+		-->
+	<servlet>
+		<servlet-name>RestletServlet</servlet-name>
+		<servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>RestletServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	
+	<mime-mapping>
+        <extension>sdf</extension>
+        <mime-type>chemical/x-mdl-sdfile</mime-type>
+    </mime-mapping>
+	<mime-mapping>
+        <extension>mol</extension>
+        <mime-type>chemical/x-mdl-molfile</mime-type>
+    </mime-mapping>    
+	<mime-mapping>
+        <extension>smiles</extension>
+        <mime-type>chemical/x-daylight-smiles</mime-type>
+    </mime-mapping> 
+	<mime-mapping>
+        <extension>inchi</extension>
+        <mime-type>chemical/x-inchi</mime-type>
+    </mime-mapping>     
+	<mime-mapping>
+        <extension>arff</extension>
+        <mime-type>chemical/x-arff</mime-type>
+    </mime-mapping>       
+  
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HTTPS</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+        <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HTTPSOrHTTP</web-resource-name>
+            <url-pattern>*.ico</url-pattern>
+            <url-pattern>/images/*</url-pattern>
+            <url-pattern>/style/*</url-pattern>
+            <url-pattern>/js/*</url-pattern>
+            <url-pattern>/jquery/*</url-pattern>
+            <url-pattern>/jme/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+  
+</web-app>

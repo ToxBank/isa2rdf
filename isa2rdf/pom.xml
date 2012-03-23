@@ -61,6 +61,7 @@
   <modules>
   	<module>isa2rdf-converter</module>
     <module>isa2rdf-cli</module>
+    <module>isa-rest</module>
   </modules>
   
 </project>

@@ -1,0 +1,53 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" >
+	<display-name>ISA-TAB REST</display-name>
+	<description>ISA-TAB REST</description>
+	
+	
+	<context-param>
+		<param-name>org.restlet.application</param-name>
+		<param-value>net.toxbank.isa.rest.ISARESTApplication</param-value>
+		
+	</context-param>
+	
+
+	<context-param>
+		<param-name>org.restlet.component</param-name>
+		<param-value>net.toxbank.isa.rest.ISARESTComponent</param-value>
+	</context-param>	
+			
+		
+	<servlet>
+		<servlet-name>RestletServlet</servlet-name>
+		<servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>RestletServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	
+	<mime-mapping>
+        <extension>sdf</extension>
+        <mime-type>chemical/x-mdl-sdfile</mime-type>
+    </mime-mapping>
+	<mime-mapping>
+        <extension>mol</extension>
+        <mime-type>chemical/x-mdl-molfile</mime-type>
+    </mime-mapping>    
+	<mime-mapping>
+        <extension>smiles</extension>
+        <mime-type>chemical/x-daylight-smiles</mime-type>
+    </mime-mapping> 
+	<mime-mapping>
+        <extension>inchi</extension>
+        <mime-type>chemical/x-inchi</mime-type>
+    </mime-mapping>     
+	<mime-mapping>
+        <extension>arff</extension>
+        <mime-type>chemical/x-arff</mime-type>
+    </mime-mapping>       
+</web-app>

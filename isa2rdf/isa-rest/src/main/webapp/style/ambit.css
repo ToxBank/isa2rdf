@@ -1,0 +1,622 @@
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 5px;
+	height: 100%;
+	background-color: #ffffff;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	COLOR: #516373;
+	FONT-SIZE: 10pt;
+}
+
+#wrap {
+	min-height: 100%;
+	min-width: 100%;
+	position: relative;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -80px;
+}
+
+* html #wrap {
+	height: 100%
+}
+
+#inner-wrap:after {
+	content: " ";
+	display: block;
+	clear: both;
+}
+
+* html #inner-wrap {
+	height: 1px;
+}
+
+p {
+	margin: 5px;
+	padding: 0;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	COLOR: #516373;
+	FONT-SIZE: 10pt;
+}
+
+h1 {
+	position: relative;
+	line-height: 80px;
+	margin: 0;
+	padding-left: 20px;
+}
+
+#left {
+	float: left;
+	width: 200px;
+	text-align: center;
+	background-color: #ffffff;
+}
+
+#content {
+	padding: 24px 5px 5px;
+	margin: auto 5px auto 200px;
+	text-align: left;
+	position: relative;
+}
+
+#footer {
+	position: relative;
+	height: 80px;
+	color: #516373;
+	background-color: #ddd;
+	width: 100%;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+div.pusher {
+	height: 80px;
+}
+
+table.footerTable {
+	width: 100%;
+	padding: 10px;
+}
+
+a.email {
+	font-weight: normal;
+	text-decoration: none;
+	background: url("/qmrf/images/Icon_External_Link_E-Mail.png") no-repeat scroll 0 1px transparent;
+	padding: 0 0 0 20px;
+}
+
+#footer p {
+	margin: 0;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+#header {
+	background-position: right;
+	background-repeat: no-repeat;
+	background-color: #ffffff;
+	color: #ece8da;
+	margin: 0;
+	padding: 0px 0px 5px;
+	height: 60px;
+	text-align: center;
+}
+
+#menu {
+	position: relative;
+	padding: 10px;
+}
+
+ul#navmenu {
+	width: 180px;
+	margin: 5 5 5 5;
+	padding: 0;
+	list-style-type: none;
+	height: 100%;
+	text-align: center;
+	border: 1px solid white;
+	background-color: white;
+}
+
+#navmenu li {
+	margin: 0;
+	display: block;
+	border-bottom: 1px solid white;
+	padding: 0;
+}
+
+#navmenu li #bottom {
+	border-bottom: none;
+}
+
+#navmenu li a {
+	display: block;
+	text-decoration: none;
+	line-height: 25px;
+}
+
+* html #navmenu li a {
+	width: 100%;
+}
+
+* html #menu,* html #inner-wrap {
+	height: 1px;
+}
+
+#navmenu li a:link, #navmenu li a:visited {
+	color: #FFFFFF;
+	font-size: 0.9em;
+	font-weight: 500;
+	background-color: #516473;
+}
+
+#navmenu li a:active {
+	color: white;
+	background-color: #bcf903;
+}
+
+#navmenu li a.selected {
+	color: white;
+	background-color: #bcf903;
+	display: block;
+	font-weight: 900;
+}
+
+#navmenu li a.hovered {
+	color: #107FEB;
+	background-color: #bcf903;
+	display: block;
+}
+
+#navmenu li input, #navmenu li form, #navmenu li#createbutton {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	height: 30px;
+}
+
+a.tbldivxpander {
+	text-decoration: none;
+}
+
+A:link {
+	FONT-SIZE: 10pt;
+	COLOR: #627a3f;
+	FONT-WEIGHT: bolder;
+	font-weight: bold;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	text-decoration: none;
+}
+
+A:visited {
+	FONT-SIZE: 10pt;
+	COLOR: #627a3f;
+	FONT-WEIGHT: bolder;
+	font-weight: bold;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	text-decoration: none;
+}
+
+A:active {
+	FONT-SIZE: 10pt;
+	COLOR: #627a3f;
+	FONT-WEIGHT: bolder;
+	font-weight: bold;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	text-decoration: none;
+}
+
+A:hover {
+	FONT-SIZE: 10pt;
+	COLOR: #516373;
+	FONT-WEIGHT: bolder;
+	font-weight: bold;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	text-decoration: underline;
+}
+
+.logo_top-left {
+	position: absolute;
+	top: 5px;
+	left: 1em;
+	border: 0;
+}
+
+.logo_header {
+	position: relative;
+	top: -55px;
+	width: 100%;
+}
+
+.logo_top-right {
+	position: absolute;
+	top: 5px;
+	right: 1em;
+	border: 0;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	font-size: 8pt;
+}
+
+ul#hnavlist {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+
+ul#hnavlist li {
+	display: inline;
+}
+
+ul#hnavlist li a {
+	float: left;
+	color: #107FEB;
+	background-color: #bcf903;
+	padding: 0.4em 0.5em 0;
+	height: 19px;
+	width: 2.5em;
+	text-align: center;
+	text-decoration: none;
+	border-right: 1px solid white;
+}
+
+ul#hnavlist li a.current {
+	float: left;
+	color: white;
+	background-color: #516473;
+	padding: 0.4em 0.5em 0;
+	height: 19px;
+	width: 2.5em;
+	text-align: center;
+	text-decoration: none;
+	border-right: 1px solid white;
+}
+
+ul#hnavlist li a.phovered {
+	color: #ffffff;
+	background-color: #86ad2d;
+	display: block;
+}
+
+
+ul#hnavlist li.inactive {
+	float: left;
+	background-color: #fafaf4;
+	color: gray;
+	padding: 0.4em 0.5em 0;
+	height: 19px;
+	width: 2.5em;
+	text-align: center;
+	text-decoration: none;
+	border-right: 1px solid white;
+}
+
+/*
+ul#hnavlist li a:hover {
+	background-color: #fff;
+	color: navy;
+}
+*/
+
+.protocol {
+	width: 100%;
+	float: left;
+	background-color: #FFFFFF;
+	color: #109DFF;
+	top: 3em;
+	left: 0;
+	margin: 2;
+	padding: 0;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	COLOR: #516373;
+	FONT-SIZE: 10pt;
+}
+
+div.protocol label {
+	FONT-WEIGHT: bold;
+}
+
+.search {
+	width: 180px;
+	margin: 0 auto;
+	padding: 0;
+	background-color: #ffff;
+	color: #109DFF;
+	border: 1px solid 109DFF;
+	line-height: 130%;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	FONT-SIZE: 10pt;
+}
+
+table {
+	color: #516373;
+	font-size: 10pt;
+	margin-top: 10px;
+	margin-left: 0px;
+	margin-right: 0px;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	text-align: justify;
+}
+
+/* Fix table headers not left-aligned on IE */
+th {
+	text-align: left;
+}
+
+th.contentTable, th.contentTableManage, td.contentTable {
+	text-align: left;
+	padding: 0.1em 0.5em;
+}
+
+/* Plus/minus icons v1 *//*
+
+td.togglerPlus {
+	width: 10px;
+	background: url("/qmrf/images/bullet_toggle_plus.png") no-repeat scroll 0 4px transparent;
+}
+
+td.togglerMinus {
+	width: 10px;
+	background: url("/qmrf/images/bullet_toggle_minus.png") no-repeat scroll 0 4px transparent;
+}
+
+*//* Plus/minus icons v2 */
+
+td.togglerPlus {
+	width: 16px;
+	min-width: 16px;
+	min-height: 16px;
+	background: url("/qmrf/images/zoom_in.png") no-repeat scroll center center transparent;
+	cursor: pointer;
+}
+
+td.togglerMinus {
+	width: 16px;
+	min-width: 16px;
+	min-height: 16px;
+	background: url("/qmrf/images/zoom_out.png") no-repeat scroll center center transparent;
+	cursor: pointer;
+}
+
+/* Override for these icons! */
+th.contentTable, th.contentTableManage, td.contentTable {
+	text-align: left;
+	padding: 0.1em 0.7em 0.1em 0.2em;
+}
+
+/* Plus/minus icons v3 *//*
+
+td.togglerPlus {
+	width: 15px;
+	background: url("/qmrf/images/plus_minus_icons_v2.png") no-repeat scroll -16px 4px transparent;
+}
+
+td.togglerMinus {
+	width: 15px;
+	background: url("/qmrf/images/plus_minus_icons_v2.png") no-repeat scroll 0 4px transparent;
+}
+
+*/
+
+td.qmrfNumber {
+	min-width: 8.1em;
+}
+
+td.qmrfNumber div {
+	width: 130px;
+	height: 0;
+}
+
+td.contentTableManageL {
+	text-align: center;
+	padding: 0.1em 0 0.1em 0.5em;
+}
+
+td.contentTableManageM {
+	text-align: center;
+	padding: 0.1em 0;
+}
+
+td.contentTableManageR {
+	text-align: center;
+	padding: 0.1em 0.5em 0.1em 0;
+}
+
+img.ieSux {
+	border: none;
+	position: relative;
+	bottom: 9px;
+}
+
+div.socialPanel {
+	width: 100%;
+}
+
+table.socialTable {
+	width: 100%;
+	margin: 0;
+}
+
+td.socialTool {
+	border: 1px dotted silver;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	text-align: center;
+	padding: 5px 5px 5px 20px;
+	width: 25%;
+}
+
+label {
+	COLOR: #516373;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+}
+
+.structureright {
+	float: right;
+	width: 153px;
+	margin: 0 0 10px 10px;
+	background-color: #fff;
+	padding: 10px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
+}
+
+div.structureright img {
+	border-top: 2px solid #fff;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-left: 2px solid #fff;
+}
+
+.documentheader {
+	color: #109DFF;
+	background-color: #FFFFFF;
+	padding: 1px;
+	margin: 0 0 0 0;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	FONT-SIZE: 10pt;
+}
+
+
+.documentheader h3 {
+	COLOR: #109DFF;
+	background-color: #FFFFFF;
+	FONT-SIZE: 11pt;
+}
+
+
+.documentheader h4 {
+	COLOR: #516373;
+	background-color: #FFFFFF;
+	display: block;
+	FONT-SIZE: 10pt;
+}
+.documentheader label {
+	color: #109DFF;
+	background-color: #FFFFFF;
+	display: inline;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+}
+
+
+.documentheader p {
+	color: #109DFF;
+	background-color: #FFFFFF;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	FONT-SIZE: 10pt;
+}
+
+.documentheader br {
+	color: #109DFF;
+	background-color: #FFFFFF;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	FONT-SIZE: 10pt;
+}
+
+.document {
+	color: #109DFF;
+	float: left;
+	margin: 1 1 1 1;
+	background-color: #fff;
+	padding: 1px;
+	border-top: 1px solid #ddd;
+	border-right: 2px solid #ddd;
+	border-bottom: 2px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+
+.tabs {
+	float: left;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	width:100%;
+	min-height:100px;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	FONT-SIZE: 9pt;
+}
+
+.tabs-id {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+.summary {
+	margin: 0;
+	padding: 0px;
+	height: 100%;
+	background-color: #ffffff;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	COLOR: #516373;
+	FONT-SIZE: 9pt;
+}
+
+.summary A:link {
+	COLOR: #109DFF;
+}
+
+.summary A:active {
+	COLOR: #109DFF;
+	FONT-WEIGHT: bolder;
+}
+
+.summary  A:hover {
+	COLOR: #516373;;
+	FONT-WEIGHT: bolder;
+}
+.summary h3 {
+	font-weight: bold;
+	FONT-SIZE: 10pt;
+}
+
+.summary li {
+	FONT-SIZE: 9pt;
+}
+
+.summary table {
+	FONT-SIZE: 9pt;
+}
+
+
+.summary ul {
+	FONT-SIZE: 9pt;
+}
+
+
+.summary label {
+	font-weight: bold;
+}
+
+.draw {
+	background-color: transparent;
+	border: none;
+	FONT-SIZE: 10pt;
+	COLOR: #109DFF;
+	FONT-WEIGHT: bolder;
+	font-weight: bold;
+	font-family: Frutiger, "Frutiger Linotype", Univers, "Droid Sans", Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	text-decoration:underline;
+	pointer: cursor;
+}
+
+.box {
+	min-height:64px;
+	min-width:128px;
+}

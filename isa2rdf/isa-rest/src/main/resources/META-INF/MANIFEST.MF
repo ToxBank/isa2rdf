@@ -1,0 +1,5 @@
+Package: net.toxbank.isa.rest
+Main-Class: net.toxbank.isa.rest.ISARESTApplication
+Manifest-version: ${project.version}
+Package-Version: ${project.version}
+Package-Vendor: Ideaconsult Ltd.
