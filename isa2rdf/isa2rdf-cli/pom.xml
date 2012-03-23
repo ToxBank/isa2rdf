@@ -96,10 +96,12 @@
           <groupId>org.apache.lucene</groupId> 
           <artifactId>lucene-core</artifactId>
         </exclusion>
+        <!-- 
         <exclusion>
           <groupId>org.hibernate</groupId> 
           <artifactId>hibernate-annotations</artifactId>
         </exclusion>
+         -->
         <exclusion>
           <groupId>cpdetector</groupId> 
           <artifactId>cpdetector</artifactId>
