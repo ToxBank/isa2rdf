@@ -3,15 +3,22 @@ package org.isa2rdf.cli;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.ObjectInputStream.GetField;
 import java.net.URL;
 
 import junit.framework.Assert;
+import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.vocabulary.DCTerms;
+import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 
 
@@ -61,7 +68,48 @@ public class AppTest  {
 		output = new FileOutputStream(out);
 		IsaClient.writeStream(model, output, "text/n3", true);
 		output.close();
+		
+		print(model);
 
+	}
+	
+	protected void print(Model model) throws Exception {
+		Model newModel = ModelFactory.createDefaultModel();
+		newModel.setNsPrefix("tbisa", ISA.URI);
+		newModel.setNsPrefix("dcterms", DCTerms.NS);
+		newModel.setNsPrefix("foaf", ISA.FOAF);
+		newModel.setNsPrefix("rdfs", RDFS.getURI());
+		newModel.setNsPrefix("rdf", RDF.getURI());
+		newModel.setNsPrefix("owl", OWL.getURI());
+		newModel.setNsPrefix("tb", TOXBANK.URI);
+
+		//newModel.setNsPrefix("bii1", ISA.URI+"BIII1/");
+		
+		/*
+		StmtIterator sti = model.listStatements(ISA.HASSTUDY, RDFS.domain,(RDFNode) null);
+		while (sti.hasNext()) {
+			Statement st = sti.next();
+			newModel.add(st);
+		}
+		sti.close();
+		*/
+
+		StmtIterator sti = model.listStatements(null, RDFS.subClassOf, ISA.PROCESSINGNODE);
+		while (sti.hasNext()) {
+			Statement st = sti.next();
+			newModel.add(st);
+		//	System.out.println(String.format("ISA.Investigation\t%s",st.getSubject()));
+			StmtIterator u = model.listStatements(st.getSubject(), null, (RDFNode)null);
+			while (u.hasNext()) {
+				Statement s = u.next();
+				newModel.add(s);
+				//System.out.println(String.format("\t\t%s\t%s",s.getPredicate(),s.getObject()));
+			}		
+			u.close();
+		}
+		sti.close();
+		
+		IsaClient.writeStream(newModel, System.out, "text/n3", true);
 	}
 	
 
