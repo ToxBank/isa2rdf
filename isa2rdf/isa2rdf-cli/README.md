@@ -1,3 +1,9 @@
+CHANGELOG
+
+isa2rdf 0.0.2
+
+-Fixed NPE (appears when investigation relese date is empty)
+
 # RDF example
 
 namespace: isa 'http://onto.toxbank.net/isa/'
