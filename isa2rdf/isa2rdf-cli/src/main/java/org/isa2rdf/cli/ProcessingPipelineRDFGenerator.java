@@ -205,13 +205,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		Resource material = getResource(node.getMaterial(), ISA.Material);
 		if (material != null) materialNode.addProperty(ISA.HASMATERIAL, material);
 		return materialNode;
-		/*
-		dotCode.append ( "    subgraph cluster_" + nodeId + " { rank = same; color = white; { " + materialId + "; " + nodeId + " }" );
-		dotCode.append ( "      " + materialId + "[label = \"" + materialLabel + "\", shape=box, style = filled, color = gold];\n" );
-		dotCode.append ( "      " + nodeId + " -> " + materialId + ";\n" );
-		dotCode.append ( "      " + nodeId + "[label = \""+ nodeLabel + "\", shape = ellipse, style = filled, color = ivory ];\n" );
-		dotCode.append ( "    }\n" );
-		*/
+
 	}
 	
 	/** Works on a single IN/OUT node */
@@ -223,13 +217,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		Resource data = getResource(node.getData(), ISA.Data);
 		if (data != null) dataNode.addProperty(ISA.HASDATA, data);
 		return dataNode;
-			/*
-			dotCode.append ( "    subgraph cluster_" + nodeId + " { rank = same; color = white; { " + dataId + "; " + nodeId + " }" );
-			dotCode.append ( "      " + dataId + "[label = \"" + dataLabel + "\", shape=box, style = filled, color = yellow];\n" );
-			dotCode.append ( "      " + nodeId + " -> " + dataId + ";\n" );
-			dotCode.append ( "      " + nodeId + "[label = \"" + nodeLabel + "\", shape = ellipse, style = filled, color = ivory ];\n" );
-			dotCode.append ( "    }\n" );
-			*/
+
 	}
 
 
