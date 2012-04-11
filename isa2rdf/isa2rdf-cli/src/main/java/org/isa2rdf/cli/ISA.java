@@ -235,7 +235,7 @@ public class ISA {
     	propertyWithDomainRange(model,HASPARAMVALUE,ProtocolApplication,ParameterValue,OWL.ObjectProperty,false);
     	propertyWithDomainRange(model,HASVALUE,PropertyValue,null,OWL.DatatypeProperty,false);
     	propertyWithDomainRange(model,HASPROPERTY,PropertyValue,Property,OWL.ObjectProperty,false);
-    	propertyWithDomainRange(model,HASFACTOR,FactorValue,Factor,OWL.ObjectProperty,false);
+    	propertyWithDomainRange(model,HASFACTOR,FactorValue,Factor,OWL.ObjectProperty,true);
     	propertyWithDomainRange(model,HASPARAMETER,ParameterValue,Parameter,OWL.ObjectProperty,false);
     	
     	
