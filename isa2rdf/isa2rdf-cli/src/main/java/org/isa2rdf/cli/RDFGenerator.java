@@ -203,11 +203,6 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 
 		/**
 		 * Persons , defined in the investigation file
-  Contact{ #3975, 'Stephen' ('G') 'Oliver' <null>
-  Roles: { 'NULL-ACCESSION' ( 'corresponding author' ) }
-  Phone: 'null', Fax: 'null'
-  Affiliation: 'Faculty of Life Sciences, Michael Smith Building, University of Manchester', URL: <null>, owner: Investigation: { #2225, 'BII-I-1', 'Growth control of the eukaryote cell: a systems biology study in yeast' } }
-
 		 */
 		if (node instanceof Contact) {
 			Contact contact = (Contact) node;
@@ -244,7 +239,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (inv.getSubmissionDate()!=null)
 			resource.addProperty(DCTerms.created,inv.getSubmissionDate().toGMTString());
 			if (inv.getReleaseDate()!=null)
-				resource.addProperty(DCTerms.issued,inv.getSubmissionDate().toGMTString());			
+				resource.addProperty(DCTerms.issued,inv.getReleaseDate().toGMTString());			
 			//if (study.getPublications()!=null)
 			//resource.addProperty(DCTerms.abstract_,study.getObjective());
 			//if (study.getContacts()!=null)
