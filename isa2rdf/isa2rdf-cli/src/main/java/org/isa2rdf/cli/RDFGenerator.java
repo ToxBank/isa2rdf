@@ -49,6 +49,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	protected String prefix;
 	protected long tempIdCounter=1;
 	
+	
 	public long getTempIdCounter() {
 		return tempIdCounter;
 	}
@@ -76,7 +77,15 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		return createGraph();
 	}
 	
-	
+	protected String getProtocolURI(Protocol protocol) throws Exception {
+		if (protocol.getType()==null) return null;
+		if (protocol.getType().getSource()!=null) {
+			if (protocol.getType().getSource().getUrl()!=null) {
+				return String.format("%s%s",protocol.getType().getSource().getUrl(),protocol.getType().getAcc());
+			}
+		}
+		return null;
+	}
 	protected String getURI(Identifiable node) throws Exception {
 		String p = "ISA_";
 		if ( node instanceof MaterialNode ) p = "MN";
@@ -86,7 +95,10 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof DataProcessing ) p = "DPN";
 		else if ( node instanceof Material ) p = "M";
 		else if ( node instanceof Data ) p = "D";
-		else if ( node instanceof Protocol ) p = "P_";
+		else if ( node instanceof Protocol ) {
+			p = getProtocolURI((Protocol)node);
+			if (p!=null) return p; else p="P_";
+		}
 		else if ( node instanceof ProtocolApplication ) p = "PA";
 		else if ( node instanceof Study ) p = "S";
 		else if ( node instanceof Assay ) p = "A";
@@ -110,6 +122,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	protected Resource getResourceID(Identifiable node,Resource clazz)  throws Exception {
 
 		if (node==null) return null;
+		
 		return model.createResource(getURI(node), clazz);
 
 	}
@@ -154,7 +167,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			//TODO
 		}
 		//Data
-	
+
 		if (node instanceof Data) {
 			//System.out.println(node);
 			Data data = (Data) node;
@@ -207,7 +220,6 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		if (node instanceof Contact) {
 			Contact contact = (Contact) node;
 			getModel().add(resource, RDF.type, FOAF.Person); 
-			getModel().add(resource, RDF.type, TOXBANK.USER); //also could be a ToxBank user
 			if (contact.getFirstName() != null)
 				resource.addLiteral(FOAF.givenname, contact.getFirstName());
 			if (contact.getLastName() != null)
@@ -225,13 +237,14 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				affiliation.addProperty(TOXBANK.HASMEMBER, resource);
 
 			}
-
+			processRoles(contact,resource);
 
 		}
 		
 		//GraphElement
 		if (node instanceof Investigation) {
 			Investigation inv = (Investigation) node;
+			processAnnotations(inv,resource);
 			if (inv.getTitle()!=null)
 			resource.addProperty(DCTerms.title,inv.getTitle());
 			if (inv.getDescription()!=null)
@@ -255,12 +268,20 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				Resource studyResource = getResourceID(study,ISA.Study);
 				//Studies are already added, but not their details
 				for (Protocol protocol : study.getProtocols()) {
-					getModel().add(studyResource,ISA.HASPROTOCOL,getResourceID(protocol,ISA.Protocol));
+					
+					Resource protocolResource = getResourceID(protocol,ISA.Protocol);
+					if (protocol.getUri()!=null)
+						getModel().add(protocolResource,RDFS.seeAlso,protocol.getUri());
+					if (protocol.getDescription()!=null)
+						getModel().add(protocolResource,DCTerms.description,protocol.getDescription());
+					
+					if (protocol.getType()!=null) processProtocolType(protocol,protocolResource);
+					
+					getModel().add(studyResource,ISA.HASPROTOCOL,protocolResource);
 				}
 				for (Contact contact: study.getContacts()) {
 					Resource contactResource = getResource(contact,ISA.Contact);
 					getModel().add(studyResource,ISA.HASOWNER,contactResource);
-					
 				}
 			}
 				
@@ -298,5 +319,17 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		//System.err.println(object!=null?object.toString():"");
 	}
 	
+	public void processAnnotations(Investigation investigation, Resource investigationResource) throws Exception {
+		
+	}
+
 	
+	public void processRoles(Contact contact, Resource contactResource)	throws Exception {
+		
+	}
+
+	
+	public void processProtocolType(Protocol protocol, Resource protocolResource)	throws Exception {
+		//TODO
+	}
 }

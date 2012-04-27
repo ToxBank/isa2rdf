@@ -1,14 +1,25 @@
 package org.isa2rdf.cli;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import net.toxbank.client.Resources;
+import net.toxbank.client.io.rdf.OrganisationIO;
+import net.toxbank.client.io.rdf.ProjectIO;
 import net.toxbank.client.io.rdf.TOXBANK;
+import net.toxbank.client.io.rdf.UserIO;
+import net.toxbank.client.resource.Organisation;
+import net.toxbank.client.resource.Project;
+import net.toxbank.client.resource.User;
 
 import org.isatools.tablib.utils.BIIObjectStore;
 
+import uk.ac.ebi.bioinvindex.model.Annotation;
 import uk.ac.ebi.bioinvindex.model.Identifiable;
 import uk.ac.ebi.bioinvindex.model.Investigation;
+import uk.ac.ebi.bioinvindex.model.Protocol;
 import uk.ac.ebi.bioinvindex.model.Study;
 import uk.ac.ebi.bioinvindex.model.processing.Assay;
 import uk.ac.ebi.bioinvindex.model.processing.DataAcquisition;
@@ -220,5 +231,96 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 
 	}
 
-
+	/**
+     * This is a hack to introduce ToxBank specific URIs into the investigation file.
+	 * @param investigation
+	 */
+	final static String TB_consortium = "comment:Consortium URI";
+	final static String TB_organisation = "comment:Owning Organisation URI";
+	final static String TB_user = "comment:Principal Investigator URI";
+	final static String TB_keywords = "comment:Investigation Keywords";
+	final static String TBKeywordsNS = "http://www.owl-ontologies.com/toxbank.owl#";
+	public static final String OBO = "http://purl.obolibrary.org/obo/";
+	public static final String BIBO = "http://purl.org/ontology/bibo/";
+	//http://bibotools.googlecode.com/svn/bibo-ontology/trunk/doc/index.html
+	//TODO get from the ontology definition
+	protected static final String TB_URI= "http://toxbanktest1.opentox.org:8080/toxbank";
+	protected static final String TBPROTOCOL_URI= String.format("%s%s/",TB_URI,Resources.protocol);
+	
+	protected void parseToxBankSpecifics(Investigation investigation, Resource investigationResource) throws MalformedURLException {
+		ProjectIO projectIO = new ProjectIO();
+		OrganisationIO orgIO = new OrganisationIO();
+		UserIO userIO = new UserIO();
+		for (Annotation annotation: investigation.getAnnotations()) {
+			if (TB_consortium.equals(annotation.getType().getValue())) {
+				String[] uri = annotation.getText().split(":");
+				if (uri.length<2) throw new MalformedURLException(annotation.getText());
+				Project tbProject = new Project( new URL(String.format("%s%s/%s",TB_URI,Resources.project, uri[1])));
+				Resource  resource = projectIO.objectToJena(getModel(),tbProject);
+				getModel().add(resource, RDF.type, TOXBANK.PROJECT); 
+				getModel().add(investigationResource,TOXBANK.HASPROJECT,resource);
+			} else if (TB_organisation.equals(annotation.getType().getValue())) {
+				String[] uri = annotation.getText().split(":");
+				if (uri.length<2) throw new MalformedURLException(annotation.getText());
+				Organisation tbOrg = new Organisation( new URL(String.format("%s%s/%s",TB_URI,Resources.organisation, uri[1])));
+				Resource  resource = orgIO.objectToJena(getModel(),tbOrg);
+				getModel().add(resource, RDF.type, TOXBANK.ORGANIZATION); 
+				getModel().add(investigationResource,TOXBANK.HASORGANISATION,resource);
+			} else if (TB_user.equals(annotation.getType().getValue())) {
+				String[] uri = annotation.getText().split(":");
+				if (uri.length<2) throw new MalformedURLException(annotation.getText());
+				User tbUser = new User( new URL(String.format("%s%s/%s",TB_URI,Resources.user, uri[1])));
+				Resource  resource = userIO.objectToJena(getModel(),tbUser);
+				getModel().add(resource, RDF.type, TOXBANK.USER); //should be a ToxBank user
+				getModel().add(investigationResource,TOXBANK.HASOWNER,resource);				
+			} else if (TB_keywords.equals(annotation.getType().getValue())) {
+				String[] keywords = annotation.getText().split(";");
+				for (String keyword : keywords) {
+					String[] uri = keyword.split(":");
+					if (uri.length<2) throw new MalformedURLException(keyword);
+					if ("TBK".equals(uri[0]))
+						investigationResource.addLiteral(TOXBANK.HASKEYWORD, String.format("%s%s",TBKeywordsNS,uri[1]));
+				}
+			}
+		}
+		/**
+		 * CiTO
+		 * http://purl.org/spar/cito/cites
+		 * BIBO
+		 * http://bibliontology.com/content/article
+		 */
+		/*
+		//final String BIBO = "http://bibliontology.com/content"; 
+		for (Publication pub : investigation.getPublications()) {
+			getResourceID(pub,)
+        	String uri = experiment.getURI()+"/publication/"+i;
+        	Individual p = getClass(OBO,"IAO_0000311").createIndividual(uri);
+        	p.addProperty(DC.title, pub.getTitle());
+        	if (pub.getPmid()!=null)
+            
+            	addDatatypeProperty(p,DC,"identifier",inv.IDF.pubMedId.get(i));
+            if (inv.IDF.publicationDOI.size() > i && inv.IDF.publicationDOI.get(i) != null)
+            	addDatatypeProperty(p,DC,"identifier",inv.IDF.publicationDOI.get(i));
+            if (inv.IDF.publicationAuthorList.size() > i && inv.IDF.publicationAuthorList.get(i) != null)
+            	addDatatypeProperty(p,DC,"creator",inv.IDF.publicationAuthorList.get(i));
+            addObjectProperty(experiment,OBO,"IAO_0000142",p);
+        }		
+        */
+	}
+	
+	@Override
+	public void processAnnotations(Investigation investigation, Resource investigationResource)
+			throws Exception {
+		parseToxBankSpecifics(investigation,investigationResource);
+	}
+	@Override
+	public void processProtocolType(Protocol protocol, Resource protocolResource)
+			throws Exception {
+		if (protocol.getType()==null) return;
+		if (protocol.getType().getSource()!=null) {
+			if (TBPROTOCOL_URI.equals(protocol.getType().getSource().getUrl())) {
+				getModel().add(protocolResource, RDF.type, TOXBANK.PROTOCOL); 
+			}
+		}
+	}
 }
