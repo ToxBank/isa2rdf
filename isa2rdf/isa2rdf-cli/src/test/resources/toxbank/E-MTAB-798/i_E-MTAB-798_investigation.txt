@@ -1,0 +1,98 @@
+ONTOLOGY SOURCE REFERENCE							
+Term Source Name	ChEMBL	OBI	TBP	TBC	TBO	TBU	TBK
+Term Source File	https://www.ebi.ac.uk/chembldb/	http://toxbanktest1.opentox.org:8080/toxbank/protocol/	http://toxbanktest1.opentox.org:8080/toxbank/project/	http://toxbanktest1.opentox.org:8080/toxbank/organisation/	http://toxbanktest1.opentox.org:8080/toxbank/user/	http://keywords.toxbank.net/	
+Term Source Version							
+Term Source Description		Ontology for Biomedical Investigations	Toxbank protocols	Toxbank Consortium	Toxbank Organisation	Toxbank users	Toxbank keywords
+INVESTIGATION							
+Investigation Identifier	E-MTAB-798						
+Investigation Title	"Open TG-GATEs (in vitro, human)"						
+Investigation Description	"The Toxicogenomics Project was a 5-year collaborative project (2002-2007) by a consortium comprising the Japanese government and several pharmaceutical companies. The project produced the 'Toxicogenomics Project-Genomics Assisted Toxicity Evaluation system' (TG-GATEs), a large-scale database of transcriptomics and pathology data potentially useful for predicting the toxicity of new chemical entities. Conventional in vivo toxicology data was collected from single dose and repeat dosing studies on rats, and gene expression measured for the liver (and kidney in some cases). To provide information on species differences, gene expression was also measured in rat and human hepatocytes treated with the chemicals in vitro. Approximately 130 chemicals, primarily medicinal compounds, were tested at multipe doses. Gene expression was analysed using Affymetrix GeneChip arrays. The gene expression data has been submitted in four parts: in vivo single dose (E-MTAB-799), in vivo repeat dosing (E-MTAB-800), in vitro rat (E-MTAB-797) and in vitro human. This submission comprises the in vitro human studies. If publishing results based on this data, please cite the full project name 'Toxicogenomics Project and Toxicogenomics Informatics Project', the database name 'Open TG-GATEs' and the URL 'http://toxico.nibio.go.jp'. Please note that the European Bioinformatics Institute (EBI) was not involved in the Toxicogenomics Project in any way, acting only to submit the transcriptomics data to Array Express. Queries about the project can be addressed to the consortium directly via 'opentggates@nibio.go.jp'."						
+Investigation Submission Date							
+Investigation Public Release Date	2/10/2012						
+Comment [Created with configuration]							
+Comment [Owning Organisation URI]	TBO:G176						
+Comment [Consortium URI]	TBC:G2						
+Comment [Principal Investigator URI]	TBU:U115						
+Comment [Investigation keywords]	TBK:Fluxomics						
+Comment [Last opened with configuration]	toxbank-config						
+INVESTIGATION PUBLICATIONS							
+Investigation PubMed ID	20041446						
+Investigation Publication DOI							
+Investigation Publication Author List	"Uehara T, Ono A, Maruyama T, Kato I, Yamada H, Ohno Y, Urushidani T."						
+Investigation Publication Title	The Japanese toxicogenomics project: application of toxicogenomics.						
+Investigation Publication Status	published						
+Investigation Publication Status Term Accession Number							
+Investigation Publication Status Term Source REF							
+INVESTIGATION CONTACTS							
+Investigation Person Last Name	Toxicogenomics Project and Toxicogenomics Informatics Project	Akhtar	Atkinson				
+Investigation Person First Name		Ruth	Francis				
+Investigation Person Mid Initials							
+Investigation Person Email	opentggates@nibio.go.jp	rutha@ebi.ac.uk	francis@ebi.ac.uk				
+Investigation Person Phone							
+Investigation Person Fax							
+Investigation Person Address							
+Investigation Person Affiliation	"National Institute for Biomedical Innovation, Japan"	EMBL-EBI	EMBL-EBI				
+Investigation Person Roles	investigator	submitter	submitter				
+Investigation Person Roles Term Accession Number							
+Investigation Person Roles Term Source REF							
+							
+STUDY							
+Study Identifier	E-MTAB-798						
+Study Title	"Open TG-GATEs (in vitro, human)"						
+Study Submission Date							
+Study Public Release Date	1/1/2015						
+Study Description	"The Toxicogenomics Project was a 5-year collaborative project (2002-2007) by a consortium comprising the Japanese government and several pharmaceutical companies. The project produced the 'Toxicogenomics Project-Genomics Assisted Toxicity Evaluation system' (TG-GATEs), a large-scale database of transcriptomics and pathology data potentially useful for predicting the toxicity of new chemical entities. Conventional in vivo toxicology data was collected from single dose and repeat dosing studies on rats, and gene expression measured for the liver (and kidney in some cases). To provide information on species differences, gene expression was also measured in rat and human hepatocytes treated with the chemicals in vitro. Approximately 130 chemicals, primarily medicinal compounds, were tested at multipe doses. Gene expression was analysed using Affymetrix GeneChip arrays. The gene expression data has been submitted in four parts: in vivo single dose (E-MTAB-799), in vivo repeat dosing (E-MTAB-800), in vitro rat (E-MTAB-797) and in vitro human. This submission comprises the in vitro human studies. If publishing results based on this data, please cite the full project name 'Toxicogenomics Project and Toxicogenomics Informatics Project', the database name 'Open TG-GATEs' and the URL 'http://toxico.nibio.go.jp'. Please note that the European Bioinformatics Institute (EBI) was not involved in the Toxicogenomics Project in any way, acting only to submit the transcriptomics data to Array Express. Queries about the project can be addressed to the consortium directly via 'opentggates@nibio.go.jp'."						
+Study File Name	s_E-MTAB-798_studysample.txt						
+STUDY DESIGN DESCRIPTORS							
+Study Design Type	transcription profiling by array						
+Study Design Type Term Accession Number							
+Study Design Type Term Source REF							
+STUDY PUBLICATIONS							
+Study PubMed ID	20041446	16360708	18480146	17202761	19761811		
+Study Publication DOI							
+Study Publication Author List	"Uehara T, Ono A, Maruyama T, Kato I, Yamada H, Ohno Y, Urushidani T."	"Takashima K, Mizukawa Y, Morishita K, Okuyama M, Kasahara T, Toritsuka N, Miyagishima T, Nagao T, Urushidani T."	"Uehara T, Kiyosawa N, Shimizu T, Omura K, Hirode M, Imazawa T, Mizukawa Y, Ono A, Miyagishima T, Nagao T, Urushidani T."	"Tamura K, Ono A, Miyagishima T, Nagao T, Urushidani T."	"Kondo C, Minowa Y, Uehara T, Okuno Y, Nakatsu N, Ono A, Maruyama T, Kato I, Yamate J, Yamada H, Ohno Y, Urushidani T."		
+Study Publication Title	The Japanese toxicogenomics project: application of toxicogenomics.	Effect of the difference in vehicles on gene expression in the rat liver--analysis of the control data in the Toxicogenomics Project Database.	Species-specific differences in coumarin-induced hepatotoxicity as an example toxicogenomics-based approach to assessing risk of toxicity to humans.	Profiling of gene expression in rat liver and rat primary cultured hepatocytes treated with peroxisome proliferators.	Identification of genomic biomarkers for concurrent diagnosis of drug-induced renal tubular injury using a large-scale toxicogenomics database.		
+Study Publication Status	published	published	published	published	published		
+Study Publication Status Term Accession Number							
+Study Publication Status Term Source REF							
+STUDY FACTORS							
+Study Factor Name	Compound	DoseLevel	TimeOfCollection				
+Study Factor Type	compound	dose	time				
+Study Factor Type Term Accession Number							
+Study Factor Type Term Source REF							
+STUDY ASSAYS							
+Study Assay Measurement Type	transcription profiling						
+Study Assay Measurement Type Term Source REF	OBI						
+Study Assay Measurement Type Term Accession Number	424						
+Study Assay Technology Type	DNA microarray						
+Study Assay Technology Type Term Source REF	OBI						
+Study Assay Technology Type Term Accession Number	400148						
+Study Assay Technology Platform							
+Study Assay File Name	a_E-MTAB-798_assay.txt						
+STUDY PROTOCOLS							
+Study Protocol Name	P-MTAB-23086	P-MTAB-23087	P-MTAB-23088	P-MTAB-23089	P-MTAB-23090	P-MTAB-23091	normalization
+Study Protocol Type	grow	compound_based_treatment	collection	nucleic_acid_extraction	labeling	hybridization	SEURAT-Protocol-225-1
+Study Protocol Type Term Accession Number							
+Study Protocol Type Term Source REF							TBP
+Study Protocol Description	"Cryopreserved human hepatocytes were thawed, washed twice with medium (L15 medium supplemented with penicillin, streptomycin and 10% fetal bovin serum) and seeded at a cell density of 1.2 x10^6 cells/well. Following an attachment period of 3 hr, the medium was replaced and kept overnight before drug exposure at 37C in an atmosphere of 5% CO2."	"Each compound was administered at four different dose levels; control (vehicle only), low, middle and high. In general, the highest concentration was 10-20% of the lethal concentration as estimated by LDH leakage over 24 hours. When the cells could tolerate 10 mM or the level equal to the solubility limit the highest concentration was set to that value. The middle and lowest concentrations were set to 1/5 and 1/25 respectively of the highest. Test compounds were added to the medium directly or as a 1,000X stock solution in DMSO. Cells were exposed to compound for 2, 8 and 24 hr before collection."	"After compound exposure, the hepatocytes were lysed with RLT buffer and collected for expression profiling. Cell viability was assesssed by LDH release and DNA content."	Total RNA was isolated from the hepatocyte lysate using an RNeasy kit (Qiagen).	Labeling was carried out according to manufacturers instrucions using SuperScript Choice System (Invitrogen) and T7-(dT)24 oligonucleotide primer (Affymetrix) for cDNA synthesis cDNA Cleanup Module (Affymetrix) for purification and BioArray High Yield RNA Transcript Labeling Kit (Enzo Diagnostics) for synthesis of biotin-labelled cRNA.	"10 ug of fragmented cRNA was hybridized to the probe array for 18 h at 45C at 60 rpm, after which the array was washed and stained by streptavidin-phycoerythrin using Fluidics Station 400 (Affymetrix) and scanned by Gene Array Scanner (Affymetrix)."	
+Study Protocol URI							http://toxbanktest1.opentox.org:8080/toxbank/protocol/SEURAT-Protocol-225-1
+Study Protocol Version							
+Study Protocol Parameters Name							
+Study Protocol Parameters Name Term Accession Number							
+Study Protocol Parameters Name Term Source REF							
+Study Protocol Components Name							
+Study Protocol Components Type							
+Study Protocol Components Type Term Accession Number							
+Study Protocol Components Type Term Source REF							
+STUDY CONTACTS							
+Study Person Last Name	Toxicogenomics Project and Toxicogenomics Informatics Project	Akhtar	Atkinson				
+Study Person First Name		Ruth	Francis				
+Study Person Mid Initials							
+Study Person Email	opentggates@nibio.go.jp	rutha@ebi.ac.uk	francis@ebi.ac.uk				
+Study Person Phone							
+Study Person Fax							
+Study Person Address							
+Study Person Affiliation	"National Institute for Biomedical Innovation, Japan"	EMBL-EBI	EMBL-EBI				
+Study Person Roles	investigator	submitter	submitter				
+Study Person Roles Term Accession Number							
+Study Person Roles Term Source REF							
