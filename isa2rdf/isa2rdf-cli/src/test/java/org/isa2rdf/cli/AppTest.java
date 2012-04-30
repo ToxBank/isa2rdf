@@ -32,7 +32,8 @@ public class AppTest  {
 		//String globalConfig = "/isaconfig-default/";
 		//String localConfig = getClass().getClassLoader().getResource("isa-tab/config/isa_configurator").getFile();
 		//ISAConfigurationSet.setConfigPath(globalConfig);
-
+		ISAConfigurationSet.setConfigPath(getClass().getClassLoader().getResource("toxbank-config").getFile());
+		
 		URL url = getClass().getClassLoader().getResource("isa-tab/BII-I-1");
 		Assert.assertNotNull(url);
 		//String filesPath = url.getFile();
@@ -43,12 +44,22 @@ public class AppTest  {
 		BIIObjectStore store = cli.validate(filesPath);
 		Assert.assertNotNull(store);
 	}	
+	
 	@org.junit.Test
-	public void testRDF() throws Exception {
+	public void testRDF_BII_I_1() throws Exception {
+		testRDF("toxbank//BII-I-1");
+	}
+	
+	@org.junit.Test
+	public void testRDF_E_MTAB_798() throws Exception {
+		testRDF("toxbank//E-MTAB-798");
+	}
+	
+	public void testRDF(String dir) throws Exception {
 
 		ISAConfigurationSet.setConfigPath(getClass().getClassLoader().getResource("toxbank-config").getFile());
 
-		URL url = getClass().getClassLoader().getResource("toxbank//BII-I-1");
+		URL url = getClass().getClassLoader().getResource(dir);
 		Assert.assertNotNull(url);
 		String filesPath = url.getFile();
 		IsaClient cli = new IsaClient();
