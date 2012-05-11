@@ -239,7 +239,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	final static String TB_organisation = "comment:Owning Organisation URI";
 	final static String TB_user = "comment:Principal Investigator URI";
 	final static String TB_keywords = "comment:Investigation keywords";
-	final static String TBKeywordsNS = "http://www.owl-ontologies.com/toxbank.owl#";
+
 	public static final String OBO = "http://purl.obolibrary.org/obo/";
 	public static final String BIBO = "http://purl.org/ontology/bibo/";
 	//http://bibotools.googlecode.com/svn/bibo-ontology/trunk/doc/index.html
@@ -277,9 +277,11 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 				String[] keywords = annotation.getText().split(";");
 				for (String keyword : keywords) {
 					String[] uri = keyword.split(":");
-					if (uri.length<2) throw new MalformedURLException(keyword);
-					if ("TBK".equals(uri[0]))
-						investigationResource.addLiteral(TOXBANK.HASKEYWORD, String.format("%s%s",TBKeywordsNS,uri[1]));
+					if (uri.length<2) continue;
+					if ("TBK".equals(uri[0]) && (!"".equals(uri[1].trim()))) {
+						//may be consider keywords resources, not literals? and update the Protocol RDF IO as well
+						investigationResource.addLiteral(TOXBANK.HASKEYWORD, String.format("%s%s",ISA.TBKeywordsNS,uri[1]));
+					}
 				}
 			}
 		}

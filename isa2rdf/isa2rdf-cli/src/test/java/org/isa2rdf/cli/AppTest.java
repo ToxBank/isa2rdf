@@ -10,6 +10,13 @@ import net.toxbank.client.io.rdf.TOXBANK;
 import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.tablib.utils.BIIObjectStore;
 
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -47,15 +54,42 @@ public class AppTest  {
 	
 	@org.junit.Test
 	public void testRDF_BII_I_1() throws Exception {
-		testRDF("toxbank//BII-I-1");
+		Model model = testRDF("toxbank//BII-I-1");
+		testKeywords(model, 3);
+		model.close();
 	}
-	
+	/**
+	 * Find keywords of isa:Investigation instance
+	 * @param model
+	 * @param nkeywords
+	 * @throws Exception
+	 */
+	protected void testKeywords(Model model, int nkeywords) throws Exception {
+		String sparqlQuery = String.format("SELECT ?investigation ?keyword where { ?investigation <%s> ?keyword.\n ?investigation <%s> <%s> } \n",
+				TOXBANK.HASKEYWORD.getURI(),
+				RDF.type.getURI(),
+				ISA.Investigation.getURI());
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			//RDFNode node = solution.get(vars.get(i));
+			Literal keyword = qs.getLiteral("keyword");
+			Assert.assertTrue(keyword.getString().startsWith(ISA.TBKeywordsNS));
+			//System.out.println(qs);
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(nkeywords,n);
+	}
 	@org.junit.Test
 	public void testRDF_E_MTAB_798() throws Exception {
 		testRDF("toxbank//E-MTAB-798");
 	}
 	
-	public void testRDF(String dir) throws Exception {
+	public Model testRDF(String dir) throws Exception {
 
 		ISAConfigurationSet.setConfigPath(getClass().getClassLoader().getResource("toxbank-config").getFile());
 
@@ -83,6 +117,7 @@ public class AppTest  {
 		output.close();
 	
 		print(model);
+		return model;
 
 	}
 	
