@@ -62,7 +62,41 @@ public class AppTest  {
 		testRetrieveAllToxbankProtocols(model);
 		testRetrieveAllProtocols(model);
 		testRetrieveAllStudiesAndProtocols(model);
+		testToxbankHasProtocol(model);
 		model.close();
+	}
+	
+	protected void testToxbankHasProtocol(Model model) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?investigation ?study ?protocol where {\n" +
+				" ?protocol rdf:type isa:Protocol.\n" +
+				//" ?protocol rdf:type tb:Protocol.\n" +
+				" ?study isa:hasProtocol ?protocol.\n" +
+				" ?study rdf:type isa:Study.\n" +
+				" ?investigation isa:hasStudy ?study.\n" +
+				" ?investigation rdf:type isa:Investigation.\n" +
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode protocol = qs.get("protocol");
+			Assert.assertNotNull(protocol);
+			Assert.assertNotNull(protocol.isURIResource());
+
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(11,n);		
 	}
 	
 	protected void testRetrieveAllToxbankProtocols(Model model) throws Exception {
@@ -105,7 +139,7 @@ public class AppTest  {
 				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
 				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
-				"SELECT ?protocol where {\n" +
+				"SELECT distinct ?protocol where {\n" +
 				" ?protocol rdf:type isa:Protocol.\n" +				
 				"} \n",
 				TOXBANK.URI,
@@ -142,7 +176,6 @@ public class AppTest  {
 				"} \n",
 				TOXBANK.URI,
 				ISA.URI);
-		System.out.println(sparqlQuery);
 		Query query = QueryFactory.create(sparqlQuery);
 		QueryExecution qe = QueryExecutionFactory.create(query,model);
 		ResultSet rs = qe.execSelect();
@@ -156,7 +189,6 @@ public class AppTest  {
 			RDFNode investigation = qs.get("investigation");
 			Assert.assertNotNull(investigation);
 			Assert.assertNotNull(investigation.isURIResource());
-			System.out.println(investigation);
 			
 			RDFNode protocol = qs.get("protocol");
 			Assert.assertNotNull(protocol);
@@ -234,7 +266,6 @@ public class AppTest  {
 		int n = 0;
 		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
-			//System.out.println(qs);
 			Literal abstrakt = qs.getLiteral("abstract");
 			Assert.assertNotNull(abstrakt);
 			Literal title = qs.getLiteral("title");
@@ -265,7 +296,6 @@ public class AppTest  {
 			//RDFNode node = solution.get(vars.get(i));
 			Literal keyword = qs.getLiteral("keyword");
 			Assert.assertTrue(keyword.getString().startsWith(ISA.TBKeywordsNS));
-			//System.out.println(qs);
 			n++;
 		}
 		qe.close();
