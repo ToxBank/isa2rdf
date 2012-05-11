@@ -20,6 +20,7 @@ import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.DCTerms;
@@ -57,14 +58,62 @@ public class AppTest  {
 		Model model = testRDF("toxbank//BII-I-1");
 		testKeywords(model, 3);
 		testTitleAndAbstract(model);
+		testToxBankURI(model);
 		model.close();
+	}
+	
+	protected void testToxBankURI(Model model) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?investigation ?consortium ?organisation ?owner where {\n" +
+				" ?investigation rdf:type isa:Investigation.\n" +				
+				" OPTIONAL {" +
+				" ?investigation tb:hasProject ?consortium." +
+				" ?consortiumURI rdf:type tb:Project." +				
+				"}\n" +
+				" OPTIONAL {" +
+				" ?investigation tb:hasOrganisation ?organisation." +
+				" ?organisation  rdf:type tb:Organization." +
+				"}\n" +
+				" OPTIONAL {" +
+				" ?investigation tb:hasOwner ?owner." +
+				" ?ownerURI  rdf:type tb:User." +
+				"}\n" +
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode project = qs.get("consortium");
+			Assert.assertNotNull(project);
+			Assert.assertNotNull(project.isURIResource());
+	
+			RDFNode organisation = qs.get("organisation");
+			Assert.assertNotNull(organisation);
+			Assert.assertNotNull(organisation.isURIResource());
+
+			RDFNode owner = qs.get("owner");
+			Assert.assertNotNull(owner);
+			Assert.assertNotNull(owner.isURIResource());
+			
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(1,n);		
 	}
 	
 	protected void testTitleAndAbstract(Model model) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
-				//"PREFIX dc:<http://purl.org/dc/elements/1.1/>\n"+
 				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
 				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
