@@ -238,7 +238,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	final static String TB_consortium = "comment:Consortium URI";
 	final static String TB_organisation = "comment:Owning Organisation URI";
 	final static String TB_user = "comment:Principal Investigator URI";
-	final static String TB_keywords = "comment:Investigation Keywords";
+	final static String TB_keywords = "comment:Investigation keywords";
 	final static String TBKeywordsNS = "http://www.owl-ontologies.com/toxbank.owl#";
 	public static final String OBO = "http://purl.obolibrary.org/obo/";
 	public static final String BIBO = "http://purl.org/ontology/bibo/";
