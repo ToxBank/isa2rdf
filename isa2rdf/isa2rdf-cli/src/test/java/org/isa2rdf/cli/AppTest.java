@@ -58,11 +58,115 @@ public class AppTest  {
 		Model model = testRDF("toxbank//BII-I-1");
 		testKeywords(model, 3);
 		testTitleAndAbstract(model);
-		testToxBankURI(model);
+		testToxBankResources(model);
+		testRetrieveAllToxbankProtocols(model);
+		testRetrieveAllProtocols(model);
+		testRetrieveAllStudiesAndProtocols(model);
 		model.close();
 	}
 	
-	protected void testToxBankURI(Model model) throws Exception {
+	protected void testRetrieveAllToxbankProtocols(Model model) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?protocol where {\n" +
+				" ?protocol rdf:type tb:Protocol.\n" +				
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode protocol = qs.get("protocol");
+			Assert.assertNotNull(protocol);
+			Assert.assertNotNull(protocol.isURIResource());
+			Assert.assertEquals("http://toxbanktest1.opentox.org:8080/toxbank/protocol/SEURAT-Protocol-245-1", 
+					((Resource)protocol).getURI());
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(1,n);		
+	}
+	/**
+	 * Retrieves all available protocols
+	 * @param model
+	 * @throws Exception
+	 */
+	protected void testRetrieveAllProtocols(Model model) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?protocol where {\n" +
+				" ?protocol rdf:type isa:Protocol.\n" +				
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode protocol = qs.get("protocol");
+			Assert.assertNotNull(protocol);
+			Assert.assertNotNull(protocol.isURIResource());
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(11,n);		
+	}
+	
+	protected void testRetrieveAllStudiesAndProtocols(Model model) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?investigation ?study ?protocol where {\n" +
+				" ?investigation rdf:type isa:Investigation.\n" +
+				" ?investigation isa:hasStudy ?study.\n" +
+				" ?study rdf:type isa:Study.\n" +
+				" ?study isa:hasProtocol ?protocol.\n" +
+				" ?protocol rdf:type tb:Protocol.\n" +
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		System.out.println(sparqlQuery);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode study = qs.get("study");
+			Assert.assertNotNull(study);
+			Assert.assertNotNull(study.isURIResource());
+			
+			RDFNode investigation = qs.get("investigation");
+			Assert.assertNotNull(investigation);
+			Assert.assertNotNull(investigation.isURIResource());
+			System.out.println(investigation);
+			
+			RDFNode protocol = qs.get("protocol");
+			Assert.assertNotNull(protocol);
+			Assert.assertNotNull(protocol.isURIResource());
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(1,n);		
+	}
+	protected void testToxBankResources(Model model) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
