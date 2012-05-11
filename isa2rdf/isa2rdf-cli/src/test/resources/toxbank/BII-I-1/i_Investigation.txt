@@ -10,7 +10,7 @@ Investigation Description	"Background Cell growth underlies many key cellular an
 Investigation Submission Date	"30/04/2007"
 Investigation Public Release Date	"10/3/2009"
 Comment [Created with configuration]	""
-Comment [Last Opened With Configuration]	"D:\src-pol\isa2rdf\isa2rdf\isa2rdf-cli\src\main\resources\toxbank-config"
+Comment [Last Opened With Configuration]	"toxbank-config"
 Comment [Owning Organisation URI]	"TBO:G176"
 Comment [Consortium URI]	"TBC:G2"
 Comment [Principal Investigator URI]	"TBU:U115"
