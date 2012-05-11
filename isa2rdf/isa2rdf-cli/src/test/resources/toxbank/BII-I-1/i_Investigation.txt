@@ -14,7 +14,7 @@ Comment [Last Opened With Configuration]	"D:\src-pol\isa2rdf\isa2rdf\isa2rdf-cli
 Comment [Owning Organisation URI]	"TBO:G176"
 Comment [Consortium URI]	"TBC:G2"
 Comment [Principal Investigator URI]	"TBU:U115"
-Comment [Investigation keywords]	"TBK:Blotting, Southwestern;TBK:Molecular Imaging;DOID:primary carcinoma of the liver cells"
+Comment [Investigation keywords]	"TBK:CellViabilityAssay;TBK:CellMigrationAssays;;TBK:Epigenetics"
 Comment [Last opened with configuration]	""
 INVESTIGATION PUBLICATIONS
 Investigation PubMed ID	"17439666"
