@@ -56,7 +56,41 @@ public class AppTest  {
 	public void testRDF_BII_I_1() throws Exception {
 		Model model = testRDF("toxbank//BII-I-1");
 		testKeywords(model, 3);
+		testTitleAndAbstract(model);
 		model.close();
+	}
+	
+	protected void testTitleAndAbstract(Model model) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				//"PREFIX dc:<http://purl.org/dc/elements/1.1/>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?investigation ?title ?abstract where {\n" +
+				" ?investigation rdf:type isa:Investigation.\n" +				
+				" OPTIONAL {?investigation dcterms:title ?title.}\n" +
+				" OPTIONAL {?investigation dcterms:abstract ?abstract.}\n" +
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			//System.out.println(qs);
+			Literal abstrakt = qs.getLiteral("abstract");
+			Assert.assertNotNull(abstrakt);
+			Literal title = qs.getLiteral("title");
+			Assert.assertNotNull(title);
+
+			n++;
+		}
+		qe.close();
+		Assert.assertTrue(n>0);		
 	}
 	/**
 	 * Find keywords of isa:Investigation instance
