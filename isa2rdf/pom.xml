@@ -22,7 +22,20 @@
         <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases</url>
     </repository>
   </distributionManagement>
-  
+    
+  <repositories>
+    <repository>
+      <id>ambit-plovdiv</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/thirdparty</url>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
+    <repository>
+      <id>mvnrepository</id>
+      <name>mvnrepository</name>
+      <url>http://mvnrepository.com/</url>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
+  </repositories>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      <junit.version>4.8.1</junit.version>
