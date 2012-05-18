@@ -7,6 +7,7 @@ import java.net.URL;
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
+import org.isa2rdf.model.ISA;
 import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.tablib.utils.BIIObjectStore;
 

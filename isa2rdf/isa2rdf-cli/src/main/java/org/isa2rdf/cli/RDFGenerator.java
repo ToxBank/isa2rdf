@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import net.toxbank.client.io.rdf.TOXBANK;
 
+import org.isa2rdf.model.ISA;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Accessible;

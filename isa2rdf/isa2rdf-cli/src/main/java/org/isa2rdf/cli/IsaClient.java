@@ -16,6 +16,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
+import org.isa2rdf.model.ISA;
 import org.isatools.isatab.ISATABValidator;
 import org.isatools.isatab.gui_invokers.GUIInvokerResult;
 import org.isatools.isatab_v1.ISATABLoader;

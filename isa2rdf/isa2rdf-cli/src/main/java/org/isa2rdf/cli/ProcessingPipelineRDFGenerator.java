@@ -14,6 +14,7 @@ import net.toxbank.client.resource.Organisation;
 import net.toxbank.client.resource.Project;
 import net.toxbank.client.resource.User;
 
+import org.isa2rdf.model.ISA;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Annotation;
