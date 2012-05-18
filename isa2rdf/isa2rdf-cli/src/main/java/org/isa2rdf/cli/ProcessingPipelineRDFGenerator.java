@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import net.toxbank.client.Resources;
 import net.toxbank.client.io.rdf.OrganisationIO;
@@ -18,6 +19,7 @@ import org.isa2rdf.model.ISA;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Annotation;
+import uk.ac.ebi.bioinvindex.model.Contact;
 import uk.ac.ebi.bioinvindex.model.Identifiable;
 import uk.ac.ebi.bioinvindex.model.Investigation;
 import uk.ac.ebi.bioinvindex.model.Protocol;
@@ -241,6 +243,12 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	final static String TB_user = "comment:Principal Investigator URI";
 	final static String TB_keywords = "comment:Investigation keywords";
 
+	
+	final static String TB_author_uri = "comment:Investigation Person URI";
+	final static String TB_author_term = "comment:Investigation Person URI Term Accession Number";
+	final static String TB_author_termref = "comment:Investigation Person URI Term Source REF";
+
+
 	public static final String OBO = "http://purl.obolibrary.org/obo/";
 	public static final String BIBO = "http://purl.org/ontology/bibo/";
 	//http://bibotools.googlecode.com/svn/bibo-ontology/trunk/doc/index.html
@@ -286,6 +294,31 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 				}
 			}
 		}
+		
+		for (Contact contact: investigation.getContacts()) {
+			
+			List<Annotation> uri = contact.getAnnotation(TB_author_uri);
+			if ((uri==null) || (uri.size()<1)) continue;
+			List<Annotation> ref = contact.getAnnotation(TB_author_termref);
+			if ((ref==null) || (ref.size()<1)) continue;
+			List<Annotation> title = contact.getAnnotation(TB_author_term);
+			if ((title==null) || (title.size()<1)) continue;
+			//m/b smth is wrong with comments; why they come as separate annotations and  freetext types?
+			/*
+			System.out.println(uri.get(0).getText());
+			System.out.println(ref.get(0).getText());
+			System.out.println(title.get(0).getText());
+			*/
+
+			User tbUser = new User( new URL(String.format("%s%s/%s",TB_URI,Resources.user, uri.get(0).getText())));
+			Resource  resource = userIO.objectToJena(getModel(),tbUser);
+			getModel().add(resource, RDF.type, TOXBANK.USER); //should be a ToxBank user
+			getModel().add(investigationResource,TOXBANK.HASAUTHOR,resource);			
+			try {
+				getModel().add(resource, OWL.sameAs, getResourceID(contact, ISA.Contact)); 
+			} catch (Exception x) {}
+			
+		}
 		/**
 		 * CiTO
 		 * http://purl.org/spar/cito/cites
@@ -310,6 +343,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
         }		
         */
 	}
+
 	
 	@Override
 	public void processAnnotations(Investigation investigation, Resource investigationResource)
@@ -325,5 +359,6 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 				getModel().add(protocolResource, RDF.type, TOXBANK.PROTOCOL); 
 			}
 		}
+		//System.out.println(protocol.getAnnotations());
 	}
 }

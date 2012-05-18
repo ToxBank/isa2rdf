@@ -64,6 +64,7 @@ public class AppTest  {
 		testRetrieveAllProtocols(model);
 		testRetrieveAllStudiesAndProtocols(model);
 		testToxbankHasProtocol(model);
+		testToxbankHasAuthor(model);
 		model.close();
 	}
 	
@@ -99,6 +100,36 @@ public class AppTest  {
 		qe.close();
 		Assert.assertEquals(11,n);		
 	}
+	
+	protected void testToxbankHasAuthor(Model model) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?investigation ?author where {\n" +
+				" ?author rdf:type tb:User.\n" +
+				" ?investigation tb:hasAuthor ?author.\n" +
+				" ?investigation rdf:type isa:Investigation.\n" +
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode author = qs.get("author");
+			Assert.assertNotNull(author);
+			Assert.assertNotNull(author.isURIResource());
+
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(3,n);		
+	}	
 	
 	protected void testRetrieveAllToxbankProtocols(Model model) throws Exception {
 		String sparqlQuery = String.format(
@@ -210,7 +241,7 @@ public class AppTest  {
 				" ?investigation rdf:type isa:Investigation.\n" +				
 				" OPTIONAL {" +
 				" ?investigation tb:hasProject ?consortium." +
-				" ?consortiumURI rdf:type tb:Project." +				
+				" ?consortium rdf:type tb:Project." +				
 				"}\n" +
 				" OPTIONAL {" +
 				" ?investigation tb:hasOrganisation ?organisation." +
@@ -218,7 +249,7 @@ public class AppTest  {
 				"}\n" +
 				" OPTIONAL {" +
 				" ?investigation tb:hasOwner ?owner." +
-				" ?ownerURI  rdf:type tb:User." +
+				" ?owner  rdf:type tb:User." +
 				"}\n" +
 				"} \n",
 				TOXBANK.URI,
