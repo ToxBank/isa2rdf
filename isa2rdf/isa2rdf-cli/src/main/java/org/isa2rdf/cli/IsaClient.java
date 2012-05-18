@@ -55,6 +55,7 @@ public class IsaClient {
 		
 		ISATABLoader loader = new ISATABLoader(filesPath);
 		FormatSetInstance isatabInstance = loader.load();
+
 		ISATABValidator validator = new ISATABValidator(isatabInstance);
 		
 	    if (GUIInvokerResult.WARNING == validator.validate()) {
