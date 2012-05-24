@@ -1,46 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>net.toxbank</groupId>
   <artifactId>isa2rdf</artifactId>
   <version>0.0.4-SNAPSHOT</version>
   <packaging>pom</packaging>
-
   <name>isa2rdf</name>
   <url>http://maven.apache.org</url>
-
-
-     <distributionManagement>
-
+  <distributionManagement>
     <snapshotRepository>
-  		<id>toxbank-snapshots</id>
-  		<url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-snapshots</url>
-	 </snapshotRepository>
-	<repository>
-        <id>toxbank-releases</id>
-        <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases</url>
+      <id>toxbank-snapshots</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>toxbank-releases</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases</url>
     </repository>
   </distributionManagement>
-    
   <repositories>
     <repository>
       <id>ambit-plovdiv</id>
       <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/thirdparty</url>
-      <snapshots><enabled>false</enabled></snapshots>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
     <repository>
       <id>mvnrepository</id>
       <name>mvnrepository</name>
       <url>http://mvnrepository.com/</url>
-      <snapshots><enabled>false</enabled></snapshots>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
   </repositories>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-     <junit.version>4.8.1</junit.version>
+    <junit.version>4.8.1</junit.version>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -50,7 +47,6 @@
     </dependency>
   </dependencies>
   <build>
-  
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -66,15 +62,14 @@
           <configuration>
             <source>1.6</source>
             <target>1.6</target>
-          </configuration>  
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
   <modules>
-  	<module>isa2rdf-converter</module>
+    <module>isa2rdf-converter</module>
     <module>isa2rdf-cli</module>
     <module>isa-rest</module>
   </modules>
-  
 </project>
