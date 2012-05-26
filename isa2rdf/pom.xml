@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.toxbank</groupId>
@@ -6,7 +6,56 @@
   <version>0.0.4-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>isa2rdf</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/ToxBank/isa2rdf</url>
+  <issueManagement>
+  	<url>https://github.com/ToxBank/isa2rdf/issues</url>
+  </issueManagement>
+  <ciManagement>
+  	<url>http://jenkins.toxbank.net</url>
+  </ciManagement>
+  <licenses>
+    <license>
+      <name>LGPL3</name>
+      <url>http://www.gnu.org/licenses/lgpl.txt</url>
+      <distribution>repo</distribution>
+      <comments />
+    </license>
+  </licenses>
+    <scm>
+  	<developerConnection>scm:git:git@github.com:ToxBank/isa2rdf.git</developerConnection>
+  	<url>https://github.com/ToxBank/isa2rdf</url>
+  </scm>
+  <developers>
+        <developer>
+            <id>vedina</id>
+            <name>Nina Jeliazkova</name>
+            <email>jeliazkova.nina@gmail.com</email>
+            <url>https://github.com/vedina</url>
+            <organization>IdeaConsult Ltd.</organization>
+            <organizationUrl>http://ideaconsult.net</organizationUrl>
+        </developer>
+		<developer>
+		 <id>proccaserra</id>
+            <name>Philippe Rocca-Serra</name>
+            <url>https://github.com/proccaserra</url>
+            <organization>ISA tools team</organization>
+            <organizationUrl>http://isa-tools.org</organizationUrl>
+    </developer>
+    </developers>
+    <contributors>
+    <contributor>
+            <name>Eamonn Maguire</name>
+            <email>eamonnmag@gmail.com</email>
+            <url>https://github.com/eamonnmag</url>
+            <organization>ISA tools team</organization>
+            <organizationUrl>http://isa-tools.org</organizationUrl>
+    </contributor>
+
+    </contributors>
+  <organization>
+  	<name>ToxBank project</name>
+  	<url>http://toxbank.net</url>
+  </organization>
   <distributionManagement>
     <snapshotRepository>
       <id>toxbank-snapshots</id>
@@ -53,6 +102,16 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+    <plugins>
+     <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <locales>en</locales>
+        </configuration>
+      </plugin>
+      </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -67,6 +126,55 @@
       </plugins>
     </pluginManagement>
   </build>
+  <reporting>
+    <plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.4</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>license</report>
+              <report>issue-tracking</report>
+              <report>project-team</report>
+              <report>scm</report>
+              <report>distribution-management</report>
+              <report>summary</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <!-- UML class diagrams  -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <!-- <docletPath>/path/to/UmlGraph.jar</docletPath> -->
+        <configuration>
+          <source>1.5</source>
+          <aggregate>false</aggregate>
+          <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
+          <docletArtifact>
+            <groupId>gr.spinellis</groupId>
+            <artifactId>UmlGraph</artifactId>
+            <version>4.6</version>
+          </docletArtifact>
+          <additionalparam>
+            <!--  http://www.umlgraph.org/doc/cd-opt.html 
+	          	-attributes
+	          	-views
+	          	-types 
+	            -inferrel -inferdep -quiet -hide java.*
+	            -collpackages java.util.* -qualify
+	            -postfixpackage 
+	            --> 
+	            -all
+	          </additionalparam>
+        </configuration>
+   	</plugin>
+    </plugins>
+  </reporting>
   <modules>
     <module>isa2rdf-converter</module>
     <module>isa2rdf-cli</module>

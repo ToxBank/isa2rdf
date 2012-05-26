@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="TOXBANK">
+
+  <bannerLeft>
+    <name>ToxBank project</name>
+    <src>./images/toxbank_rgb-72.png</src>
+    <href>http://toxbank.net</href>
+  </bannerLeft>
+  <bannerRight>
+    <src></src>
+  </bannerRight>
+ 
+  <body>
+    <links>
+      <item name="ToxBank-beans" href="http://toxbank.github.com/toxbank-api-beans/" />
+      <item name="ToxBank-client" href="http://toxbank.github.com/toxbank-api-client/" />
+      <item name="ToxBank-server" href="http://toxbank.github.com/toxbank-api-server/" />
+      <item name="ToxBank plugin for ISAcreator" href="http://toxbank.github.com/toxbank-isa-plugin/" />
+      <item name="OpenTox AA" href="http://vedina.github.com/opentox-aa-cli" />
+      <item name="ToxBank project" href="http://toxbank.net" />
+    </links>
+
+    <menu name="ISA2RDF">
+      <item name="Home" href="/index.html"/>
+      <item name="Maven dependency" href="/maven.html"/>
+      <item name="Command line" href="/cli.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+
+  </body>
+  <poweredBy>
+  </poweredBy>    
+  <publishDate position="navigation-bottom" format="MM-dd-yy"/>
+
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.2.1</version>
+    </skin>  
+    
+     <custom>
+    <fluidoSkin>
+      <searchEnabled>true</searchEnabled>
+      <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+      <topBarEnabled>false</topBarEnabled>
+      <topBarIcon>
+      <name>ISA2RDF</name>
+      <alt>ISA-TAB to RDF conversion</alt>
+      <src>/images/toxbank_rgb-72.png</src>
+      <href>/index.html</href>
+      </topBarIcon>
+
+	  <googleSearch>
+        <sitesearch>http://github.com/ToxBank/isa2rdf</sitesearch>
+      </googleSearch>
+
+      <sideBarEnabled>true</sideBarEnabled>
+      <!-- 
+      <facebookLike />
+      <googlePlusOne />
+       -->
+       <gitHub>
+        <projectId>toxbank/isa2rdf</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>green</ribbonColor>
+      </gitHub>
+       
+    </fluidoSkin>
+ 
+  </custom>
+
+</project>

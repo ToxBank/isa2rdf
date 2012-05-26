@@ -1,0 +1,55 @@
+ -----
+ ISA-TAB to Resource Description Framework (RDF) conversion
+ -----
+ Background
+ -----
+ May 2012
+
+ISA-TAB to Resource Description Framework (RDF) conversion
+~~~~~~~  
+ 
+ ISA-TAB to Resource Description Framework (RDF) conversion
+
+* Code
+  
+  {{{https://github.com/ToxBank/isa2rdf}GitHub}}
+  
+* Maven
+    
+ Use as {{{http://maven.apache.org}Maven}} dependency:
+
+ {{{https://github.com/ToxBank/isa2rdf/downloads}isa2rdf-0.0.3-SNAPSHOT.jar}}
+
+---------------------------------------
+
+	No stable release yet
+	
+    <repository>
+        <id>toxbank-releases</id>
+        <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases/</url>
+        <snapshots>
+  	       <enabled>false</enabled>
+         </snapshots>
+    </repository>
+    
+----------------------------------------  
+
+  {{{http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-snapshots/}Snapshots}}
+
+---------------------------------------
+
+	<dependency>
+      <groupId>net.toxbank</groupId>
+      <artifactId>isa2rdf</artifactId>
+      <version>0.0.3-SNAPSHOT</version>
+   </dependency>
+   
+    <repository>
+        <id>toxbank-snapshots</id>
+        <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-snapshots</url>
+        <snapshots>
+               <enabled>true</enabled>
+        </snapshots>
+    </repository>
+----------------------------------------
+

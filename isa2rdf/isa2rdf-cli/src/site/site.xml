@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="AMBIT2">
+
   <bannerLeft>
-   <name>ISA2RDF</name>
-    <src>./images/tb.jpg</src>
-    <href>index.html</href>
+    <name>ToxBank project</name>
+    <src>./images/toxbank_rgb-72.png</src>
+    <href>http://toxbank.net</href>
   </bannerLeft>
   <bannerRight>
     <src></src>
   </bannerRight>
-
+ 
   <body>
-    <links>
-      <item name="ToxBank" href="http://toxbank.net/"/>
-      <item name="ToxBank-beans" href="http://toxbank.github.com/toxbank-api-beans"/>
-      <item name="ToxBank-client" href="http://toxbank.github.com/toxbank-api-client"/>
-      <item name="ToxBank-server" href="http://toxbank.github.com/toxbank-api-server"/>
-      <item name="ToxBank ISA2RDF" href="http://toxbank.github.com/isa2rdf"/>
-      <item name="OpenTox AA" href="http://vedina.github.com/opentox-aa-cli"/>
-    </links>
-    
-  <menu name="Toxbank ISA2RDF">
+  <menu name="ISA2RDF">
       <item name="Home" href="/index.html"/>
-      <item name="Maven dependency" href="/maven.html"/>
-      <!-- 
       <item name="Command line" href="/cli.html"/>
-      -->
+      <item name="Maven dependency" href="/maven.html"/>
     </menu>
 
     <menu ref="reports"/>
@@ -34,5 +24,39 @@
     <logo name="Toxbank" href="http://toxbank.net"/>
   </poweredBy>    
   <publishDate position="navigation-bottom" format="MM-dd-yy"/>
+
+   <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.2.1</version>
+    </skin>  
+    
+     <custom>
+    <fluidoSkin>
+      <searchEnabled>true</searchEnabled>
+      <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+      <topBarEnabled>false</topBarEnabled>
+      <topBarIcon>
+      <name>ISA2RDF</name>
+      <alt>ISA-TAB to RDF conversion</alt>
+      <src>/images/toxbank_rgb-72.png</src>
+      <href>/index.html</href>
+      </topBarIcon>
+
+	  <googleSearch>
+        <sitesearch>http://github.com/ToxBank/isa2rdf</sitesearch>
+      </googleSearch>
+
+      <sideBarEnabled>true</sideBarEnabled>
+
+       <gitHub>
+        <projectId>toxbank/isa2rdf</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>green</ribbonColor>
+      </gitHub>
+       
+    </fluidoSkin>
+ 
+  </custom>
 
 </project>
