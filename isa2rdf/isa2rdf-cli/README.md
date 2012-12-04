@@ -40,6 +40,7 @@ namespace: isa 'http://onto.toxbank.net/isa/'
 
 ####Example N3
 
+````
 
 :I2213
       a       isa:Investigation ;
@@ -87,9 +88,11 @@ Cell growth underlies many key cellular and developmental processes, .......""" 
       rdfs:label "EukGE-WS4"^^xsd:string ;
       isa:hasAccessionID "BII-S-1\\EukGE-WS4" .      
                         
+````
+
 Example RDF/XML
 
-"
+````
   <isa:Investigation rdf:about="I2225">
     <isa:hasAccessionID>BII-I-1</isa:hasAccessionID>
     <dcterms:title>Growth control of the eukaryote cell: a systems biology study in yeast</dcterms:title>    
@@ -101,5 +104,6 @@ Example RDF/XML
 Cell growth underlies many key cellular and developmental processes, yet a limited number of studies have been carried out on cell-growth regulation. Comprehensive studies at the transcriptional, proteomic and metabolic levels under defined controlled conditions are currently lacking.
 Results......</dcterms:abstract>
   </isa:Investigation>
-"
+  
+````
       
