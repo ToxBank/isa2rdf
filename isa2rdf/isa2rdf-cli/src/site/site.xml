@@ -9,7 +9,9 @@
   <bannerRight>
     <src></src>
   </bannerRight>
-   <head>
+
+  <body>
+     <head>
         <!-- Google Analytics - Start -->
 <script type="text/javascript">
 
@@ -28,7 +30,6 @@
       <!-- Google Analytics - End -->    
   </head>  
  
-  <body>
   <menu name="ISA2RDF">
       <item name="Home" href="/index.html"/>
       <item name="Command line" href="/cli.html"/>
