@@ -48,7 +48,9 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends RDFGenerator<NODE,Model>{
-	
+	//e.g. "http://toxbanktest1.opentox.org:8080/toxbank";
+	protected final String TB_URI ;
+	protected final String TBPROTOCOL_URI;
 	
 	/**
 	 * I will graph all the instances of {@link #objects} which are {@link Processing} (and nodes, materials, etc.).
@@ -57,7 +59,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	 * are distinct.
 	 *
 	 */
-	public ProcessingPipelineRDFGenerator ( String prefix,  BIIObjectStore store , Model model) {
+	public ProcessingPipelineRDFGenerator ( String toxbankURI, String prefix,  BIIObjectStore store , Model model) {
 		super(prefix,store,model);
 		getModel().setNsPrefix( "", prefix+"/" );
 		getModel().setNsPrefix( "isa", ISA.URI );
@@ -69,12 +71,13 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		getModel().setNsPrefix( "rdfs", RDFS.getURI() );
 		getModel().setNsPrefix( "rdf", RDF.getURI() );
 		getModel().setNsPrefix("xsd", XSDDatatype.XSD+"#");
+		this.TB_URI = toxbankURI;
+		this.TBPROTOCOL_URI = String.format("%s%s/",TB_URI,Resources.protocol);
 		ISA.init(getModel());
 	}
 	
-	public ProcessingPipelineRDFGenerator (  String prefix,  BIIObjectStore store ) {
-		this(prefix, store,ModelFactory.createDefaultModel());
-
+	public ProcessingPipelineRDFGenerator (  String toxbankURI, String prefix,  BIIObjectStore store ) {
+		this(toxbankURI,prefix, store,ModelFactory.createDefaultModel());
 	}
 
 	/**
@@ -253,9 +256,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	public static final String BIBO = "http://purl.org/ontology/bibo/";
 	//http://bibotools.googlecode.com/svn/bibo-ontology/trunk/doc/index.html
 	//TODO get from the ontology definition
-	protected static final String TB_URI= "http://toxbanktest1.opentox.org:8080/toxbank";
-	protected static final String TBPROTOCOL_URI= String.format("%s%s/",TB_URI,Resources.protocol);
-	
+
 	protected void parseToxBankSpecifics(Investigation investigation, Resource investigationResource) throws MalformedURLException {
 		ProjectIO projectIO = new ProjectIO();
 		OrganisationIO orgIO = new OrganisationIO();

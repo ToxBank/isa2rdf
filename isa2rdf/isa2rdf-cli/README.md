@@ -1,5 +1,17 @@
 CHANGELOG
 
+isa2rdf 0.0.4-SNAPSHOT
+
+-added option -t toxbank protocol service URI, to be able to use specific instance of Toxbank protocol user,organisation,project services.
+-The deleted by mistake ISA.java class is restored and added to the isa2rdf-converter package
+-isa tools upgraded to import-layer 1.5 (since May 2012)
+-support for investigation authors (since May 2012)
+
+isa2rdf 0.0.3
+
+-Fix for investigaton keywords not serialized (capital K).
+-more junit tests
+
 isa2rdf 0.0.2
 
 -Fixed NPE (appears when investigation relese date is empty)

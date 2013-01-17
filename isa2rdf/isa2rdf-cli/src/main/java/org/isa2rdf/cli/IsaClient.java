@@ -33,7 +33,7 @@ import com.hp.hpl.jena.rdf.model.RDFWriter;
 public class IsaClient {
 	protected String dir;
 	protected String outfile;
-	
+	protected String toxbankuri;
 	
 	public void  processAndSave() throws Exception {
 		Model model = process(dir);
@@ -93,7 +93,8 @@ public class IsaClient {
  
         File file = new File(filesPath);
         String prefix = String.format("%s%s",ISA.URI,file.getName().replace("-","").replace(" ","").trim());
-        ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(prefix,store);
+        ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(
+        		toxbankuri==null?"http://toxbanktest1.opentox.org:8080/toxbank":toxbankuri,prefix,store);
         gen.setTempIdCounter(tempIdCounter);
         return gen.createGraph();
 	}
@@ -175,7 +176,7 @@ public class IsaClient {
 
 			@Override
 			public String getArgName() {
-				return "ooutput file";
+				return "output file";
 			}
 
 			@Override
@@ -201,7 +202,38 @@ public class IsaClient {
 		    	return option;
 			}
 			
-		},		
+		},	
+		toxbankuri {
+
+			@Override
+			public String getArgName() {
+				return "ToxBank protocol service root URI ";
+			}
+
+			@Override
+			public String getDescription() {
+				return "ToxBank protocol service root URI e.g. http://toxbanktest1.opentox.org:8080/toxbank";
+			}
+
+			@Override
+			public String getShortName() {
+				return "t";
+			}
+			@Override
+			public String getDefaultValue() {
+				return null;
+			}
+			public Option createOption() {
+		    	Option option   = OptionBuilder.withLongOpt(name())
+		    	.withArgName(getArgName())
+		        .withDescription(getDescription())
+		        .hasArg()
+		        .create(getShortName());
+
+		    	return option;
+			}
+			
+		},				
 		help {
 			@Override
 			public String getArgName() {
@@ -264,6 +296,10 @@ public class IsaClient {
 		case output: {
 			this.outfile = argument;
 			break;			
+		}
+		case toxbankuri: {
+			this.toxbankuri = argument;
+			break;
 		}
 	
 		default: 

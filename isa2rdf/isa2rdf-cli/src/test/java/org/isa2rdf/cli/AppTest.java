@@ -7,6 +7,7 @@ import java.net.URL;
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
+import org.isa2rdf.cli.IsaClient._option;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.tablib.utils.BIIObjectStore;
@@ -152,7 +153,7 @@ public class AppTest  {
 			RDFNode protocol = qs.get("protocol");
 			Assert.assertNotNull(protocol);
 			Assert.assertNotNull(protocol.isURIResource());
-			Assert.assertEquals("http://toxbanktest1.opentox.org:8080/toxbank/protocol/SEURAT-Protocol-245-1", 
+			Assert.assertEquals("https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-245-1", 
 					((Resource)protocol).getURI());
 			n++;
 		}
@@ -346,6 +347,7 @@ public class AppTest  {
 		Assert.assertNotNull(url);
 		String filesPath = url.getFile();
 		IsaClient cli = new IsaClient();
+		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
 		Model model = cli.process(filesPath);
 
 		File out = new File(new File(filesPath),"isatab.owl");
