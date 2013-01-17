@@ -33,11 +33,56 @@
   	</dependency>
   </dependencies>
   <properties>
-  	<restnet.version>0.0.6-SNAPSHOT</restnet.version>
+  	<restnet.version>0.0.9</restnet.version>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   	<junit.version>4.8.1</junit.version>
 	<restlet.version>2.0-M6</restlet.version>
   </properties>  
+ <distributionManagement>
+    <snapshotRepository>
+      <id>toxbank-snapshots</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>toxbank-releases</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases</url>
+    </repository>
+  </distributionManagement>
+  <repositories>
+    <repository>
+      <id>ambit-plovdiv</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>ambit-plovdiv-snapshots</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>mvnrepository</id>
+      <name>mvnrepository</name>
+      <url>http://mvnrepository.com/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>toxbank-releases</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases</url>
+    </repository>
+    <repository>
+      <id>toxbank-snapshots</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>    
+  </repositories>  
  <profiles> 
 <profile>
    <id>http</id>
