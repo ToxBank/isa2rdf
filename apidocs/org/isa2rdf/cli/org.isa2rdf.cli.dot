@@ -42,14 +42,14 @@ digraph G {
 			<tr><td> ProcessingPipelineRDFGenerator&lt;NODE extends Identifiable&gt; </td></tr>
 		</table></td></tr>
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
-			<tr><td align="left"> + OBO : String </td></tr>
-			<tr><td align="left"> + BIBO : String </td></tr>
 			<tr><td align="left"> # TB_URI : String </td></tr>
 			<tr><td align="left"> # TBPROTOCOL_URI : String </td></tr>
+			<tr><td align="left"> + OBO : String </td></tr>
+			<tr><td align="left"> + BIBO : String </td></tr>
 		</table></td></tr>
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
-			<tr><td align="left"> + ProcessingPipelineRDFGenerator(prefix : String, store : BIIObjectStore, model : Model) </td></tr>
-			<tr><td align="left"> + ProcessingPipelineRDFGenerator(prefix : String, store : BIIObjectStore) </td></tr>
+			<tr><td align="left"> + ProcessingPipelineRDFGenerator(toxbankURI : String, prefix : String, store : BIIObjectStore, model : Model) </td></tr>
+			<tr><td align="left"> + ProcessingPipelineRDFGenerator(toxbankURI : String, prefix : String, store : BIIObjectStore) </td></tr>
 			<tr><td align="left"> + createGraph() : Model </td></tr>
 			<tr><td align="left"> # parseToxBankSpecifics(investigation : Investigation, investigationResource : Resource) </td></tr>
 			<tr><td align="left"> + processAnnotations(investigation : Investigation, investigationResource : Resource) </td></tr>
@@ -64,6 +64,7 @@ digraph G {
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 			<tr><td align="left"> # dir : String </td></tr>
 			<tr><td align="left"> # outfile : String </td></tr>
+			<tr><td align="left"> # toxbankuri : String </td></tr>
 		</table></td></tr>
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 			<tr><td align="left"> + IsaClient() </td></tr>

@@ -15,6 +15,7 @@ digraph G {
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 			<tr><td align="left"> # dir : String </td></tr>
 			<tr><td align="left"> # outfile : String </td></tr>
+			<tr><td align="left"> # toxbankuri : String </td></tr>
 		</table></td></tr>
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 			<tr><td align="left"> + IsaClient() </td></tr>
