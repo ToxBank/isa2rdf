@@ -16,30 +16,37 @@ isa2rdf>mvn clean package
 ```
 
 Use: 
-1) Download from https://github.com/ToxBank/isa2rdf/downloads
+1) Download from https://github.com/ToxBank/isa2rdf/downloads  or from Maven repository at
+   http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;quick~isa2rdf
 
 2)
 
 ```
->java -jar isa2rdf-0.0.1-SNAPSHOT.jar
+>java -jar isa2rdf-0.0.4-SNAPSHOT.jar
 ISA-TAB to RDF conversion
 usage: org.isa2rdf.cli.IsaClient
- -d,--dir <dir>               Directory with ISA-TAB files
- -h,--help                    ISA2RDF client
- -o,--output <output file>   Output file .n3|.rdf
+ -d,--dir <dir>                                         Directory with
+                                                        ISA-TAB files
+ -h,--help                                              ISA2RDF client
+ -o,--output <output file>                              Output file
+                                                        .n3|.rdf
+ -t,--toxbankuri <ToxBank protocol service root URI >   ToxBank protocol
+                                                        service root URI 
+                                                        e.g. http://toxbanktest1.opentox.org:8080/toxbank
+                                                        or https://services.toxbank.net/toxbank 
  
 ```
 
 Example:
 
 ```
->java -jar isa2rdf-0.0.1-SNAPSHOT.jar -d /home/myself/sa2rdf/BII-S-11 -o /home/myself/BII-S-11/isatab.rdf
+>java -jar isa2rdf-0.0.4-SNAPSHOT.jar -d /home/myself/sa2rdf/BII-S-11 -o /home/myself/BII-S-11/isatab.rdf -t https://services.toxbank.net/toxbank
 ```
 
 Example: without -o argument, will write RDF/N3 to console
 
 ```
->java -jar isa2rdf-0.0.1-SNAPSHOT.jar -d /home/myself/sa2rdf/BII-S-11 
+>java -jar isa2rdf-0.0.1-SNAPSHOT.jar -d /home/myself/sa2rdf/BII-S-11 -t https://services.toxbank.net/toxbank
 
 @prefix :        <http://onto.toxbank.net/isa/TEST/> .
 @prefix dc:      <http://purl.org/dc/elements/1.1/> .
