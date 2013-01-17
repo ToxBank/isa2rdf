@@ -17,6 +17,7 @@ isa2rdf>mvn clean package
 
 Use: 
 1) Download [0.0.3-SNAPSHOT] (https://github.com/ToxBank/isa2rdf/downloads)  or newer version  [isa2rdf-0.0.4-SNAPSHOT.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4-SNAPSHOT.jar)
+   or use the [Maven repository ] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~~~)
 
 2)
 
