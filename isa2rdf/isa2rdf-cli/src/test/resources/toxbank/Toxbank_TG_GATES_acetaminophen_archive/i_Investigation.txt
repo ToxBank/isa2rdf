@@ -1,0 +1,105 @@
+ONTOLOGY SOURCE REFERENCE										
+Term Source Name	OBI	TBU	TBO	TBC	UO	CHEBI	NCBITaxon	TBK	NCIt	TBP
+Term Source File		https://services.toxbank.net/toxbank/user/	https://services.toxbank.net/toxbank/organisation/	https://services.toxbank.net/toxbank/project/	http://bioportal.bioontology.org/ontologies/49778	http://bioportal.bioontology.org/ontologies/49736	http://bioportal.bioontology.org/ontologies/47845		http://bioportal.bioontology.org/ontologies/47638	https://services.toxbank.net/toxbank/protocol/
+Term Source Version					49778	49736	47845		47638	
+Term Source Description	Ontology for Biomedical Investigations	Toxbank Users	Toxbank Organisations	Toxbank Consortiums	Units of measurement	Chemical entities of biological interest	NCBI organismal classification	Toxbank keywords	NCI Thesaurus	Toxbank Protocols
+INVESTIGATION										
+Investigation Identifier	TG-GATES acetaminophen liver									
+Investigation Title	TG-GATES acetaminophen liver									
+Investigation Description	TG-GATES acetaminophen liver									
+Investigation Submission Date	2/15/2013									
+Investigation Public Release Date	12/29/2009									
+Comment [Created with configuration]										
+Comment [Last Opened With Configuration]	toxbank-config									
+Comment [Owning Organisation URI]	TBO:G20									
+Comment [Consortium URI]	TBC:G17									
+Comment [Principal Investigator URI]	TBU:U39									
+Comment [Investigation keywords]	TBK:K7									
+Comment [Created With Configuration]	C:\ToxBank\ISAcreator.SEURAT-v1.6.2\ISAcreator.SEURAT\Configurations\toxbank-config									
+INVESTIGATION PUBLICATIONS										
+Investigation PubMed ID	20041446									
+Investigation Publication DOI										
+Investigation Publication Author List	"Uehara T, Ono A, Maruyama T, Kato I, Yamada H, Ohno Y, Urushidani T."									
+Investigation Publication Title	The Japanese toxicogenomics project: application of toxicogenomics.									
+Investigation Publication Status	Scientific Publication									
+Investigation Publication Status Term Accession Number	Scientific_Publications									
+Investigation Publication Status Term Source REF	NCIt									
+INVESTIGATION CONTACTS										
+Investigation Person Last Name	Uehara	Maruyama	Kato	Yamada	Kohonen					
+Investigation Person First Name	T	T	I	H	Pekka					
+Investigation Person Mid Initials										
+Investigation Person Email										
+Investigation Person Phone										
+Investigation Person Fax										
+Investigation Person Address										
+Investigation Person Affiliation										
+Investigation Person Roles										
+Investigation Person Roles Term Accession Number										
+Investigation Person Roles Term Source REF										
+Comment [Investigation Person URI]					U39					
+Comment [Investigation Person URI Term Accession Number]					 Pekka Kohonen					
+Comment [Investigation Person URI Term Source REF]					TBU					
+										
+STUDY										
+Study Identifier	acetaminophen.Human.in_vitro.Liver									
+Study Title	TG_GATES Acetaminophen Human in-vitro Liver									
+Study Description	Gene expression profiling of Acetaminophen in Human frozen hepatocytes. Part of the Japanese Toxicogenomics Project									
+Study Submission Date	1/1/2007									
+Study Public Release Date	12/29/2009									
+Study File Name	s_study_sample.txt									
+STUDY DESIGN DESCRIPTORS										
+Study Design Type										
+Study Design Type Term Accession Number										
+Study Design Type Term Source REF										
+STUDY PUBLICATIONS										
+Study PubMed ID	20041446									
+Study Publication DOI										
+Study Publication Author List										
+Study Publication Title										
+Study Publication Status										
+Study Publication Status Term Accession Number										
+Study Publication Status Term Source REF										
+STUDY FACTORS										
+Study Factor Name	Age	Compound	Dose	SampleTimePoint						
+Study Factor Type	Age	Compound	Dose	SampleTimePoint						
+Study Factor Type Term Accession Number										
+Study Factor Type Term Source REF										
+STUDY ASSAYS										
+Study Assay Measurement Type	transcription profiling									
+Study Assay Measurement Type Term Source REF	OBI									
+Study Assay Measurement Type Term Accession Number	424									
+Study Assay Technology Type	DNA microarray									
+Study Assay Technology Type Term Source REF	OBI									
+Study Assay Technology Type Term Accession Number	400148									
+Study Assay Technology Platform										
+Study Assay File Name	a_transcription_micro_1.txt									
+STUDY PROTOCOLS										
+Study Protocol Name	SEURAT-Protocol-22-1									
+Study Protocol Type	SEURAT-Protocol-22-1									
+Study Protocol Type Term Accession Number	SEURAT-Protocol-22-1									
+Study Protocol Type Term Source REF	TBP									
+Study Protocol Description	test protocol									
+Study Protocol URI	https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-22-1									
+Study Protocol Version										
+Study Protocol Parameters Name										
+Study Protocol Parameters Name Term Accession Number										
+Study Protocol Parameters Name Term Source REF										
+Study Protocol Components Name										
+Study Protocol Components Type										
+Study Protocol Components Type Term Accession Number										
+Study Protocol Components Type Term Source REF										
+Comment [Protocol URI]										
+Comment [Protocol URI Term Accession Number]										
+Comment [Protocol URI Term Source REF]										
+STUDY CONTACTS										
+Study Person Last Name										
+Study Person First Name										
+Study Person Mid Initials										
+Study Person Email										
+Study Person Phone										
+Study Person Fax										
+Study Person Address										
+Study Person Affiliation										
+Study Person Roles										
+Study Person Roles Term Accession Number										
+Study Person Roles Term Source REF										

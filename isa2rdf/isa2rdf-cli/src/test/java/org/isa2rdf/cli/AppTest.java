@@ -56,20 +56,33 @@ public class AppTest  {
 	}	
 	
 	@org.junit.Test
+	public void testRDF_TGGATES() throws Exception {
+		Model model = testRDF("toxbank//Toxbank_TG_GATES_acetaminophen_archive");
+		testKeywords(model, 1);
+		testTitleAndAbstract(model);
+		testToxBankResources(model);
+		testRetrieveAllToxbankProtocols(model);
+		testRetrieveAllProtocols(model,1);
+		testRetrieveAllStudiesAndProtocols(model);
+		testToxbankHasProtocol(model,1);
+		testToxbankHasAuthor(model,1);
+		model.close();
+	}
+	@org.junit.Test
 	public void testRDF_BII_I_1() throws Exception {
 		Model model = testRDF("toxbank//BII-I-1");
 		testKeywords(model, 3);
 		testTitleAndAbstract(model);
 		testToxBankResources(model);
 		testRetrieveAllToxbankProtocols(model);
-		testRetrieveAllProtocols(model);
+		testRetrieveAllProtocols(model,11);
 		testRetrieveAllStudiesAndProtocols(model);
-		testToxbankHasProtocol(model);
-		testToxbankHasAuthor(model);
+		testToxbankHasProtocol(model,11);
+		testToxbankHasAuthor(model,3);
 		model.close();
 	}
 	
-	protected void testToxbankHasProtocol(Model model) throws Exception {
+	protected void testToxbankHasProtocol(Model model,int nprotocols) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
@@ -99,10 +112,10 @@ public class AppTest  {
 			n++;
 		}
 		qe.close();
-		Assert.assertEquals(11,n);		
+		Assert.assertEquals(nprotocols,n);		
 	}
 	
-	protected void testToxbankHasAuthor(Model model) throws Exception {
+	protected void testToxbankHasAuthor(Model model,int nauthors) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
@@ -129,7 +142,7 @@ public class AppTest  {
 			n++;
 		}
 		qe.close();
-		Assert.assertEquals(3,n);		
+		Assert.assertEquals(nauthors,n);		
 	}	
 	
 	protected void testRetrieveAllToxbankProtocols(Model model) throws Exception {
@@ -153,8 +166,7 @@ public class AppTest  {
 			RDFNode protocol = qs.get("protocol");
 			Assert.assertNotNull(protocol);
 			Assert.assertNotNull(protocol.isURIResource());
-			Assert.assertEquals("https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-245-1", 
-					((Resource)protocol).getURI());
+			Assert.assertTrue(((Resource)protocol).getURI().startsWith("https://services.toxbank.net/toxbank/protocol"));
 			n++;
 		}
 		qe.close();
@@ -165,7 +177,7 @@ public class AppTest  {
 	 * @param model
 	 * @throws Exception
 	 */
-	protected void testRetrieveAllProtocols(Model model) throws Exception {
+	protected void testRetrieveAllProtocols(Model model,int numProtocols) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
@@ -190,7 +202,7 @@ public class AppTest  {
 			n++;
 		}
 		qe.close();
-		Assert.assertEquals(11,n);		
+		Assert.assertEquals(numProtocols,n);		
 	}
 	
 	protected void testRetrieveAllStudiesAndProtocols(Model model) throws Exception {
