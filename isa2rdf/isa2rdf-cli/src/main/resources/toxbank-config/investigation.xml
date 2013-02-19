@@ -45,7 +45,7 @@
         <ontology id="TBC" abbreviation="TBC" name="ToxBank consortium" version="0.1" />
       </recommended-ontologies>
     </field>
-    <field header="Comment [Principal Investigator URI]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false" section="INVESTIGATION">
+    <field header="Comment [Owner URI]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false" section="INVESTIGATION">
       <description><![CDATA[Toxbank user URI]]></description>
       <default-value><![CDATA[]]></default-value>
       <recommended-ontologies>

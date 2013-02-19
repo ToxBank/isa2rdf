@@ -243,7 +243,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	 */
 	final static String TB_consortium = "comment:Consortium URI";
 	final static String TB_organisation = "comment:Owning Organisation URI";
-	final static String TB_user = "comment:Principal Investigator URI";
+	final static String TB_user = "comment:Owner URI";
 	final static String TB_keywords = "comment:Investigation keywords";
 
 	
