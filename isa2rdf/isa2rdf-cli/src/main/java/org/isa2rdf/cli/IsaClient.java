@@ -43,7 +43,8 @@ public class IsaClient {
 			File out = new File(outfile);
 			writer = new FileWriter(out);
 		}
-		IsaClient.write(model, writer, (outfile==null)||outfile.endsWith(".n3")?"text/n3":"application/rdf+xml", true);
+		IsaClient.write(model, writer, (outfile==null)||outfile.endsWith(".n3")?"text/n3":
+						 (outfile.endsWith(".nt")?"text/n-triples":"application/rdf+xml"), true);
 		writer.close();
 		
 	}
