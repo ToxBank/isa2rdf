@@ -182,7 +182,7 @@ public class IsaClient {
 
 			@Override
 			public String getDescription() {
-				return "Output file .n3|.rdf";
+				return "Output file .n3|.rdf|.nt";
 			}
 
 			@Override
