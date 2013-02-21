@@ -71,6 +71,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		getModel().setNsPrefix( "rdfs", RDFS.getURI() );
 		getModel().setNsPrefix( "rdf", RDF.getURI() );
 		getModel().setNsPrefix("xsd", XSDDatatype.XSD+"#");
+		getModel().setNsPrefix("kw", ISA.TBKeywordsNS);
 		this.TB_URI = toxbankURI;
 		this.TBPROTOCOL_URI = String.format("%s%s/",TB_URI,Resources.protocol);
 		ISA.init(getModel());
