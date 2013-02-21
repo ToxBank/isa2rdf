@@ -1,6 +1,6 @@
 ONTOLOGY SOURCE REFERENCE							
 Term Source Name	ChEMBL	OBI	TBP	TBC	TBO	TBU	TBK
-Term Source File	https://www.ebi.ac.uk/chembldb/	http://toxbanktest1.opentox.org:8080/toxbank/protocol/	http://toxbanktest1.opentox.org:8080/toxbank/project/	http://toxbanktest1.opentox.org:8080/toxbank/organisation/	http://toxbanktest1.opentox.org:8080/toxbank/user/	http://keywords.toxbank.net/	
+Term Source File	https://www.ebi.ac.uk/chembldb/		http://toxbanktest1.opentox.org:8080/toxbank/protocol/	http://toxbanktest1.opentox.org:8080/toxbank/organisation/	http://toxbanktest1.opentox.org:8080/toxbank/project/	http://toxbanktest1.opentox.org:8080/toxbank/user/	http://keywords.toxbank.net#
 Term Source Version							
 Term Source Description		Ontology for Biomedical Investigations	Toxbank protocols	Toxbank Consortium	Toxbank Organisation	Toxbank users	Toxbank keywords
 INVESTIGATION							
@@ -12,7 +12,7 @@ Investigation Public Release Date	2/10/2012
 Comment [Created with configuration]							
 Comment [Owning Organisation URI]	TBO:G176						
 Comment [Consortium URI]	TBC:G2						
-Comment [Principal Investigator URI]	TBU:U115						
+Comment [Owner URI]	TBU:U115						
 Comment [Investigation keywords]	TBK:Fluxomics						
 Comment [Last opened with configuration]	toxbank-config						
 INVESTIGATION PUBLICATIONS							

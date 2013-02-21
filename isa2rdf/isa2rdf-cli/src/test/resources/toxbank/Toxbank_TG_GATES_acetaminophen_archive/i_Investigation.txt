@@ -1,6 +1,6 @@
 ONTOLOGY SOURCE REFERENCE										
 Term Source Name	OBI	TBU	TBO	TBC	UO	CHEBI	NCBITaxon	TBK	NCIt	TBP
-Term Source File		https://services.toxbank.net/toxbank/user/	https://services.toxbank.net/toxbank/organisation/	https://services.toxbank.net/toxbank/project/	http://bioportal.bioontology.org/ontologies/49778	http://bioportal.bioontology.org/ontologies/49736	http://bioportal.bioontology.org/ontologies/47845		http://bioportal.bioontology.org/ontologies/47638	https://services.toxbank.net/toxbank/protocol/
+Term Source File		https://services.toxbank.net/toxbank/user/	https://services.toxbank.net/toxbank/organisation/	https://services.toxbank.net/toxbank/project/	http://bioportal.bioontology.org/ontologies/49778	http://bioportal.bioontology.org/ontologies/49736	http://bioportal.bioontology.org/ontologies/47845	http://keywords.toxbank.net#	http://bioportal.bioontology.org/ontologies/47638	https://services.toxbank.net/toxbank/protocol/
 Term Source Version					49778	49736	47845		47638	
 Term Source Description	Ontology for Biomedical Investigations	Toxbank Users	Toxbank Organisations	Toxbank Consortiums	Units of measurement	Chemical entities of biological interest	NCBI organismal classification	Toxbank keywords	NCI Thesaurus	Toxbank Protocols
 INVESTIGATION										
@@ -13,7 +13,7 @@ Comment [Created with configuration]
 Comment [Last Opened With Configuration]	toxbank-config									
 Comment [Owning Organisation URI]	TBO:G20									
 Comment [Consortium URI]	TBC:G17									
-Comment [Principal Investigator URI]	TBU:U39									
+Comment [Owner URI]	TBU:U39									
 Comment [Investigation keywords]	TBK:K7									
 Comment [Created With Configuration]	C:\ToxBank\ISAcreator.SEURAT-v1.6.2\ISAcreator.SEURAT\Configurations\toxbank-config									
 INVESTIGATION PUBLICATIONS										

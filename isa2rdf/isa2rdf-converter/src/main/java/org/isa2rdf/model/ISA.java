@@ -13,7 +13,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  * Java API to the ToxBank API OWL.
  */
 public class ISA {
-	final public static String TBKeywordsNS = "http://www.owl-ontologies.com/toxbank.owl#";
+	final public static String TBKeywordsNS = "http://www.owl-ontologies.com/toxbank.owl/";
 	public static final String URI ="http://onto.toxbank.net/isa/";
 	public static String FOAF = "http://xmlns.com/foaf/0.1/";
 
