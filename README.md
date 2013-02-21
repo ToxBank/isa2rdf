@@ -39,7 +39,7 @@ This configuration is used in [ISACreator.SEURAT](https://github.com/ToxBank/tox
    * Support for investigation authors (since May 2012)
 
    
-### [0.0.3-SNAPSHOT] (https://github.com/ToxBank/isa2rdf/downloads)  
+### [isa2rdf-0.0.3-SNAPSHOT.jar] (https://github.com/ToxBank/isa2rdf/downloads)  
    
    * Fix for investigaton keywords not serialized (capital K).
    * More junit tests
