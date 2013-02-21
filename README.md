@@ -1,8 +1,7 @@
 ISA-TAB to RDF conversion
 ================
 
-Build
------------------
+##Build
 ````
    isa2rdf>mvn clean package
 
@@ -19,19 +18,36 @@ Build
 ````   
 
 
-Download 
--------------------
+##Download 
 
-   * [isa2rdf-0.0.4.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4.jar)
-   
-   * [isa2rdf-0.0.4-SNAPSHOT.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4-SNAPSHOT.jar)
-   
-   * [0.0.3-SNAPSHOT] (https://github.com/ToxBank/isa2rdf/downloads)  
-   
-   * [Maven repository ] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~~~)
 
-Use
-------------------
+### [isa2rdf-0.0.4.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4.jar)
+   
+   * Keywords namespace is now http://www.owl-ontologies.com/toxbank.owl/
+   * Support for N-TRIPLE output (file extension .nt)
+   * Expects 'Comment[Owner URI]' instead of 'Comment[Principal Investigator URI]' in i_*.txt as defined in [investigation.xml](https://github.com/ToxBank/isa2rdf/blob/master/isa2rdf/isa2rdf-cli/src/main/resources/toxbank-config/investigation.xml). 
+This configuration is used in [ISACreator.SEURAT](https://github.com/ToxBank/toxbank-isa-plugin).
+   * Added TG-GATES example
+   * Added toxbank-config as used in ISACreator.SEURAT
+
+   
+### [isa2rdf-0.0.4-SNAPSHOT.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4-SNAPSHOT.jar)
+
+   * Added option -t toxbank protocol service URI, to be able to use specific instance of Toxbank protocol user,organisation,project services.
+   * The deleted by mistake ISA.java class is restored and added to the isa2rdf-converter package
+   * ISA tools upgraded to import-layer 1.5 (since May 2012)
+   * Support for investigation authors (since May 2012)
+
+   
+### [0.0.3-SNAPSHOT] (https://github.com/ToxBank/isa2rdf/downloads)  
+   
+   * Fix for investigaton keywords not serialized (capital K).
+   * More junit tests
+   
+### [Maven repository ] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~~~)
+
+##Use
+
 
 ```
 >java -jar isa2rdf-0.0.4-SNAPSHOT.jar
