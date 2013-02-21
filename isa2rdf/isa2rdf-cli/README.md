@@ -1,5 +1,12 @@
 CHANGELOG
 
+isa2rdf 0.0.4  (Feb 2013)
+- Keywords namespace is now http://www.owl-ontologies.com/toxbank.owl/
+- support for N-TRIPLE output (file extension .nt)
+- Expects 'Comment[Owner URI]' instead of 'Comment[Principal Investigator URI]' in investigation.txt
+- Added TG-GATES example
+- Added toxbank-config as used in ISACreator.SEURAT
+
 isa2rdf 0.0.4-SNAPSHOT
 
 -added option -t toxbank protocol service URI, to be able to use specific instance of Toxbank protocol user,organisation,project services.
