@@ -22,8 +22,8 @@
     </license>
   </licenses>
     <scm>
-  	<developerConnection>scm:git:git@github.com:ToxBank/isa2rdf.git</developerConnection>
-  	<url>https://github.com/ToxBank/isa2rdf</url>
+    <developerConnection>scm:git:git@github.com:ToxBank/isa2rdf</developerConnection>
+    <url>https://github.com/ToxBank/isa2rdf</url>
   </scm>
   <developers>
         <developer>
