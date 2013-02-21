@@ -1,25 +1,37 @@
 ISA-TAB to RDF conversion
+================
 
-```Build:
-isa2rdf>mvn clean package
+Build
+-----------------
+````
+   isa2rdf>mvn clean package
 
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary:
-[INFO] ------------------------------------------------------------------------
-[INFO] isa2rdf ............................................... SUCCESS [2.362s]
-[INFO] isa2rdf converter ..................................... SUCCESS [17.080s]
-[INFO] isa2rdf-cli ........................................... SUCCESS [2.051s]
-[INFO] ------------------------------------------------------------------------
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESSFUL
-```
+   [INFO]
+   [INFO] ------------------------------------------------------------------------
+   [INFO] Reactor Summary:
+   [INFO] ------------------------------------------------------------------------
+   [INFO] isa2rdf ............................................... SUCCESS [2.362s]
+   [INFO] isa2rdf converter ..................................... SUCCESS [17.080s]
+   [INFO] isa2rdf-cli ........................................... SUCCESS [2.051s]
+   [INFO] ------------------------------------------------------------------------
+   [INFO] ------------------------------------------------------------------------
+   [INFO] BUILD SUCCESSFUL
+````   
 
-Use: 
-1) Download [0.0.3-SNAPSHOT] (https://github.com/ToxBank/isa2rdf/downloads)  or newer version  [isa2rdf-0.0.4-SNAPSHOT.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4-SNAPSHOT.jar)
-   or use the [Maven repository ] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~~~)
 
-2)
+Download 
+-------------------
+
+   * [isa2rdf-0.0.4.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4.jar)
+   
+   * [isa2rdf-0.0.4-SNAPSHOT.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4-SNAPSHOT.jar)
+   
+   * [0.0.3-SNAPSHOT] (https://github.com/ToxBank/isa2rdf/downloads)  
+   
+   * [Maven repository ] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~~~)
+
+Use
+------------------
 
 ```
 >java -jar isa2rdf-0.0.4-SNAPSHOT.jar
@@ -29,7 +41,7 @@ usage: org.isa2rdf.cli.IsaClient
                                                         ISA-TAB files
  -h,--help                                              ISA2RDF client
  -o,--output <output file>                              Output file
-                                                        .n3|.rdf
+                                                        .n3|.rdf|.nt
  -t,--toxbankuri <ToxBank protocol service root URI >   ToxBank protocol
                                                         service root URI 
                                                         e.g. http://toxbanktest1.opentox.org:8080/toxbank
