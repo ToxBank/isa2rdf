@@ -1,1 +1,37 @@
-<isatab-config-file xmlns="http://www.ebi.ac.uk/bii/isatab_configuration#"><isatab-configuration table-name="accutox_assay" isatab-assay-type="generic_assay" isatab-conversion-target="generic"><measurement term-label="Cell viability" term-accession="0000090" source-abbreviation="BAO"/><technology term-label="Neutral Red Uptake Cytotoxicity Test" term-accession="" source-abbreviation=""/><field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false"><description><![CDATA[Should be linked to accutox template Sample Name field]]></description><default-value><![CDATA[]]></default-value></field><field header="Characteristics[well]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false"><description><![CDATA[Well in a 96 well plate]]></description><default-value><![CDATA[A1]]></default-value></field><field header="Factor Value[replicate]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false"><description><![CDATA[replicate within the plate]]></description><default-value><![CDATA[1]]></default-value></field><protocol-field protocol-type ="NRU "/><field header="Assay Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false"><description><![CDATA[Identifier of the well ?]]></description><default-value><![CDATA[]]></default-value></field><field header="Raw Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="true" is-hidden="false"><description><![CDATA[Data file]]></description><default-value><![CDATA[]]></default-value></field><protocol-field protocol-type ="dose response curve"/><field header="Dose Response Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false"><description><![CDATA[Dose response derived data]]></description><default-value><![CDATA[]]></default-value></field><field header="Derived Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="false" is-hidden="false"><description><![CDATA[IC50]]></description><default-value><![CDATA[]]></default-value></field></isatab-configuration></isatab-config-file>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<isatab-config-file xmlns="http://www.ebi.ac.uk/bii/isatab_configuration#">
+  <isatab-configuration table-name="accutox_assay" isatab-assay-type="generic_assay" isatab-conversion-target="generic">
+    <measurement term-label="Cell viability" term-accession="0000090" source-abbreviation="BAO" />
+    <technology term-label="Neutral Red Uptake Cytotoxicity Test" term-accession="" source-abbreviation="" />
+    <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false">
+      <description><![CDATA[Should be linked to accutox template Sample Name field]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[well]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false">
+      <description><![CDATA[Well in a 96 well plate]]></description>
+      <default-value><![CDATA[A1]]></default-value>
+    </field>
+    <field header="Factor Value[replicate]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false">
+      <description><![CDATA[replicate within the plate]]></description>
+      <default-value><![CDATA[1]]></default-value>
+    </field>
+    <protocol-field protocol-type="NRU " />
+    <field header="Assay Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false">
+      <description><![CDATA[Identifier of the well ?]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Raw Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="true" is-hidden="false">
+      <description><![CDATA[Data file]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <protocol-field protocol-type="dose response curve" />
+    <field header="Dose Response Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false">
+      <description><![CDATA[Dose response derived data]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Derived Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="false" is-hidden="false">
+      <description><![CDATA[IC50]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+  </isatab-configuration>
+</isatab-config-file>
