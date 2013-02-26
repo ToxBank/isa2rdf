@@ -75,10 +75,10 @@ public class AppTest  {
 		testTitleAndAbstract(model);
 		testToxBankResources(model);
 		testRetrieveAllToxbankProtocols(model);
-		testRetrieveAllProtocols(model,11);
+		testRetrieveAllProtocols(model,10);
 		testRetrieveAllStudiesAndProtocols(model);
 		testToxbankHasProtocol(model,11);
-		testToxbankHasAuthor(model,3);
+		testToxbankHasAuthor(model,1);
 		model.close();
 	}
 	
@@ -241,7 +241,7 @@ public class AppTest  {
 			n++;
 		}
 		qe.close();
-		Assert.assertEquals(1,n);		
+		Assert.assertEquals(2,n);		
 	}
 	protected void testToxBankResources(Model model) throws Exception {
 		String sparqlQuery = String.format(
