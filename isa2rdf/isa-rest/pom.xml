@@ -3,11 +3,11 @@
   <parent>
     <artifactId>isa2rdf</artifactId>
     <groupId>net.toxbank</groupId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
   </parent>
   <groupId>net.toxbank</groupId>
   <artifactId>isa-rest</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>ISA web service</name>
   <description>Simple REST web service to help with test and visualisation</description>
@@ -33,7 +33,7 @@
   	</dependency>
   </dependencies>
   <properties>
-  	<restnet.version>0.0.9</restnet.version>
+  	<restnet.version>1.0.0-SNAPSHOT</restnet.version>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   	<junit.version>4.8.1</junit.version>
 	<restlet.version>2.0-M6</restlet.version>
