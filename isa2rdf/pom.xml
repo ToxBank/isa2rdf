@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.toxbank</groupId>
@@ -8,10 +8,10 @@
   <name>isa2rdf</name>
   <url>https://github.com/ToxBank/isa2rdf</url>
   <issueManagement>
-  	<url>https://github.com/ToxBank/isa2rdf/issues</url>
+    <url>https://github.com/ToxBank/isa2rdf/issues</url>
   </issueManagement>
   <ciManagement>
-  	<url>http://jenkins.toxbank.net</url>
+    <url>http://jenkins.toxbank.net</url>
   </ciManagement>
   <licenses>
     <license>
@@ -21,41 +21,40 @@
       <comments />
     </license>
   </licenses>
-    <scm>
-    	<connection>scm:git:https://ToxBank@github.com/ToxBank/isa2rdf.git</connection>
-    	<developerConnection>scm:git:git@github.com:ToxBank/isa2rdf</developerConnection>
+  <scm>
+    <connection>scm:git:https://ToxBank@github.com/ToxBank/isa2rdf.git</connection>
+    <developerConnection>scm:git:git@github.com:ToxBank/isa2rdf</developerConnection>
     <url>https://github.com/ToxBank/isa2rdf</url>
   </scm>
   <developers>
-        <developer>
-            <id>vedina</id>
-            <name>Nina Jeliazkova</name>
-            <email>jeliazkova.nina@gmail.com</email>
-            <url>https://github.com/vedina</url>
-            <organization>IdeaConsult Ltd.</organization>
-            <organizationUrl>http://ideaconsult.net</organizationUrl>
-        </developer>
-		<developer>
-		 <id>proccaserra</id>
-            <name>Philippe Rocca-Serra</name>
-            <url>https://github.com/proccaserra</url>
-            <organization>ISA tools team</organization>
-            <organizationUrl>http://isa-tools.org</organizationUrl>
+    <developer>
+      <id>vedina</id>
+      <name>Nina Jeliazkova</name>
+      <email>jeliazkova.nina@gmail.com</email>
+      <url>https://github.com/vedina</url>
+      <organization>IdeaConsult Ltd.</organization>
+      <organizationUrl>http://ideaconsult.net</organizationUrl>
     </developer>
-    </developers>
-    <contributors>
+    <developer>
+      <id>proccaserra</id>
+      <name>Philippe Rocca-Serra</name>
+      <url>https://github.com/proccaserra</url>
+      <organization>ISA tools team</organization>
+      <organizationUrl>http://isa-tools.org</organizationUrl>
+    </developer>
+  </developers>
+  <contributors>
     <contributor>
-            <name>Eamonn Maguire</name>
-            <email>eamonnmag@gmail.com</email>
-            <url>https://github.com/eamonnmag</url>
-            <organization>ISA tools team</organization>
-            <organizationUrl>http://isa-tools.org</organizationUrl>
+      <name>Eamonn Maguire</name>
+      <email>eamonnmag@gmail.com</email>
+      <url>https://github.com/eamonnmag</url>
+      <organization>ISA tools team</organization>
+      <organizationUrl>http://isa-tools.org</organizationUrl>
     </contributor>
-
-    </contributors>
+  </contributors>
   <organization>
-  	<name>ToxBank project</name>
-  	<url>http://toxbank.net</url>
+    <name>ToxBank project</name>
+    <url>http://toxbank.net</url>
   </organization>
   <distributionManagement>
     <snapshotRepository>
@@ -104,7 +103,7 @@
       </resource>
     </resources>
     <plugins>
-     <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <version>3.1</version>
@@ -112,13 +111,13 @@
           <locales>en</locales>
         </configuration>
       </plugin>
-      </plugins>
+    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.1</version>
+          <version>3.1</version>
           <configuration>
             <source>1.6</source>
             <target>1.6</target>
@@ -129,7 +128,7 @@
   </build>
   <reporting>
     <plugins>
-    <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>2.4</version>
@@ -173,7 +172,7 @@
 	            -all
 	          </additionalparam>
         </configuration>
-   	</plugin>
+      </plugin>
     </plugins>
   </reporting>
   <modules>
