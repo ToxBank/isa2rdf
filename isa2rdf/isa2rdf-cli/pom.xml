@@ -58,6 +58,11 @@
     </repository>
   </distributionManagement>
   <repositories>
+  	<!--  isa-tools -->
+    <repository>
+      <id>oerc</id>
+      <url>http://frog.oerc.ox.ac.uk:8080/nexus-2.1.2/content/repositories/releases/</url>
+    </repository>
     <repository>
       <id>ambit-plovdiv</id>
       <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/thirdparty</url>
