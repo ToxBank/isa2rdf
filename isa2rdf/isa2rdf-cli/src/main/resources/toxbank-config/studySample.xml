@@ -20,5 +20,12 @@
     </field>
     <structured-field name="characteristics" />
     <structured-field name="factors" />
+    <field header="Factor Value[compound]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Chemical compound]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="OTSIM" abbreviation="OTSIM" name="OpenTox" version="02" />
+      </recommended-ontologies>
+    </field>
   </isatab-configuration>
 </isatab-config-file>
