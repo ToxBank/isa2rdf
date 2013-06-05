@@ -10,13 +10,17 @@
     </field>
     <field header="Characteristics[organism]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Provide a taxonomic information associated to the Source Biological material (for example, Species, genus, strain,....). Ideally, provide NCBI TaxID or NEWT identifier]]></description>
-      <default-value><![CDATA[]]></default-value>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="" abbreviation="NEWT" name="NEWT UniProt Taxonomy Database" version="Jun 2010" />
+      </recommended-ontologies>
     </field>
     <protocol-field protocol-type="sample collection" />
     <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Samples represent major outputs resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.]]></description>
       <default-value><![CDATA[]]></default-value>
-      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT]</generated-value-template>
+      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT]
+            </generated-value-template>
     </field>
     <structured-field name="characteristics" />
     <structured-field name="factors" />
@@ -24,7 +28,7 @@
       <description><![CDATA[Chemical compound]]></description>
       <default-value><![CDATA[]]></default-value>
       <recommended-ontologies>
-        <ontology id="OTSIM" abbreviation="OTSIM" name="OpenTox" version="02" />
+        <ontology id="OT" abbreviation="OT" name="OpenTox" version="02" />
       </recommended-ontologies>
     </field>
   </isatab-configuration>

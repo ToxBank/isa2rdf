@@ -1,35 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <isatab-config-file xmlns="http://www.ebi.ac.uk/bii/isatab_configuration#">
-  <isatab-configuration table-name="metaboliteprofiling_nmr" isatab-assay-type="nmr_spec_assay" isatab-conversion-target="generic">
-    <measurement term-label="metabolite profiling" term-accession="0000366" source-abbreviation="OBI" />
-    <technology term-label="NMR spectroscopy" term-accession="" source-abbreviation="OBI" />
+  <isatab-configuration table-name="metaboliteprofiling_nmr" isatab-assay-type="nmr_spec_assay" isatab-conversion-target="meda">
+    <measurement term-label="metabolite profiling" term-accession="obo:OBI_0000366" source-abbreviation="OBI" />
+    <technology term-label="NMR spectroscopy" term-accession="obo:OBI_0000623" source-abbreviation="OBI" />
     <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="true" is-required="true" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Samples represent major outputs resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.]]></description>
       <default-value><![CDATA[]]></default-value>
-      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT]
-            </generated-value-template>
+      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT]</generated-value-template>
     </field>
     <protocol-field protocol-type="extraction" />
     <field header="Extract Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[User-defined names for each portion of extracted material.]]></description>
       <default-value><![CDATA[]]></default-value>
-      <generated-value-template>
-                [INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT].Extract-[EXTRACT_COUNT]
-            </generated-value-template>
+      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT].Extract-[EXTRACT_COUNT]</generated-value-template>
     </field>
     <protocol-field protocol-type="labeling" />
     <field header="Labeled Extract Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Identifier for the labeled extract.]]></description>
       <default-value><![CDATA[]]></default-value>
-      <generated-value-template>
-                [INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT].Extract-[EXTRACT_COUNT].LE-[LABEL_COUNT]
-            </generated-value-template>
+      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT].Extract-[EXTRACT_COUNT].LE-[LABEL_COUNT]</generated-value-template>
     </field>
     <field header="Label" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Indicates a chemical or biological marker, such as a radioactive isotope or a fluorescent dye which is bound to a material in order to make it detectable by some assay technology (e.g. P33, biotin, GFP).]]></description>
-      <default-value><![CDATA[]]></default-value>
+      <default-value></default-value>
       <recommended-ontologies>
-        <ontology id="1007" abbreviation="CHEBI" name="Chemical entities of biological interest" version="40664" />
+        <ontology id="1007" abbreviation="CHEBI" name="Chemical entities of biological interest" version="49736" />
       </recommended-ontologies>
     </field>
     <protocol-field protocol-type="NMR spectroscopy" />
@@ -49,7 +44,9 @@
       <description><![CDATA[a parameter expressed in tesla to report the strength of the]]></description>
       <default-value><![CDATA[]]></default-value>
     </field>
-    <unit-field data-type="Ontology term" is-multiple-value="false" is-required="true">" is-forced-ontology="false<description>unit"</description></unit-field>
+    <unit-field data-type="Ontology term" is-multiple-value="false" is-required="true" is-forced-ontology="false">
+      <description>unit"</description>
+    </unit-field>
     <field header="Acquisition Parameter Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Name (or URI) of the acquisition parameter data file gathered for this assay.]]></description>
       <default-value><![CDATA[]]></default-value>
@@ -58,9 +55,7 @@
     <field header="NMR Assay Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[User-defined name for a NMR assay.]]></description>
       <default-value><![CDATA[]]></default-value>
-      <generated-value-template>
-                [INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT].Extract-[EXTRACT_COUNT].LE-[LABEL_COUNT].NMRASSAY-[HYB_COUNT]
-            </generated-value-template>
+      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT].Extract-[EXTRACT_COUNT].LE-[LABEL_COUNT].NMRASSAY-[HYB_COUNT]</generated-value-template>
     </field>
     <field header="Free Induction Decay Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Name (or URI) of the free induction decay data file gathered for this assay.]]></description>
