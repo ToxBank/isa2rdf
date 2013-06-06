@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import net.idea.opentox.cli.csv.QuotedTokenizer;
 
@@ -16,7 +19,16 @@ import org.codehaus.jackson.node.ObjectNode;
 
 
 public class qHTSConverter {
-
+	private String _ASSAY_NAME = "Assay Name";
+	private String _SAMPLE_NAME = "Sample Name";
+	private String _FACTORS = "factors";
+	private String _READOUT = "readout";
+	private String _NAME = "name";
+	private String _EXPERIMENT = "experiment";
+	
+	
+	HashMap<String,BufferedWriter> dataWriters = new HashMap<String, BufferedWriter>();
+	
 	public static void main(String[] args) {
 		qHTSConverter q = new qHTSConverter();
 		q.run(args);
@@ -30,7 +42,7 @@ public class qHTSConverter {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			BufferedWriter studyWriter = new BufferedWriter(new FileWriter(new File("a_assay.txt")));
 			BufferedWriter assayWriter = new BufferedWriter(new FileWriter(new File("a_assay.txt")));
-			BufferedWriter dataWriter = new BufferedWriter(new FileWriter(new File("data.txt")));
+
 			ObjectMapper m = new ObjectMapper();
 			ArrayNode root = m.createArrayNode();
 			
@@ -38,8 +50,9 @@ public class qHTSConverter {
 			int row = 0;
 			while ((line = reader.readLine()) != null) {
 				ObjectNode node = m.createObjectNode();
+				node.put(_NAME,experimentname);
 				ArrayNode experiment = m.createArrayNode();
-				node.put("experiment", experiment);
+				node.put(_EXPERIMENT, experiment);
 
 				QuotedTokenizer st = new QuotedTokenizer(line,',');
 				int col = 0;
@@ -55,9 +68,9 @@ public class qHTSConverter {
 							if (concentration == null) { concentration = m.createObjectNode(); experiment.insert(i-1, concentration);}
 							
 							if (header.get(col).equals(concentrationHeader)) {
-								((ObjectNode) concentration).put("Assay Name",String.format("C%d",i));
+								((ObjectNode) concentration).put(_ASSAY_NAME,String.format("C%d",i));
 								
-								ObjectNode factors = getNode("factors", (ObjectNode)concentration, m);
+								ObjectNode factors = getNode(_FACTORS, (ObjectNode)concentration, m);
 								
 								factors.put("concentration",value);
 								isAdded = true;
@@ -65,10 +78,10 @@ public class qHTSConverter {
 							}
 							concentrationHeader = String.format("C%d Feature:",i);
 							if (header.get(col).startsWith(concentrationHeader)) {
-								JsonNode readout = concentration.get("readout");
+								JsonNode readout = concentration.get(_READOUT);
 								if (readout == null) { 
 									readout = m.createObjectNode(); 
-									((ObjectNode)concentration).put("readout", readout);
+									((ObjectNode)concentration).put(_READOUT, readout);
 								}
 								
 								boolean isChannelAdded = false;
@@ -93,11 +106,10 @@ public class qHTSConverter {
 						if (!isAdded) {
 							for (int e = 0; e < experiment.size(); e++) {
 								if (("Compoundname").equals(header.get(col))) {
-									ObjectNode factors = getNode("factors", (ObjectNode)experiment.get(e), m);
+									ObjectNode factors = getNode(_FACTORS, (ObjectNode)experiment.get(e), m);
 									factors.put("Compound",value);
 								}
 								else ((ObjectNode)experiment.get(e)).put(header.get(col),value);
-								((ObjectNode)experiment.get(e)).put("name",experimentname);
 							}	
 						}	
 					}
@@ -105,21 +117,52 @@ public class qHTSConverter {
 				}
 				
 				for (int e = 0; e < experiment.size(); e++) {
-					((ObjectNode)experiment.get(e)).put("Assay Name",
-							experiment.get(e).get("Sample Name").getTextValue() + "-" + experiment.get(e).get("Assay Name").getTextValue()
+					((ObjectNode)experiment.get(e)).put(_ASSAY_NAME,
+							experiment.get(e).get(_SAMPLE_NAME).getTextValue() + "-" + experiment.get(e).get(_ASSAY_NAME).getTextValue()
 						);
 				}
-				
-				if (row>0) root.add(node);
-				System.out.println(node);
+				if (row>0) {
+					root.add(node);
+					writeDataFile(node);
+				}
+
 				row++;
 			}
 			//System.out.println(root);
 			reader.close();
 		} catch (Exception x) {
 			x.printStackTrace();
+		} finally {
+			for (BufferedWriter w : dataWriters.values()) try {w.close();} catch (Exception x) {}
 		}
 	}
+	
+	protected void writeDataFile(ObjectNode node) throws Exception {
+		BufferedWriter dataWriter = null;
+		ArrayNode experiment = (ArrayNode)node.get(_EXPERIMENT);
+		for (int e = 0; e < experiment.size(); e++) {
+			ObjectNode sample = ((ObjectNode)experiment.get(e));
+			Iterator<String> fields = sample.get(_READOUT).getFieldNames();
+			while (fields.hasNext()) {
+				String field = fields.next();
+				dataWriter = dataWriters.get(field);
+				if (dataWriter==null) {
+					dataWriter = new BufferedWriter(new FileWriter(new File(String.format("data_%s_%s.txt",node.get(_NAME).getTextValue(),field))));
+					dataWriters.put(field,dataWriter);
+				}
+				dataWriter.write(String.format("%s\t", sample.get(_ASSAY_NAME).getTextValue()));
+				
+				Iterator<Entry<String,JsonNode>> values = sample.get(_READOUT).get(field).getFields();
+				while (values.hasNext()) {
+					Entry<String,JsonNode> value = values.next();
+					dataWriter.write(String.format("%s\t%s\t", value.getKey() ,value.getValue().getTextValue()));
+				}
+				dataWriter.write("\n");
+				dataWriter.flush();
+			}
+		}
+	}
+	
 	
 	protected ObjectNode getNode(String key, ObjectNode parent, ObjectMapper m) {
 		JsonNode node = parent.get(key);
