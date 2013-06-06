@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<isatab-config-file xmlns="http://www.ebi.ac.uk/bii/isatab_configuration#">
+  <isatab-configuration table-name="qHTS" isatab-assay-type="generic_assay" isatab-conversion-target="generic">
+    <measurement term-label="Cytotoxicity" term-accession="BAO_0000090" source-abbreviation="BAO" />
+    <technology term-label="Fluorescence imaging" term-accession="Fluorescence_imaging" source-abbreviation="http://www.owl-ontologies.com/Ontology1298855822.owl#" />
+    <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Sample name]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <generated-value-template>{experiment}-{well}-{concentration}</generated-value-template>
+    </field>
+    <field header="Characteristics[organism]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Organism]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <protocol-field protocol-type="fluorescence imaging" />
+    <field header="Parameter Value[Reagents kit]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Reagents kit]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Parameter Value[dye]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Fluorescent dye]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="1007" abbreviation="CHEBI" name="Chemical entities of biological interest" version="50346" />
+        <ontology id="1123" abbreviation="OBI" name="Ontology for Biomedical Investigations" version="47893" />
+      </recommended-ontologies>
+    </field>
+    <field header="Parameter Value[emission wavelength]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Emission wavelength]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Parameter Value[cellular component]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[The cellular component being imaged]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Parameter Value[software]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[The software generating and processing the images]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Assay Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Assay sample identifier]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <generated-value-template>{experiment}-{well}-{concentration}-{channel}</generated-value-template>
+    </field>
+    <field header="Image File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Image file name]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Raw Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Raw data file name]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Derived Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Derived data file name]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <structured-field name="factors" />
+  </isatab-configuration>
+</isatab-config-file>
