@@ -33,6 +33,25 @@
     	<artifactId>jena</artifactId>
     	<version>2.6.4</version>
     </dependency>
+    <dependency>
+    	<groupId>ambit</groupId>
+    	<artifactId>opentox-client</artifactId>
+    	<version>1.0.2</version>
+    	<type>jar</type>
+    	<scope>test</scope>
+    </dependency>
+    <dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-core-lgpl</artifactId>
+	<version>1.9.12</version>
+	<scope>test</scope>
+</dependency>
+<dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-mapper-asl</artifactId>
+	<version>1.9.12</version>
+	<scope>test</scope>
+</dependency>
 </dependencies>  
 <description>ISA-TAB to RDF conversion</description>
   <organization>
