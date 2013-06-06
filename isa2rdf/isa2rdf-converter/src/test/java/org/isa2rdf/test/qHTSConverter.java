@@ -26,8 +26,18 @@ public class qHTSConverter {
 	private String _NAME = "name";
 	private String _EXPERIMENT = "experiment";
 	
+	private String _PROTOCOL_REF = "experiment";
+	private String _PARAMETER_VALUE = "Parameter Value[%s]";
+	private String _IMAGE_FILE = "Image File";
+	private String _RAW_DATA_FILE = "Raw Data File";
+	private String _FACTOR_VALUE = "Factor Value[%s]";
+	private String _UNIT = "Unit";
+
 	
+	HashMap<String,BufferedWriter> studyWriters = new HashMap<String, BufferedWriter>();
+	HashMap<String,BufferedWriter> assayWriters = new HashMap<String, BufferedWriter>();
 	HashMap<String,BufferedWriter> dataWriters = new HashMap<String, BufferedWriter>();
+
 	
 	public static void main(String[] args) {
 		qHTSConverter q = new qHTSConverter();
@@ -40,9 +50,7 @@ public class qHTSConverter {
 			File file = new File(args[0]);
 			String experimentname= file.getName().replace(".csv", "");
 			BufferedReader reader = new BufferedReader(new FileReader(file));
-			BufferedWriter studyWriter = new BufferedWriter(new FileWriter(new File("a_assay.txt")));
-			BufferedWriter assayWriter = new BufferedWriter(new FileWriter(new File("a_assay.txt")));
-
+			
 			ObjectMapper m = new ObjectMapper();
 			ArrayNode root = m.createArrayNode();
 			
@@ -123,6 +131,7 @@ public class qHTSConverter {
 				}
 				if (row>0) {
 					root.add(node);
+					writeAssayFile(node);
 					writeDataFile(node);
 				}
 
@@ -135,6 +144,71 @@ public class qHTSConverter {
 		} finally {
 			for (BufferedWriter w : dataWriters.values()) try {w.close();} catch (Exception x) {}
 		}
+	}
+	
+	protected void writeAssayFile(ObjectNode node) throws Exception {
+		String key = node.get(_NAME).getTextValue();
+		BufferedWriter assayWriter = assayWriters.get(key);
+		if (assayWriter==null) {
+			assayWriter = new BufferedWriter(new FileWriter(new File(String.format("a_%s.txt",key))));
+			assayWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+					_SAMPLE_NAME,
+					_PROTOCOL_REF,
+					String.format(_PARAMETER_VALUE,"dye"),
+					String.format(_PARAMETER_VALUE,"emission wavelength"),
+					String.format(_PARAMETER_VALUE,"cellular component"),
+					String.format(_PARAMETER_VALUE,"software"),
+					_ASSAY_NAME,
+					_IMAGE_FILE,
+					_RAW_DATA_FILE,
+					String.format(_FACTOR_VALUE,"compound"),
+					String.format(_FACTOR_VALUE,"concentration"),
+					_UNIT,
+					String.format(_FACTOR_VALUE,"duration of exposure"),
+					_UNIT
+			));
+			assayWriters.put(key,assayWriter);
+		}
+		
+		ArrayNode experiment = (ArrayNode)node.get(_EXPERIMENT);
+		for (int e = 0; e < experiment.size(); e++) {
+			ObjectNode sample = (ObjectNode)experiment.get(e);
+			ObjectNode factors = (ObjectNode)sample.get(_FACTORS);
+			Iterator<String> fields = sample.get(_READOUT).getFieldNames();
+			while (fields.hasNext()) {
+				String field = fields.next();
+				String dataFilename = String.format("data_%s_%s.txt",node.get(_NAME).getTextValue(),field);
+				assayWriter.write(sample.get(_SAMPLE_NAME).getTextValue());
+				assayWriter.write("\t");
+				assayWriter.write("TODO"); //protocol
+				assayWriter.write("\t");
+				assayWriter.write("TODO"); //dye
+				assayWriter.write("\t");
+				assayWriter.write("TODO"); //wavelen
+				assayWriter.write("\t");
+				assayWriter.write("TODO"); //cell
+				assayWriter.write("\t");
+				assayWriter.write("TODO");//soft
+				assayWriter.write("\t");
+				assayWriter.write(String.format("%s-%s", sample.get(_ASSAY_NAME).getTextValue(),field));
+				assayWriter.write("\t");
+				assayWriter.write("");//img file
+				assayWriter.write("\t");
+				assayWriter.write(dataFilename);//data file
+				assayWriter.write("\t");
+				assayWriter.write(factors.get("Compound").getTextValue());//concen
+				assayWriter.write("\t");
+				assayWriter.write(factors.get("concentration").getTextValue());//concen
+				assayWriter.write("\t");
+				assayWriter.write("TODO");//unit
+				assayWriter.write("\t");
+				assayWriter.write("TODO");//exposure
+				assayWriter.write("\t");
+				assayWriter.write("TODO");//unit
+				assayWriter.write("\n");
+			}
+		}
+		assayWriter.flush();
 	}
 	
 	protected void writeDataFile(ObjectNode node) throws Exception {
