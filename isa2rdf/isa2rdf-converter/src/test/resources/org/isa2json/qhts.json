@@ -7,16 +7,19 @@
                 "cellular component",
                 "software"
             ],
+            
             "protocol_application": {
                 "Ch1": {
                     "dye": "Hoechst 33342",
                     "emission wavelength": "461 nm",
-                    "cellular component": "cell  nuclei"
+                    "cellular component": "cell  nuclei",
+                    "software" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
                 },
                 "Ch2": {
                     "dye": "dihidroethidium",
                     "emission wavelength": "605 nm",
-                    "cellular component": "Reactive oxygen species"
+                    "cellular component": "Reactive oxygen species",
+                    "software" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
                 }
             }
         },
@@ -32,17 +35,20 @@
                 "Ch1": {
                     "dye": "Hoechst 33342",
                     "emission wavelength": "461 nm",
-                    "cellular component": "cell  nuclei"
+                    "cellular component": "cell  nuclei",
+                    "software" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
                 },
                 "Ch2": {
                     "dye": "neutral lipid stain",
                     "emission wavelength": "505 nm",
-                    "cellular component": "neutral lipid droplets"
+                    "cellular component": "neutral lipid droplets",
+                    "software" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
                 },
                 "Ch3": {
                     "dye": "neutral lipid stain",
                     "emission wavelength": "505 nm",
-                    "cellular component": "neutral lipid droplets"
+                    "cellular component": "neutral lipid droplets",
+                    "software" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
                 }
             }
         }

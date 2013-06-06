@@ -44,7 +44,7 @@ public class qHTSConverter {
 	
 	//study
 	private String _SOURCE_NAME = "Source Name";
-	private String _CHARACTERISTIC = "Characteristic[%s]";
+	private String _CHARACTERISTIC = "Characteristics[%s]";
 	
 	//assay
 	private String _SAMPLE_NAME = "Sample Name";
@@ -63,14 +63,18 @@ public class qHTSConverter {
 
 	
 	public static void main(String[] args) {
-		qHTSConverter q = new qHTSConverter();
-		q.run(args);
-	}
-	public void run(String[] args) {
 		if (args.length<1) return;
+		
+		for (String arg: args) {
+			qHTSConverter q = new qHTSConverter();
+			q.run(arg);
+		}	
+	}
+	public void run(String arg) {
+		
 		try {
 			String line;
-			File file = new File(args[0]);
+			File file = new File(arg);
 			String experimentname= file.getName().replace(".csv", "");
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			
@@ -175,6 +179,8 @@ public class qHTSConverter {
 			x.printStackTrace();
 		} finally {
 			for (BufferedWriter w : dataWriters.values()) try {w.close();} catch (Exception x) {}
+			for (BufferedWriter w : assayWriters.values()) try {w.close();} catch (Exception x) {}
+			for (BufferedWriter w : studyWriters.values()) try {w.close();} catch (Exception x) {}
 		}
 	}
 	//Source Name	Characteristics[plate identifier]	Characteristics[plate well]	Characteristics[organism]	Characteristics[cell line]	
@@ -214,7 +220,7 @@ public class qHTSConverter {
 			ObjectNode sample = (ObjectNode)experiment.get(e);
 			ObjectNode factors = (ObjectNode)sample.get(_FACTORS);
 
-			studyWriter.write(sample.get(_SAMPLE_NAME).getTextValue());
+			studyWriter.write(node.get(_NAME).getTextValue());
 			studyWriter.write("\t");
 			studyWriter.write(sample.get(_SAMPLE_NAME).getTextValue().replace(sample.get("Position").getTextValue(),"").replace("-", "")); //plate
 			studyWriter.write("\t");
@@ -234,9 +240,9 @@ public class qHTSConverter {
 			studyWriter.write("\t");
 			studyWriter.write("37 Degree C");//protocol
 			studyWriter.write("\t");
-			studyWriter.write(""); //performer
+			studyWriter.write(hackPerformer(key)); //performer
 			studyWriter.write("\t");
-			studyWriter.write(""); //date
+			studyWriter.write(hackDate(key)); //date
 			studyWriter.write("\t");
 			studyWriter.write(sample.get(_ASSAY_NAME).getTextValue());
 			studyWriter.write("\t");
@@ -259,15 +265,13 @@ public class qHTSConverter {
 		BufferedWriter assayWriter = assayWriters.get(key);
 		if (assayWriter==null) {
 			assayWriter = new BufferedWriter(new FileWriter(new File(String.format("a_%s.txt",key))));
-			assayWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+			assayWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
 					_SAMPLE_NAME,
 					_PROTOCOL_REF,
 					String.format(_PARAMETER_VALUE,"dye"),
 					String.format(_PARAMETER_VALUE,"emission wavelength"),
 					String.format(_PARAMETER_VALUE,"cellular component"),
 					String.format(_PARAMETER_VALUE,"software"),
-					"Performer",
-					"Date",
 					_ASSAY_NAME,
 					_IMAGE_FILE,
 					_RAW_DATA_FILE
@@ -295,30 +299,27 @@ public class qHTSConverter {
 			*/
 			assayWriters.put(key,assayWriter);
 		}
-		
+
 		ArrayNode experiment = (ArrayNode)node.get(_EXPERIMENT);
 		for (int e = 0; e < experiment.size(); e++) {
 			ObjectNode sample = (ObjectNode)experiment.get(e);
-			ObjectNode factors = (ObjectNode)sample.get(_FACTORS);
+			
 			Iterator<String> fields = sample.get(_READOUT).getFieldNames();
 			while (fields.hasNext()) {
 				String field = fields.next();
+				JsonNode protocolapp = node.get("protocol").get("protocol_application").get(field);
 				String dataFilename = String.format("data_%s_%s.txt",node.get(_NAME).getTextValue(),field);
 				assayWriter.write(sample.get(_ASSAY_NAME).getTextValue());
 				assayWriter.write("\t");
-				assayWriter.write("TODO"); //protocol
+				assayWriter.write(node.get("protocol").get("ref").getTextValue()); //protocol
 				assayWriter.write("\t");
-				assayWriter.write(""); //performer
+				assayWriter.write(protocolapp.get("dye").getTextValue()); //dye
 				assayWriter.write("\t");
-				assayWriter.write(""); //date
+				assayWriter.write(protocolapp.get("emission wavelength").getTextValue()); //wavelen
 				assayWriter.write("\t");
-				assayWriter.write("TODO"); //dye
+				assayWriter.write(protocolapp.get("cellular component").getTextValue()); //cell
 				assayWriter.write("\t");
-				assayWriter.write("TODO"); //wavelen
-				assayWriter.write("\t");
-				assayWriter.write("TODO"); //cell
-				assayWriter.write("\t");
-				assayWriter.write("TODO");//soft
+				assayWriter.write(protocolapp.get("software").getTextValue()); //cell
 				assayWriter.write("\t");
 				assayWriter.write(String.format("%s-%s", sample.get(_ASSAY_NAME).getTextValue(),field));
 				assayWriter.write("\t");
@@ -348,6 +349,7 @@ public class qHTSConverter {
 		ArrayNode experiment = (ArrayNode)node.get(_EXPERIMENT);
 		for (int e = 0; e < experiment.size(); e++) {
 			ObjectNode sample = ((ObjectNode)experiment.get(e));
+			ObjectNode factors = (ObjectNode)sample.get(_FACTORS);
 			Iterator<String> fields = sample.get(_READOUT).getFieldNames();
 			while (fields.hasNext()) {
 				String field = fields.next();
@@ -363,16 +365,29 @@ public class qHTSConverter {
 					Entry<String,JsonNode> value = values.next();
 					dataWriter.write(String.format("%s\t%s\t", value.getKey() ,value.getValue().getTextValue()));
 				}
+				dataWriter.write(factors.get("Compound").getTextValue());//comp
+				dataWriter.write("\t");
+				dataWriter.write(factors.get("concentration").getTextValue());//concen
 				dataWriter.write("\n");
 				dataWriter.flush();
 			}
 		}
 	}
 	
-	
 	protected ObjectNode getNode(String key, ObjectNode parent, ObjectMapper m) {
 		JsonNode node = parent.get(key);
 		if (node == null) { node = m.createObjectNode(); parent.put(key,node);}
 		return (ObjectNode) node;
+	}
+	protected String hackDate(String name) {
+		if (name.indexOf("experiment1")>0) return "10/8/2010";
+		else if (name.indexOf("experiment6")>0) return "5/18/2011";
+		else return "";
+	}
+	protected String hackPerformer(String name) {
+		if (name.indexOf("experiment1")>0) return "Milena/Taina";
+		else if (name.indexOf("experiment2")>0) return "Milena";
+		else if (name.indexOf("experiment4")>0) return "Milena";
+		else return "Milena/Georgina";
 	}
 }
