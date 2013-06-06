@@ -1,0 +1,49 @@
+  {
+        "ROS": {
+            "ref" : "oxidative stress staining kit",
+            "parameter": [
+                "dye",
+                "emission wavelength",
+                "cellular component",
+                "software"
+            ],
+            "protocol_application": {
+                "Ch1": {
+                    "dye": "Hoechst 33342",
+                    "emission wavelength": "461 nm",
+                    "cellular component": "cell  nuclei"
+                },
+                "Ch2": {
+                    "dye": "dihidroethidium",
+                    "emission wavelength": "605 nm",
+                    "cellular component": "Reactive oxygen species"
+                }
+            }
+        },
+        "STEATOSIS": {
+            "ref" : "HCS LipidTOX Green Neutral Lipid Stain, for cellular imaging",
+            "parameter": [
+                "dye",
+                "emission wavelength",
+                "cellular component",
+                "software"
+            ],
+            "protocol_application": {
+                "Ch1": {
+                    "dye": "Hoechst 33342",
+                    "emission wavelength": "461 nm",
+                    "cellular component": "cell  nuclei"
+                },
+                "Ch2": {
+                    "dye": "neutral lipid stain",
+                    "emission wavelength": "505 nm",
+                    "cellular component": "neutral lipid droplets"
+                },
+                "Ch3": {
+                    "dye": "neutral lipid stain",
+                    "emission wavelength": "505 nm",
+                    "cellular component": "neutral lipid droplets"
+                }
+            }
+        }
+    }

@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,12 +17,26 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
-import org.omg.CORBA._PolicyStub;
 
 
 public class qHTSConverter {
 	
 	
+	enum _protocol {
+		ROS {
+			@Override
+			public String getProtocol() {
+				return "oxidative stress staining kit";
+			}
+		},
+		STEATOSIS {
+			@Override
+			public String getProtocol() {
+				return "oxidative stress staining kit";
+			}
+		};
+		public abstract String getProtocol();
+	}
 	private String _FACTORS = "factors";
 	private String _READOUT = "readout";
 	private String _NAME = "name";
@@ -33,7 +48,7 @@ public class qHTSConverter {
 	
 	//assay
 	private String _SAMPLE_NAME = "Sample Name";
-	private String _PROTOCOL_REF = "experiment";
+	private String _PROTOCOL_REF = "Protocol REF";
 	private String _PARAMETER_VALUE = "Parameter Value[%s]";
 	private String _ASSAY_NAME = "Assay Name";
 	private String _IMAGE_FILE = "Image File";
@@ -60,13 +75,21 @@ public class qHTSConverter {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			
 			ObjectMapper m = new ObjectMapper();
+			InputStream in = getClass().getClassLoader().getResourceAsStream("org/isa2json/qhts.json");
+			JsonNode protocols = m.readTree(in);
+
+			in.close();
 			ArrayNode root = m.createArrayNode();
-			
+
 			ArrayList<String> header = new ArrayList<String>();
 			int row = 0;
 			while ((line = reader.readLine()) != null) {
 				ObjectNode node = m.createObjectNode();
+				
+				String protocolRef = experimentname.startsWith("ROS")?"ROS":experimentname.startsWith("STEATOSIS")?"STEATOSIS":"UNKNOWN";
+				
 				node.put(_NAME,experimentname);
+				node.put("protocol",protocols.get(protocolRef));
 				ArrayNode experiment = m.createArrayNode();
 				node.put(_EXPERIMENT, experiment);
 
@@ -163,7 +186,7 @@ public class qHTSConverter {
 		BufferedWriter studyWriter = studyWriters.get(key);
 		if (studyWriter==null) {
 			studyWriter = new BufferedWriter(new FileWriter(new File(String.format("s_%s.txt",key))));
-			studyWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+			studyWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
 					_SOURCE_NAME,
 					String.format(_CHARACTERISTIC,"plate identifier"),
 					String.format(_CHARACTERISTIC,"well"),
@@ -174,6 +197,8 @@ public class qHTSConverter {
 					String.format(_PARAMETER_VALUE,"cell culture medium"),
 					String.format(_PARAMETER_VALUE,"CO2 concentration"),
 					String.format(_PARAMETER_VALUE,"incubation temperature"),
+					"Performer",
+					"Date",
 					_SAMPLE_NAME,
 					String.format(_FACTOR_VALUE,"compound"),
 					String.format(_FACTOR_VALUE,"concentration"),
@@ -188,11 +213,10 @@ public class qHTSConverter {
 		for (int e = 0; e < experiment.size(); e++) {
 			ObjectNode sample = (ObjectNode)experiment.get(e);
 			ObjectNode factors = (ObjectNode)sample.get(_FACTORS);
-			Iterator<String> fields = sample.get(_READOUT).getFieldNames();
 
 			studyWriter.write(sample.get(_SAMPLE_NAME).getTextValue());
 			studyWriter.write("\t");
-			studyWriter.write("TODO"); //plate
+			studyWriter.write(sample.get(_SAMPLE_NAME).getTextValue().replace(sample.get("Position").getTextValue(),"").replace("-", "")); //plate
 			studyWriter.write("\t");
 			studyWriter.write(sample.get("Position").getTextValue());
 			studyWriter.write("\t");
@@ -210,17 +234,21 @@ public class qHTSConverter {
 			studyWriter.write("\t");
 			studyWriter.write("37 Degree C");//protocol
 			studyWriter.write("\t");
+			studyWriter.write(""); //performer
+			studyWriter.write("\t");
+			studyWriter.write(""); //date
+			studyWriter.write("\t");
 			studyWriter.write(sample.get(_ASSAY_NAME).getTextValue());
 			studyWriter.write("\t");
 			studyWriter.write(factors.get("Compound").getTextValue());//comp
 			studyWriter.write("\t");
 			studyWriter.write(factors.get("concentration").getTextValue());//concen
 			studyWriter.write("\t");
-			studyWriter.write("TODO");//unit
+			studyWriter.write("Molar");//unit
 			studyWriter.write("\t");
-			studyWriter.write("TODO");//exposure
+			studyWriter.write("72");//exposure
 			studyWriter.write("\t");
-			studyWriter.write("TODO");//unit
+			studyWriter.write("hour");//unit
 			studyWriter.write("\n");
 		}
 		studyWriter.flush();
@@ -231,13 +259,30 @@ public class qHTSConverter {
 		BufferedWriter assayWriter = assayWriters.get(key);
 		if (assayWriter==null) {
 			assayWriter = new BufferedWriter(new FileWriter(new File(String.format("a_%s.txt",key))));
-			assayWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+			assayWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
 					_SAMPLE_NAME,
 					_PROTOCOL_REF,
 					String.format(_PARAMETER_VALUE,"dye"),
 					String.format(_PARAMETER_VALUE,"emission wavelength"),
 					String.format(_PARAMETER_VALUE,"cellular component"),
 					String.format(_PARAMETER_VALUE,"software"),
+					"Performer",
+					"Date",
+					_ASSAY_NAME,
+					_IMAGE_FILE,
+					_RAW_DATA_FILE
+			));
+		
+			/*
+			assayWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+					_SAMPLE_NAME,
+					_PROTOCOL_REF,
+					String.format(_PARAMETER_VALUE,"dye"),
+					String.format(_PARAMETER_VALUE,"emission wavelength"),
+					String.format(_PARAMETER_VALUE,"cellular component"),
+					String.format(_PARAMETER_VALUE,"software"),
+					"Performer",
+					"Date",
 					_ASSAY_NAME,
 					_IMAGE_FILE,
 					_RAW_DATA_FILE,
@@ -247,6 +292,7 @@ public class qHTSConverter {
 					String.format(_FACTOR_VALUE,"duration of exposure"),
 					_UNIT
 			));
+			*/
 			assayWriters.put(key,assayWriter);
 		}
 		
@@ -262,6 +308,10 @@ public class qHTSConverter {
 				assayWriter.write("\t");
 				assayWriter.write("TODO"); //protocol
 				assayWriter.write("\t");
+				assayWriter.write(""); //performer
+				assayWriter.write("\t");
+				assayWriter.write(""); //date
+				assayWriter.write("\t");
 				assayWriter.write("TODO"); //dye
 				assayWriter.write("\t");
 				assayWriter.write("TODO"); //wavelen
@@ -275,6 +325,7 @@ public class qHTSConverter {
 				assayWriter.write("");//img file
 				assayWriter.write("\t");
 				assayWriter.write(dataFilename);//data file
+				/*
 				assayWriter.write("\t");
 				assayWriter.write(factors.get("Compound").getTextValue());//concen
 				assayWriter.write("\t");
@@ -285,6 +336,7 @@ public class qHTSConverter {
 				assayWriter.write("TODO");//exposure
 				assayWriter.write("\t");
 				assayWriter.write("TODO");//unit
+				*/
 				assayWriter.write("\n");
 			}
 		}
