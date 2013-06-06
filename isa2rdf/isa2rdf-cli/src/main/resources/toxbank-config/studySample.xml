@@ -8,28 +8,154 @@
       <default-value><![CDATA[]]></default-value>
       <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO]</generated-value-template>
     </field>
-    <field header="Characteristics[organism]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
-      <description><![CDATA[Provide a taxonomic information associated to the Source Biological material (for example, Species, genus, strain,....). Ideally, provide NCBI TaxID or NEWT identifier]]></description>
-      <default-value></default-value>
+    <field header="Characteristics[Subject ID]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[ID of the subject (animal or bio batch name when in vitro)]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[organism]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Provide a taxonomic information associated to the Source Biological material (e.g., Species, genus, strain, etc.). Ideally, provide NCBI TaxID or NEWT identifier (required)]]></description>
+      <default-value><![CDATA[]]></default-value>
       <recommended-ontologies>
         <ontology id="" abbreviation="NEWT" name="NEWT UniProt Taxonomy Database" version="Jun 2010" />
+        <ontology id="1132" abbreviation="NCBITaxon" name="NCBI organismal classification" version="47845" />
       </recommended-ontologies>
     </field>
-    <protocol-field protocol-type="sample collection" />
-    <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
-      <description><![CDATA[Samples represent major outputs resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.]]></description>
+    <field header="Characteristics[sex]" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Sex (sex of original source or U when in vitro)]]></description>
       <default-value><![CDATA[]]></default-value>
-      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT]
-            </generated-value-template>
+      <list-values>Female,Male,U</list-values>
     </field>
-    <structured-field name="characteristics" />
-    <structured-field name="factors" />
-    <field header="Factor Value[compound]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
-      <description><![CDATA[Chemical compound]]></description>
+    <field header="Characteristics[strain]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Strain for cell line name when in vitro, inbred strain for rodent]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Factor Value[age]" data-type="Integer" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Age of animal (in vivo) or passage number if relevant (in vitro)]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <unit-field data-type="Ontology term" is-multiple-value="false" is-required="false">" is-forced-ontology="false<description>Age unit"</description></unit-field>
+    <field header="Characteristics[organ]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Organ from which the RNA is extracted for hybridization]]></description>
       <default-value><![CDATA[]]></default-value>
       <recommended-ontologies>
+        <ontology id="1123" abbreviation="OBI" name="Ontology for Biomedical Investigations" version="47203" />
+      </recommended-ontologies>
+    </field>
+    <field header="Characteristics[tissue]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Tissue from which the RNA is extracted for hybridization]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="1123" abbreviation="OBI" name="Ontology for Biomedical Investigations" version="47893" />
+      </recommended-ontologies>
+    </field>
+    <field header="Characteristics[cell]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Type of cells (not cell line)]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="1123" abbreviation="OBI" name="Ontology for Biomedical Investigations" version="47893" />
+      </recommended-ontologies>
+    </field>
+    <field header="Characteristics[cell line]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Cell line)]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="1123" abbreviation="OBI" name="Ontology for Biomedical Investigations" version="47893" />
+      </recommended-ontologies>
+    </field>
+    <field header="Characteristics[assay type]" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Type of assay (in vitro, in vivo or ex vivo) (required)]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <list-values>in vivo,in vitro,ex vivo,other</list-values>
+    </field>
+    <field header="Characteristics[plate identifier]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Plate identifier]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[well]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Plate position]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[Biological Replicate]" data-type="Integer" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Put 1 for all samples if there are no biological replicates, otherwise use a distinct number or letter for each replicate group (required)]]></description>
+      <default-value><![CDATA[1]]></default-value>
+    </field>
+    <field header="Characteristics[Technical Replicate]" data-type="Integer" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Leave blank if there are no technical replicates, otherwise use a number for each replicate group]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Factor Value[compound]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Compound Name (use IUPAC name)]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="1007" abbreviation="CHEBI" name="Chemical entities of biological interest" version="49277" />
         <ontology id="OT" abbreviation="OT" name="OpenTox" version="02" />
       </recommended-ontologies>
     </field>
+    <field header="Characteristics[StdInChIKey]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[The Compound's Standard International Chemical Identifier (InChI) key (please look up)]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[eniantiomer]" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Enantiomer form of the compound]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <list-values>Mixture,S,R,Unknown</list-values>
+    </field>
+    <field header="Characteristics[control]" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Control flag (Positive or Negative or blank]]></description>
+      <default-value><![CDATA[false]]></default-value>
+      <list-values>,Negative,Positive</list-values>
+    </field>
+    <field header="Characteristics[sample match]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Sample name of the matching control sample (leave empty if no control is linked to this sample)]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Factor Value[dose]" data-type="Double" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Dose per administration or concentration tested]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <unit-field data-type="Ontology term" is-multiple-value="false" is-required="false">" is-forced-ontology="false<description>Dose or concentration unit"</description></unit-field>
+    <field header="Factor Value[dose duration]" data-type="Double" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Duration of treatment; only for repeat dose toxicity study]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <unit-field data-type="Ontology term" is-multiple-value="false" is-required="false">" is-forced-ontology="false<description>Dose duration unit"</description></unit-field>
+    <field header="Factor Value[dose frequency]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Dose frequency; only for repeat dose toxicity study]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[vehicle]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Vehicle used to dilute the compound (water, DMSO, etc.)]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[route]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Administration route (Oral gavage, injection, etc.)]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="1032" abbreviation="NCIt" name="NCI Thesaurus" version="47638" />
+      </recommended-ontologies>
+    </field>
+    <field header="Factor Value[sample TimePoint]" data-type="Double" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Elapsed time between end of dosing and sample collection]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Characteristics[sample TimePointUnit]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="true">
+      <description><![CDATA[Time unit]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="1112" abbreviation="UO" name="Units of measurement" version="49121" />
+      </recommended-ontologies>
+    </field>
+    <field header="Characteristics[treatment group]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Free text to group the assay by treatment (ex. treated, untreated)]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <protocol-field protocol-type="sample collection" />
+    <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[A unique name for each of your samples after all treatments described here (required)]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT]</generated-value-template>
+    </field>
+    <structured-field name="characteristics" />
+    <structured-field name="factors" />
   </isatab-configuration>
 </isatab-config-file>
