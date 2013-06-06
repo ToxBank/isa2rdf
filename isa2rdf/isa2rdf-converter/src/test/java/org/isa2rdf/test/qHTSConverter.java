@@ -16,18 +16,26 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.omg.CORBA._PolicyStub;
 
 
 public class qHTSConverter {
-	private String _ASSAY_NAME = "Assay Name";
-	private String _SAMPLE_NAME = "Sample Name";
+	
+	
 	private String _FACTORS = "factors";
 	private String _READOUT = "readout";
 	private String _NAME = "name";
 	private String _EXPERIMENT = "experiment";
 	
+	//study
+	private String _SOURCE_NAME = "Source Name";
+	private String _CHARACTERISTIC = "Characteristic[%s]";
+	
+	//assay
+	private String _SAMPLE_NAME = "Sample Name";
 	private String _PROTOCOL_REF = "experiment";
 	private String _PARAMETER_VALUE = "Parameter Value[%s]";
+	private String _ASSAY_NAME = "Assay Name";
 	private String _IMAGE_FILE = "Image File";
 	private String _RAW_DATA_FILE = "Raw Data File";
 	private String _FACTOR_VALUE = "Factor Value[%s]";
@@ -131,6 +139,7 @@ public class qHTSConverter {
 				}
 				if (row>0) {
 					root.add(node);
+					writeStudyFile(node);
 					writeAssayFile(node);
 					writeDataFile(node);
 				}
@@ -144,6 +153,77 @@ public class qHTSConverter {
 		} finally {
 			for (BufferedWriter w : dataWriters.values()) try {w.close();} catch (Exception x) {}
 		}
+	}
+	//Source Name	Characteristics[plate identifier]	Characteristics[plate well]	Characteristics[organism]	Characteristics[cell line]	
+	//Characteristics[cell line provider]	Protocol REF	Parameter Value[cell culture medium]	Parameter Value[CO2 concentration]	
+	//Parameter Value[incubation temperature]	Sample Name	Factor Value[compound]	Factor Value[concentration]	Unit	Factor Value[duration of exposure]	Unit
+
+	protected void writeStudyFile(ObjectNode node) throws Exception {
+		String key = node.get(_NAME).getTextValue();
+		BufferedWriter studyWriter = studyWriters.get(key);
+		if (studyWriter==null) {
+			studyWriter = new BufferedWriter(new FileWriter(new File(String.format("s_%s.txt",key))));
+			studyWriter.write(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+					_SOURCE_NAME,
+					String.format(_CHARACTERISTIC,"plate identifier"),
+					String.format(_CHARACTERISTIC,"well"),
+					String.format(_CHARACTERISTIC,"organism"),
+					String.format(_CHARACTERISTIC,"cell line"),
+					String.format(_CHARACTERISTIC,"cell line provider"),
+					_PROTOCOL_REF,
+					String.format(_PARAMETER_VALUE,"cell culture medium"),
+					String.format(_PARAMETER_VALUE,"CO2 concentration"),
+					String.format(_PARAMETER_VALUE,"incubation temperature"),
+					_SAMPLE_NAME,
+					String.format(_FACTOR_VALUE,"compound"),
+					String.format(_FACTOR_VALUE,"concentration"),
+					_UNIT,
+					String.format(_FACTOR_VALUE,"duration of exposure"),
+					_UNIT
+			));
+			studyWriters.put(key,studyWriter);
+		}
+		
+		ArrayNode experiment = (ArrayNode)node.get(_EXPERIMENT);
+		for (int e = 0; e < experiment.size(); e++) {
+			ObjectNode sample = (ObjectNode)experiment.get(e);
+			ObjectNode factors = (ObjectNode)sample.get(_FACTORS);
+			Iterator<String> fields = sample.get(_READOUT).getFieldNames();
+
+			studyWriter.write(sample.get(_SAMPLE_NAME).getTextValue());
+			studyWriter.write("\t");
+			studyWriter.write("TODO"); //plate
+			studyWriter.write("\t");
+			studyWriter.write(sample.get("Position").getTextValue());
+			studyWriter.write("\t");
+			studyWriter.write("Homo sapiens"); //organism
+			studyWriter.write("\t");
+			studyWriter.write("HepRG"); //cell
+			studyWriter.write("\t");
+			studyWriter.write("Biopredic International");//cell line prov
+			studyWriter.write("\t");
+			studyWriter.write("cell growth");//protocol
+			studyWriter.write("\t");
+			studyWriter.write("William’s E medium supplemented with 10% serum, 1% L-glutamine, 1% penicillin/streptomycin, 5 \u00B5g/ml bovine insulin and 50 µM hydrocortisone hemisuccinate");//protocol
+			studyWriter.write("\t");
+			studyWriter.write("5%");//protocol
+			studyWriter.write("\t");
+			studyWriter.write("37 Degree C");//protocol
+			studyWriter.write("\t");
+			studyWriter.write(sample.get(_ASSAY_NAME).getTextValue());
+			studyWriter.write("\t");
+			studyWriter.write(factors.get("Compound").getTextValue());//comp
+			studyWriter.write("\t");
+			studyWriter.write(factors.get("concentration").getTextValue());//concen
+			studyWriter.write("\t");
+			studyWriter.write("TODO");//unit
+			studyWriter.write("\t");
+			studyWriter.write("TODO");//exposure
+			studyWriter.write("\t");
+			studyWriter.write("TODO");//unit
+			studyWriter.write("\n");
+		}
+		studyWriter.flush();
 	}
 	
 	protected void writeAssayFile(ObjectNode node) throws Exception {
@@ -178,7 +258,7 @@ public class qHTSConverter {
 			while (fields.hasNext()) {
 				String field = fields.next();
 				String dataFilename = String.format("data_%s_%s.txt",node.get(_NAME).getTextValue(),field);
-				assayWriter.write(sample.get(_SAMPLE_NAME).getTextValue());
+				assayWriter.write(sample.get(_ASSAY_NAME).getTextValue());
 				assayWriter.write("\t");
 				assayWriter.write("TODO"); //protocol
 				assayWriter.write("\t");
