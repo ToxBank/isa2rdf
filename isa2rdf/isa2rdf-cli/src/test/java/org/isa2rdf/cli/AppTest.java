@@ -82,6 +82,21 @@ public class AppTest  {
 		model.close();
 	}
 	
+	//@org.junit.Test
+	public void testRDF_LCMSMS() throws Exception {
+		Model model = testRDF("toxbank//LCMSMS_archive");
+		testKeywords(model, 8);
+		testTitleAndAbstract(model);
+		testToxBankResources(model,2);
+		//testRetrieveAllToxbankProtocols(model);
+		//testRetrieveAllProtocols(model,10);
+		//testRetrieveAllStudiesAndProtocols(model);
+		//testToxbankHasProtocol(model,11);
+		//testToxbankHasAuthor(model,1);
+		testToxbankHasProject(model,2);
+		
+		model.close();
+	}
 	protected void testToxbankHasProtocol(Model model,int nprotocols) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
@@ -144,7 +159,37 @@ public class AppTest  {
 		qe.close();
 		Assert.assertEquals(nauthors,n);		
 	}	
-	
+
+	protected void testToxbankHasProject(Model model,int nproject) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?investigation ?project where {\n" +
+				" ?project rdf:type tb:Project.\n" +
+				" ?investigation tb:hasProject ?project.\n" +
+				" ?investigation rdf:type isa:Investigation.\n" +
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode project = qs.get("project");
+			Assert.assertNotNull(project);
+			Assert.assertNotNull(project.isURIResource());
+
+			n++;
+		}
+		qe.close();
+		Assert.assertEquals(nproject,n);		
+	}	
+
 	protected void testRetrieveAllToxbankProtocols(Model model) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
@@ -244,6 +289,9 @@ public class AppTest  {
 		Assert.assertEquals(2,n);		
 	}
 	protected void testToxBankResources(Model model) throws Exception {
+		testToxBankResources(model,1);
+	}
+	protected void testToxBankResources(Model model, int expected) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
@@ -288,7 +336,7 @@ public class AppTest  {
 			n++;
 		}
 		qe.close();
-		Assert.assertEquals(1,n);		
+		Assert.assertEquals(expected,n);		
 	}
 	
 	protected void testTitleAndAbstract(Model model) throws Exception {
