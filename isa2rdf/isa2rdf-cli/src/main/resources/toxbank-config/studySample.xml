@@ -75,7 +75,7 @@
       <description><![CDATA[Plate position]]></description>
       <default-value><![CDATA[]]></default-value>
     </field>
-    <field header="Characteristics[Biological Replicate]" data-type="Integer" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+    <field header="Characteristics[Biological Replicate]" data-type="Integer" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Put 1 for all samples if there are no biological replicates, otherwise use a distinct number or letter for each replicate group (required)]]></description>
       <default-value><![CDATA[1]]></default-value>
     </field>
