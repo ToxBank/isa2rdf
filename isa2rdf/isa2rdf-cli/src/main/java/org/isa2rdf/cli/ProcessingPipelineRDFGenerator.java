@@ -263,30 +263,32 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		OrganisationIO orgIO = new OrganisationIO();
 		UserIO userIO = new UserIO();
 		for (Annotation annotation: investigation.getAnnotations()) {
-			if (TB_consortium.equals(annotation.getType().getValue())) {
-				String[] uri = annotation.getText().split(":");
-				if (uri.length<2) throw new MalformedURLException(annotation.getText());
-				Project tbProject = new Project( new URL(String.format("%s%s/%s",TB_URI,Resources.project, uri[1])));
-				Resource  resource = projectIO.objectToJena(getModel(),tbProject);
-				getModel().add(resource, RDF.type, TOXBANK.PROJECT); 
-				getModel().add(investigationResource,TOXBANK.HASPROJECT,resource);
-			} else if (TB_organisation.equals(annotation.getType().getValue())) {
-				String[] uri = annotation.getText().split(":");
-				if (uri.length<2) throw new MalformedURLException(annotation.getText());
-				Organisation tbOrg = new Organisation( new URL(String.format("%s%s/%s",TB_URI,Resources.organisation, uri[1])));
-				Resource  resource = orgIO.objectToJena(getModel(),tbOrg);
-				getModel().add(resource, RDF.type, TOXBANK.ORGANIZATION); 
-				getModel().add(investigationResource,TOXBANK.HASORGANISATION,resource);
-			} else if (TB_user.equals(annotation.getType().getValue())) {
-				String[] uri = annotation.getText().split(":");
-				if (uri.length<2) throw new MalformedURLException(annotation.getText());
-				User tbUser = new User( new URL(String.format("%s%s/%s",TB_URI,Resources.user, uri[1])));
-				Resource  resource = userIO.objectToJena(getModel(),tbUser);
-				getModel().add(resource, RDF.type, TOXBANK.USER); //should be a ToxBank user
-				getModel().add(investigationResource,TOXBANK.HASOWNER,resource);				
-			} else if (TB_keywords.equals(annotation.getType().getValue())) {
-				String[] keywords = annotation.getText().split(";");
-				for (String keyword : keywords) {
+			
+			String[] multiEntries = annotation.getText().split(";");
+			for (String multiEntry:multiEntries) {
+				if (TB_consortium.equals(annotation.getType().getValue())) {
+					String[] uri = multiEntry.split(":");
+					if (uri.length<2) throw new MalformedURLException(annotation.getText());
+					Project tbProject = new Project( new URL(String.format("%s%s/%s",TB_URI,Resources.project, uri[1])));
+					Resource  resource = projectIO.objectToJena(getModel(),tbProject);
+					getModel().add(resource, RDF.type, TOXBANK.PROJECT); 
+					getModel().add(investigationResource,TOXBANK.HASPROJECT,resource);
+				} else if (TB_organisation.equals(annotation.getType().getValue())) {
+					String[] uri = multiEntry.split(":");
+					if (uri.length<2) throw new MalformedURLException(annotation.getText());
+					Organisation tbOrg = new Organisation( new URL(String.format("%s%s/%s",TB_URI,Resources.organisation, uri[1])));
+					Resource  resource = orgIO.objectToJena(getModel(),tbOrg);
+					getModel().add(resource, RDF.type, TOXBANK.ORGANIZATION); 
+					getModel().add(investigationResource,TOXBANK.HASORGANISATION,resource);
+				} else if (TB_user.equals(annotation.getType().getValue())) {
+					String[] uri = multiEntry.split(":");
+					if (uri.length<2) throw new MalformedURLException(annotation.getText());
+					User tbUser = new User( new URL(String.format("%s%s/%s",TB_URI,Resources.user, uri[1])));
+					Resource  resource = userIO.objectToJena(getModel(),tbUser);
+					getModel().add(resource, RDF.type, TOXBANK.USER); //should be a ToxBank user
+					getModel().add(investigationResource,TOXBANK.HASOWNER,resource);				
+				} else if (TB_keywords.equals(annotation.getType().getValue())) {
+					String keyword = multiEntry;
 					String[] uri = keyword.split(":");
 					if (uri.length<2) continue;
 					if ("TBK".equals(uri[0]) && (!"".equals(uri[1].trim()))) {
