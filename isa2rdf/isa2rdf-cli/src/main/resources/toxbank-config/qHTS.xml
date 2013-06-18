@@ -8,10 +8,6 @@
       <default-value><![CDATA[]]></default-value>
       <generated-value-template>{experiment}-{well}-{concentration}</generated-value-template>
     </field>
-    <field header="Characteristics[organism]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
-      <description><![CDATA[Organism]]></description>
-      <default-value><![CDATA[]]></default-value>
-    </field>
     <protocol-field protocol-type="fluorescence imaging" />
     <field header="Parameter Value[Reagents kit]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Reagents kit]]></description>
