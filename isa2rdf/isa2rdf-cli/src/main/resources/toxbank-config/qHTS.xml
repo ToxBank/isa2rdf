@@ -2,7 +2,7 @@
 <isatab-config-file xmlns="http://www.ebi.ac.uk/bii/isatab_configuration#">
   <isatab-configuration table-name="qHTS" isatab-assay-type="generic_assay" isatab-conversion-target="generic">
     <measurement term-label="Cytotoxicity" term-accession="BAO_0000090" source-abbreviation="BAO" />
-    <technology term-label="Fluorescence imaging" term-accession="Fluorescence_imaging" source-abbreviation="http://www.owl-ontologies.com/Ontology1298855822.owl#" />
+    <technology term-label="Fluorescence imaging" term-accession="Fluorescence_imaging" source-abbreviation="QIBO" />
     <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Sample name]]></description>
       <default-value><![CDATA[]]></default-value>
