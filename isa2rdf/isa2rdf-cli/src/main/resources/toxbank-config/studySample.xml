@@ -91,10 +91,14 @@
         <ontology id="OT" abbreviation="OT" name="OpenTox" version="02" />
       </recommended-ontologies>
     </field>
-    <field header="Characteristics[StdInChIKey]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+    <field header="Comment [StdInChIKey]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[The Compound's Standard International Chemical Identifier (InChI) key (please look up)]]></description>
       <default-value><![CDATA[]]></default-value>
+      <recommended-ontologies>
+        <ontology id="OT" abbreviation="OT" name="OpenTox" version="02" />
+      </recommended-ontologies>      
     </field>
+   
     <field header="Characteristics[eniantiomer]" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Enantiomer form of the compound]]></description>
       <default-value><![CDATA[]]></default-value>
