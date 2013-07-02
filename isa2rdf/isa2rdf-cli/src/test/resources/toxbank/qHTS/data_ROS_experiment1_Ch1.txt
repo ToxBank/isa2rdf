@@ -1,0 +1,3 @@
+Assay Name	ValidObjectCount	MEAN_ObjectTotalIntenCh1	ValidFieldCount	MEAN_ObjectAvgIntenCh1	MEAN_ObjectAreaCh1	Compound	Concentration
+exp1-A1-C1-Ch1	1660	41711.83	10	328.36	104.99	Acetaminophen	0.001
+exp1-E8-C1-Ch1	3337	61146.58	10	453.84	131.53	Fenarimol	0.00001
