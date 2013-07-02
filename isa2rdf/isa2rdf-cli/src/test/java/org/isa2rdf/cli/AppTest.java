@@ -7,6 +7,11 @@ import java.net.URL;
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.isa2rdf.cli.IsaClient._option;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
@@ -107,6 +112,7 @@ public class AppTest  {
 		testKeywords(model, 14);
 		testTitleAndAbstract(model);
 		testToxBankResources(model,1);
+		testGraph(model, 14);
 		//testRetrieveAllToxbankProtocols(model);
 		testRetrieveAllProtocols(model,2);
 		testRetrieveAllStudiesAndProtocols(model);
@@ -115,6 +121,235 @@ public class AppTest  {
 		testToxbankHasProject(model,1);
 		
 		model.close();
+	}
+	
+	protected void testGraph(Model model,int steps) throws Exception {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?study ?input ?node ?type ?protocolApplication ?protocol ?inputid ?outputid ?output ?itype ?otype ?idata ?odata ?imat ?omat ?plabel ?pid ?imacc ?omacc ?idacc ?odacc where {\n" +
+				//" ?protocol rdf:type tb:Protocol.\n" +
+				" ?node isa:hasInputNode ?input.\n" +
+				" ?node isa:hasOutputNode ?output.\n" +
+				" ?node rdf:type ?type.\n" +
+				" ?input rdf:type ?itype.\n" +
+				" ?output rdf:type ?otype.\n" +
+				" OPTIONAL {" +
+				"	?node isa:hasProtocolApplication ?protocolApplication." +
+				"	?protocolApplication isa:appliesProtocol ?protocol." +
+				"	?protocol rdf:type isa:Protocol." +
+				"	?protocol rdfs:label ?plabel." +
+				"	?protocol isa:hasAccessionID ?pid." +
+				"}."+
+				" OPTIONAL {" +
+				"	?node isa:hasStudy ?study." +
+				"}."+
+				" OPTIONAL {?input isa:hasAccessionID ?inputid}."+
+				" OPTIONAL {" +
+				"	?input isa:hasData ?idata." +
+				"	?idata rdf:type isa:Data." +
+				"	?idata isa:hasAccessionID ?idacc." +				
+				"}."+
+				" OPTIONAL {" +
+				"	?input isa:hasMaterial ?imat." +
+				"	?imat rdf:type isa:Material." +
+				"	?imat isa:hasAccessionID ?imacc." +
+				"}."+
+				" OPTIONAL {?output isa:hasAccessionID ?outputid}."+
+				" OPTIONAL {" +
+				"	?output isa:hasData ?odata." +
+				"	?odata rdf:type isa:Data." +
+				"	?odata isa:hasAccessionID ?odacc." +
+				"}."+
+				" OPTIONAL {" +
+				"	?output isa:hasMaterial ?omat." +
+				"	?omat rdf:type isa:Material." +
+				"	?omat isa:hasAccessionID ?omacc." +
+				"}."+
+				"} ORDER by ?input \n",
+				TOXBANK.URI,
+				ISA.URI);
+		
+		ObjectMapper m = new ObjectMapper();
+		ObjectNode root = m.createObjectNode();
+		ObjectNode studies = m.createObjectNode();
+		root.put("study",studies);
+
+		
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode protocolApp = qs.get("protocolApplication");
+			RDFNode protocol = qs.get("protocol");
+			RDFNode input = qs.get("input");
+			RDFNode output = qs.get("output");
+			RDFNode study = qs.get("study");
+			RDFNode nodetype = qs.get("type");
+
+			n++;
+			
+			JsonNode studyNode = studies.get(study.asNode().getLocalName());
+			if (studyNode==null) {
+				studyNode = m.createObjectNode();
+				studies.put(study.asNode().getLocalName(),studyNode);
+			}
+			JsonNode processing = studyNode.get("processing");
+			if (processing==null) {
+				processing = m.createArrayNode();
+				((ObjectNode)studyNode).put("processing",processing);
+			}
+			
+			JsonNode nodes = studyNode.get("nodes");
+			if (nodes==null) {
+				nodes = m.createObjectNode();
+				((ObjectNode)studyNode).put("nodes",nodes);
+			}
+			
+			JsonNode protocols = studyNode.get("protocols");
+			if (protocols==null) {
+				protocols = m.createObjectNode();
+				((ObjectNode)studyNode).put("protocols",protocols);
+			}
+			
+			JsonNode protocolApps = studyNode.get("protocolApplications");
+			if (protocolApps==null) {
+				protocolApps = m.createObjectNode();
+				((ObjectNode)studyNode).put("protocolApplications",protocols);
+			}			
+			
+			JsonNode materials = studyNode.get("materials");
+			if (materials==null) {
+				materials = m.createObjectNode();
+				((ObjectNode)studyNode).put("materials",materials);
+			}
+			JsonNode data = studyNode.get("data");
+			if (data==null) {
+				data = m.createObjectNode();
+				((ObjectNode)studyNode).put("data",data);
+			}
+			
+			ObjectNode item = m.createObjectNode();
+			item.put("type",nodetype.asNode().getLocalName());
+			item.put("input",input.asNode().getLocalName());
+			item.put("output",output.asNode().getLocalName());
+			if (protocolApp!=null) {
+				
+				JsonNode pApp = protocolApps.get(protocolApp.asNode().getLocalName());
+				if (pApp==null) {
+					pApp = m.createObjectNode();
+					((ObjectNode)protocolApps).put(protocolApp.asNode().getLocalName(),pApp);
+				}
+				((ObjectNode)pApp).put("protocol", protocol.asNode().getURI());
+				((ObjectNode)pApp).put("parameters", "todo");
+				item.put("applies",protocolApp.asNode().getLocalName());
+				//:PMV62 , :PMV71 , :PMV68 , :PMV64 , :PMV66 .
+				JsonNode p = protocols.get(protocol.asNode().getURI());
+				if (p==null) p = m.createObjectNode();
+				((ObjectNode)p).put("label",qs.get("plabel").asLiteral().getString());
+				((ObjectNode)p).put("acc",qs.get("pid").asLiteral().getString());
+				((ObjectNode)protocols).put(protocol.asNode().getURI(),((ObjectNode)p));
+			}
+			((ArrayNode)processing).add(item);
+			
+			ObjectNode iNode = m.createObjectNode();
+			iNode.put("type",qs.get("itype").asNode().getLocalName());
+			if (qs.get("inputid")!=null) iNode.put("acc",qs.get("inputid").asLiteral().getString());
+			if (qs.get("idata")!=null) {
+				iNode.put("data",qs.get("idata").asNode().getLocalName());
+				if (protocols.get(qs.get("idata").asNode().getLocalName())==null) {
+					 ObjectNode o = m.createObjectNode();
+					 o.put("acc",qs.get("idacc").asLiteral().getString());
+					((ObjectNode)data).put(qs.get("idata").asNode().getLocalName(), o);
+				}
+			}
+			if (qs.get("imat")!=null) {
+				iNode.put("material",qs.get("imat").asNode().getLocalName());
+				if (protocols.get(qs.get("imat").asNode().getLocalName())==null) { 
+					ObjectNode o = m.createObjectNode();
+					o.put("acc",qs.get("imacc").asLiteral().getString());
+					((ObjectNode)materials).put(qs.get("imat").asNode().getLocalName(),o);
+				}	
+			}
+			((ObjectNode)nodes).put(input.asNode().getLocalName(), iNode);
+			
+			ObjectNode oNode = m.createObjectNode();
+			oNode.put("type",qs.get("otype").asNode().getLocalName());
+			if (qs.get("outputid")!=null) oNode.put("acc",qs.get("outputid").asLiteral().getString());
+			if (qs.get("odata")!=null) {
+				oNode.put("data",qs.get("odata").asNode().getLocalName());
+				if (protocols.get(qs.get("odata").asNode().getLocalName())==null) {
+					 ObjectNode o = m.createObjectNode();
+					 o.put("acc",qs.get("odacc").asLiteral().getString());
+					((ObjectNode)data).put(qs.get("odata").asNode().getLocalName(), o);
+				}	
+
+			}
+			if (qs.get("omat")!=null) {
+				oNode.put("material",qs.get("omat").asNode().getLocalName());
+				if (protocols.get(qs.get("omat").asNode().getLocalName())==null) { 
+					 ObjectNode o = m.createObjectNode();
+					 o.put("acc",qs.get("omacc").asLiteral().getString());
+					((ObjectNode)materials).put(qs.get("omat").asNode().getLocalName(), o);
+				}	
+			}
+			((ObjectNode)nodes).put(output.asNode().getLocalName(), oNode);
+
+		}
+		qe.close();
+		ObjectWriter writer = m.defaultPrettyPrintingWriter();
+		System.out.println(writer.writeValueAsString(root));
+		//Assert.assertEquals(nprotocols,n);		
+	}
+
+	protected void parameters2json(Model model, ObjectMapper m, ObjectNode studyNode) throws Exception {
+		
+		JsonNode parameters = studyNode.get("parameters");
+		if (parameters==null) {
+			parameters = m.createObjectNode();
+			((ObjectNode)studyNode).put("parameters",parameters);
+		}
+		JsonNode parameterValues = studyNode.get("parameterValues");
+		if (parameterValues==null) {
+			parameterValues = m.createObjectNode();
+			((ObjectNode)studyNode).put("parameterValues",parameterValues);
+		}		
+		
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?parameter ?protocolapp ?pvalue ?value ?term where {\n" +
+				" ?parameter node isa:hasInputNode ?input.\n" +
+				" ?protocolapp isa:hasParameterValue ?pvalue.\n" +
+				" ?pvalue rdf:type isa:ParameterValue.\n" +
+				" ?pvalue isa:hasParameter ?parameter.\n" +
+				" ?pvalue isa:hasValue ?value.\n" +
+				" OPTIONAL {" +
+				"	?pvalue isa:hasOntologyTerm ?term.\n" +
+				" }."+
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode protocol = qs.get("protocol");
+
+			n++;
+		}
+		qe.close();
+				
 	}
 	
 	protected void testToxbankHasProtocol(Model model,int nprotocols) throws Exception {
