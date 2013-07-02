@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import junit.framework.Assert;
 
+import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Identifiable;
@@ -17,7 +18,9 @@ public class GraphTest {
 	
 	@org.junit.Test
 	public void testGraph() throws Exception {
-		URL url = getClass().getClassLoader().getResource("isa-tab/BII-I-1");
+		String config = getClass().getClassLoader().getResource("toxbank-config").getFile();
+		ISAConfigurationSet.setConfigPath(config);
+		URL url = getClass().getClassLoader().getResource("toxbank//qHTS");
 		Assert.assertNotNull(url);
 		String filesPath = url.getFile();
         Collection<Identifiable> objects = new ArrayList<Identifiable>();

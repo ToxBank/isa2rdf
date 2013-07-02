@@ -36,6 +36,8 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  * Unit test for simple App.
  */
 public class AppTest  {
+	
+	
 
 	@org.junit.Test
 	public void testValidate() throws Exception {
@@ -82,7 +84,7 @@ public class AppTest  {
 		model.close();
 	}
 	
-	//@org.junit.Test
+	@org.junit.Test
 	public void testRDF_LCMSMS() throws Exception {
 		Model model = testRDF("toxbank//LCMSMS_archive");
 		testKeywords(model, 8);
@@ -97,6 +99,24 @@ public class AppTest  {
 		
 		model.close();
 	}
+	
+	@org.junit.Test
+	public void testRDF_qHTS() throws Exception {
+		//Model model = testRDF(new File("D:/src-isatab//qHTS"));
+		Model model = testRDF("toxbank//qHTS");
+		testKeywords(model, 14);
+		testTitleAndAbstract(model);
+		testToxBankResources(model,1);
+		//testRetrieveAllToxbankProtocols(model);
+		testRetrieveAllProtocols(model,2);
+		testRetrieveAllStudiesAndProtocols(model);
+		//testToxbankHasProtocol(model,11);
+		//testToxbankHasAuthor(model,1);
+		testToxbankHasProject(model,1);
+		
+		model.close();
+	}
+	
 	protected void testToxbankHasProtocol(Model model,int nprotocols) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
@@ -211,7 +231,7 @@ public class AppTest  {
 			RDFNode protocol = qs.get("protocol");
 			Assert.assertNotNull(protocol);
 			Assert.assertNotNull(protocol.isURIResource());
-			Assert.assertTrue(((Resource)protocol).getURI().startsWith("https://services.toxbank.net/toxbank/protocol"));
+			Assert.assertTrue(((Resource)protocol).getURI().startsWith("https://services.toxbank.net/toxbank/protocol/"));
 			n++;
 		}
 		qe.close();
@@ -394,23 +414,27 @@ public class AppTest  {
 		qe.close();
 		Assert.assertEquals(nkeywords,n);
 	}
-	@org.junit.Test
+	
 	public void testRDF_E_MTAB_798() throws Exception {
 		testRDF("toxbank//E-MTAB-798");
 	}
 	
 	public Model testRDF(String dir) throws Exception {
-
-		ISAConfigurationSet.setConfigPath(getClass().getClassLoader().getResource("toxbank-config").getFile());
-
 		URL url = getClass().getClassLoader().getResource(dir);
 		Assert.assertNotNull(url);
-		String filesPath = url.getFile();
+		return testRDF(new File(url.getFile()));
+	}
+	public Model testRDF(File filesDir) throws Exception {
+		Assert.assertTrue(filesDir.isDirectory());
+		String config = getClass().getClassLoader().getResource("toxbank-config").getFile();
+		System.out.println(config);
+		ISAConfigurationSet.setConfigPath(config);
+
 		IsaClient cli = new IsaClient();
 		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
-		Model model = cli.process(filesPath);
+		Model model = cli.process(filesDir.getAbsolutePath());
 
-		File out = new File(new File(filesPath),"isatab.owl");
+		File out = new File(filesDir,"isatab.owl");
 		FileOutputStream output = new FileOutputStream(out);
 		IsaClient.writeStream(model, output, "application/rdf+xml", true);
 		output.close();
@@ -422,7 +446,7 @@ public class AppTest  {
 		reader.close();
 		*/
 		
-		out = new File(new File(filesPath),"isatab.n3");
+		out = new File(filesDir,"isatab.n3");
 		output = new FileOutputStream(out);
 		IsaClient.writeStream(model, output, "text/n3", true);
 		output.close();
