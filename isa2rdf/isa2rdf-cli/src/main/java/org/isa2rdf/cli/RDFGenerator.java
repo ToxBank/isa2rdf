@@ -112,11 +112,11 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			ParameterValue pv = (ParameterValue) node;
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
-				return String.format("%s/PMV/%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
-			} else {
-				cache.get(ParameterValue.class.getName());
-				return getCachedURI(pv, String.format("%s/PMV",prefix) , pv.getValue());
-			}
+				if (!"NULL-ACCESSION".equals(term.getAcc()))
+					return String.format("%s/PMV_%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
+			} 
+			cache.get(ParameterValue.class.getName());
+			return getCachedURI(pv, String.format("%s/PMV",prefix) , pv.getValue());
 		}
 		else if ( node instanceof FactorValue ) p = "FV";
 		else if ( node instanceof CharacteristicValue ) p = "CV";
@@ -131,15 +131,22 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof OntologyEntry ) p = "OE";
 		else if ( node instanceof Factor ) p = "F";
 		else if ( node instanceof Characteristic ) p = "C";
-		else if ( node instanceof Property ) p = "PR";
+		else if ( node instanceof Parameter ) {
+			Parameter pv = (Parameter) node;
+			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
+				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
+				if (!"NULL-ACCESSION".equals(term.getAcc()))
+						return String.format("%s/PRM_%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
+			} 
+			cache.get(Parameter.class.getName());
+			return getCachedURI(pv, String.format("%s/PRM",prefix) , pv.getValue());
+
+		} else if ( node instanceof Property ) p = "PR";
 		else if ( node instanceof ReferenceSource ) {
 			String url = ((ReferenceSource) node).getUrl();
 			if (url!=null) return url;
 			else p = "RS";
-		} else if ( node instanceof Parameter ) {
-			p = "PM";
-		}
-		else {
+		} else {
 			//System.err.println(node.getClass().getName());
 		}
 			if (node.getId()==null) { node.setId(tempIdCounter); tempIdCounter++; }
@@ -161,18 +168,26 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
 		}
 		if (node instanceof Property) { //factor/char/params are descendant
-			//TODO
+			Property pv = (Property) node;
+			getModel().add(resource,DCTerms.title,pv.getValue());
+			if (pv.getOntologyTerms()!=null)
+				for (Object ot: pv.getOntologyTerms()) {
+					Resource xot = getResource((OntologyTerm)ot, ISA.OntologyTerm);
+					if (xot!=null)
+						getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
+				}
 		}
 		
 		if (node instanceof PropertyValue) {
-			//TODO
 			PropertyValue pv = (PropertyValue) node;
-			
 			if (pv.getOntologyTerms()!=null)
 			for (Object ot: pv.getOntologyTerms()) {
-				Resource xot = getResource((OntologyTerm)ot, ISA.OntologyTerm);
-				if (xot!=null)
-					getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
+				OntologyTerm term = (OntologyTerm) ot;
+				if (!"NULL-ACCESSION".equals(term.getAcc())) {
+					Resource xot = getResource(term, ISA.OntologyTerm);
+					if (xot!=null)
+						getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
+				}
 			}
 			
 			Resource r = node instanceof FactorValue?ISA.Factor:node instanceof ParameterValue?ISA.Parameter:ISA.Property;
@@ -180,7 +195,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			
 			if (pv.getValue()!=null) getModel().add(resource,ISA.HASVALUE,pv.getValue());
 			if (pv.getType()!=null) {
-				Resource xt = getResourceID(pv.getType(),r);
+				Resource xt = getResource(pv.getType(),r);
 				getModel().add(resource,p,xt);
 			}
 			
@@ -373,6 +388,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	}
 	
 	protected String getCachedURI(Identifiable object,String prefix, String value) {
+		if (value==null) return null;
+		value = value.trim();
 		List<String> ocache = cache.get(object.getClass().getName());
 		int index = -1;
 		if (ocache==null) {

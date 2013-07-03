@@ -316,12 +316,13 @@ public class AppTest  {
 				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
 				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
-				"SELECT ?processing ?study ?protocolapp ?pvalue ?parameter ?value ?term where {\n" +
+				"SELECT ?processing ?study ?protocolapp ?pvalue ?parameter ?ptitle ?value ?term where {\n" +
 				" ?processing isa:hasStudy ?study.\n" +
 				" ?processing isa:hasProtocolApplication ?protocolapp.\n" +
 				" ?protocolapp isa:hasParameterValue ?pvalue.\n" +
 				" ?pvalue rdf:type isa:ParameterValue.\n" +
 				" ?pvalue isa:hasParameter ?parameter.\n" +
+				" ?parameter dcterms:title ?ptitle.\n" +
 				" ?pvalue isa:hasValue ?value.\n" +
 				" OPTIONAL {" +
 				"	?pvalue isa:hasOntologyTerm ?term.\n" +
@@ -356,7 +357,7 @@ public class AppTest  {
 			
 			//Parameters
 			String paramId = qs.get("parameter").asNode().getLocalName();
-			((ObjectNode)parameters).put(paramId, "");
+			((ObjectNode)parameters).put(paramId, qs.get("ptitle").asLiteral().getString());
 
 			//Parameter values
 			String pValueId = qs.get("pvalue").asNode().getLocalName();
