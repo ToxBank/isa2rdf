@@ -115,7 +115,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			PropertyValue pv = (PropertyValue) node;
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
-				if (!term.getAcc().startsWith("NULL-") && ! term.getSource().getAcc().startsWith("NULL-"))
+				if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0))
 					return String.format("%s/%s_%s_%s",prefix,p,term.getSource().getAcc(),term.getAcc());	
 			} 
 			cache.get(node.getClass().getName());
@@ -136,7 +136,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			Property pv = (Property) node;
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
-				if (!"NULL-ACCESSION".equals(term.getAcc()) && !"NULL-SOURCE_NULL-ACCESSION".equals(term.getSource().getAcc()))
+				if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0))
 						return String.format("%s/%s_%s_%s",prefix,p,term.getSource().getAcc(),term.getAcc());	
 			} 
 			cache.get(node.getClass().getName());
@@ -173,9 +173,12 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			getModel().add(resource,DCTerms.title,pv.getValue());
 			if (pv.getOntologyTerms()!=null)
 				for (Object ot: pv.getOntologyTerms()) {
-					Resource xot = getResource((OntologyTerm)ot, ISA.OntologyTerm);
+					OntologyTerm term = (OntologyTerm) ot;
+					if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0)) {
+					Resource xot = getResource(term, ISA.OntologyTerm);
 					if (xot!=null)
 						getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
+					}
 				}
 		}
 		
@@ -184,7 +187,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (pv.getOntologyTerms()!=null)
 			for (Object ot: pv.getOntologyTerms()) {
 				OntologyTerm term = (OntologyTerm) ot;
-				if (!"NULL-ACCESSION".equals(term.getAcc())) {
+				if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0)) {
 					Resource xot = getResource(term, ISA.OntologyTerm);
 					if (xot!=null)
 						getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
