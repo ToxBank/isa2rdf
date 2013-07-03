@@ -1,7 +1,9 @@
 package org.isa2rdf.cli;
 
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import net.toxbank.client.io.rdf.TOXBANK;
 
@@ -51,6 +53,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	protected String prefix;
 	protected long tempIdCounter=1;
 	
+	protected Hashtable<String,List<String>> cache = new Hashtable<String, List<String>>();
 	
 	public long getTempIdCounter() {
 		return tempIdCounter;
@@ -105,25 +108,25 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof Study ) p = "S";
 		else if ( node instanceof Assay ) p = "A";
 		else if ( node instanceof Investigation ) p = "I";
-		else if ( node instanceof ParameterValue ) p = "PMV";
+		else if ( node instanceof ParameterValue ) {
+			ParameterValue pv = (ParameterValue) node;
+			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
+				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
+				return String.format("%s/PMV/%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
+			} else {
+				cache.get(ParameterValue.class.getName());
+				return getCachedURI(pv, String.format("%s/PMV",prefix) , pv.getValue());
+			}
+		}
 		else if ( node instanceof FactorValue ) p = "FV";
 		else if ( node instanceof CharacteristicValue ) p = "CV";
 		else if ( node instanceof PropertyValue ) p = "PV";
 		else if ( node instanceof OntologyTerm ) {
-			
 			/**
     <!-- http://purl.obolibrary.org/obo/CHEBI_26523 -->
-
-    <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_26523">
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reactive oxygen species</rdfs:label>
-        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_25806"/>
-        <obo2:Definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Molecules or ions formed by the incomplete one-electron reduction of oxygen. They contribute to the microbicidal activity of phagocytes, regulation of signal transduction and gene expression, and the oxidative damage to biopolymers.</obo2:Definition>
-        <obo2:Synonym rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ROS</obo2:Synonym>
-    </owl:Class>
 			 */
-			System.out.println(node);
-			System.out.println(((OntologyTerm)node).getSource());
-			return String.format("%s/%s",((OntologyTerm)node).getSource().getAcc(),((OntologyTerm)node).getAcc());
+			OntologyTerm term  =(OntologyTerm) node;
+			return String.format("http://purl.obolibrary.org/obo/%s_%s",term.getSource().getAcc(),term.getAcc());
 		}
 		else if ( node instanceof OntologyEntry ) p = "OE";
 		else if ( node instanceof Factor ) p = "F";
@@ -167,7 +170,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			
 			if (pv.getOntologyTerms()!=null)
 			for (Object ot: pv.getOntologyTerms()) {
-				Resource xot = getResourceID((OntologyTerm)ot, ISA.OntologyTerm);
+				Resource xot = getResource((OntologyTerm)ot, ISA.OntologyTerm);
 				if (xot!=null)
 					getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
 			}
@@ -184,7 +187,20 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		}
 
 		if (node instanceof OntologyTerm) {
-			//TODO
+			OntologyTerm term = (OntologyTerm) node;
+			//resource.addProperty(ISA.,getResource(term.getSource(),ISA.ReferenceSources));
+			resource.addProperty(RDFS.label,term.getName());
+			resource.addProperty(ISA.hasAccessionID,term.getAcc());
+			/*
+
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_26523">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reactive oxygen species</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_25806"/>
+        <obo2:Definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Molecules or ions formed by the incomplete one-electron reduction of oxygen. They contribute to the microbicidal activity of phagocytes, regulation of signal transduction and gene expression, and the oxidative damage to biopolymers.</obo2:Definition>
+        <obo2:Synonym rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ROS</obo2:Synonym>
+    </owl:Class>
+			 */
+			
 		}
 		if (node instanceof OntologyEntry) {
 			//TODO
@@ -354,5 +370,20 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	
 	public void processProtocolType(Protocol protocol, Resource protocolResource)	throws Exception {
 		//TODO
+	}
+	
+	protected String getCachedURI(Identifiable object,String prefix, String value) {
+		List<String> ocache = cache.get(object.getClass().getName());
+		int index = -1;
+		if (ocache==null) {
+			ocache = new ArrayList<String>();
+			cache.put(object.getClass().getName(),ocache);
+		} else 
+			index = ocache.indexOf(value);
+		if (index<0) {
+			ocache.add(value);
+			index = ocache.size()-1;
+		}
+		return String.format("%s%d",prefix,(index+1));
 	}
 }
