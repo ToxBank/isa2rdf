@@ -32,7 +32,6 @@ import uk.ac.ebi.bioinvindex.model.term.Factor;
 import uk.ac.ebi.bioinvindex.model.term.FactorValue;
 import uk.ac.ebi.bioinvindex.model.term.OntologyEntry;
 import uk.ac.ebi.bioinvindex.model.term.OntologyTerm;
-import uk.ac.ebi.bioinvindex.model.term.Parameter;
 import uk.ac.ebi.bioinvindex.model.term.ParameterValue;
 import uk.ac.ebi.bioinvindex.model.term.Property;
 import uk.ac.ebi.bioinvindex.model.term.PropertyValue;
@@ -108,19 +107,20 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof Study ) p = "S";
 		else if ( node instanceof Assay ) p = "A";
 		else if ( node instanceof Investigation ) p = "I";
-		else if ( node instanceof ParameterValue ) {
-			ParameterValue pv = (ParameterValue) node;
+		else if ( node instanceof PropertyValue ) {
+			if ( node instanceof ParameterValue ) p = "PMV";
+			else if ( node instanceof FactorValue ) p = "FV";
+			else if ( node instanceof CharacteristicValue ) p = "CV";
+
+			PropertyValue pv = (PropertyValue) node;
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
-				if (!"NULL-ACCESSION".equals(term.getAcc()))
-					return String.format("%s/PMV_%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
+				if (!term.getAcc().startsWith("NULL-") && ! term.getSource().getAcc().startsWith("NULL-"))
+					return String.format("%s/%s_%s_%s",prefix,p,term.getSource().getAcc(),term.getAcc());	
 			} 
-			cache.get(ParameterValue.class.getName());
-			return getCachedURI(pv, String.format("%s/PMV",prefix) , pv.getValue());
+			cache.get(node.getClass().getName());
+			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv.getValue());
 		}
-		else if ( node instanceof FactorValue ) p = "FV";
-		else if ( node instanceof CharacteristicValue ) p = "CV";
-		else if ( node instanceof PropertyValue ) p = "PV";
 		else if ( node instanceof OntologyTerm ) {
 			/**
     <!-- http://purl.obolibrary.org/obo/CHEBI_26523 -->
@@ -129,17 +129,18 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			return String.format("http://purl.obolibrary.org/obo/%s_%s",term.getSource().getAcc(),term.getAcc());
 		}
 		else if ( node instanceof OntologyEntry ) p = "OE";
-		else if ( node instanceof Factor ) p = "F";
-		else if ( node instanceof Characteristic ) p = "C";
-		else if ( node instanceof Parameter ) {
-			Parameter pv = (Parameter) node;
+		else if ( node instanceof Property ) {
+			p = "PRM";
+			if ( node instanceof Factor ) p = "F";
+			else if ( node instanceof Characteristic ) p = "C";
+			Property pv = (Property) node;
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
-				if (!"NULL-ACCESSION".equals(term.getAcc()))
-						return String.format("%s/PRM_%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
+				if (!"NULL-ACCESSION".equals(term.getAcc()) && !"NULL-SOURCE_NULL-ACCESSION".equals(term.getSource().getAcc()))
+						return String.format("%s/%s_%s_%s",prefix,p,term.getSource().getAcc(),term.getAcc());	
 			} 
-			cache.get(Parameter.class.getName());
-			return getCachedURI(pv, String.format("%s/PRM",prefix) , pv.getValue());
+			cache.get(node.getClass().getName());
+			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv.getValue());
 
 		} else if ( node instanceof Property ) p = "PR";
 		else if ( node instanceof ReferenceSource ) {
@@ -220,26 +221,41 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		if (node instanceof OntologyEntry) {
 			//TODO
 		}
-		//Data
-
+		/**
+		 * Data
+		 */
 		if (node instanceof Data) {
-			//System.out.println(node);
 			Data data = (Data) node;
-			//if (data.getUrl()!=null) resource.addProperty(RDFS.isDefinedBy, data.getUrl());
-			
 			if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getDataMatrixUrl()!=null) resource.addProperty(RDFS.seeAlso, data.getUrl());
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyEntry);
 			}
-			
-			//if (data.getSubmissionTs()!=null) resource.addProperty(DCTerms.created, data.getSubmissionTs().toGMTString());
 			if (data.getFactorValues()!=null)
 				for (FactorValue fv : data.getFactorValues()) {
-					Resource xfv = getResourceID(fv, ISA.FactorValue);
-					logger(xfv);
+					Resource xfv = getResource(fv, ISA.FactorValue);
 					getModel().add(resource,ISA.HASFACTORVALUE,xfv);
 				}
+		}
+		/**
+		 * material
+		 */
+		if (node instanceof Material) {
+			Material data = (Material) node;
+			if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
+			if (data.getType()!=null) { //ontlogy entry
+				Resource oe = getResourceID(data.getType(), ISA.OntologyEntry);
+			}
+			if (data.getFactorValues()!=null)
+				for (FactorValue fv : data.getFactorValues()) {
+					Resource xfv = getResource(fv, ISA.FactorValue);
+					getModel().add(resource,ISA.HASFACTORVALUE,xfv);
+				}
+			if (data.getCharacteristicValues()!=null)
+				for (CharacteristicValue fv : data.getCharacteristicValues()) {
+					Resource xfv = getResource(fv, ISA.CharacteristicValue);
+					getModel().add(resource,ISA.HASCHARACTERISTICVALUE,xfv);
+				}			
 		}
 		
 		//GraphElement

@@ -142,6 +142,7 @@ public class ISA {
     
     public static final Property HASPROPERTYVALUE = property("hasPropertyValue");
     public static final Property HASFACTORVALUE = property("hasFactorValue");
+    public static final Property HASCHARACTERISTICVALUE = property("hasCharacteristicValue");
     public static final Property HASPARAMVALUE = property("hasParameterValue");
     public static final Property HASVALUE = property("hasValue");
     public static final Property HASPROPERTY = property("hasProperty");
