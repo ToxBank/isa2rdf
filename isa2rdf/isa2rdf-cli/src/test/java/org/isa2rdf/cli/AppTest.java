@@ -220,7 +220,7 @@ public class AppTest  {
 			JsonNode protocolApps = studyNode.get("protocolApplications");
 			if (protocolApps==null) {
 				protocolApps = m.createObjectNode();
-				((ObjectNode)studyNode).put("protocolApplications",protocols);
+				((ObjectNode)studyNode).put("protocolApplications",protocolApps);
 			}			
 			
 			JsonNode materials = studyNode.get("materials");
@@ -246,7 +246,7 @@ public class AppTest  {
 					((ObjectNode)protocolApps).put(protocolApp.asNode().getLocalName(),pApp);
 				}
 				((ObjectNode)pApp).put("protocol", protocol.asNode().getURI());
-				((ObjectNode)pApp).put("parameters", "todo");
+				((ObjectNode)pApp).put("parameters", m.createArrayNode());
 				item.put("applies",protocolApp.asNode().getLocalName());
 				//:PMV62 , :PMV71 , :PMV68 , :PMV64 , :PMV66 .
 				JsonNode p = protocols.get(protocol.asNode().getURI());
@@ -302,23 +302,13 @@ public class AppTest  {
 
 		}
 		qe.close();
+		parameters2json(model, m,root);
 		ObjectWriter writer = m.defaultPrettyPrintingWriter();
 		System.out.println(writer.writeValueAsString(root));
 		//Assert.assertEquals(nprotocols,n);		
 	}
 
-	protected void parameters2json(Model model, ObjectMapper m, ObjectNode studyNode) throws Exception {
-		
-		JsonNode parameters = studyNode.get("parameters");
-		if (parameters==null) {
-			parameters = m.createObjectNode();
-			((ObjectNode)studyNode).put("parameters",parameters);
-		}
-		JsonNode parameterValues = studyNode.get("parameterValues");
-		if (parameterValues==null) {
-			parameterValues = m.createObjectNode();
-			((ObjectNode)studyNode).put("parameterValues",parameterValues);
-		}		
+	protected void parameters2json(Model model, ObjectMapper m, ObjectNode root) throws Exception {
 		
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
@@ -326,8 +316,9 @@ public class AppTest  {
 				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
 				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
-				"SELECT ?parameter ?protocolapp ?pvalue ?value ?term where {\n" +
-				" ?parameter node isa:hasInputNode ?input.\n" +
+				"SELECT ?processing ?study ?protocolapp ?pvalue ?parameter ?value ?term where {\n" +
+				" ?processing isa:hasStudy ?study.\n" +
+				" ?processing isa:hasProtocolApplication ?protocolapp.\n" +
 				" ?protocolapp isa:hasParameterValue ?pvalue.\n" +
 				" ?pvalue rdf:type isa:ParameterValue.\n" +
 				" ?pvalue isa:hasParameter ?parameter.\n" +
@@ -344,7 +335,46 @@ public class AppTest  {
 		int n = 0;
 		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
-			RDFNode protocol = qs.get("protocol");
+			
+			String studyId = qs.get("study").asNode().getLocalName();
+			JsonNode studyNode = root.get("study").get(studyId);
+			if (studyNode==null) {
+				studyNode = m.createObjectNode();
+				((ObjectNode)root.get("study")).put(studyId,studyNode);
+			}
+			
+			JsonNode parameters = studyNode.get("parameters");
+			if (parameters==null) {
+				parameters = m.createObjectNode();
+				((ObjectNode)studyNode).put("parameters",parameters);
+			}
+			JsonNode parameterValues = studyNode.get("parameterValues");
+			if (parameterValues==null) {
+				parameterValues = m.createObjectNode();
+				((ObjectNode)studyNode).put("parameterValues",parameterValues);
+			}
+			
+			//Parameters
+			String paramId = qs.get("parameter").asNode().getLocalName();
+			((ObjectNode)parameters).put(paramId, "");
+
+			//Parameter values
+			String pValueId = qs.get("pvalue").asNode().getLocalName();
+			JsonNode pValue = ((ObjectNode)parameterValues).get(pValueId);
+			if (pValue==null) {
+				pValue = m.createObjectNode();
+				((ObjectNode)parameterValues).put(pValueId, pValue);
+				((ObjectNode)pValue).put("parameter",paramId);
+				((ObjectNode)pValue).put("value",qs.get("value").asLiteral().getString());
+				if (qs.get("term")!=null)
+				((ObjectNode)pValue).put("term",qs.get("term").asNode().getURI());
+				
+			}
+			
+			JsonNode protocolApps = studyNode.get("protocolApplications");
+			
+			JsonNode papp = ((ObjectNode)protocolApps).get(qs.get("protocolapp").asNode().getLocalName());
+			((ArrayNode)papp.get("parameters")).add(pValueId);
 
 			n++;
 		}

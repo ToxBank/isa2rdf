@@ -30,6 +30,7 @@ import uk.ac.ebi.bioinvindex.model.term.Factor;
 import uk.ac.ebi.bioinvindex.model.term.FactorValue;
 import uk.ac.ebi.bioinvindex.model.term.OntologyEntry;
 import uk.ac.ebi.bioinvindex.model.term.OntologyTerm;
+import uk.ac.ebi.bioinvindex.model.term.Parameter;
 import uk.ac.ebi.bioinvindex.model.term.ParameterValue;
 import uk.ac.ebi.bioinvindex.model.term.Property;
 import uk.ac.ebi.bioinvindex.model.term.PropertyValue;
@@ -114,11 +115,14 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof Characteristic ) p = "C";
 		else if ( node instanceof Property ) p = "PR";
 		else if ( node instanceof ReferenceSource ) p = "RS";
+		else if ( node instanceof Parameter ) {
+			p = "PM";
+		}
 		else {
 			//System.err.println(node.getClass().getName());
 		}
-		if (node.getId()==null) { node.setId(tempIdCounter); tempIdCounter++; }
-		return String.format("%s/%s%d",prefix,p,node.getId());
+			if (node.getId()==null) { node.setId(tempIdCounter); tempIdCounter++; }
+			return String.format("%s/%s%d",prefix,p,node.getId());
 	}
 	protected Resource getResourceID(Identifiable node,Resource clazz)  throws Exception {
 
