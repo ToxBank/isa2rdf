@@ -109,13 +109,31 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof FactorValue ) p = "FV";
 		else if ( node instanceof CharacteristicValue ) p = "CV";
 		else if ( node instanceof PropertyValue ) p = "PV";
-		else if ( node instanceof OntologyTerm ) p = "OT";
+		else if ( node instanceof OntologyTerm ) {
+			
+			/**
+    <!-- http://purl.obolibrary.org/obo/CHEBI_26523 -->
+
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/CHEBI_26523">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reactive oxygen species</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://purl.obolibrary.org/obo/CHEBI_25806"/>
+        <obo2:Definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Molecules or ions formed by the incomplete one-electron reduction of oxygen. They contribute to the microbicidal activity of phagocytes, regulation of signal transduction and gene expression, and the oxidative damage to biopolymers.</obo2:Definition>
+        <obo2:Synonym rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ROS</obo2:Synonym>
+    </owl:Class>
+			 */
+			System.out.println(node);
+			System.out.println(((OntologyTerm)node).getSource());
+			return String.format("%s/%s",((OntologyTerm)node).getSource().getAcc(),((OntologyTerm)node).getAcc());
+		}
 		else if ( node instanceof OntologyEntry ) p = "OE";
 		else if ( node instanceof Factor ) p = "F";
 		else if ( node instanceof Characteristic ) p = "C";
 		else if ( node instanceof Property ) p = "PR";
-		else if ( node instanceof ReferenceSource ) p = "RS";
-		else if ( node instanceof Parameter ) {
+		else if ( node instanceof ReferenceSource ) {
+			String url = ((ReferenceSource) node).getUrl();
+			if (url!=null) return url;
+			else p = "RS";
+		} else if ( node instanceof Parameter ) {
 			p = "PM";
 		}
 		else {
