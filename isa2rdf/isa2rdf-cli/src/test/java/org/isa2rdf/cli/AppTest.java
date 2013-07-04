@@ -309,7 +309,7 @@ public class AppTest  {
 		}
 		qe.close();
 		parameters2json(model, m,root);
-		
+		parameters2factors(model,m,root);
 		ObjectWriter writer = m.defaultPrettyPrintingWriter();
 		writer.writeValueAsString(root);
 		URL url = getClass().getClassLoader().getResource(dir);
@@ -399,6 +399,67 @@ public class AppTest  {
 		qe.close();
 				
 	}
+	
+	protected void parameters2factors(Model model, ObjectMapper m, ObjectNode root) throws Exception {
+		
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?study ?node ?material ?factorValue ?factor ?factortitle ?value ?term where {\n" +
+				" ?node isa:hasStudy ?study.\n"+
+				" {{?node isa:hasMaterial ?material} union {?node isa:hasData ?material}}.\n"+
+				" ?material isa:hasFactorValue ?factorValue.\n"+
+				" ?factorValue isa:hasValue ?value.\n"+
+				" ?factorValue isa:hasFactor ?factor.\n"+
+				" ?factor dcterms:title ?factortitle.\n"+
+				" OPTIONAL {" +
+				"	?factorValue isa:hasOntologyTerm ?term.\n" +
+				" }."+				
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI);
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+		int n = 0;
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			
+			String studyId = qs.get("study").asNode().getLocalName();
+			JsonNode studyNode = root.get("study").get(studyId);
+			if (studyNode==null) {
+				studyNode = m.createObjectNode();
+				((ObjectNode)root.get("study")).put(studyId,studyNode);
+			}
+			
+			String mid = qs.get("material").asNode().getLocalName();
+			String fvid = qs.get("factorValue").asNode().getLocalName();
+			String fid = qs.get("factor").asNode().getLocalName();
+			String ftid = qs.get("factortitle").asLiteral().getString();
+			String val = qs.get("value").asLiteral().getString();
+			String term = qs.get("term")==null?null:qs.get("term").asNode().getURI();
+			
+			if (fvid!=null && !"".equals(fvid)) {
+				JsonNode material = studyNode.get("materials").get(mid);
+				if (material==null) material = studyNode.get("data").get(mid);
+				if (material != null) {
+					JsonNode factors = material.get("factors");
+					if (factors==null) { factors = m.createObjectNode(); ((ObjectNode)material).put("factors",factors);}
+					ObjectNode fnode = m.createObjectNode();
+					fnode.put(ftid, val);
+					if (term!=null) fnode.put("term", term);
+					((ObjectNode)factors).put(fvid,fnode);
+				}
+			}
+			n++;
+		}
+		qe.close();
+				
+	}
+		
 	
 	protected void testToxbankHasProtocol(Model model,int nprotocols) throws Exception {
 		String sparqlQuery = String.format(
