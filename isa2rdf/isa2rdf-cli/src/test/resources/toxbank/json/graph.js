@@ -1,6 +1,6 @@
 function drawGraph(data,chartselector) {
   var width = 960,
-      height = 500;
+      height = 800;
 
   var color = d3.scale.category20();
 
@@ -83,7 +83,7 @@ var text = node.append("text")
       .attr("y", function(d) { return d.y; })
       .style("color","red")
       .attr("text-anchor", "end")
-      .text(function(d) { return "CID "+d.name; });
+      .text(function(d) { return d.name; });
 
     svg.on("mousemove", function() {
       fisheye.focus(d3.mouse(this));

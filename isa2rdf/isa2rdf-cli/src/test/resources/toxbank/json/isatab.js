@@ -38,10 +38,10 @@ function defineProcessingTable(root,url) {
 				{ "mDataProp": function ( source ) {
 					return source.input==null?"":
 						source.type=='MaterialProcessing'?
-							("["+source.input.id + "." + source.input.material.id + "] " + source.input.material.acc):
+							("["+source.prev.id + "." + source.prev.material.id + "] " + source.prev.material.acc):
 						source.type=='DataAcquisition'?
-							("["+source.input.id + "." +source.input.material.id + "] " + source.input.material.acc):
-							("["+source.input.id + "." +source.input.data.id + "] " + source.input.data.acc);
+							("["+source.prev.id + "." +source.prev.material.id + "] " + source.prev.material.acc):
+							("["+source.prev.id + "." +source.prev.data.id + "] " + source.prev.data.acc);
 				  },
 				  "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 1 ],	
@@ -68,8 +68,8 @@ function defineProcessingTable(root,url) {
 				{ "mDataProp": function ( source ) {
 					return source.output==null?"": 
 					source.type=='MaterialProcessing'?
-						("["+source.output.id + "." +source.output.material.id + "] " + source.output.material.acc):
-						("["+source.output.id + "." +source.output.data.id + "] " + source.output.data.acc);
+						("["+source.next.id + "." +source.next.material.id + "] " + source.next.material.acc):
+						("["+source.next.id + "." +source.next.data.id + "] " + source.next.data.acc);
 				  },
 				  "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 4 ],	
@@ -92,17 +92,20 @@ function defineProcessingTable(root,url) {
 			        		thestudy = study;
 			        		
 			    	        $.each(study.nodes, function(i,s){
+			    	        	var group = 0;
 			    	        	if (s.material !=undefined) {
 			    	        		var id = s.material;
 			    	        		s.material = study.materials[id];
 			    	        		s.material['id'] = id;
+			    	        		group=1;
 			    	        	} else if (s.data !=undefined) {
 			    	        		var id = s.data;
 			    	        		s.data = study.data[id];
 			    	        		s.data['id'] = id;
+			    	        		group=2;
 			    	        	};
 			    	        	s['index'] = graph.nodes.length;
-			    	        	graph.nodes.push({'name':i,'group':1});
+			    	        	graph.nodes.push({'name':i,'group':group});
 			    	        });
 			    	        $.each(study.processing, function(i,s){
 			    	        	graph.links.push({
@@ -113,11 +116,11 @@ function defineProcessingTable(root,url) {
 			    	        });
 			    	        $.each(study.processing, function(i,s){
 			    	        	var id = s.input;
-		    	        		s.input = study.nodes[s.input];
-		    	        		s.input['id'] = id;
+		    	        		s.prev = study.nodes[s.input];
+		    	        		s.prev['id'] = id;
 		    	        		id = s.output;
-		    	        		s.output = study.nodes[s.output];
-		    	        		s.output['id'] = id;
+		    	        		s.next = study.nodes[s.output];
+		    	        		s.next['id'] = id;
 		    	        		if (s.applies!=undefined) {
 			    	        		var id = s.applies;
 		    	        			s.applies = study.protocolApplications[id];
@@ -148,7 +151,7 @@ function defineProcessingTable(root,url) {
 		"bDeferRender": true,
 		"bSearchable": true,
 		"sAjaxSource": url,
-		"iDisplayLength": 100,
+		"iDisplayLength": 10,
 		"oLanguage": {
 				"sSearch": "Filter:",
 	            "sProcessing": "<img src='"+root+"/images/progress.gif' border='0'>",
