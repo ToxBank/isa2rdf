@@ -2,11 +2,14 @@ package org.isa2rdf.cli;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.net.URL;
 
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
@@ -15,6 +18,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import org.isa2rdf.cli.IsaClient._option;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
+import org.isatools.tablib.mapping.properties.PropertyMappingHelper;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import com.hp.hpl.jena.query.Query;
@@ -73,6 +77,7 @@ public class AppTest  {
 		testRetrieveAllStudiesAndProtocols(model);
 		testToxbankHasProtocol(model,1);
 		testToxbankHasAuthor(model,1);
+
 		model.close();
 	}
 	@org.junit.Test
@@ -86,6 +91,7 @@ public class AppTest  {
 		testRetrieveAllStudiesAndProtocols(model);
 		testToxbankHasProtocol(model,11);
 		testToxbankHasAuthor(model,1);
+		JsonNode root = testGraph(model, 14,"toxbank//BII-I-1");
 		model.close();
 	}
 	
@@ -107,12 +113,14 @@ public class AppTest  {
 	
 	@org.junit.Test
 	public void testRDF_qHTS() throws Exception {
-		//Model model = testRDF(new File("D:/src-isatab//qHTS"));
-		Model model = testRDF("toxbank//qHTS");
+		Model model = testRDF(new File("D:/src-isatab//qHTS"));
+		String dir = "toxbank//qHTS";
+		//Model model = testRDF(dir);
 		testKeywords(model, 14);
 		testTitleAndAbstract(model);
 		testToxBankResources(model,1);
-		testGraph(model, 14);
+		JsonNode root = testGraph(model, 14,dir);
+		
 		//testRetrieveAllToxbankProtocols(model);
 		testRetrieveAllProtocols(model,2);
 		testRetrieveAllStudiesAndProtocols(model);
@@ -123,7 +131,8 @@ public class AppTest  {
 		model.close();
 	}
 	
-	protected void testGraph(Model model,int steps) throws Exception {
+	protected JsonNode testGraph(Model model,int steps,String dir) throws Exception {
+		PropertyMappingHelper pmh;
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
@@ -303,8 +312,16 @@ public class AppTest  {
 		}
 		qe.close();
 		parameters2json(model, m,root);
+		
 		ObjectWriter writer = m.defaultPrettyPrintingWriter();
-		System.out.println(writer.writeValueAsString(root));
+		writer.writeValueAsString(root);
+		URL url = getClass().getClassLoader().getResource(dir);
+		Assert.assertNotNull(url);
+		FileOutputStream fw = new FileOutputStream(new File(url.getFile(),"isatab.json"));
+		writer.writeValue(fw, root);
+		fw.close();
+		
+		return root;
 		//Assert.assertEquals(nprotocols,n);		
 	}
 
@@ -375,7 +392,8 @@ public class AppTest  {
 			JsonNode protocolApps = studyNode.get("protocolApplications");
 			
 			JsonNode papp = ((ObjectNode)protocolApps).get(qs.get("protocolapp").asNode().getLocalName());
-			((ArrayNode)papp.get("parameters")).add(pValueId);
+			if (papp!=null)
+				((ArrayNode)papp.get("parameters")).add(pValueId);
 
 			n++;
 		}
@@ -700,9 +718,10 @@ public class AppTest  {
 		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
 		Model model = cli.process(filesDir.getAbsolutePath());
 
-		File out = new File(filesDir,"isatab.owl");
+		System.err.println("triples " + model.size());
+		File out = new File(filesDir,"isatab.n3");
 		FileOutputStream output = new FileOutputStream(out);
-		IsaClient.writeStream(model, output, "application/rdf+xml", true);
+		IsaClient.writeStream(model, output, "text/n3", false);
 		output.close();
 
 		/*
@@ -712,9 +731,9 @@ public class AppTest  {
 		reader.close();
 		*/
 		
-		out = new File(filesDir,"isatab.n3");
+		out = new File(filesDir,"isatab.rdf");
 		output = new FileOutputStream(out);
-		IsaClient.writeStream(model, output, "text/n3", true);
+		IsaClient.writeStream(model, output, "application/rdf+xml", false);
 		output.close();
 	
 		print(model);

@@ -16,6 +16,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.ISATABValidator;
 import org.isatools.isatab.gui_invokers.GUIInvokerResult;
@@ -334,30 +336,38 @@ public class IsaClient {
 	}
     public static void write(Model jenaModel, Writer output, String mediaType, boolean isXml_abbreviation) throws IOException {
     	try {
-    		RDFWriter fasterWriter = null;
+    		RDFFormat format = RDFFormat.TTL;
+    		//RDFWriter fasterWriter = null;
 			if ("application/rdf+xml".equals(mediaType)) {
+				
 				if (isXml_abbreviation)
-					fasterWriter = jenaModel.getWriter("RDF/XML-ABBREV");//lot smaller ... but could be slower
+					format = RDFFormat.RDFXML_ABBREV ;	
+					//fasterWriter = jenaModel.getWriter("RDF/XML-ABBREV");//lot smaller ... but could be slower
 				else
-					fasterWriter = jenaModel.getWriter("RDF/XML");
-				fasterWriter.setProperty("xmlbase",jenaModel.getNsPrefixURI(""));
-				fasterWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
-				fasterWriter.setProperty("showDoctypeDeclaration", Boolean.TRUE);
+					format = RDFFormat.RDFXML_PLAIN ;
+					//fasterWriter = jenaModel.getWriter("RDF/XML");
+				//fasterWriter.setProperty("xmlbase",jenaModel.getNsPrefixURI(""));
+				//fasterWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
+				//fasterWriter.setProperty("showDoctypeDeclaration", Boolean.TRUE);
 			}
 			else if (mediaType.equals("application/x-turtle"))
-				fasterWriter = jenaModel.getWriter("TURTLE");
+				//fasterWriter = jenaModel.getWriter("TURTLE");
+				format = RDFFormat.TURTLE ;
 			else if (mediaType.equals("text/n3"))
-				fasterWriter = jenaModel.getWriter("N3");
+				format = RDFFormat.TTL ;
 			else if (mediaType.equals("text/n-triples"))
-				fasterWriter = jenaModel.getWriter("N-TRIPLE");	
+				format = RDFFormat.NTRIPLES ;
 			else {
+				format = RDFFormat.RDFXML_ABBREV;
+				/*
 				fasterWriter = jenaModel.getWriter("RDF/XML-ABBREV");
 				fasterWriter.setProperty("showXmlDeclaration", Boolean.TRUE);
 				fasterWriter.setProperty("showDoctypeDeclaration", Boolean.TRUE);	//essential to get XSD prefixed
 				fasterWriter.setProperty("xmlbase",jenaModel.getNsPrefixURI(""));
+				*/
 			}
-			
-			fasterWriter.write(jenaModel,output,ISA.URI);
+			//fasterWriter.write(jenaModel,output,ISA.URI);
+			RDFDataMgr.write(output, jenaModel, format) ;
 
     	} catch (Exception x) {
     		Throwable ex = x;
