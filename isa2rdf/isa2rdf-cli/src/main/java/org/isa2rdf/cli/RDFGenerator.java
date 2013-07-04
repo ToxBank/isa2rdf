@@ -52,7 +52,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	protected String prefix;
 	protected long tempIdCounter=1;
 	
-	protected Hashtable<String,List<String>> cache = new Hashtable<String, List<String>>();
+	protected Hashtable<String,List<Object>> cache = new Hashtable<String, List<Object>>();
 	
 	public long getTempIdCounter() {
 		return tempIdCounter;
@@ -85,7 +85,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		if (protocol.getType()==null) return null;
 		if (protocol.getType().getSource()!=null) {
 			if (protocol.getType().getSource().getUrl()!=null) {
-				return String.format("%s%s",protocol.getType().getSource().getUrl(),protocol.getType().getAcc());
+				return String.format("%s/%s",protocol.getType().getSource().getUrl(),protocol.getType().getAcc());
 			}
 		}
 		return null;
@@ -103,8 +103,12 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			p = getProtocolURI((Protocol)node);
 			if (p!=null) return p; else p="P_";
 		}
-		else if ( node instanceof ProtocolApplication ) p = "PA";
-		else if ( node instanceof Study ) p = "S";
+		else if ( node instanceof ProtocolApplication ) {
+			ProtocolApplication papp = (ProtocolApplication) node;
+			p = "PA";
+			return getCachedURI(papp, String.format("%s/%s",prefix,p) , papp);
+			//
+		} else if ( node instanceof Study ) p = "S";
 		else if ( node instanceof Assay ) p = "A";
 		else if ( node instanceof Investigation ) p = "I";
 		else if ( node instanceof PropertyValue ) {
@@ -166,6 +170,9 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		if (node==null) return null;
 		//Accessible
 		if ((node instanceof Accessible) && ((Accessible) node).getAcc()!=null) {
+			//resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
+		}
+		if (node instanceof Protocol) {
 			resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
 		}
 		if (node instanceof Property) { //factor/char/params are descendant
@@ -229,7 +236,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		 */
 		if (node instanceof Data) {
 			Data data = (Data) node;
-			if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
+			resource.addProperty(ISA.hasAccessionID, data.getName());
+			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getDataMatrixUrl()!=null) resource.addProperty(RDFS.seeAlso, data.getUrl());
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyEntry);
@@ -245,7 +253,9 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		 */
 		if (node instanceof Material) {
 			Material data = (Material) node;
-			if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
+			//resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
+			resource.addProperty(ISA.hasAccessionID, data.getName());
+			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyEntry);
 			}
@@ -406,13 +416,13 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		//TODO
 	}
 	
-	protected String getCachedURI(Identifiable object,String prefix, String value) {
+	protected String getCachedURI(Identifiable object,String prefix, Object value) {
 		if (value==null) return null;
-		value = value.trim();
-		List<String> ocache = cache.get(object.getClass().getName());
+		value = (value instanceof String)?value.toString().trim():value;
+		List<Object> ocache = cache.get(object.getClass().getName());
 		int index = -1;
 		if (ocache==null) {
-			ocache = new ArrayList<String>();
+			ocache = new ArrayList<Object>();
 			cache.put(object.getClass().getName(),ocache);
 		} else 
 			index = ocache.indexOf(value);
