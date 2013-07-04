@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>ISA-TAB browser</title>
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css" />
+<LINK href="graph.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" language="javascript"  src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" language="javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="isatab.js"></script>
+<script type="text/javascript" language="javascript"  src="http://d3js.org/d3.v2.min.js?2.9.4"></script>
+<script type="text/javascript" language="javascript"  src="http://bost.ocks.org/mike/fisheye/fisheye.js?0.0.3"></script>
+<script src="graph.js"></script>
+<script>
+$(document).ready(function() {
+	//demo("bii1.json");
+	demo("isatab.json");
+} );
+</script>
+</head>
+<body>
+<h3>Table</h3>
+<table id='processing'>
+<thead>
+<tr>
+<th>Type</th>
+<th>Source</th>
+<th>Protocol</th>
+<th>Parameters</th>
+<th>Destination</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<hr>
+
+<p id="chart1">
+ 
+<p><aside>Mouseover to distort the nodes.</aside>
+
+</body>
+</html>

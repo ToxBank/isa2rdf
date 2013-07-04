@@ -1,0 +1,372 @@
+{
+  "study" : {
+    "S72" : {
+      "processing" : [ {
+        "type" : "DataProcessing",
+        "input" : "DN47",
+        "output" : "DN59"
+      }, {
+        "type" : "DataProcessing",
+        "input" : "DN51",
+        "output" : "DN56"
+      }, {
+        "type" : "DataProcessing",
+        "input" : "DN52",
+        "output" : "DN53"
+      }, {
+        "type" : "DataProcessing",
+        "input" : "DN68",
+        "output" : "DN66"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN46",
+        "output" : "MN60",
+        "applies" : "PA110"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN46",
+        "output" : "MN54",
+        "applies" : "PA121"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN48",
+        "output" : "DN52"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN49",
+        "output" : "MN65"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN50",
+        "output" : "MN63"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN54",
+        "output" : "MN49",
+        "applies" : "PA96"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN54",
+        "output" : "MN50",
+        "applies" : "PA103"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN55",
+        "output" : "DN68"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN57",
+        "output" : "MN58"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN58",
+        "output" : "DN51"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN60",
+        "output" : "MN67",
+        "applies" : "PA80"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN60",
+        "output" : "MN61",
+        "applies" : "PA89"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN61",
+        "output" : "MN57"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN62",
+        "output" : "MN48"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN63",
+        "output" : "MN64"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN64",
+        "output" : "DN47"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN65",
+        "output" : "MN55"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN67",
+        "output" : "MN62"
+      } ],
+      "nodes" : {
+        "DN47" : {
+          "type" : "DataNode",
+          "data" : "D78"
+        },
+        "DN59" : {
+          "type" : "DataNode",
+          "data" : "D126"
+        },
+        "DN51" : {
+          "type" : "DataNode",
+          "data" : "D101"
+        },
+        "DN56" : {
+          "type" : "DataNode",
+          "data" : "D113"
+        },
+        "DN52" : {
+          "type" : "DataNode",
+          "data" : "D119"
+        },
+        "DN53" : {
+          "type" : "DataNode",
+          "data" : "D122"
+        },
+        "DN68" : {
+          "type" : "DataNode",
+          "data" : "D106"
+        },
+        "DN66" : {
+          "type" : "DataNode",
+          "data" : "D115"
+        },
+        "MN46" : {
+          "type" : "MaterialNode",
+          "material" : "M111"
+        },
+        "MN60" : {
+          "type" : "MaterialNode",
+          "material" : "M81"
+        },
+        "MN54" : {
+          "type" : "MaterialNode",
+          "material" : "M97"
+        },
+        "MN48" : {
+          "type" : "MaterialNode",
+          "material" : "M117"
+        },
+        "MN49" : {
+          "type" : "MaterialNode",
+          "material" : "M92"
+        },
+        "MN65" : {
+          "type" : "MaterialNode",
+          "material" : "M94"
+        },
+        "MN50" : {
+          "type" : "MaterialNode",
+          "material" : "M85"
+        },
+        "MN63" : {
+          "type" : "MaterialNode",
+          "material" : "M87"
+        },
+        "MN55" : {
+          "type" : "MaterialNode",
+          "material" : "M104"
+        },
+        "MN57" : {
+          "type" : "MaterialNode",
+          "material" : "M108"
+        },
+        "MN58" : {
+          "type" : "MaterialNode",
+          "material" : "M99"
+        },
+        "MN67" : {
+          "type" : "MaterialNode",
+          "material" : "M83"
+        },
+        "MN61" : {
+          "type" : "MaterialNode",
+          "material" : "M90"
+        },
+        "MN62" : {
+          "type" : "MaterialNode",
+          "material" : "M124"
+        },
+        "MN64" : {
+          "type" : "MaterialNode",
+          "material" : "M76"
+        }
+      },
+      "protocols" : {
+        "http://onto.toxbank.net/isa/qHTS/P_24" : {
+          "label" : "cell growth",
+          "acc" : "Hepatotoxicity_ROS\\cell growth"
+        },
+        "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA" : {
+          "label" : "fluorescence imaging",
+          "acc" : "Hepatotoxicity_ROS\\fluorescence imaging"
+        }
+      },
+      "protocolApplications" : {
+        "PA110" : {
+          "protocol" : "http://onto.toxbank.net/isa/qHTS/P_24",
+          "parameters" : [ "PMV10", "PMV9", "PMV11", "PMV7", "PMV8" ]
+        },
+        "PA121" : {
+          "protocol" : "http://onto.toxbank.net/isa/qHTS/P_24",
+          "parameters" : [ "PMV10", "PMV9", "PMV11", "PMV7", "PMV8" ]
+        },
+        "PA96" : {
+          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
+          "parameters" : [ "PMV4", "PMV2", "PMV1", "PMV_GO_5634", "PMV3" ]
+        },
+        "PA103" : {
+          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
+          "parameters" : [ "PMV4", "PMV1", "PMV_CHEBI_26523", "PMV5", "PMV6" ]
+        },
+        "PA80" : {
+          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
+          "parameters" : [ "PMV4", "PMV2", "PMV1", "PMV_GO_5634", "PMV3" ]
+        },
+        "PA89" : {
+          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
+          "parameters" : [ "PMV4", "PMV1", "PMV_CHEBI_26523", "PMV5", "PMV6" ]
+        }
+      },
+      "materials" : {
+        "M111" : {
+          "acc" : "ROS_exp1"
+        },
+        "M81" : {
+          "acc" : "exp1-A1-C1"
+        },
+        "M97" : {
+          "acc" : "exp1-E8-C1"
+        },
+        "M117" : {
+          "acc" : "exp1-A1-C1-Ch1"
+        },
+        "M92" : {
+          "acc" : ""
+        },
+        "M94" : {
+          "acc" : ""
+        },
+        "M85" : {
+          "acc" : ""
+        },
+        "M87" : {
+          "acc" : ""
+        },
+        "M104" : {
+          "acc" : "exp1-E8-C1-Ch1"
+        },
+        "M108" : {
+          "acc" : ""
+        },
+        "M99" : {
+          "acc" : "exp1-A1-C1-Ch2"
+        },
+        "M83" : {
+          "acc" : ""
+        },
+        "M90" : {
+          "acc" : ""
+        },
+        "M124" : {
+          "acc" : ""
+        },
+        "M76" : {
+          "acc" : "exp1-E8-C1-Ch2"
+        }
+      },
+      "data" : {
+        "D78" : {
+          "acc" : " (exp1-E8-C1-Ch2)"
+        },
+        "D126" : {
+          "acc" : "data_ROS_experiment1_Ch2.txt (exp1-E8-C1-Ch2)"
+        },
+        "D101" : {
+          "acc" : " (exp1-A1-C1-Ch2)"
+        },
+        "D113" : {
+          "acc" : "data_ROS_experiment1_Ch2.txt (exp1-A1-C1-Ch2)"
+        },
+        "D119" : {
+          "acc" : " (exp1-A1-C1-Ch1)"
+        },
+        "D122" : {
+          "acc" : "data_ROS_experiment1_Ch1.txt (exp1-A1-C1-Ch1)"
+        },
+        "D106" : {
+          "acc" : " (exp1-E8-C1-Ch1)"
+        },
+        "D115" : {
+          "acc" : "data_ROS_experiment1_Ch1.txt (exp1-E8-C1-Ch1)"
+        }
+      },
+      "parameters" : {
+        "PRM5" : "software",
+        "PRM9" : "Date",
+        "PRM2" : "dye",
+        "PRM1" : "Reagents kit",
+        "PRM8" : "Performer",
+        "PRM10" : "cell culture medium",
+        "PRM4" : "cellular component",
+        "PRM6" : "CO2 concentration",
+        "PRM7" : "incubation temperature",
+        "PRM3" : "emission wavelength"
+      },
+      "parameterValues" : {
+        "PMV4" : {
+          "parameter" : "PRM5",
+          "value" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
+        },
+        "PMV10" : {
+          "parameter" : "PRM9",
+          "value" : "10/8/2010"
+        },
+        "PMV2" : {
+          "parameter" : "PRM2",
+          "value" : "Hoechst 33342"
+        },
+        "PMV1" : {
+          "parameter" : "PRM1",
+          "value" : "oxidative stress staining kit"
+        },
+        "PMV9" : {
+          "parameter" : "PRM8",
+          "value" : "Milena/Taina"
+        },
+        "PMV11" : {
+          "parameter" : "PRM10",
+          "value" : "William's E medium"
+        },
+        "PMV_GO_5634" : {
+          "parameter" : "PRM4",
+          "value" : "nucleus",
+          "term" : "http://purl.obolibrary.org/obo/GO_5634"
+        },
+        "PMV7" : {
+          "parameter" : "PRM6",
+          "value" : "5%"
+        },
+        "PMV_CHEBI_26523" : {
+          "parameter" : "PRM4",
+          "value" : "reactive oxygen species",
+          "term" : "http://purl.obolibrary.org/obo/CHEBI_26523"
+        },
+        "PMV8" : {
+          "parameter" : "PRM7",
+          "value" : "37 C"
+        },
+        "PMV5" : {
+          "parameter" : "PRM2",
+          "value" : "DHE"
+        },
+        "PMV6" : {
+          "parameter" : "PRM3",
+          "value" : "605 nm"
+        },
+        "PMV3" : {
+          "parameter" : "PRM3",
+          "value" : "461 nm"
+        }
+      }
+    }
+  }
+}
