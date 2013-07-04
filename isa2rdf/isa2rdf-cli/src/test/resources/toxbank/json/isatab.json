@@ -5,37 +5,37 @@
         "type" : "MaterialProcessing",
         "input" : "MN30",
         "output" : "MN36",
-        "applies" : "PA80"
+        "applies" : "PA1"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN30",
         "output" : "MN39",
-        "applies" : "PA89"
+        "applies" : "PA2"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN32",
         "output" : "MN34",
-        "applies" : "PA90"
+        "applies" : "PA3"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN32",
         "output" : "MN30",
-        "applies" : "PA93"
+        "applies" : "PA3"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN32",
         "output" : "MN43",
-        "applies" : "PA94"
+        "applies" : "PA3"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN34",
         "output" : "MN35",
-        "applies" : "PA73"
+        "applies" : "PA2"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN34",
         "output" : "MN42",
-        "applies" : "PA64"
+        "applies" : "PA1"
       }, {
         "type" : "DataAcquisition",
         "input" : "MN35",
@@ -60,12 +60,12 @@
         "type" : "MaterialProcessing",
         "input" : "MN43",
         "output" : "MN44",
-        "applies" : "PA103"
+        "applies" : "PA1"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN43",
         "output" : "MN40",
-        "applies" : "PA104"
+        "applies" : "PA2"
       }, {
         "type" : "DataAcquisition",
         "input" : "MN44",
@@ -74,67 +74,67 @@
       "nodes" : {
         "MN30" : {
           "type" : "MaterialNode",
-          "material" : "M81"
+          "material" : "M78"
         },
         "MN36" : {
           "type" : "MaterialNode",
-          "material" : "M83"
+          "material" : "M80"
         },
         "MN39" : {
           "type" : "MaterialNode",
-          "material" : "M76"
+          "material" : "M74"
         },
         "MN32" : {
           "type" : "MaterialNode",
-          "material" : "M91"
+          "material" : "M86"
         },
         "MN34" : {
           "type" : "MaterialNode",
-          "material" : "M65"
+          "material" : "M64"
         },
         "MN43" : {
           "type" : "MaterialNode",
-          "material" : "M95"
+          "material" : "M88"
         },
         "MN35" : {
           "type" : "MaterialNode",
-          "material" : "M74"
+          "material" : "M72"
         },
         "MN42" : {
           "type" : "MaterialNode",
-          "material" : "M67"
+          "material" : "M66"
         },
         "DN33" : {
           "type" : "DataNode",
-          "data" : "D87"
+          "data" : "D84"
         },
         "DN41" : {
           "type" : "DataNode",
-          "data" : "D85"
+          "data" : "D82"
         },
         "DN38" : {
           "type" : "DataNode",
-          "data" : "D78"
+          "data" : "D76"
         },
         "MN40" : {
           "type" : "MaterialNode",
-          "material" : "M97"
+          "material" : "M90"
         },
         "DN31" : {
           "type" : "DataNode",
-          "data" : "D99"
+          "data" : "D92"
         },
         "DN37" : {
           "type" : "DataNode",
-          "data" : "D101"
+          "data" : "D94"
         },
         "MN44" : {
           "type" : "MaterialNode",
-          "material" : "M69"
+          "material" : "M68"
         },
         "DN45" : {
           "type" : "DataNode",
-          "data" : "D71"
+          "data" : "D70"
         }
       },
       "protocols" : {
@@ -148,92 +148,133 @@
         }
       },
       "protocolApplications" : {
-        "PA80" : {
+        "PA1" : {
           "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
-          "parameters" : [ "PMV4", "PMV2", "PMV1", "PMV_GO_5634", "PMV3" ]
+          "parameters" : {
+            "PMV4" : {
+              "parameter" : "software",
+              "value" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
+            },
+            "PMV2" : {
+              "parameter" : "dye",
+              "value" : "Hoechst 33342"
+            },
+            "PMV1" : {
+              "parameter" : "Reagents kit",
+              "value" : "oxidative stress staining kit"
+            },
+            "PMV_GO_5634" : {
+              "parameter" : "cellular component",
+              "value" : "nucleus",
+              "term" : "http://purl.obolibrary.org/obo/GO_5634"
+            },
+            "PMV3" : {
+              "parameter" : "emission wavelength",
+              "value" : "461 nm"
+            }
+          }
         },
-        "PA89" : {
+        "PA2" : {
           "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
-          "parameters" : [ "PMV4", "PMV1", "PMV_CHEBI_26523", "PMV5", "PMV6" ]
+          "parameters" : {
+            "PMV4" : {
+              "parameter" : "software",
+              "value" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
+            },
+            "PMV1" : {
+              "parameter" : "Reagents kit",
+              "value" : "oxidative stress staining kit"
+            },
+            "PMV_CHEBI_26523" : {
+              "parameter" : "cellular component",
+              "value" : "reactive oxygen species",
+              "term" : "http://purl.obolibrary.org/obo/CHEBI_26523"
+            },
+            "PMV5" : {
+              "parameter" : "dye",
+              "value" : "DHE"
+            },
+            "PMV6" : {
+              "parameter" : "emission wavelength",
+              "value" : "605 nm"
+            }
+          }
         },
-        "PA90" : {
+        "PA3" : {
           "protocol" : "http://onto.toxbank.net/isa/qHTS/P_3",
-          "parameters" : [ "PMV10", "PMV9", "PMV11", "PMV7", "PMV8" ]
-        },
-        "PA93" : {
-          "protocol" : "http://onto.toxbank.net/isa/qHTS/P_3",
-          "parameters" : [ "PMV10", "PMV9", "PMV11", "PMV7", "PMV8" ]
-        },
-        "PA94" : {
-          "protocol" : "http://onto.toxbank.net/isa/qHTS/P_3",
-          "parameters" : [ "PMV10", "PMV9", "PMV11", "PMV7", "PMV8" ]
-        },
-        "PA73" : {
-          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
-          "parameters" : [ "PMV4", "PMV1", "PMV_CHEBI_26523", "PMV5", "PMV6" ]
-        },
-        "PA64" : {
-          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
-          "parameters" : [ "PMV4", "PMV2", "PMV1", "PMV_GO_5634", "PMV3" ]
-        },
-        "PA103" : {
-          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
-          "parameters" : [ "PMV4", "PMV2", "PMV1", "PMV_GO_5634", "PMV3" ]
-        },
-        "PA104" : {
-          "protocol" : "https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA",
-          "parameters" : [ "PMV4", "PMV1", "PMV_CHEBI_26523", "PMV5", "PMV6" ]
+          "parameters" : {
+            "PMV10" : {
+              "parameter" : "Date",
+              "value" : "10/8/2010"
+            },
+            "PMV9" : {
+              "parameter" : "Performer",
+              "value" : "Milena/Taina"
+            },
+            "PMV11" : {
+              "parameter" : "cell culture medium",
+              "value" : "William's E medium"
+            },
+            "PMV7" : {
+              "parameter" : "CO2 concentration",
+              "value" : "5%"
+            },
+            "PMV8" : {
+              "parameter" : "incubation temperature",
+              "value" : "37 C"
+            }
+          }
         }
       },
       "materials" : {
-        "M81" : {
+        "M78" : {
           "acc" : "exp1-A1-C2"
         },
-        "M83" : {
+        "M80" : {
           "acc" : "exp1-A1-C2-Ch1"
         },
-        "M76" : {
+        "M74" : {
           "acc" : "exp1-A1-C2-Ch2"
         },
-        "M91" : {
+        "M86" : {
           "acc" : "ROS_exp1"
         },
-        "M65" : {
+        "M64" : {
           "acc" : "exp1-A1-C1"
         },
-        "M95" : {
+        "M88" : {
           "acc" : "exp1-E8-C1"
         },
-        "M74" : {
+        "M72" : {
           "acc" : "exp1-A1-C1-Ch2"
         },
-        "M67" : {
+        "M66" : {
           "acc" : "exp1-A1-C1-Ch1"
         },
-        "M97" : {
+        "M90" : {
           "acc" : "exp1-E8-C1-Ch2"
         },
-        "M69" : {
+        "M68" : {
           "acc" : "exp1-E8-C1-Ch1"
         }
       },
       "data" : {
-        "D87" : {
+        "D84" : {
           "acc" : "data_ROS_experiment1_Ch2.txt (exp1-A1-C1-Ch2)"
         },
-        "D85" : {
+        "D82" : {
           "acc" : "data_ROS_experiment1_Ch1.txt (exp1-A1-C2-Ch1)"
         },
-        "D78" : {
+        "D76" : {
           "acc" : "data_ROS_experiment1_Ch2.txt (exp1-A1-C2-Ch2)"
         },
-        "D99" : {
+        "D92" : {
           "acc" : "data_ROS_experiment1_Ch2.txt (exp1-E8-C1-Ch2)"
         },
-        "D101" : {
+        "D94" : {
           "acc" : "data_ROS_experiment1_Ch1.txt (exp1-A1-C1-Ch1)"
         },
-        "D71" : {
+        "D70" : {
           "acc" : "data_ROS_experiment1_Ch1.txt (exp1-E8-C1-Ch1)"
         }
       },
@@ -251,57 +292,57 @@
       },
       "parameterValues" : {
         "PMV4" : {
-          "parameter" : "PRM5",
+          "parameter" : "software",
           "value" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
         },
         "PMV10" : {
-          "parameter" : "PRM9",
+          "parameter" : "Date",
           "value" : "10/8/2010"
         },
         "PMV2" : {
-          "parameter" : "PRM2",
+          "parameter" : "dye",
           "value" : "Hoechst 33342"
         },
         "PMV1" : {
-          "parameter" : "PRM1",
+          "parameter" : "Reagents kit",
           "value" : "oxidative stress staining kit"
         },
         "PMV9" : {
-          "parameter" : "PRM8",
+          "parameter" : "Performer",
           "value" : "Milena/Taina"
         },
         "PMV11" : {
-          "parameter" : "PRM10",
+          "parameter" : "cell culture medium",
           "value" : "William's E medium"
         },
         "PMV_GO_5634" : {
-          "parameter" : "PRM4",
+          "parameter" : "cellular component",
           "value" : "nucleus",
           "term" : "http://purl.obolibrary.org/obo/GO_5634"
         },
         "PMV7" : {
-          "parameter" : "PRM6",
+          "parameter" : "CO2 concentration",
           "value" : "5%"
         },
         "PMV_CHEBI_26523" : {
-          "parameter" : "PRM4",
+          "parameter" : "cellular component",
           "value" : "reactive oxygen species",
           "term" : "http://purl.obolibrary.org/obo/CHEBI_26523"
         },
         "PMV8" : {
-          "parameter" : "PRM7",
+          "parameter" : "incubation temperature",
           "value" : "37 C"
         },
         "PMV5" : {
-          "parameter" : "PRM2",
+          "parameter" : "dye",
           "value" : "DHE"
         },
         "PMV6" : {
-          "parameter" : "PRM3",
+          "parameter" : "emission wavelength",
           "value" : "605 nm"
         },
         "PMV3" : {
-          "parameter" : "PRM3",
+          "parameter" : "emission wavelength",
           "value" : "461 nm"
         }
       }

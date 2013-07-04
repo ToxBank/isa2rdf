@@ -1,4 +1,4 @@
-function demo(url) {
+function demo(url,buildgraph) {
 	/*
 	$.getJSON("isatab.json", function(data) {
 		$.each(data.study, function(key,study){
@@ -11,19 +11,20 @@ function demo(url) {
                 alert("ERROR: " + textStatus + ", " + error);
     });
     */
-	defineProcessingTable(null,url);
+	defineProcessingTable(null,url,buildgraph);
 	
 }
 
 
-function defineProcessingTable(root,url) {
+function defineProcessingTable(root,url,buildgraph) {
 	var oTable = $('#processing').dataTable( {
 		"sAjaxDataProp" : "processing",
 		"bProcessing": true,
 		"bServerSide": false,
 		"bStateSave": false,
 		"aoColumnDefs": [
- 				{ "mData": function ( source) {
+ 				{ 
+ 				 "mData": function ( source) {
  					return source.type; 
  				  },
  				  "asSorting": [ "asc", "desc" ],
@@ -58,7 +59,12 @@ function defineProcessingTable(root,url) {
 				  "bSortable" : true
 				},			
 				{ "mDataProp": function ( source ) {
-					return source.applies==null?"":source.applies.parameters; 
+					var sOut = "";
+					if (source.applies!=null) 
+					 $.each(source.applies.parameters, function(p,pv){
+						 sOut += pv.parameter + "= " + pv.value + "<br>";
+					 });
+					return sOut;
 				  },
 				  "asSorting": [ "asc", "desc" ],
 				  "aTargets": [ 3 ],	
@@ -75,7 +81,7 @@ function defineProcessingTable(root,url) {
 				  "aTargets": [ 4 ],	
 				  "bSearchable" : true,
 				  "bSortable" : true
-				},
+				}
 				
 			],
 		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
@@ -135,7 +141,8 @@ function defineProcessingTable(root,url) {
 			    	        			    	        
 			    		});
 			        	fnCallback(thestudy);
-			        	drawGraph(graph,'#chart1');
+			        	if (buildgraph)
+			        		drawGraph(graph,'#chart1');
 			        },
 			        "cache": false,
 			        "error" : function( xhr, textStatus, error ) {

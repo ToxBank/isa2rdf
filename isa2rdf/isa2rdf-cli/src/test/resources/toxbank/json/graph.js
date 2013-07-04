@@ -87,7 +87,6 @@ var text = node.append("text")
 
     svg.on("mousemove", function() {
       fisheye.focus(d3.mouse(this));
-
       circle.each(function(d) { d.fisheye = fisheye(d); })
           .attr("cx", function(d) { return d.fisheye.x; })
           .attr("cy", function(d) { return d.fisheye.y; })

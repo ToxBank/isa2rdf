@@ -2,14 +2,11 @@ package org.isa2rdf.cli;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.net.URL;
 
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
@@ -113,9 +110,9 @@ public class AppTest  {
 	
 	@org.junit.Test
 	public void testRDF_qHTS() throws Exception {
-		Model model = testRDF(new File("D:/src-isatab//qHTS"));
+		//Model model = testRDF(new File("D:/src-isatab//qHTS"));
 		String dir = "toxbank//qHTS";
-		//Model model = testRDF(dir);
+		Model model = testRDF(dir);
 		testKeywords(model, 14);
 		testTitleAndAbstract(model);
 		testToxBankResources(model,1);
@@ -255,7 +252,7 @@ public class AppTest  {
 					((ObjectNode)protocolApps).put(protocolApp.asNode().getLocalName(),pApp);
 				}
 				((ObjectNode)pApp).put("protocol", protocol.asNode().getURI());
-				((ObjectNode)pApp).put("parameters", m.createArrayNode());
+				((ObjectNode)pApp).put("parameters", m.createObjectNode());
 				item.put("applies",protocolApp.asNode().getLocalName());
 				//:PMV62 , :PMV71 , :PMV68 , :PMV64 , :PMV66 .
 				JsonNode p = protocols.get(protocol.asNode().getURI());
@@ -382,7 +379,7 @@ public class AppTest  {
 			if (pValue==null) {
 				pValue = m.createObjectNode();
 				((ObjectNode)parameterValues).put(pValueId, pValue);
-				((ObjectNode)pValue).put("parameter",paramId);
+				((ObjectNode)pValue).put("parameter",studyNode.get("parameters").get(paramId));
 				((ObjectNode)pValue).put("value",qs.get("value").asLiteral().getString());
 				if (qs.get("term")!=null)
 				((ObjectNode)pValue).put("term",qs.get("term").asNode().getURI());
@@ -392,8 +389,10 @@ public class AppTest  {
 			JsonNode protocolApps = studyNode.get("protocolApplications");
 			
 			JsonNode papp = ((ObjectNode)protocolApps).get(qs.get("protocolapp").asNode().getLocalName());
-			if (papp!=null)
-				((ArrayNode)papp.get("parameters")).add(pValueId);
+			if (papp!=null) {
+				ObjectNode params = ((ObjectNode)papp.get("parameters"));
+				params.put(pValueId,studyNode.get("parameterValues").get(pValueId));
+			}	
 
 			n++;
 		}
