@@ -13,18 +13,22 @@
 <https://services.toxbank.net/toxbank/organisation/G27>
         a       tb:Organization .
 
+:MN53   a                isa:MaterialNode ;
+        isa:hasMaterial  :M74 ;
+        isa:hasStudy     :S1 .
+
+:M86    a                           isa:Material ;
+        isa:hasAccessionID          "ROS_exp1" ;
+        isa:hasCharacteristicValue  :CV7 , :CV6 , :CV5 , :CV4 , :CV3 , :CV2 , :CV1 .
+
 isa:hasParameterValue
         a            owl:ObjectProperty ;
         rdfs:domain  isa:ProtocolApplication ;
         rdfs:range   isa:ParameterValue .
 
-:M86    a                           isa:Material ;
-        isa:hasAccessionID          "ROS_exp1" ;
-        isa:hasCharacteristicValue  :CV5 , :CV4 , :CV3 , :CV2 , :CV1 , :CV_EFO_EFO_0001186 , :CV_NCBITaxon_xon_9606 .
-
-:MN32   a                isa:MaterialNode ;
-        isa:hasMaterial  :M86 ;
-        isa:hasStudy     :S1 .
+:CV6    a                isa:CharacteristicValue ;
+        isa:hasProperty  :C6 ;
+        isa:hasValue     "1"^^xsd:int .
 
 :D76    a                   isa:Data ;
         isa:hasAccessionID  "data_ROS_experiment1_Ch2.txt (exp1-A1-C2-Ch2)" .
@@ -33,63 +37,50 @@ isa:Node  rdfs:subClassOf  isa:GraphElement .
 
 :OE79   a       isa:OntologyEntry .
 
+[ a              tb:Organization ;
+  tb:hasMember   :ISA_61 ;
+  dcterms:title  "CCC"^^xsd:string
+] .
+
 :PRM2   a              isa:Parameter ;
         dcterms:title  "dye" .
 
 isa:DataNode  rdfs:subClassOf  isa:Node .
 
-:RS60   a              isa:ReferenceSources ;
-        dcterms:title  "BAO" .
-
 isa:ReferenceSources  rdfs:subClassOf  isa:Accessible .
-
-:MN40   a                isa:MaterialNode ;
-        isa:hasMaterial  :M90 ;
-        isa:hasStudy     :S1 .
 
 :D84    a                   isa:Data ;
         isa:hasAccessionID  "data_ROS_experiment1_Ch2.txt (exp1-A1-C1-Ch2)" .
 
-[ a              tb:Organization ;
-  tb:hasMember   :ISA_96 ;
-  dcterms:title  "ZZZ"^^xsd:string
-] .
-
-:DN33   a             isa:DataNode ;
-        isa:hasData   :D84 ;
-        isa:hasStudy  :S1 .
-
 :OE87   a       isa:OntologyEntry .
 
-:CV_NCBITaxon_xon_9606
-        a                    isa:CharacteristicValue ;
-        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/NCBITaxon_xon_9606> ;
-        isa:hasProperty      :C1 ;
-        isa:hasValue         "Homo sapiens" .
+:FV6    a              isa:FactorValue ;
+        isa:hasFactor  :F3 ;
+        isa:hasValue   1.0E-5 .
 
 :C3     a              isa:Property ;
         dcterms:title  "cell line provider" .
 
+:RSOBI  a              isa:ReferenceSources ;
+        dcterms:title  "OBI" .
+
 :D92    a                   isa:Data ;
         isa:hasAccessionID  "data_ROS_experiment1_Ch2.txt (exp1-E8-C1-Ch2)" .
+
+:MN48   a                isa:MaterialNode ;
+        isa:hasMaterial  :M64 ;
+        isa:hasStudy     :S1 .
 
 isa:Annotatable  rdfs:subClassOf  isa:Identifiable .
 
 :PMV7   a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM6 ;
-        isa:hasValue      "5%" .
+        isa:hasParameter  :PRM3 ;
+        isa:hasValue      "605 nm" .
 
-:CV1    a                isa:CharacteristicValue ;
-        isa:hasProperty  :C3 ;
-        isa:hasValue     "Biopredic" .
-
-:DN41   a             isa:DataNode ;
-        isa:hasData   :D82 ;
-        isa:hasStudy  :S1 .
-
-:ISA_29  a                foaf:Person , isa:Contact ;
-        foaf:family_name  "XYZ"^^xsd:string ;
-        foaf:givenname    "E"^^xsd:string .
+:CV1    a                    isa:CharacteristicValue ;
+        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/NCBITaxon_xon_9606> ;
+        isa:hasProperty      :C1 ;
+        isa:hasValue         "Homo sapiens" .
 
 :OE95   a       isa:OntologyEntry .
 
@@ -100,15 +91,8 @@ isa:hasStudy  a      owl:ObjectProperty ;
         rdfs:domain  isa:Investigation ;
         rdfs:range   isa:Study .
 
-:PMV_CHEBI_26523  a          isa:ParameterValue ;
-        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/CHEBI_26523> ;
-        isa:hasParameter     :PRM4 ;
-        isa:hasValue         "reactive oxygen species" .
-
-:A24    a       isa:Assay .
-
-:MN35   a                isa:MaterialNode ;
-        isa:hasMaterial  :M72 ;
+:MN56   a                isa:MaterialNode ;
+        isa:hasMaterial  :M66 ;
         isa:hasStudy     :S1 .
 
 :M68    a                   isa:Material ;
@@ -126,137 +110,143 @@ isa:hasValue  a      owl:DatatypeProperty ;
 :PRM5   a              isa:Parameter ;
         dcterms:title  "software" .
 
+:PA3    a                      isa:ProtocolApplication ;
+        isa:appliesProtocol    <https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1> ;
+        isa:hasParameterValue  :PMV5 , :PMV4 , :PMV3 , :PMV9 , :PMV1 .
+
 isa:hasParameter  a  owl:ObjectProperty ;
         rdfs:domain  isa:ParameterValue ;
         rdfs:range   isa:Parameter .
 
-:PA3    a                      isa:ProtocolApplication ;
-        isa:appliesProtocol    :P_3 ;
-        isa:hasParameterValue  :PMV11 , :PMV10 , :PMV9 , :PMV8 , :PMV7 .
+<http://purl.obolibrary.org/obo/GO_0005634>
+        a                   isa:OntologyTerm ;
+        rdfs:label          "nucleus" ;
+        isa:hasAccessionID  "0005634" .
+
+<http://toxbanktest2.toxbank.net:8080/ambit2/compound/>
+        a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "http://toxbanktest2.toxbank.net:8080/ambit2/compound/" ;
+        dcterms:description  "OpenTox structure search" ;
+        dcterms:title        "OT" .
 
 isa:hasMaterial  a   owl:FunctionalProperty , owl:ObjectProperty ;
         rdfs:domain  isa:MaterialNode ;
         rdfs:range   isa:Material .
 
-:MN43   a                isa:MaterialNode ;
-        isa:hasMaterial  :M88 ;
-        isa:hasStudy     :S1 .
-
-:PMV2   a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM2 ;
-        isa:hasValue      "Hoechst 33342" .
-
-:MN22   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN43 ;
-        isa:hasOutputNode           :MN40 ;
+:MN43   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN57 ;
+        isa:hasOutputNode           :MN54 ;
         isa:hasProtocolApplication  :PA2 ;
         isa:hasStudy                :S1 .
 
-:DAN11  a                  isa:DataAcquisition ;
-        isa:hasInputNode   :MN39 ;
-        isa:hasOutputNode  :DN38 ;
+:PMV2   a                    isa:ParameterValue ;
+        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/CHEBI_51232> ;
+        isa:hasParameter     :PRM2 ;
+        isa:hasValue         "2'-(4-ethoxyphenyl)-5-(4-methylpiperazin-1-yl)-2,5'-bibenzimidazole" .
+
+:DAN32  a                  isa:DataAcquisition ;
+        isa:hasInputNode   :MN53 ;
+        isa:hasOutputNode  :DN52 ;
         isa:hasStudy       :S1 .
+
+:I9     a                   isa:Investigation ;
+        tb:hasKeyword       "http://www.owl-ontologies.com/toxbank.owl/K696"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K78"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K12"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K367"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K358"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K609"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K671"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K191"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K487"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K369"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K202"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K220"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/k669"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K352"^^xsd:string ;
+        tb:hasOrganisation  <https://services.toxbank.net/toxbank/organisation/G27> ;
+        tb:hasOwner         <https://services.toxbank.net/toxbank/user/U60> ;
+        tb:hasProject       <https://services.toxbank.net/toxbank/project/G9> ;
+        isa:hasOwner        :ISA_61 , :ISA_96 ;
+        isa:hasStudy        :S1 ;
+        dcterms:abstract    "The liver …." ;
+        dcterms:created     "3 Nov 2013 22:00:00 GMT" ;
+        dcterms:title       "Hepatotoxicity Screening" .
 
 :OE69   a       isa:OntologyEntry .
 
 :C6     a              isa:Property ;
         dcterms:title  "Biological Replicate" .
 
-:RS50   a              isa:ReferenceSources ;
-        dcterms:title  "OBI" .
+:A5     a       isa:Assay .
 
 :S1     a                    isa:Study ;
-        isa:hasAssay         :A24 , :A27 , :A23 , :A25 , :A26 , :A28 ;
-        isa:hasProtocol      <https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA> , :P_3 ;
+        isa:hasAssay         :A3 , :A5 , :A6 , :A8 , :A7 , :A4 ;
+        isa:hasProtocol      <https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1> , :P1 ;
         dcterms:description  "The Hoechst dye …." ;
         dcterms:title        "ROS production" .
 
 :PMV10  a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM9 ;
-        isa:hasValue      "10/8/2010" .
+        isa:hasParameter  :PRM6 ;
+        isa:hasValue      "5%" .
 
-:MN30   a                isa:MaterialNode ;
-        isa:hasMaterial  :M78 ;
-        isa:hasStudy     :S1 .
+:DAN40  a                  isa:DataAcquisition ;
+        isa:hasInputNode   :MN54 ;
+        isa:hasOutputNode  :DN45 ;
+        isa:hasStudy       :S1 .
 
 :CV4    a                isa:CharacteristicValue ;
-        isa:hasProperty  :C6 ;
-        isa:hasValue     "1"^^xsd:int .
+        isa:hasProperty  :C4 ;
+        isa:hasValue     "exp1" .
 
-:DAN19  a                  isa:DataAcquisition ;
-        isa:hasInputNode   :MN40 ;
-        isa:hasOutputNode  :DN31 ;
-        isa:hasStudy       :S1 .
+:OE77   a       isa:OntologyEntry .
 
 <http://bioportal.bioontology.org/ontologies/47845>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "http://bioportal.bioontology.org/ontologies/47845" ;
         dcterms:description  "NCBI organismal classification" ;
         dcterms:hasVersion   "47845" ;
         dcterms:title        "NCBITaxon" .
-
-<http://purl.obolibrary.org/obo/GO_5634>
-        a                   isa:OntologyTerm ;
-        rdfs:label          "nucleus" ;
-        isa:hasAccessionID  "5634" .
-
-:OE77   a       isa:OntologyEntry .
 
 dcterms:created  a  owl:AnnotationProperty .
 
 isa:Accessible  rdfs:subClassOf  isa:Annotatable .
 
+isa:Assay  rdfs:subClassOf  isa:HASREFERENCES .
+
 <http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=GO>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=GO" ;
         dcterms:description  "Gene Ontology" ;
         dcterms:hasVersion   "10-Jun" ;
         dcterms:title        "GO" .
 
-isa:Assay  rdfs:subClassOf  isa:HASREFERENCES .
-
 isa:GraphElement  rdfs:subClassOf  isa:Accessible .
 
-:A27    a       isa:Assay .
+:ISA_61  a                foaf:Person , isa:Contact ;
+        foaf:family_name  "XYZ"^^xsd:string ;
+        foaf:givenname    "E"^^xsd:string .
+
+:MN38   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN46 ;
+        isa:hasOutputNode           :MN44 ;
+        isa:hasProtocolApplication  :PA4 ;
+        isa:hasStudy                :S1 .
 
 :D82    a                   isa:Data ;
         isa:hasAccessionID  "data_ROS_experiment1_Ch1.txt (exp1-A1-C2-Ch1)" .
 
-:MN17   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN32 ;
-        isa:hasOutputNode           :MN30 ;
-        isa:hasProtocolApplication  :PA3 ;
-        isa:hasStudy                :S1 .
-
-:DN31   a             isa:DataNode ;
-        isa:hasData   :D92 ;
+:DN52   a             isa:DataNode ;
+        isa:hasData   :D76 ;
         isa:hasStudy  :S1 .
+
+:RSBAO  a              isa:ReferenceSources ;
+        dcterms:title  "BAO" .
 
 <https://services.toxbank.net/toxbank/project/G9>
         a       tb:Project .
 
 :OE85   a       isa:OntologyEntry .
 
-:I4     a                   isa:Investigation ;
-        tb:hasKeyword       "http://www.owl-ontologies.com/toxbank.owl/K367"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K671"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K487"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K202"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K609"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/k669"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K358"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K352"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K12"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K696"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K369"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K78"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K191"^^xsd:string , "http://www.owl-ontologies.com/toxbank.owl/K220"^^xsd:string ;
-        tb:hasOrganisation  <https://services.toxbank.net/toxbank/organisation/G27> ;
-        tb:hasOwner         <https://services.toxbank.net/toxbank/user/U60> ;
-        tb:hasProject       <https://services.toxbank.net/toxbank/project/G9> ;
-        isa:hasOwner        :ISA_96 , :ISA_29 ;
-        isa:hasStudy        :S1 ;
-        dcterms:abstract    "The liver …." ;
-        dcterms:created     "3 Nov 2013 22:00:00 GMT" ;
-        dcterms:title       "Hepatotoxicity Screening" .
+:PRM10  a              isa:Parameter ;
+        dcterms:title  "cell culture medium" .
 
 <https://services.toxbank.net/toxbank/protocol>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "https://services.toxbank.net/toxbank/protocol" ;
         dcterms:description  "Toxbank Protocols" ;
         dcterms:title        "TBP" .
 
 :FV4    a              isa:FactorValue ;
         isa:hasFactor  :F3 ;
-        isa:hasValue   1.0E-5 .
-
-:PRM10  a              isa:Parameter ;
-        dcterms:title  "cell culture medium" .
+        isa:hasValue   5.0E-4 .
 
 :C1     a              isa:Property ;
         dcterms:title  "organism" .
@@ -266,12 +256,22 @@ isa:GraphElement  rdfs:subClassOf  isa:Accessible .
 
 isa:ParameterValue  rdfs:subClassOf  isa:PropertyValue .
 
+<https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1>
+        a                   tb:Protocol , isa:Protocol ;
+        rdfs:label          "fluorescence imaging"^^xsd:string ;
+        isa:hasAccessionID  "Hepatotoxicity_ROS\\fluorescence imaging" .
+
 isa:hasInputNode  a  owl:ObjectProperty ;
         rdfs:domain  isa:Processing ;
         rdfs:range   isa:Node .
 
+:MN46   a                isa:MaterialNode ;
+        isa:hasMaterial  :M86 ;
+        isa:hasStudy     :S1 .
+
 <http://bioportal.bioontology.org/ontologies/50119>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "http://bioportal.bioontology.org/ontologies/50119" ;
         dcterms:description  "Units of measurement" ;
         dcterms:hasVersion   "50119" ;
         dcterms:title        "UO" .
@@ -281,23 +281,24 @@ isa:appliesProtocol  a  owl:FunctionalProperty , owl:ObjectProperty ;
         rdfs:range   isa:Protocol .
 
 :PMV5   a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM2 ;
-        isa:hasValue      "DHE" .
+        isa:hasParameter  :PRM5 ;
+        isa:hasValue      "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software" .
+
+:DAN35  a                  isa:DataAcquisition ;
+        isa:hasInputNode   :MN49 ;
+        isa:hasOutputNode  :DN47 ;
+        isa:hasStudy       :S1 .
 
 <http://bioportal.bioontology.org/ontologies/50261>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "http://bioportal.bioontology.org/ontologies/50261" ;
         dcterms:description  "Experimental Factor Ontology" ;
         dcterms:hasVersion   "50261" ;
         dcterms:title        "EFO" .
 
-:OE93   a       isa:OntologyEntry .
-
 isa:PropertyValue  rdfs:subClassOf  isa:FreeTextTerm .
 
-:DAN14  a                  isa:DataAcquisition ;
-        isa:hasInputNode   :MN35 ;
-        isa:hasOutputNode  :DN33 ;
-        isa:hasStudy       :S1 .
+:OE93   a       isa:OntologyEntry .
 
 <http://purl.obolibrary.org/obo/CHEBI_26523>
         a                   isa:OntologyTerm ;
@@ -310,25 +311,44 @@ isa:hasProperty  a   owl:ObjectProperty ;
         rdfs:domain  isa:PropertyValue ;
         rdfs:range   isa:Property .
 
+:A8     a       isa:Assay .
+
 isa:OntologyEntry  rdfs:subClassOf  isa:Annotatable .
+
+:PMV13  a                 isa:ParameterValue ;
+        isa:hasParameter  :PRM9 ;
+        isa:hasValue      "10/8/2010" .
 
 <https://services.toxbank.net/toxbank/user/U60>
         a       tb:User , foaf:Person .
 
-:MN12   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN30 ;
-        isa:hasOutputNode           :MN36 ;
-        isa:hasProtocolApplication  :PA1 ;
+:MN54   a                isa:MaterialNode ;
+        isa:hasMaterial  :M90 ;
+        isa:hasStudy     :S1 .
+
+:CV7    a                isa:CharacteristicValue ;
+        isa:hasProperty  :C5 ;
+        isa:hasValue     "E8" .
+
+:MN33   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN44 ;
+        isa:hasOutputNode           :MN50 ;
+        isa:hasProtocolApplication  :PA3 ;
         isa:hasStudy                :S1 .
 
 :M66    a                   isa:Material ;
         isa:hasAccessionID  "exp1-A1-C1-Ch1" .
 
+:DN47   a             isa:DataNode ;
+        isa:hasData   :D84 ;
+        isa:hasStudy  :S1 .
+
 isa:MaterialNode  rdfs:subClassOf  isa:Node .
 
-:P_3    a                   isa:Protocol ;
-        rdfs:label          "cell growth"^^xsd:string ;
-        isa:hasAccessionID  "Hepatotoxicity_ROS\\cell growth" .
+[ a              tb:Organization ;
+  tb:hasMember   :ISA_96 ;
+  dcterms:title  "ZZZ"^^xsd:string
+] .
 
 :PRM3   a              isa:Parameter ;
         dcterms:title  "emission wavelength" .
@@ -336,8 +356,8 @@ isa:MaterialNode  rdfs:subClassOf  isa:Node .
 isa:Material  rdfs:subClassOf  isa:Accessible .
 
 :PA1    a                      isa:ProtocolApplication ;
-        isa:appliesProtocol    <https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA> ;
-        isa:hasParameterValue  :PMV4 , :PMV_GO_5634 , :PMV3 , :PMV2 , :PMV1 .
+        isa:appliesProtocol    <https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1> ;
+        isa:hasParameterValue  :PMV5 , :PMV4 , :PMV3 , :PMV2 , :PMV1 .
 
 isa:hasSampleField  a  owl:FunctionalProperty , owl:DatatypeProperty ;
         rdfs:domain  isa:Node .
@@ -350,11 +370,19 @@ isa:hasSampleField  a  owl:FunctionalProperty , owl:DatatypeProperty ;
 :M74    a                   isa:Material ;
         isa:hasAccessionID  "exp1-A1-C2-Ch2" .
 
-<http://onto.toxbank.net/isa/qHTS/FV_OT_OT:NHOWDZOIZKMVAI-UHFFFAOYSA-N>
-        a                    isa:FactorValue ;
-        isa:hasFactor        :F2 ;
-        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/OT_OT:NHOWDZOIZKMVAI-UHFFFAOYSA-N> ;
-        isa:hasValue         "FENARIMOL" .
+:DN55   a             isa:DataNode ;
+        isa:hasData   :D82 ;
+        isa:hasStudy  :S1 .
+
+:DAN30  a                  isa:DataAcquisition ;
+        isa:hasInputNode   :MN58 ;
+        isa:hasOutputNode  :DN59 ;
+        isa:hasStudy       :S1 .
+
+<http://purl.obolibrary.org/obo/CHEBI_51232>
+        a                   isa:OntologyTerm ;
+        rdfs:label          "2'-(4-ethoxyphenyl)-5-(4-methylpiperazin-1-yl)-2,5'-bibenzimidazole" ;
+        isa:hasAccessionID  "CHEBI:51232" .
 
 dcterms:abstract  a  owl:AnnotationProperty .
 
@@ -363,21 +391,23 @@ dcterms:abstract  a  owl:AnnotationProperty .
 :C4     a              isa:Property ;
         dcterms:title  "plate identifier" .
 
-<http://onto.toxbank.net/isa/qHTS/FV_CHEBI_CHEBI:46195>
-        a                    isa:FactorValue ;
-        isa:hasFactor        :F2 ;
-        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/CHEBI_CHEBI:46195> ;
-        isa:hasValue         "paracetamol" .
+:A3     a       isa:Assay .
 
 isa:DataProcessing  rdfs:subClassOf  isa:Processing .
 
-:PMV8   a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM7 ;
-        isa:hasValue      "37 C" .
+:PMV8   a                    isa:ParameterValue ;
+        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/CHEBI_26523> ;
+        isa:hasParameter     :PRM4 ;
+        isa:hasValue         "reactive oxygen species" .
 
-:CV2    a                isa:CharacteristicValue ;
-        isa:hasProperty  :C4 ;
-        isa:hasValue     "exp1" .
+:MN49   a                isa:MaterialNode ;
+        isa:hasMaterial  :M72 ;
+        isa:hasStudy     :S1 .
+
+:CV2    a                    isa:CharacteristicValue ;
+        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/EFO_EFO_0001186> ;
+        isa:hasProperty      :C2 ;
+        isa:hasValue         "HepaRG" .
 
 :OE75   a       isa:OntologyEntry .
 
@@ -389,38 +419,31 @@ isa:hasProtocolApplication
 :F3     a              isa:Factor ;
         dcterms:title  "concentration" .
 
-:RS56   a                    isa:ReferenceSources ;
-        dcterms:description  "Toxbank keywords" ;
-        dcterms:title        "TBK" .
-
-:MN8    a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN34 ;
-        isa:hasOutputNode           :MN42 ;
-        isa:hasProtocolApplication  :PA1 ;
-        isa:hasStudy                :S1 .
-
-:A25    a       isa:Assay .
-
 :M90    a                   isa:Material ;
         isa:hasAccessionID  "exp1-E8-C1-Ch2" .
+
+:MN57   a                isa:MaterialNode ;
+        isa:hasMaterial  :M88 ;
+        isa:hasStudy     :S1 .
 
 isa:hasFactorValue  a  owl:ObjectProperty ;
         rdfs:domain  isa:Data ;
         rdfs:range   isa:FactorValue .
 
-:MN36   a                isa:MaterialNode ;
-        isa:hasMaterial  :M80 ;
-        isa:hasStudy     :S1 .
+<http://purl.obolibrary.org/obo/CHEBI_46195>
+        a                   isa:OntologyTerm ;
+        rdfs:label          "paracetamol" ;
+        isa:hasAccessionID  "CHEBI:46195" .
+
+:MN36   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN44 ;
+        isa:hasOutputNode           :MN53 ;
+        isa:hasProtocolApplication  :PA2 ;
+        isa:hasStudy                :S1 .
 
 isa:hasData  a       owl:FunctionalProperty , owl:ObjectProperty ;
         rdfs:domain  isa:DataNode ;
         rdfs:range   isa:Data .
-
-:MN15   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN30 ;
-        isa:hasOutputNode           :MN39 ;
-        isa:hasProtocolApplication  :PA2 ;
-        isa:hasStudy                :S1 .
 
 :OE83   a       isa:OntologyEntry .
 
@@ -429,19 +452,10 @@ dcterms:title  a  owl:AnnotationProperty .
 isa:ProtocolApplication
         rdfs:subClassOf  isa:Accessible .
 
-<http://purl.obolibrary.org/obo/OT_OT:NHOWDZOIZKMVAI-UHFFFAOYSA-N>
-        a                   isa:OntologyTerm ;
-        rdfs:label          "FENARIMOL" ;
-        isa:hasAccessionID  "OT:NHOWDZOIZKMVAI-UHFFFAOYSA-N" .
-
-<http://toxbanktest2.toxbank.net:8080/ambit2>
-        a                    isa:ReferenceSources ;
-        dcterms:description  "OpenTox structure search" ;
-        dcterms:title        "OT" .
-
-:FV2    a              isa:FactorValue ;
-        isa:hasFactor  :F3 ;
-        isa:hasValue   "0.0010"^^xsd:double .
+:FV2    a                    isa:FactorValue ;
+        isa:hasFactor        :F2 ;
+        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/CHEBI_46195> ;
+        isa:hasValue         "paracetamol" .
 
 :PRM6   a              isa:Parameter ;
         dcterms:title  "CO2 concentration" .
@@ -449,12 +463,16 @@ isa:ProtocolApplication
 isa:MaterialProcessing
         rdfs:subClassOf  isa:Processing .
 
+:PA4    a                      isa:ProtocolApplication ;
+        isa:appliesProtocol    :P1 ;
+        isa:hasParameterValue  :PMV14 , :PMV13 , :PMV12 , :PMV11 , :PMV10 .
+
 :PMV3   a                 isa:ParameterValue ;
         isa:hasParameter  :PRM3 ;
         isa:hasValue      "461 nm" .
 
 :MN44   a                isa:MaterialNode ;
-        isa:hasMaterial  :M68 ;
+        isa:hasMaterial  :M78 ;
         isa:hasStudy     :S1 .
 
 isa:Data  rdfs:subClassOf  isa:Accessible .
@@ -463,10 +481,6 @@ isa:Data  rdfs:subClassOf  isa:Accessible .
         a                   isa:OntologyTerm ;
         rdfs:label          "Homo sapiens" ;
         isa:hasAccessionID  "xon_9606" .
-
-:DN37   a             isa:DataNode ;
-        isa:hasData   :D94 ;
-        isa:hasStudy  :S1 .
 
 :OE91   a       isa:OntologyEntry .
 
@@ -477,43 +491,40 @@ isa:Factor  rdfs:subClassOf  isa:Property .
 
 isa:Property  rdfs:subClassOf  isa:FreeTextTerm .
 
+:A6     a       isa:Assay .
+
 :PMV11  a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM10 ;
-        isa:hasValue      "William's E medium" .
+        isa:hasParameter  :PRM7 ;
+        isa:hasValue      "37 C" .
 
 :ISA_96  a                foaf:Person , isa:Contact ;
         foaf:family_name  "ABC"^^xsd:string ;
         foaf:givenname    "R"^^xsd:string .
 
-:DAN20  a                  isa:DataAcquisition ;
-        isa:hasInputNode   :MN42 ;
-        isa:hasOutputNode  :DN37 ;
+:DAN41  a                  isa:DataAcquisition ;
+        isa:hasInputNode   :MN56 ;
+        isa:hasOutputNode  :DN51 ;
         isa:hasStudy       :S1 .
+
+:DN45   a             isa:DataNode ;
+        isa:hasData   :D92 ;
+        isa:hasStudy  :S1 .
 
 :CV5    a                isa:CharacteristicValue ;
         isa:hasProperty  :C5 ;
-        isa:hasValue     "E8" .
+        isa:hasValue     "A1" .
+
+:MN31   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN48 ;
+        isa:hasOutputNode           :MN49 ;
+        isa:hasProtocolApplication  :PA2 ;
+        isa:hasStudy                :S1 .
 
 :M64    a                   isa:Material ;
         isa:hasAccessionID  "exp1-A1-C1" ;
-        isa:hasFactorValue  :FV2 , <http://onto.toxbank.net/isa/qHTS/FV_CHEBI_CHEBI:46195> , :FV1 .
-
-<https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA>
-        a                   isa:Protocol ;
-        rdfs:label          "fluorescence imaging"^^xsd:string ;
-        isa:hasAccessionID  "Hepatotoxicity_ROS\\fluorescence imaging" .
-
-:DN45   a             isa:DataNode ;
-        isa:hasData   :D70 ;
-        isa:hasStudy  :S1 .
+        isa:hasFactorValue  :FV3 , :FV2 , :FV1 .
 
 isa:Investigation  rdfs:subClassOf  isa:HASREFERENCES .
-
-:MN10   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN34 ;
-        isa:hasOutputNode           :MN35 ;
-        isa:hasProtocolApplication  :PA2 ;
-        isa:hasStudy                :S1 .
 
 isa:hasAssay  a      owl:ObjectProperty ;
         rdfs:domain  isa:Study ;
@@ -528,39 +539,25 @@ isa:OntologyTerm  rdfs:subClassOf  isa:OntologyEntry .
 
 <http://bioportal.bioontology.org/ontologies/50346>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "http://bioportal.bioontology.org/ontologies/50346" ;
         dcterms:description  "Chemical entities of biological interest" ;
         dcterms:hasVersion   "50346" ;
         dcterms:title        "CHEBI" .
 
-:CV_EFO_EFO_0001186  a       isa:CharacteristicValue ;
-        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/EFO_EFO_0001186> ;
-        isa:hasProperty      :C2 ;
-        isa:hasValue         "HepaRG" .
-
-:A28    a       isa:Assay .
-
-:MN39   a                isa:MaterialNode ;
-        isa:hasMaterial  :M74 ;
-        isa:hasStudy     :S1 .
+:MN39   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN46 ;
+        isa:hasOutputNode           :MN57 ;
+        isa:hasProtocolApplication  :PA4 ;
+        isa:hasStudy                :S1 .
 
 :M72    a                   isa:Material ;
         isa:hasAccessionID  "exp1-A1-C1-Ch2" .
 
 <https://services.toxbank.net/toxbank/project>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "https://services.toxbank.net/toxbank/project" ;
         dcterms:description  "Toxbank Consortiums" ;
         dcterms:title        "TBC" .
-
-:MN18   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN32 ;
-        isa:hasOutputNode           :MN43 ;
-        isa:hasProtocolApplication  :PA3 ;
-        isa:hasStudy                :S1 .
-
-[ a              tb:Organization ;
-  tb:hasMember   :ISA_29 ;
-  dcterms:title  "CCC"^^xsd:string
-] .
 
 isa:hasOntologyTerm  a  owl:ObjectProperty ;
         rdfs:domain  isa:FreeTextTerm ;
@@ -572,10 +569,10 @@ isa:hasFactor  a     owl:FunctionalProperty , owl:ObjectProperty ;
         rdfs:domain  isa:FactorValue ;
         rdfs:range   isa:Factor .
 
-:PMV_GO_5634  a              isa:ParameterValue ;
-        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/GO_5634> ;
-        isa:hasParameter     :PRM4 ;
-        isa:hasValue         "nucleus" .
+:FV5    a                    isa:FactorValue ;
+        isa:hasFactor        :F2 ;
+        isa:hasOntologyTerm  <http://toxbanktest2.toxbank.net:8080/ambit2/compound/NHOWDZOIZKMVAI-UHFFFAOYSA-N> ;
+        isa:hasValue         "FENARIMOL" .
 
 :C2     a              isa:Property ;
         dcterms:title  "cell line" .
@@ -585,12 +582,9 @@ isa:UnitValue  rdfs:subClassOf  isa:FreeTextTerm .
 :PRM9   a              isa:Parameter ;
         dcterms:title  "Date" .
 
-:RS46   a              isa:ReferenceSources ;
-        dcterms:title  "QIBO" .
-
 :PMV6   a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM3 ;
-        isa:hasValue      "605 nm" .
+        isa:hasParameter  :PRM2 ;
+        isa:hasValue      "DHE" .
 
 :M80    a                   isa:Material ;
         isa:hasAccessionID  "exp1-A1-C2-Ch1" .
@@ -600,6 +594,7 @@ isa:UnitValue  rdfs:subClassOf  isa:FreeTextTerm .
 
 <http://bioportal.bioontology.org/ontologies/50262>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "http://bioportal.bioontology.org/ontologies/50262" ;
         dcterms:description  "NCI Thesaurus" ;
         dcterms:hasVersion   "50262" ;
         dcterms:title        "NCIt" .
@@ -615,29 +610,23 @@ isa:hasProtocol  a   owl:ObjectProperty ;
 
 dcterms:description  a  owl:AnnotationProperty .
 
-:A23    a       isa:Assay .
+:PMV14  a                 isa:ParameterValue ;
+        isa:hasParameter  :PRM10 ;
+        isa:hasValue      "William's E medium" .
 
 isa:Study  rdfs:subClassOf  isa:HASREFERENCES .
 
+isa:Unit  rdfs:subClassOf  isa:FreeTextTerm .
+
 <https://services.toxbank.net/toxbank/organisation>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "https://services.toxbank.net/toxbank/organisation" ;
         dcterms:description  "Toxbank Organisations" ;
         dcterms:title        "TBO" .
 
-isa:Unit  rdfs:subClassOf  isa:FreeTextTerm .
-
 :M88    a                   isa:Material ;
         isa:hasAccessionID  "exp1-E8-C1" ;
-        isa:hasFactorValue  :FV4 , <http://onto.toxbank.net/isa/qHTS/FV_OT_OT:NHOWDZOIZKMVAI-UHFFFAOYSA-N> , :FV1 .
-
-:MN34   a                isa:MaterialNode ;
-        isa:hasMaterial  :M64 ;
-        isa:hasStudy     :S1 .
-
-<http://purl.obolibrary.org/obo/CHEBI_CHEBI:46195>
-        a                   isa:OntologyTerm ;
-        rdfs:label          "paracetamol" ;
-        isa:hasAccessionID  "CHEBI:46195" .
+        isa:hasFactorValue  :FV6 , :FV5 , :FV1 .
 
 isa:Parameter  rdfs:subClassOf  isa:Property .
 
@@ -647,24 +636,24 @@ isa:Parameter  rdfs:subClassOf  isa:Property .
         dcterms:title  "cellular component" .
 
 :PA2    a                      isa:ProtocolApplication ;
-        isa:appliesProtocol    <https://services.toxbank.net/toxbank/protocol/Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA> ;
-        isa:hasParameterValue  :PMV4 , :PMV_CHEBI_26523 , :PMV6 , :PMV5 , :PMV1 .
+        isa:appliesProtocol    <https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1> ;
+        isa:hasParameterValue  :PMV5 , :PMV8 , :PMV7 , :PMV6 , :PMV1 .
 
-:MN42   a                isa:MaterialNode ;
-        isa:hasMaterial  :M66 ;
-        isa:hasStudy     :S1 .
+:P1     a                   isa:Protocol ;
+        rdfs:label          "cell growth"^^xsd:string ;
+        isa:hasAccessionID  "Hepatotoxicity_ROS\\cell growth" .
+
+:MN42   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN57 ;
+        isa:hasOutputNode           :MN58 ;
+        isa:hasProtocolApplication  :PA1 ;
+        isa:hasStudy                :S1 .
 
 :PMV1   a                 isa:ParameterValue ;
         isa:hasParameter  :PRM1 ;
         isa:hasValue      "oxidative stress staining kit" .
 
 isa:Processing  rdfs:subClassOf  isa:GraphElement .
-
-:MN21   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN43 ;
-        isa:hasOutputNode           :MN44 ;
-        isa:hasProtocolApplication  :PA1 ;
-        isa:hasStudy                :S1 .
 
 isa:Contact  rdfs:subClassOf  isa:Annotatable .
 
@@ -673,82 +662,115 @@ isa:Contact  rdfs:subClassOf  isa:Annotatable .
 :C5     a              isa:Property ;
         dcterms:title  "well" .
 
+:A4     a       isa:Assay .
+
 :D94    a                   isa:Data ;
         isa:hasAccessionID  "data_ROS_experiment1_Ch1.txt (exp1-A1-C1-Ch1)" .
 
+:MN50   a                isa:MaterialNode ;
+        isa:hasMaterial  :M80 ;
+        isa:hasStudy     :S1 .
+
 :PMV9   a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM8 ;
-        isa:hasValue      "Milena/Taina" .
+        isa:hasParameter  :PRM2 ;
+        isa:hasValue      "Hoechst 33342" .
 
 isa:hasAccessionID  a  owl:FunctionalProperty , owl:DatatypeProperty ;
         rdfs:domain  isa:Accessible .
 
-:DAN9   a                  isa:DataAcquisition ;
-        isa:hasInputNode   :MN44 ;
-        isa:hasOutputNode  :DN45 ;
-        isa:hasStudy       :S1 .
-
 :CV3    a                isa:CharacteristicValue ;
-        isa:hasProperty  :C5 ;
-        isa:hasValue     "A1" .
+        isa:hasProperty  :C3 ;
+        isa:hasValue     "Biopredic" .
+
+:MN29   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN48 ;
+        isa:hasOutputNode           :MN56 ;
+        isa:hasProtocolApplication  :PA1 ;
+        isa:hasStudy                :S1 .
 
 rdfs:isDefinedBy  a  owl:AnnotationProperty .
 
 isa:Design  rdfs:subClassOf  isa:FreeTextTerm .
 
-:A26    a       isa:Assay .
+:MN58   a                isa:MaterialNode ;
+        isa:hasMaterial  :M68 ;
+        isa:hasStudy     :S1 .
 
-isa:CharacteristicValue
-        rdfs:subClassOf  isa:PropertyValue .
+:MN37   a                           isa:MaterialProcessing ;
+        isa:hasInputNode            :MN46 ;
+        isa:hasOutputNode           :MN48 ;
+        isa:hasProtocolApplication  :PA4 ;
+        isa:hasStudy                :S1 .
+
+:DN51   a             isa:DataNode ;
+        isa:hasData   :D94 ;
+        isa:hasStudy  :S1 .
 
 isa:hasOutputNode  a  owl:ObjectProperty ;
         rdfs:domain  isa:Processing ;
         rdfs:range   isa:Node .
 
-:MN16   a                           isa:MaterialProcessing ;
-        isa:hasInputNode            :MN32 ;
-        isa:hasOutputNode           :MN34 ;
-        isa:hasProtocolApplication  :PA3 ;
-        isa:hasStudy                :S1 .
+isa:CharacteristicValue
+        rdfs:subClassOf  isa:PropertyValue .
+
+:RSQIBO  a             isa:ReferenceSources ;
+        dcterms:title  "QIBO" .
 
 :FV3    a              isa:FactorValue ;
         isa:hasFactor  :F3 ;
-        isa:hasValue   5.0E-4 .
+        isa:hasValue   "0.0010"^^xsd:double .
 
 :PRM7   a              isa:Parameter ;
         dcterms:title  "incubation temperature" .
 
+<http://toxbanktest2.toxbank.net:8080/ambit2/compound/NHOWDZOIZKMVAI-UHFFFAOYSA-N>
+        a                   isa:OntologyTerm ;
+        rdfs:label          "FENARIMOL" ;
+        isa:hasAccessionID  "OT:NHOWDZOIZKMVAI-UHFFFAOYSA-N" .
+
 isa:hasOwner  a     owl:AnnotationProperty ;
         rdfs:range  isa:Contact .
 
+:M78    a                   isa:Material ;
+        isa:hasAccessionID  "exp1-A1-C2" ;
+        isa:hasFactorValue  :FV4 , :FV2 , :FV1 .
+
+:DN59   a             isa:DataNode ;
+        isa:hasData   :D70 ;
+        isa:hasStudy  :S1 .
+
 <https://services.toxbank.net/toxbank/user>
         a                    isa:ReferenceSources ;
+        rdfs:seeAlso         "https://services.toxbank.net/toxbank/user" ;
         dcterms:description  "Toxbank Users" ;
         dcterms:title        "TBU" .
 
-:PMV4   a                 isa:ParameterValue ;
-        isa:hasParameter  :PRM5 ;
-        isa:hasValue      "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software" .
+:PMV4   a                    isa:ParameterValue ;
+        isa:hasOntologyTerm  <http://purl.obolibrary.org/obo/GO_0005634> ;
+        isa:hasParameter     :PRM4 ;
+        isa:hasValue         "nucleus" .
 
-:M78    a                   isa:Material ;
-        isa:hasAccessionID  "exp1-A1-C2" ;
-        isa:hasFactorValue  :FV3 , <http://onto.toxbank.net/isa/qHTS/FV_CHEBI_CHEBI:46195> , :FV1 .
+:RSTBK  a                    isa:ReferenceSources ;
+        dcterms:description  "Toxbank keywords" ;
+        dcterms:title        "TBK" .
 
 isa:HASREFERENCES  rdfs:subClassOf  isa:Accessible .
 
-:DN38   a             isa:DataNode ;
-        isa:hasData   :D76 ;
-        isa:hasStudy  :S1 .
+:DAN34  a                  isa:DataAcquisition ;
+        isa:hasInputNode   :MN50 ;
+        isa:hasOutputNode  :DN55 ;
+        isa:hasStudy       :S1 .
 
 isa:Protocol  rdfs:subClassOf  isa:Accessible .
 
 isa:FreeTextTerm  rdfs:subClassOf  isa:Annotatable .
 
-:DAN13  a                  isa:DataAcquisition ;
-        isa:hasInputNode   :MN36 ;
-        isa:hasOutputNode  :DN41 ;
-        isa:hasStudy       :S1 .
-
 :OE71   a       isa:OntologyEntry .
 
 isa:FactorValue  rdfs:subClassOf  isa:PropertyValue .
+
+:A7     a       isa:Assay .
+
+:PMV12  a                 isa:ParameterValue ;
+        isa:hasParameter  :PRM8 ;
+        isa:hasValue      "Milena/Taina" .

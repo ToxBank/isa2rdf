@@ -372,4 +372,16 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		}
 		//System.out.println(protocol.getAnnotations());
 	}
+	@Override
+	protected String getProtocolURI(Protocol protocol) throws Exception {
+		if ((protocol.getType()!=null) && (protocol.getType().getSource()!=null)) {
+			String uri = protocol.getType().getSource().getUrl();
+			if (uri!=null) {
+				if (!uri.endsWith("/")) uri = uri + "/";
+				if (TBPROTOCOL_URI.equals(uri)) 
+					return String.format("%s%s%s",uri,uri.endsWith("/")?"":"/",protocol.getType().getAcc());
+			}
+		}
+		return super.getProtocolURI(protocol);
+	}
 }

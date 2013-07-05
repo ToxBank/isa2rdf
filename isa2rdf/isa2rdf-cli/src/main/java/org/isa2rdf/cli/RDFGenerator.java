@@ -83,13 +83,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	}
 	
 	protected String getProtocolURI(Protocol protocol) throws Exception {
-		if (protocol.getType()==null) return null;
-		if (protocol.getType().getSource()!=null) {
-			if (protocol.getType().getSource().getUrl()!=null) {
-				return String.format("%s/%s",protocol.getType().getSource().getUrl(),protocol.getType().getAcc());
-			}
-		}
-		return null;
+		return getCachedURI(protocol, String.format("%s/P",prefix) , protocol);
 	}
 	protected String getURI(Identifiable node) throws Exception {
 		String p = "ISA_";
@@ -101,8 +95,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof Material ) p = "M";
 		else if ( node instanceof Data ) p = "D";
 		else if ( node instanceof Protocol ) {
-			p = getProtocolURI((Protocol)node);
-			if (p!=null) return p; else p="P_";
+			p = "P";
+			return getProtocolURI((Protocol)node);
 		}
 		else if ( node instanceof ProtocolApplication ) {
 			ProtocolApplication papp = (ProtocolApplication) node;
