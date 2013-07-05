@@ -3,136 +3,136 @@
     "S1" : {
       "processing" : [ {
         "type" : "MaterialProcessing",
-        "input" : "MN28",
+        "input" : "MN30",
+        "output" : "MN36",
+        "applies" : "PA1"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN30",
+        "output" : "MN39",
+        "applies" : "PA2"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN32",
         "output" : "MN34",
-        "applies" : "PA1"
-      }, {
-        "type" : "MaterialProcessing",
-        "input" : "MN28",
-        "output" : "MN37",
-        "applies" : "PA2"
-      }, {
-        "type" : "MaterialProcessing",
-        "input" : "MN30",
-        "output" : "MN32",
-        "applies" : "PA3"
-      }, {
-        "type" : "MaterialProcessing",
-        "input" : "MN30",
-        "output" : "MN28",
-        "applies" : "PA3"
-      }, {
-        "type" : "MaterialProcessing",
-        "input" : "MN30",
-        "output" : "MN41",
         "applies" : "PA3"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN32",
-        "output" : "MN40",
-        "applies" : "PA1"
+        "output" : "MN30",
+        "applies" : "PA3"
       }, {
         "type" : "MaterialProcessing",
         "input" : "MN32",
-        "output" : "MN33",
-        "applies" : "PA2"
+        "output" : "MN43",
+        "applies" : "PA3"
       }, {
-        "type" : "DataAcquisition",
-        "input" : "MN33",
-        "output" : "DN31"
-      }, {
-        "type" : "DataAcquisition",
+        "type" : "MaterialProcessing",
         "input" : "MN34",
-        "output" : "DN39"
-      }, {
-        "type" : "DataAcquisition",
-        "input" : "MN37",
-        "output" : "DN36"
-      }, {
-        "type" : "DataAcquisition",
-        "input" : "MN38",
-        "output" : "DN29"
-      }, {
-        "type" : "DataAcquisition",
-        "input" : "MN40",
-        "output" : "DN35"
+        "output" : "MN35",
+        "applies" : "PA2"
       }, {
         "type" : "MaterialProcessing",
-        "input" : "MN41",
+        "input" : "MN34",
         "output" : "MN42",
         "applies" : "PA1"
       }, {
-        "type" : "MaterialProcessing",
-        "input" : "MN41",
-        "output" : "MN38",
-        "applies" : "PA2"
+        "type" : "DataAcquisition",
+        "input" : "MN35",
+        "output" : "DN33"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN36",
+        "output" : "DN41"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN39",
+        "output" : "DN38"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN40",
+        "output" : "DN31"
       }, {
         "type" : "DataAcquisition",
         "input" : "MN42",
-        "output" : "DN43"
+        "output" : "DN37"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN43",
+        "output" : "MN44",
+        "applies" : "PA1"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN43",
+        "output" : "MN40",
+        "applies" : "PA2"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN44",
+        "output" : "DN45"
       } ],
       "nodes" : {
-        "MN28" : {
+        "MN30" : {
           "type" : "MaterialNode",
           "material" : "M78"
         },
-        "MN34" : {
+        "MN36" : {
           "type" : "MaterialNode",
           "material" : "M80"
         },
-        "MN37" : {
+        "MN39" : {
           "type" : "MaterialNode",
           "material" : "M74"
         },
-        "MN30" : {
+        "MN32" : {
           "type" : "MaterialNode",
           "material" : "M86"
         },
-        "MN32" : {
+        "MN34" : {
           "type" : "MaterialNode",
           "material" : "M64"
         },
-        "MN41" : {
+        "MN43" : {
           "type" : "MaterialNode",
           "material" : "M88"
         },
-        "MN40" : {
-          "type" : "MaterialNode",
-          "material" : "M66"
-        },
-        "MN33" : {
+        "MN35" : {
           "type" : "MaterialNode",
           "material" : "M72"
         },
-        "DN31" : {
+        "MN42" : {
+          "type" : "MaterialNode",
+          "material" : "M66"
+        },
+        "DN33" : {
           "type" : "DataNode",
           "data" : "D84"
         },
-        "DN39" : {
+        "DN41" : {
           "type" : "DataNode",
           "data" : "D82"
         },
-        "DN36" : {
+        "DN38" : {
           "type" : "DataNode",
           "data" : "D76"
         },
-        "MN38" : {
+        "MN40" : {
           "type" : "MaterialNode",
           "material" : "M90"
         },
-        "DN29" : {
+        "DN31" : {
           "type" : "DataNode",
           "data" : "D92"
         },
-        "DN35" : {
+        "DN37" : {
           "type" : "DataNode",
           "data" : "D94"
         },
-        "MN42" : {
+        "MN44" : {
           "type" : "MaterialNode",
           "material" : "M68"
         },
-        "DN43" : {
+        "DN45" : {
           "type" : "DataNode",
           "data" : "D70"
         }
@@ -142,7 +142,7 @@
           "label" : "fluorescence imaging",
           "acc" : "Hepatotoxicity_ROS\\fluorescence imaging"
         },
-        "http://onto.toxbank.net/isa/qHTS/P_45" : {
+        "http://onto.toxbank.net/isa/qHTS/P_3" : {
           "label" : "cell growth",
           "acc" : "Hepatotoxicity_ROS\\cell growth"
         }
@@ -201,7 +201,7 @@
           }
         },
         "PA3" : {
-          "protocol" : "http://onto.toxbank.net/isa/qHTS/P_45",
+          "protocol" : "http://onto.toxbank.net/isa/qHTS/P_3",
           "parameters" : {
             "PMV10" : {
               "parameter" : "Date",
@@ -231,7 +231,7 @@
           "acc" : "exp1-A1-C2",
           "factors" : {
             "FV3" : {
-              "concentration" : "5.00E-04"
+              "concentration" : "5.0E-4"
             },
             "FV1" : {
               "duration of exposure" : "72"
@@ -251,7 +251,7 @@
           "acc" : "exp1-A1-C1",
           "factors" : {
             "FV2" : {
-              "concentration" : "0.001"
+              "concentration" : "0.0010"
             },
             "FV1" : {
               "duration of exposure" : "72"
@@ -262,7 +262,7 @@
           "acc" : "exp1-E8-C1",
           "factors" : {
             "FV4" : {
-              "concentration" : "1.00E-05"
+              "concentration" : "1.0E-5"
             },
             "NHOWDZOIZKMVAI-UHFFFAOYSA-N" : {
               "compound" : "FENARIMOL",
@@ -273,11 +273,11 @@
             }
           }
         },
-        "M66" : {
-          "acc" : "exp1-A1-C1-Ch1"
-        },
         "M72" : {
           "acc" : "exp1-A1-C1-Ch2"
+        },
+        "M66" : {
+          "acc" : "exp1-A1-C1-Ch1"
         },
         "M90" : {
           "acc" : "exp1-E8-C1-Ch2"

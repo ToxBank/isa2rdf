@@ -204,7 +204,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			Resource r = node instanceof FactorValue?ISA.Factor:node instanceof ParameterValue?ISA.Parameter:ISA.Property;
 			com.hp.hpl.jena.rdf.model.Property p = node instanceof FactorValue?ISA.HASFACTOR:node instanceof ParameterValue?ISA.HASPARAMETER:ISA.HASPROPERTY;
 			
-			if (pv.getValue()!=null) getModel().add(resource,ISA.HASVALUE,pv.getValue());
+			addScalarValue(resource, ISA.HASVALUE,pv.getValue());
+
 			if (pv.getType()!=null) {
 				Resource xt = getResource(pv.getType(),r);
 				getModel().add(resource,p,xt);
@@ -247,6 +248,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 					Resource xfv = getResource(fv, ISA.FactorValue);
 					getModel().add(resource,ISA.HASFACTORVALUE,xfv);
 				}
+
+			
 		}
 		/**
 		 * material
@@ -398,6 +401,20 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	}
 	
 
+	protected void addScalarValue(Resource resource,com.hp.hpl.jena.rdf.model.Property property,Object value) {
+		if (value==null) return;
+		try { 
+			double v = Double.parseDouble(value.toString());
+			try {
+				int i = Integer.parseInt(value.toString());	
+				getModel().addLiteral(resource,property,i);
+			} catch (Exception x) {
+				getModel().addLiteral(resource,property,v);	
+			}
+		} catch (Exception x) {
+			getModel().add(resource,property,value.toString());	
+		}
+	}
 	public void logger(Object object) {
 		//System.err.println(object!=null?object.toString():"");
 	}
