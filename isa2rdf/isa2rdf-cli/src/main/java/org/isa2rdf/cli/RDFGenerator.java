@@ -2,6 +2,7 @@ package org.isa2rdf.cli;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 	private MODEL model;
 	protected String prefix;
 	protected long tempIdCounter=1;
-	
+	protected HashMap<String, ReferenceSource> references = new HashMap<String, ReferenceSource>();
 	protected Hashtable<String,List<Object>> cache = new Hashtable<String, List<Object>>();
 	
 	public long getTempIdCounter() {
@@ -117,45 +118,66 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			else if ( node instanceof CharacteristicValue ) p = "CV";
 
 			PropertyValue pv = (PropertyValue) node;
+			/*
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
-				if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0))
-					return String.format("%s/%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
+				String uri = mintOntologyURI(prefix,term, p);
+				if (uri != null) return uri;
 			} 
-			cache.get(node.getClass().getName());
-			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv.getValue());
+			*/
+			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv);
 		}
 		else if ( node instanceof OntologyTerm ) {
 			/**
     <!-- http://purl.obolibrary.org/obo/CHEBI_26523 -->
 			 */
 			OntologyTerm term  =(OntologyTerm) node;
-			return String.format("http://purl.obolibrary.org/obo/%s_%s",term.getSource().getAcc(),term.getAcc());
+			
+			String uri = mintOntologyURI("http://purl.obolibrary.org/obo",term, null);
+			return uri!=null?uri:String.format("http://purl.obolibrary.org/obo/%s_%s",term.getSource().getAcc(),term.getAcc());
 		}
 		else if ( node instanceof OntologyEntry ) p = "OE";
 		else if ( node instanceof Property ) {
 			p = "PRM";
 			if ( node instanceof Factor ) p = "F";
 			else if ( node instanceof Characteristic ) p = "C";
+			
 			Property pv = (Property) node;
+			/*
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
-				if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0))
-						return String.format("%s/%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
+				String uri = mintOntologyURI(prefix, term, p);
+				if (uri != null) return uri;
 			} 
-			cache.get(node.getClass().getName());
-			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv.getValue());
+			*/
+			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv);
 
 		} else if ( node instanceof Property ) p = "PR";
 		else if ( node instanceof ReferenceSource ) {
+			p = "RS";
 			String url = ((ReferenceSource) node).getUrl();
 			if (url!=null) return url;
-			else p = "RS";
+			else return String.format("%s/%s%s",prefix,p,((ReferenceSource) node).getAcc());
 		} else {
 			//System.err.println(node.getClass().getName());
 		}
 			if (node.getId()==null) { node.setId(tempIdCounter); tempIdCounter++; }
 			return String.format("%s/%s%d",prefix,p,node.getId());
+	}
+	
+	protected String mintOntologyURI(String prefix, OntologyTerm term, String p) {
+		if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0)) {
+			//ISACreator 1.7.x writes prefixed accession numbers ....
+			String[] split = term.getAcc().split(":");
+			ReferenceSource xs = references.get(term.getSource().getAcc());
+			if (xs != null && xs.getUrl()!=null && xs.getUrl().toLowerCase().indexOf("toxbank")>=0) {
+				return String.format("%s%s%s%s",xs.getUrl(),
+						xs.getUrl().endsWith("/")?"":"/",
+						p==null?"":(p+"_"),split.length>1?split[1]:split[0]);	
+			} else
+			return String.format("%s/%s%s_%s",prefix,p==null?"":(p+"_"),term.getSource().getAcc(),split.length>1?split[1]:split[0]);
+		}		
+		return null;
 	}
 	protected Resource getResourceID(Identifiable node,Resource clazz)  throws Exception {
 
@@ -414,6 +436,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		} catch (Exception x) {
 			getModel().add(resource,property,value.toString());	
 		}
+
 	}
 	public void logger(Object object) {
 		//System.err.println(object!=null?object.toString():"");

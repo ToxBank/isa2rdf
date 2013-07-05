@@ -51,6 +51,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	//e.g. "http://toxbanktest1.opentox.org:8080/toxbank";
 	protected final String TB_URI ;
 	protected final String TBPROTOCOL_URI;
+
 	
 	/**
 	 * I will graph all the instances of {@link #objects} which are {@link Processing} (and nodes, materials, etc.).
@@ -85,8 +86,21 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	 * Creates the DOT string corresponding to the graph of {@link Processing} objects in the collection I manage
 	 *
 	 */
-	public Model createGraph () throws Exception
-	{
+	public Model createGraph () throws Exception {
+		//lookup for references
+        for (Identifiable object: store.values(ReferenceSource.class)) {
+	        	ReferenceSource xs = ((ReferenceSource)object);
+	        	Resource xref = getResource(object, ISA.ReferenceSources);
+	        	getModel().add(xref,DCTerms.title,xs.getName());
+	        	if (xs.getDescription()!=null)
+	        		getModel().add(xref,DCTerms.description,xs.getDescription());
+	        	if (xs.getVersion() != null)
+	        		getModel().add(xref,DCTerms.hasVersion,xs.getVersion());
+	        	if (xs.getUrl()!=null)
+	        		getModel().add(xref,RDFS.seeAlso,xs.getUrl());
+	        	references.put(xs.getName(),xs);
+	      }		
+        
 		Collection<Identifiable> objects = new ArrayList<Identifiable>();
         objects.addAll(store.values(Processing.class));
 		for ( Identifiable object: objects )
@@ -102,18 +116,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		objects.clear();
 		//why there are no URL for the ontologies???
 		//FIXME - use owl:ontology and ontology uri
-		
-        objects.addAll(store.values(ReferenceSource.class));
-	        for ( Identifiable object: objects )  {
-	        	ReferenceSource xs = ((ReferenceSource)object);
-	        	Resource xref = getResource(object, ISA.ReferenceSources);
-	        	getModel().add(xref,DCTerms.title,xs.getName());
-	        	if (xs.getDescription()!=null)
-	        		getModel().add(xref,DCTerms.description,xs.getDescription());
-	        	if (xs.getVersion() != null)
-	        		getModel().add(xref,DCTerms.hasVersion,xs.getVersion());
-	        	//getModel().add(xref,DCTerms.hasVersion,((ReferenceSource)object).getUrl());
-	      }		
+
 	    objects.clear();
 	    objects.addAll(store.values(Study.class));   
 	    for ( Identifiable object: objects )  {
@@ -255,6 +258,8 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 
 	public static final String OBO = "http://purl.obolibrary.org/obo/";
 	public static final String BIBO = "http://purl.org/ontology/bibo/";
+	public static final String EFO = "http://purl.org/ontology/efo/";
+	public static final String CHEBI = "http://purl.org/ontology/chebi/";
 	//http://bibotools.googlecode.com/svn/bibo-ontology/trunk/doc/index.html
 	//TODO get from the ontology definition
 
