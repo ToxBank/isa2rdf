@@ -120,7 +120,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
 				if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0))
-					return String.format("%s/%s_%s_%s",prefix,p,term.getSource().getAcc(),term.getAcc());	
+					return String.format("%s/%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
 			} 
 			cache.get(node.getClass().getName());
 			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv.getValue());
@@ -141,7 +141,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (pv.getOntologyTerms()!=null && pv.getOntologyTerms().size()==1) {
 				OntologyTerm term  =(OntologyTerm) pv.getOntologyTerms().get(0);
 				if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0))
-						return String.format("%s/%s_%s_%s",prefix,p,term.getSource().getAcc(),term.getAcc());	
+						return String.format("%s/%s_%s",prefix,term.getSource().getAcc(),term.getAcc());	
 			} 
 			cache.get(node.getClass().getName());
 			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv.getValue());
