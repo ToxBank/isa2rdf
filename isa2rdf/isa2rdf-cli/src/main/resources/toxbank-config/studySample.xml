@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <isatab-config-file xmlns="http://www.ebi.ac.uk/bii/isatab_configuration#">
   <isatab-configuration table-name="studySample">
-    <measurement term-label="[Sample]" term-accession="e.g. 12345" source-abbreviation="e.g. OBI" />
-    <technology term-label="" term-accession="e.g. 12345" source-abbreviation="e.g. OBI" />
+    <measurement term-label="[Sample]" term-accession="e.g. 12345" source-abbreviation="" />
+    <technology term-label="" term-accession="" source-abbreviation="" />
     <field header="Source Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Sources are considered as the starting biological material used in a study.]]></description>
       <default-value><![CDATA[]]></default-value>
@@ -83,12 +83,12 @@
       <description><![CDATA[Leave blank if there are no technical replicates, otherwise use a number for each replicate group]]></description>
       <default-value><![CDATA[]]></default-value>
     </field>
-    <field header="Factor Value[compound]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+    <field header="Factor Value[compound]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="true">
       <description><![CDATA[Compound Name (use IUPAC name)]]></description>
       <default-value><![CDATA[]]></default-value>
       <recommended-ontologies>
+      	<ontology id="OT" abbreviation="OT" name="OpenTox" version="02" />
         <ontology id="1007" abbreviation="CHEBI" name="Chemical entities of biological interest" version="49277" />
-        <ontology id="OT" abbreviation="OT" name="OpenTox" version="02" />
       </recommended-ontologies>
     </field>
     <field header="Comment [StdInChIKey]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">

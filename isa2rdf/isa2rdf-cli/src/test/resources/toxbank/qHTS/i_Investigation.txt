@@ -1,8 +1,8 @@
 ONTOLOGY SOURCE REFERENCE
-Term Source Name	""	"BAO"	"QIBO"	"e.g. OBI"	"OBI"	"GO"	"TBP"	"UO"	"CHEBI"	"EFO"	"NCBITaxon"	"TBO"	"TBC"	"TBU"	"TBK"	"NCIt"	"OT"	
-Term Source File	""	""	""	""	""	"http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=GO"	"https://services.toxbank.net/toxbank/protocol"	"http://bioportal.bioontology.org/ontologies/50119"	"http://bioportal.bioontology.org/ontologies/50346"	"http://bioportal.bioontology.org/ontologies/50261"	"http://bioportal.bioontology.org/ontologies/47845"	"https://services.toxbank.net/toxbank/organisation"	"https://services.toxbank.net/toxbank/project"	"https://services.toxbank.net/toxbank/user"	""	"http://bioportal.bioontology.org/ontologies/50262"	"http://toxbanktest2.toxbank.net:8080/ambit2"	
-Term Source Version	""	""	""	""	""	"10-Jun"	""	"50119"	"50346"	"50261"	"47845"	""	""	""	""	"50262"	""	
-Term Source Description	""	""	""	""	""	"Gene Ontology"	"Toxbank Protocols"	"Units of measurement"	"Chemical entities of biological interest"	"Experimental Factor Ontology"	"NCBI organismal classification"	"Toxbank Organisations"	"Toxbank Consortiums"	"Toxbank Users"	"Toxbank keywords"	"NCI Thesaurus"	"OpenTox structure search"	
+Term Source Name	""	"BAO"	"QIBO"	"OBI"	"GO"	"TBP"	"UO"	"CHEBI"	"EFO"	"NCBITaxon"	"TBO"	"TBC"	"TBU"	"TBK"	"NCIt"	"OT"	
+Term Source File	""	""	""	""	"http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=GO"	"https://services.toxbank.net/toxbank/protocol"	"http://bioportal.bioontology.org/ontologies/50119"	"http://bioportal.bioontology.org/ontologies/50346"	"http://bioportal.bioontology.org/ontologies/50261"	"http://bioportal.bioontology.org/ontologies/47845"	"https://services.toxbank.net/toxbank/organisation"	"https://services.toxbank.net/toxbank/project"	"https://services.toxbank.net/toxbank/user"	""	"http://bioportal.bioontology.org/ontologies/50262"	"http://toxbanktest2.toxbank.net:8080/ambit2/compound/"	
+Term Source Version	""	""	""	""	"10-Jun"	""	"50119"	"50346"	"50261"	"47845"	""	""	""	""	"50262"	""	
+Term Source Description	""	""	""	""	"Gene Ontology"	"Toxbank Protocols"	"Units of measurement"	"Chemical entities of biological interest"	"Experimental Factor Ontology"	"NCBI organismal classification"	"Toxbank Organisations"	"Toxbank Consortiums"	"Toxbank Users"	"Toxbank keywords"	"NCI Thesaurus"	"OpenTox structure search"	
 INVESTIGATION
 Investigation Identifier	"Hepatotoxicity"
 Investigation Title	"Hepatotoxicity Screening"
