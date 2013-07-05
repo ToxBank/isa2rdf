@@ -1,103 +1,103 @@
-ONTOLOGY SOURCE REFERENCE																
-Term Source Name		BAO	QIBO	OBI	GO	TBP	UO	CHEBI	EFO	NCBITaxon	TBO	TBC	TBU	TBK	NCIt	OT
-Term Source File					http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=GO	https://services.toxbank.net/toxbank/protocol	http://bioportal.bioontology.org/ontologies/50119	http://bioportal.bioontology.org/ontologies/50346	http://bioportal.bioontology.org/ontologies/50261	http://bioportal.bioontology.org/ontologies/47845	https://services.toxbank.net/toxbank/organisation	https://services.toxbank.net/toxbank/project	https://services.toxbank.net/toxbank/user		http://bioportal.bioontology.org/ontologies/50262	http://toxbanktest2.toxbank.net:8080/ambit2
-Term Source Version					10-Jun		50119	50346	50261	47845					50262	
-Term Source Description					Gene Ontology	Toxbank Protocols	Units of measurement	Chemical entities of biological interest	Experimental Factor Ontology	NCBI organismal classification	Toxbank Organisations	Toxbank Consortiums	Toxbank Users	Toxbank keywords	NCI Thesaurus	OpenTox structure search
-INVESTIGATION																
-Investigation Identifier	Hepatotoxicity															
-Investigation Title	Hepatotoxicity Screening															
-Investigation Description	The liver ….															
-Investigation Submission Date	4/11/2013															
-Investigation Public Release Date																
-Comment [Created with configuration]																
-Comment [Last Opened With Configuration]	toxbank-config2															
-Comment [Owning Organisation URI]	TBO:G27															
-Comment [Consortium URI]	TBC:G9															
-Comment [Owner URI]	TBU:U60															
-Comment [Investigation keywords]	TBK:K78;TBK:K12;TBK:K191;TBK:K202;TBK:K220;TBK:K487;TBK:K352;TBK:K367;TBK:K358;TBK:K369;TBK:K696;TBK:k669;TBK:K671;TBK:K609															
-Comment [Created With Configuration]																
-INVESTIGATION PUBLICATIONS																
-Investigation PubMed ID																
-Investigation Publication DOI																
-Investigation Publication Author List																
-Investigation Publication Title	Hepatotoxicity Screening Taking a Mode-Of-Action Approach Using HepaRG Cells and HCA															
-Investigation Publication Status																
-Investigation Publication Status Term Accession Number																
-Investigation Publication Status Term Source REF																
-INVESTIGATION CONTACTS																
-Investigation Person Last Name	ABC	XYZ														
-Investigation Person First Name	R	E														
-Investigation Person Mid Initials																
-Investigation Person Email																
-Investigation Person Phone																
-Investigation Person Fax																
-Investigation Person Address																
-Investigation Person Affiliation	ZZZ	CCC														
-Investigation Person Roles																
-Investigation Person Roles Term Accession Number																
-Investigation Person Roles Term Source REF																
-Comment[Investigation Person REF]																
-Comment [Investigation Person URI]																
-STUDY																
-Study Identifier	Hepatotoxicity_ROS															
-Study Title	ROS production															
-Study Description	The Hoechst dye ….															
-Comment[Study Grant Number]																
-Comment[Study Funding Agency]																
-Study Submission Date																
-Study Public Release Date																
-Study File Name	s_Hepatotoxicity_ROS.txt															
-STUDY DESIGN DESCRIPTORS																
-Study Design Type																
-Study Design Type Term Accession Number																
-Study Design Type Term Source REF																
-STUDY PUBLICATIONS																
-Study PubMed ID																
-Study Publication DOI																
-Study Publication Author List																
-Study Publication Title																
-Study Publication Status																
-Study Publication Status Term Accession Number																
-Study Publication Status Term Source REF																
-STUDY FACTORS																
-Study Factor Name	compound	concentration	duration of exposure													
-Study Factor Type	compound	concentration	duration of exposure													
-Study Factor Type Term Accession Number																
-Study Factor Type Term Source REF																
-STUDY ASSAYS																
-Study Assay File Name	a_ROS_experiment1.txt															
-Study Assay Measurement Type	Cytotoxicity															
-Study Assay Measurement Type Term Accession Number	BAO_0000090															
-Study Assay Measurement Type Term Source REF	BAO															
-Study Assay Technology Type	Fluorescence imaging															
-Study Assay Technology Type Term Accession Number	Fluorescence_imaging															
-Study Assay Technology Type Term Source REF	QIBO															
-Study Assay Technology Platform																
-STUDY PROTOCOLS																
-Study Protocol Name	cell growth	fluorescence imaging														
-Study Protocol Type	cell growth	SEURAT-Protocol-82-1														
-Study Protocol Type Term Accession Number		Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA														
-Study Protocol Type Term Source REF		TBP														
-Study Protocol Description																
-Study Protocol URI																
-Study Protocol Version																
-Study Protocol Parameters Name		software;dye;Reagents kit;cellular component;emission wavelength														
-Study Protocol Parameters Name Term Accession Number		;;;;														
-Study Protocol Parameters Name Term Source REF		;;;;														
-Study Protocol Components Name																
-Study Protocol Components Type																
-Study Protocol Components Type Term Accession Number																
-Study Protocol Components Type Term Source REF																
-Comment [Protocol URI]		TBP:SEURAT-Protocol-82-1														
-STUDY CONTACTS																
-Study Person Last Name																
-Study Person First Name																
-Study Person Mid Initials																
-Study Person Email																
-Study Person Phone																
-Study Person Fax																
-Study Person Address																
-Study Person Affiliation																
-Study Person Roles																
-Study Person Roles Term Accession Number																
-Study Person Roles Term Source REF																
+ONTOLOGY SOURCE REFERENCE
+Term Source Name	""	"BAO"	"QIBO"	"e.g. OBI"	"OBI"	"GO"	"TBP"	"UO"	"CHEBI"	"EFO"	"NCBITaxon"	"TBO"	"TBC"	"TBU"	"TBK"	"NCIt"	"OT"	
+Term Source File	""	""	""	""	""	"http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=GO"	"https://services.toxbank.net/toxbank/protocol"	"http://bioportal.bioontology.org/ontologies/50119"	"http://bioportal.bioontology.org/ontologies/50346"	"http://bioportal.bioontology.org/ontologies/50261"	"http://bioportal.bioontology.org/ontologies/47845"	"https://services.toxbank.net/toxbank/organisation"	"https://services.toxbank.net/toxbank/project"	"https://services.toxbank.net/toxbank/user"	""	"http://bioportal.bioontology.org/ontologies/50262"	"http://toxbanktest2.toxbank.net:8080/ambit2"	
+Term Source Version	""	""	""	""	""	"10-Jun"	""	"50119"	"50346"	"50261"	"47845"	""	""	""	""	"50262"	""	
+Term Source Description	""	""	""	""	""	"Gene Ontology"	"Toxbank Protocols"	"Units of measurement"	"Chemical entities of biological interest"	"Experimental Factor Ontology"	"NCBI organismal classification"	"Toxbank Organisations"	"Toxbank Consortiums"	"Toxbank Users"	"Toxbank keywords"	"NCI Thesaurus"	"OpenTox structure search"	
+INVESTIGATION
+Investigation Identifier	"Hepatotoxicity"
+Investigation Title	"Hepatotoxicity Screening"
+Investigation Description	"The liver …."
+Investigation Submission Date	"4/11/2013"
+Investigation Public Release Date	""
+Comment [Created with configuration]	""
+Comment [Last Opened With Configuration]	"toxbank-config"
+Comment [Owning Organisation URI]	"TBO:G27"
+Comment [Consortium URI]	"TBC:G9"
+Comment [Owner URI]	"TBU:U60"
+Comment [Investigation keywords]	"TBK:K78;TBK:K12;TBK:K191;TBK:K202;TBK:K220;TBK:K487;TBK:K352;TBK:K367;TBK:K358;TBK:K369;TBK:K696;TBK:k669;TBK:K671;TBK:K609"
+Comment [Created With Configuration]	""
+INVESTIGATION PUBLICATIONS
+Investigation PubMed ID	""
+Investigation Publication DOI	""
+Investigation Publication Author List	""
+Investigation Publication Title	"Hepatotoxicity Screening Taking a Mode-Of-Action Approach Using HepaRG Cells and HCA"
+Investigation Publication Status	""
+Investigation Publication Status Term Accession Number	""
+Investigation Publication Status Term Source REF	""
+INVESTIGATION CONTACTS
+Investigation Person Last Name	"ABC"	"XYZ"
+Investigation Person First Name	"R"	"E"
+Investigation Person Mid Initials	""	""
+Investigation Person Email	""	""
+Investigation Person Phone	""	""
+Investigation Person Fax	""	""
+Investigation Person Address	""	""
+Investigation Person Affiliation	"ZZZ"	"CCC"
+Investigation Person Roles	""	""
+Investigation Person Roles Term Accession Number	""	""
+Investigation Person Roles Term Source REF	""	""
+Comment[Investigation Person REF]	""	""
+Comment [Investigation Person URI]	""	""
+STUDY
+Study Identifier	"Hepatotoxicity_ROS"
+Study Title	"ROS production"
+Study Description	"The Hoechst dye …."
+Comment[Study Grant Number]	""
+Comment[Study Funding Agency]	""
+Study Submission Date	""
+Study Public Release Date	""
+Study File Name	"s_Hepatotoxicity_ROS.txt"
+STUDY DESIGN DESCRIPTORS
+Study Design Type	""
+Study Design Type Term Accession Number	""
+Study Design Type Term Source REF	""
+STUDY PUBLICATIONS
+Study PubMed ID	""
+Study Publication DOI	""
+Study Publication Author List	""
+Study Publication Title	""
+Study Publication Status	""
+Study Publication Status Term Accession Number	""
+Study Publication Status Term Source REF	""
+STUDY FACTORS
+Study Factor Name	"compound"	"concentration"	"duration of exposure"
+Study Factor Type	"compound"	"concentration"	"duration of exposure"
+Study Factor Type Term Accession Number	""	""	""
+Study Factor Type Term Source REF	""	""	""
+STUDY ASSAYS
+Study Assay File Name	"a_ROS_experiment1.txt"
+Study Assay Measurement Type	"Cytotoxicity"
+Study Assay Measurement Type Term Accession Number	"BAO_0000090"
+Study Assay Measurement Type Term Source REF	"BAO"
+Study Assay Technology Type	"Fluorescence imaging"
+Study Assay Technology Type Term Accession Number	"Fluorescence_imaging"
+Study Assay Technology Type Term Source REF	"QIBO"
+Study Assay Technology Platform	""
+STUDY PROTOCOLS
+Study Protocol Name	"cell growth"	"fluorescence imaging"
+Study Protocol Type	"cell growth"	"SEURAT-Protocol-82-1"
+Study Protocol Type Term Accession Number	""	"Hepatotoxicity screening taking a mode of action approach using HepaRG cells and HCA"
+Study Protocol Type Term Source REF	""	"TBP"
+Study Protocol Description	""	""
+Study Protocol URI	""	""
+Study Protocol Version	""	""
+Study Protocol Parameters Name	""	"software;dye;Reagents kit;cellular component;emission wavelength"
+Study Protocol Parameters Name Term Accession Number	""	";;;;"
+Study Protocol Parameters Name Term Source REF	""	";;;;"
+Study Protocol Components Name	""	""
+Study Protocol Components Type	""	""
+Study Protocol Components Type Term Accession Number	""	""
+Study Protocol Components Type Term Source REF	""	""
+Comment [Protocol URI]	""	"TBP:SEURAT-Protocol-82-1"
+STUDY CONTACTS
+Study Person Last Name	""
+Study Person First Name	""
+Study Person Mid Initials	""
+Study Person Email	""
+Study Person Phone	""
+Study Person Fax	""
+Study Person Address	""
+Study Person Affiliation	""
+Study Person Roles	""
+Study Person Roles Term Accession Number	""
+Study Person Roles Term Source REF	""
