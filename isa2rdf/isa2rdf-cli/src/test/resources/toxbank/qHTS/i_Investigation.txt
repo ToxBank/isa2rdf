@@ -14,7 +14,7 @@ Comment [Last Opened With Configuration]	"toxbank-config"
 Comment [Owning Organisation URI]	"TBO:G27"
 Comment [Consortium URI]	"TBC:G9"
 Comment [Owner URI]	"TBU:U60"
-Comment [Investigation keywords]	"TBK:TBK:K40"
+Comment [Investigation keywords]	"TBK:K78;TBK:K12;TBK:K191;TBK:K202;TBK:K220;TBK:K487;TBK:K352;TBK:K367;TBK:K358;TBK:K369;TBK:K696;TBK:k669;TBK:K671;TBK:K609"
 Comment [Created With Configuration]	""
 INVESTIGATION PUBLICATIONS
 Investigation PubMed ID	""
