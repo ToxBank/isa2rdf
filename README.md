@@ -32,7 +32,7 @@ ISA-TAB to RDF conversion
    * The [configuration templates](/isa2rdf/isa2rdf-cli/src/main/resources/toxbank-config) synchronised with the latest ISACreator 1.7.0
    * Added new study template default fields 
    * New template for [qHTS](/isa2rdf/isa2rdf-cli/src/main/resources/toxbank-config/qHTS.xml) assays
-   * Upgraded isa-tools import_layer dependency to 1.6
+   * Upgraded isa-tools [import_layer](https://github.com/ISA-tools/ISAvalidator-ISAconverter-BIImanager/tree/master/import_layer) dependency to 1.6
    * Fixed to handle multiple entries in the investigation page comments
 
 ### [isa2rdf-0.0.4.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4.jar)
