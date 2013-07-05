@@ -71,7 +71,7 @@ public class AppTest  {
 		testToxBankResources(model);
 		testRetrieveAllToxbankProtocols(model);
 		testRetrieveAllProtocols(model,1);
-		testRetrieveAllStudiesAndProtocols(model);
+		testRetrieveAllStudiesAndProtocols(model,2);
 		testToxbankHasProtocol(model,1);
 		testToxbankHasAuthor(model,1);
 
@@ -85,7 +85,7 @@ public class AppTest  {
 		testToxBankResources(model);
 		testRetrieveAllToxbankProtocols(model);
 		testRetrieveAllProtocols(model,10);
-		testRetrieveAllStudiesAndProtocols(model);
+		testRetrieveAllStudiesAndProtocols(model,2);
 		testToxbankHasProtocol(model,11);
 		testToxbankHasAuthor(model,1);
 		JsonNode root = testGraph(model, 14,"toxbank//BII-I-1");
@@ -120,7 +120,7 @@ public class AppTest  {
 		
 		//testRetrieveAllToxbankProtocols(model);
 		testRetrieveAllProtocols(model,2);
-		testRetrieveAllStudiesAndProtocols(model);
+		testRetrieveAllStudiesAndProtocols(model,1);
 		//testToxbankHasProtocol(model,11);
 		//testToxbankHasAuthor(model,1);
 		testToxbankHasProject(model,1);
@@ -614,7 +614,7 @@ public class AppTest  {
 		Assert.assertEquals(numProtocols,n);		
 	}
 	
-	protected void testRetrieveAllStudiesAndProtocols(Model model) throws Exception {
+	protected void testRetrieveAllStudiesAndProtocols(Model model, int expected) throws Exception {
 		String sparqlQuery = String.format(
 				"PREFIX tb:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
@@ -650,7 +650,7 @@ public class AppTest  {
 			n++;
 		}
 		qe.close();
-		Assert.assertEquals(2,n);		
+		Assert.assertEquals(expected,n);		
 	}
 	protected void testToxBankResources(Model model) throws Exception {
 		testToxBankResources(model,1);

@@ -364,7 +364,9 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 			throws Exception {
 		if (protocol.getType()==null) return;
 		if (protocol.getType().getSource()!=null) {
-			if (TBPROTOCOL_URI.equals(protocol.getType().getSource().getUrl())) {
+			String uri = protocol.getType().getSource().getUrl();
+			if (!uri.endsWith("/")) uri = uri + "/";
+			if (TBPROTOCOL_URI.equals(uri)) {
 				getModel().add(protocolResource, RDF.type, TOXBANK.PROTOCOL); 
 			}
 		}
