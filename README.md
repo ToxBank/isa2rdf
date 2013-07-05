@@ -24,7 +24,7 @@ ISA-TAB to RDF conversion
 
 ### [isa2rdf-0.0.6-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.6-SNAPSHOT~~)
    
-   * Dependency upgraded to apache jena 2.10.1 (faster RDF input/output)
+   * Dependency upgraded to Apache [jena 2.10.1](http://jena.apache.org/download/index.html) (faster RDF input/output)
    * Multiple optimisations in RDF generation 
 
 ### [isa2rdf-0.0.5-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.5-SNAPSHOT~~)
