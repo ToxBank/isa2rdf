@@ -22,6 +22,18 @@ ISA-TAB to RDF conversion
 
 ##Download 
 
+### [isa2rdf-0.0.6-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.6-SNAPSHOT~~)
+   
+   * Dependency upgraded to apache jena 2.10.1 (faster RDF input/output)
+   * Multiple optimisation in RDF generation 
+
+### [isa2rdf-0.0.5-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.5-SNAPSHOT~~)
+
+   * The configuration templates synchronised with the latest ISACreator 1.7.0
+   * Added new study template default fields 
+   * New template for qHTS assays
+   * Upgraded isa-tools import_layer dependency to 1.6
+   * Fixed to handle multiple entries in the investigation page comments
 
 ### [isa2rdf-0.0.4.jar] (https://www.ideaconsult.net/downloads/ISAcreator.SEURAT/isa2rdf-0.0.4.jar)
    
