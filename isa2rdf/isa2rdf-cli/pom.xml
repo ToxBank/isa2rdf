@@ -140,39 +140,26 @@
             <artifactId>xercesImpl</artifactId>
             <version>2.8.1</version>
         </dependency>	
-    <dependency>
-       <groupId>org.isatools</groupId>
-	    <artifactId>import_layer</artifactId>
-    	<version>1.6</version>
-    	<exclusions>
-        <exclusion>
-          <groupId>hsqldb</groupId> 
-          <artifactId>hsqldb</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>axis</groupId> 
-          <artifactId>axis</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.lucene</groupId> 
-          <artifactId>lucene-core</artifactId>
-        </exclusion>
-        <!-- 
-        <exclusion>
-          <groupId>org.hibernate</groupId> 
-          <artifactId>hibernate-annotations</artifactId>
-        </exclusion>
-         -->
-        <exclusion>
-          <groupId>cpdetector</groupId> 
-          <artifactId>cpdetector</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>xalan</groupId> 
-          <artifactId>xalan</artifactId>
-        </exclusion>                
-      </exclusions>
-    </dependency>
+        
+
+        <dependency>
+            <groupId>org.isatools</groupId>
+            <artifactId>import_layer</artifactId>
+            <version>1.6</version>
+            <!-- 
+            <exclusions>
+                <exclusion>
+                    <groupId>uk.ac.ebi</groupId>
+                    <artifactId>ols</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>uk.ac.ebi</groupId>
+                    <artifactId>jutils</artifactId>
+                </exclusion>
+            </exclusions>
+             -->
+        </dependency>
     <dependency>
     	<groupId>net.toxbank</groupId>
     	<artifactId>toxbank-api-beans</artifactId>
