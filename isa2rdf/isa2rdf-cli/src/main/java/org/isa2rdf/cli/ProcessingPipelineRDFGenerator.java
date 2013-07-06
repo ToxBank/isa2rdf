@@ -16,6 +16,7 @@ import net.toxbank.client.resource.Project;
 import net.toxbank.client.resource.User;
 
 import org.isa2rdf.model.ISA;
+import org.isatools.isatab.mapping.AssayGroup;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Annotation;
@@ -24,7 +25,6 @@ import uk.ac.ebi.bioinvindex.model.Identifiable;
 import uk.ac.ebi.bioinvindex.model.Investigation;
 import uk.ac.ebi.bioinvindex.model.Protocol;
 import uk.ac.ebi.bioinvindex.model.Study;
-import uk.ac.ebi.bioinvindex.model.processing.Assay;
 import uk.ac.ebi.bioinvindex.model.processing.DataAcquisition;
 import uk.ac.ebi.bioinvindex.model.processing.DataNode;
 import uk.ac.ebi.bioinvindex.model.processing.DataProcessing;
@@ -100,7 +100,12 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	        		getModel().add(xref,RDFS.seeAlso,xs.getUrl());
 	        	references.put(xs.getName(),xs);
 	      }		
-        
+        for (Identifiable c : store.values(org.isatools.isatab.mapping.AssayGroup.class)) {
+        	AssayGroup assay = (AssayGroup) c;
+        	Resource rassay = getResource(assay, ISA.Assay);
+        	Resource rStudy = getResourceID(assay.getStudy(),ISA.Study);
+        	getModel().add(rStudy,ISA.HASASSAY,rassay);
+        }
 		Collection<Identifiable> objects = new ArrayList<Identifiable>();
         objects.addAll(store.values(Processing.class));
 		for ( Identifiable object: objects )
@@ -122,16 +127,6 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	    for ( Identifiable object: objects )  {
 	    	Study xs = ((Study)object);
 	    	Resource xref = getResource(object, ISA.Study);
-	    	for (Assay assay :xs.getAssays()) {
-	    		Resource xassay = getResource(assay, ISA.Assay);	
-	    		getModel().add(xref,ISA.HASASSAY,xassay);
-	    	}
-	    	/*
-	    	for (Investigation inv :xs.getInvestigations()) {
-	    		Resource xinv = getResource(inv, ISA.Investigation);	
-	    		getModel().add(xref,ISA.HASASSAY,xassay);
-	    	}
-	    	*/
 	    }
 
 	    objects.clear();

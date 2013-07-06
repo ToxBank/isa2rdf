@@ -9,9 +9,12 @@ import java.util.List;
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.isa2rdf.model.ISA;
+import org.isatools.isatab.mapping.AssayGroup;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Accessible;
+import uk.ac.ebi.bioinvindex.model.AssayResult;
+import uk.ac.ebi.bioinvindex.model.BioEntity;
 import uk.ac.ebi.bioinvindex.model.Contact;
 import uk.ac.ebi.bioinvindex.model.Data;
 import uk.ac.ebi.bioinvindex.model.Identifiable;
@@ -92,8 +95,11 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		else if ( node instanceof MaterialProcessing ) p = "MN"; 
 		else if ( node instanceof DataAcquisition ) p = "DAN"; 
 		else if ( node instanceof DataProcessing ) p = "DPN";
-		else if ( node instanceof Material ) p = "M";
-		else if ( node instanceof Data ) p = "D";
+		else if ( node instanceof Material ) {
+			//source or sample
+			String typeAcc = ((Material)node).getType().getAcc().substring(4);
+			p = typeAcc;
+		}else if ( node instanceof Data ) p = "D";
 		else if ( node instanceof Protocol ) {
 			p = "P";
 			return getProtocolURI((Protocol)node);
@@ -104,7 +110,10 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			return getCachedURI(papp, String.format("%s/%s",prefix,p) , papp);
 			//
 		} else if ( node instanceof Study ) p = "S";
-		else if ( node instanceof Assay ) p = "A";
+		else if ( node instanceof Assay ) {
+			p = "Assay";
+			return getCachedURI(node, String.format("%s/%s",prefix,p) , node);
+		}
 		else if ( node instanceof Investigation ) p = "I";
 		else if ( node instanceof PropertyValue ) {
 			if ( node instanceof ParameterValue ) p = "PMV";
@@ -121,17 +130,15 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			*/
 			return getCachedURI(pv, String.format("%s/%s",prefix,p) , pv);
 		}
-		else if ( node instanceof OntologyTerm ) {
+		else if ( node instanceof OntologyEntry ) {
 			/**
     <!-- http://purl.obolibrary.org/obo/CHEBI_26523 -->
 			 */
-			OntologyTerm term  =(OntologyTerm) node;
+			OntologyEntry term  =(OntologyEntry) node;
 			
 			String uri = mintOntologyURI("http://purl.obolibrary.org/obo",term, null);
 			return uri!=null?uri:String.format("http://purl.obolibrary.org/obo/%s_%s",term.getSource().getAcc(),term.getAcc());
-		}
-		else if ( node instanceof OntologyEntry ) p = "OE";
-		else if ( node instanceof Property ) {
+		} else if ( node instanceof Property ) {
 			p = "PRM";
 			if ( node instanceof Factor ) p = "F";
 			else if ( node instanceof Characteristic ) p = "C";
@@ -159,7 +166,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			return String.format("%s/%s%d",prefix,p,node.getId());
 	}
 	
-	protected String mintOntologyURI(String prefix, OntologyTerm term, String p) {
+	protected String mintOntologyURI(String prefix, OntologyEntry term, String p) {
 		if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0)) {
 			//ISACreator 1.7.x writes prefixed accession numbers ....
 			String[] split = term.getAcc().split(":");
@@ -190,8 +197,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		}
 		if (node instanceof Protocol) {
 			resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
-		}
-		if (node instanceof Property) { //factor/char/params are descendant
+		} else if (node instanceof Property) { //factor/char/params are descendant
 			Property pv = (Property) node;
 			getModel().add(resource,DCTerms.title,pv.getValue());
 			if (pv.getOntologyTerms()!=null)
@@ -203,9 +209,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 						getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
 					}
 				}
-		}
-		
-		if (node instanceof PropertyValue) {
+		} else if (node instanceof PropertyValue) {
 			PropertyValue pv = (PropertyValue) node;
 			if (pv.getOntologyTerms()!=null)
 			for (Object ot: pv.getOntologyTerms()) {
@@ -227,9 +231,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				getModel().add(resource,p,xt);
 			}
 			
-		}
-
-		if (node instanceof OntologyTerm) {
+		} else if (node instanceof OntologyTerm) {
 			OntologyTerm term = (OntologyTerm) node;
 			//resource.addProperty(ISA.,getResource(term.getSource(),ISA.ReferenceSources));
 			resource.addProperty(RDFS.label,term.getName());
@@ -244,20 +246,22 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
     </owl:Class>
 			 */
 			
-		}
-		if (node instanceof OntologyEntry) {
-			//TODO
-		}
-		/**
-		 * Data
-		 */
-		if (node instanceof Data) {
+		} else if (node instanceof OntologyEntry) {
+			OntologyEntry term = (OntologyEntry) node;
+			//resource.addProperty(ISA.,getResource(term.getSource(),ISA.ReferenceSources));
+			resource.addProperty(RDFS.label,term.getName());
+			resource.addProperty(ISA.hasAccessionID,term.getAcc());
+			
+		} else if (node instanceof Data) {
+			/**
+			 * Data
+			 */
 			Data data = (Data) node;
 			resource.addProperty(ISA.hasAccessionID, data.getName());
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getDataMatrixUrl()!=null) resource.addProperty(RDFS.seeAlso, data.getUrl());
 			if (data.getType()!=null) { //ontlogy entry
-				Resource oe = getResourceID(data.getType(), ISA.OntologyEntry);
+				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
 			}
 			if (data.getFactorValues()!=null)
 				for (FactorValue fv : data.getFactorValues()) {
@@ -266,17 +270,16 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				}
 
 			
-		}
-		/**
-		 * material
-		 */
-		if (node instanceof Material) {
+		} if (node instanceof Material) {
+			/**
+			 * material
+			 */
 			Material data = (Material) node;
 			//resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
 			resource.addProperty(ISA.hasAccessionID, data.getName());
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getType()!=null) { //ontlogy entry
-				Resource oe = getResourceID(data.getType(), ISA.OntologyEntry);
+				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
 			}
 			if (data.getFactorValues()!=null)
 				for (FactorValue fv : data.getFactorValues()) {
@@ -288,16 +291,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 					Resource xfv = getResource(fv, ISA.CharacteristicValue);
 					getModel().add(resource,ISA.HASCHARACTERISTICVALUE,xfv);
 				}			
-		}
-		
-		//GraphElement
-		if (node instanceof GraphElement) {
-			if (((GraphElement) node).getStudy()!=null)
-				resource.addProperty(ISA.HASSTUDY, getResourceID(((GraphElement) node).getStudy(),ISA.Study));
-		}
-		
-		//GraphElement
-		if (node instanceof Study) {
+		} if (node instanceof Study) {
 			Study study = (Study) node;
 			if (study.getTitle()!=null)
 			resource.addProperty(DCTerms.title,study.getTitle());
@@ -308,18 +302,55 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (study.getObjective()!=null)
 			resource.addProperty(DCTerms.abstract_,study.getObjective());
 			
-			/*
 			for (AssayResult ar : study.getAssayResults()) {
-				System.out.println(ar);
+				Resource rData = getResourceID(ar.getData(), ISA.Data);
+				rData.addProperty(RDF.type, ISA.AssayResult);
+				
+		
+				
+				//System.out.println(ar);
+				//System.out.println(ar.getData());
+				for (BioEntity bioentity : ar.getBioEntities()) {
+					System.out.println("Bioentity" + bioentity.getDescription());
+				}
+				/*
+				for (FactorValue fv : ar.getFactorValues()) {
+					System.out.println(fv.getType().getValue() + "=" + fv.getValue());
+				}
+				*/
+				
+				for (PropertyValue fv : ar.getCascadedPropertyValues()) {
+					if (fv==null) continue;
+					Property property = fv.getType();
+					StringBuilder a = new StringBuilder();
+					for (Assay assay : ar.getAssays()) {
+						a.append(assay.getAcc());
+						a.append("|");
+					}
+					
+					System.out.println(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
+							ar.getStudy().getAcc(),a,
+							(ar.getData()==null?"":ar.getData().getName()),
+							(ar.getData()==null?"":ar.getData().getType().getAcc()),
+							(ar.getData()==null?"":ar.getData().getProcessingNode()),
+							(property==null?"":fv.getType().getOrder()), 
+							(property==null?"":fv.getType().getRole()), 
+							(property==null?"":fv.getType().getValue()), 
+							fv.getValue(), 
+							(fv.getUnit()==null?"":fv.getUnit().getValue()))
+							);
+				}				
+/*
+				for (Assay fv : ar.getAssays()) {
+					System.out.println("Assay\t" + fv.getAcc() + " : " + fv + "\t" +  fv.getMaterial());
+				}
+				*/				
 			}
-			*/
-		}
 
-
-		/**
-		 * Persons , defined in the investigation file
-		 */
-		if (node instanceof Contact) {
+		} else	if (node instanceof Contact) {
+			/**
+			 * Persons , defined in the investigation file
+			 */
 			Contact contact = (Contact) node;
 			getModel().add(resource, RDF.type, FOAF.Person); 
 			if (contact.getFirstName() != null)
@@ -340,11 +371,29 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 
 			}
 			processRoles(contact,resource);
-
-		}
-		
-		//GraphElement
-		if (node instanceof Investigation) {
+		/*
+		} else if (node instanceof Assay) {
+			Assay assay = (Assay) node;
+			resource.addProperty(DCTerms.title,assay.getTechnologyName());
+			resource.addProperty(ISA.hasAccessionID,assay.getAcc());
+*/
+		} else if (node instanceof AssayGroup) {
+			AssayGroup assaygroup = (AssayGroup) node;
+			if (assaygroup.getTechnology()!=null) {
+				Resource technology = getResource(assaygroup.getTechnology(),ISA.OntologyTerm);
+				resource.addProperty(ISA.USESTECHNOLOGY,technology);
+			}
+			if (assaygroup.getPlatform()!=null)
+				resource.addProperty(ISA.USESPLATFORM,assaygroup.getPlatform());
+			resource.addProperty(RDFS.seeAlso,assaygroup.getFilePath());
+			Resource endpoint = getResource(assaygroup.getMeasurement(),ISA.OntologyTerm);
+			resource.addProperty(ISA.HASENDPOINT,endpoint);
+			for (Assay assay : assaygroup.getAssays()) {
+				Material material = assay.getMaterial();
+				Resource mresource = getResourceID(material,ISA.Material);
+				resource.addProperty(ISA.USES,mresource);
+			}
+		} else if (node instanceof Investigation) {
 			Investigation inv = (Investigation) node;
 			processAnnotations(inv,resource);
 			if (inv.getTitle()!=null)
@@ -393,6 +442,13 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			}
 			*/
 		}		
+		
+		//GraphElement
+		if (node instanceof GraphElement) {
+			if (((GraphElement) node).getStudy()!=null)
+				resource.addProperty(ISA.HASSTUDY, getResourceID(((GraphElement) node).getStudy(),ISA.Study));
+		}
+
 		//Node
 		/**FIXME something is wrong, owl gets broken ... perhaps consider assayfields as resources not literals
 		if (node instanceof Node) {

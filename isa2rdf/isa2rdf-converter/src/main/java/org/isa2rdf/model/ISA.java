@@ -64,6 +64,7 @@ public class ISA {
     public static final Resource ProtocolApplication = resource("ProtocolApplication");
     public static final Resource Material = resource("Material"); 
     public static final Resource Data = resource("Data");
+    public static final Resource AssayResult = resource("AssayResult");
     /**
      * TODO : replace with ToxBank User object or FOAF: Person
      */
@@ -75,7 +76,6 @@ public class ISA {
     public static final Resource Assay = resource("Assay");
     public static final Resource ReferenceSources = resource("ReferenceSources");
     
-    public static final Resource OntologyEntry = resource("OntologyEntry");
     public static final Resource OntologyTerm = resource("OntologyTerm");
     public static final Resource FreeTextTerm = resource("FreeTextTerm");
     public static final Resource PropertyValue = resource("PropertyValue");
@@ -127,6 +127,7 @@ public class ISA {
      */
     public static final Property HASSTUDY = property("hasStudy");
     public static final Property HASASSAY = property("hasAssay");
+    public static final Property USES = property("uses");
     
     /**
      * STUDY HASPROTOCOL Protocol.
@@ -151,12 +152,14 @@ public class ISA {
     //Contacts can be Investigation or Study owners
     public static final Property HASOWNER = property("hasOwner");
 
+    public static final Property HASENDPOINT = property("hasEndpoint");
+    public static final Property USESTECHNOLOGY = property("usesTechnology");
+    public static final Property USESPLATFORM= property("usesPlatform");
     
     public static void init(Model model) {
     	 resourceWithParent(model,ANNOTATABLE,IDENTIFIABLE);
     	 resourceWithParent(model,ACCESSIBLE,ANNOTATABLE);
-    	 resourceWithParent(model,OntologyEntry,ANNOTATABLE);
-    	 resourceWithParent(model,OntologyTerm,OntologyEntry);
+    	 resourceWithParent(model,OntologyTerm,ANNOTATABLE);
     	 resourceWithParent(model,GraphElement,ACCESSIBLE);
     	 resourceWithParent(model,ReferenceSources,ACCESSIBLE);
     	 resourceWithParent(model,PROCESSINGNODE,GraphElement);

@@ -29,7 +29,6 @@ import org.isatools.tablib.utils.BIIObjectStore;
 import uk.ac.ebi.bioinvindex.model.Identifiable;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFWriter;
 
 
 public class IsaClient {
@@ -93,7 +92,23 @@ public class IsaClient {
            
         }
         
- 
+        /*
+class org.isatools.isatab.mapping.FactorTypeHelper
+class org.isatools.isatab.mapping.AssayGroup
+class uk.ac.ebi.bioinvindex.model.Protocol
+class uk.ac.ebi.bioinvindex.model.xref.ReferenceSource
+class uk.ac.ebi.bioinvindex.model.processing.Node
+class uk.ac.ebi.bioinvindex.model.Publication
+class uk.ac.ebi.bioinvindex.model.processing.Assay
+class uk.ac.ebi.bioinvindex.model.Study
+class org.isatools.tablib.mapping.TabMappingContext
+class uk.ac.ebi.bioinvindex.model.processing.Processing
+class uk.ac.ebi.bioinvindex.model.Investigation
+class uk.ac.ebi.bioinvindex.model.Material
+class org.isatools.isatab.mapping.StudyWrapper
+class uk.ac.ebi.bioinvindex.model.Contact
+
+         */
         File file = new File(filesPath);
         String prefix = String.format("%s%s",ISA.URI,file.getName().replace("-","").replace(" ","").trim());
         ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(
