@@ -83,7 +83,7 @@
       <description><![CDATA[Leave blank if there are no technical replicates, otherwise use a number for each replicate group]]></description>
       <default-value><![CDATA[]]></default-value>
     </field>
-    <field header="Factor Value[compound]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="true">
+    <field header="Factor Value[compound]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="true">
       <description><![CDATA[Compound Name (use IUPAC name)]]></description>
       <default-value><![CDATA[]]></default-value>
       <recommended-ontologies>
