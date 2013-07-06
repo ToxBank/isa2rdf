@@ -123,7 +123,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	    	Study xs = ((Study)object);
 	    	Resource xref = getResource(object, ISA.Study);
 	    	for (Assay assay :xs.getAssays()) {
-	    		Resource xassay = getResourceID(assay, ISA.Assay);	
+	    		Resource xassay = getResource(assay, ISA.Assay);	
 	    		getModel().add(xref,ISA.HASASSAY,xassay);
 	    	}
 	    	/*
@@ -365,7 +365,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 		if (protocol.getType()==null) return;
 		if (protocol.getType().getSource()!=null) {
 			String uri = protocol.getType().getSource().getUrl();
-			if (!uri.endsWith("/")) uri = uri + "/";
+			if ((uri!=null) && !uri.endsWith("/")) uri = uri + "/";
 			if (TBPROTOCOL_URI.equals(uri)) {
 				getModel().add(protocolResource, RDF.type, TOXBANK.PROTOCOL); 
 			}
