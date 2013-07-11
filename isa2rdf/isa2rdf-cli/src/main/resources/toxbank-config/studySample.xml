@@ -99,7 +99,7 @@
       </recommended-ontologies>      
     </field>
    
-    <field header="Characteristics[eniantiomer]" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+    <field header="Characteristics[enantiomer]" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
       <description><![CDATA[Enantiomer form of the compound]]></description>
       <default-value><![CDATA[]]></default-value>
       <list-values>Mixture,S,R,Unknown</list-values>
