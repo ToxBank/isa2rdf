@@ -135,9 +135,16 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
     <!-- http://purl.obolibrary.org/obo/CHEBI_26523 -->
 			 */
 			OntologyEntry term  =(OntologyEntry) node;
-			
-			String uri = mintOntologyURI("http://purl.obolibrary.org/obo",term, null);
-			return uri!=null?uri:String.format("http://purl.obolibrary.org/obo/%s_%s",term.getSource().getAcc(),term.getAcc());
+			String purl = "http://purl.obolibrary.org/obo";
+			String uri = null;
+			try {
+				SupportedPurl sp = SupportedPurl.valueOf(term.getSource().getAcc());
+				purl = sp.getPURL();
+				return sp.getEntry(term.getSource().getAcc(), term.getAcc()); 
+			} catch (Exception x) {	
+				uri = mintOntologyURI(purl,term, null);
+			}
+			return uri!=null?uri:String.format("%s/%s_%s",purl,term.getSource().getAcc(),term.getAcc());
 		} else if ( node instanceof Property ) {
 			p = "PRM";
 			if ( node instanceof Factor ) p = "F";

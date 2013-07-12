@@ -250,11 +250,6 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	final static String TB_author_term = "comment:Investigation Person URI Term Accession Number";
 	final static String TB_author_termref = "comment:Investigation Person URI Term Source REF";
 
-
-	public static final String OBO = "http://purl.obolibrary.org/obo/";
-	public static final String BIBO = "http://purl.org/ontology/bibo/";
-	public static final String EFO = "http://purl.org/ontology/efo/";
-	public static final String CHEBI = "http://purl.org/ontology/chebi/";
 	//http://bibotools.googlecode.com/svn/bibo-ontology/trunk/doc/index.html
 	//TODO get from the ontology definition
 
