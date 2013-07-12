@@ -82,45 +82,61 @@ usage: org.isa2rdf.cli.IsaClient
 Example:
 
 ```
->java -jar isa2rdf-0.0.4-SNAPSHOT.jar -d /home/myself/sa2rdf/BII-S-11 -o /home/myself/BII-S-11/isatab.rdf -t https://services.toxbank.net/toxbank
+>java -jar isa2rdf-0.0.4-SNAPSHOT.jar -d /home/myself/isa2rdf/BII-I-1 -o /home/myself/qHTS/isatab.rdf -t https://services.toxbank.net/toxbank
 ```
 
 Example: without -o argument, will write RDF/N3 to console
 
 ```
->java -jar isa2rdf-0.0.1-SNAPSHOT.jar -d /home/myself/sa2rdf/BII-S-11 -t https://services.toxbank.net/toxbank
+>java -jar isa2rdf-0.0.6.jar -d /home/myself/isa2rdf/qHTS -t https://services.toxbank.net/toxbank
 
-@prefix :        <http://onto.toxbank.net/isa/TEST/> .
-@prefix dc:      <http://purl.org/dc/elements/1.1/> .
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix isa:     <http://onto.toxbank.net/isa/> .
-@prefix owl:     <http://www.w3.org/2002/07/owl#> .
-@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix :      <http://onto.toxbank.net/isa/qHTS/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix kw:    <http://www.owl-ontologies.com/toxbank.owl/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tb:    <http://onto.toxbank.net/api/> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix isa:   <http://onto.toxbank.net/isa/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 
-:M13303
-      a       isa:Material ;
-      isa:hasAccessionID "BII-S-11:labelled_extract:a_FP004BA-DNACHIP-transcriptome.992-biotin-labeled" .
+:MN4    a                isa:MaterialNode ;
+        isa:hasMaterial  :source76 ;
+        isa:hasStudy     :S36 .
 
-:MN4186
-      a       isa:MaterialNode ;
-      isa:hasAccessionID "BII-S-11:proc:a_FP004BA-DNACHIP-transcriptome.2.4.47:out:0" ;
-      isa:hasMaterial :M16232 ;
-      isa:hasStudy :S4854 .
+<https://services.toxbank.net/toxbank/organisation/G27>
+        a       tb:Organization .
 
-:PA20601
-      a       isa:MaterialProcessing ;
-      isa:hasProtocol :P_10571 .
+isa:hasParameterValue
+        a            owl:ObjectProperty ;
+        rdfs:domain  isa:ProtocolApplication ;
+        rdfs:range   isa:ParameterValue .
 
-:MN10215
-      a       isa:MaterialProcessing ;
-      isa:hasAccessionID "BII-S-11:proc:a_FP004BA-SELDI-MS-proteome.4.6.847" ;
-      isa:hasInputNode :MN826 ;
-      isa:hasOutputNode :MN3760 ;
-      isa:hasProtocolApplication
-              :PA21039 ;
-      isa:hasStudy :S4854 .
+:DAN42  a                  isa:DataAcquisition ;
+        isa:hasInputNode   :MN16 ;
+        isa:hasOutputNode  :DN17 ;
+        isa:hasStudy       :S36 .
+
+:CV6    a                isa:CharacteristicValue ;
+        isa:hasProperty  :C6 ;
+        isa:hasValue     "1"^^xsd:int .
+
+:MN11   a                isa:MaterialNode ;
+        isa:hasMaterial  :generic_assay66 ;
+        isa:hasStudy     :S36 .
+
+isa:Node  rdfs:subClassOf  isa:GraphElement .
+
+:PRM2   a              isa:Parameter ;
+        dcterms:title  "dye" .
+
+:sample73  a                isa:Material ;
+        isa:hasAccessionID  "exp1-A1-C2" ;
+        isa:hasFactorValue  :FV4 , :FV2 , :FV1 .
 
 ```
-<output skipped>
+
+
+<output skipped> See the full output in [N3](https://github.com/ToxBank/isa2rdf/tree/master/isa2rdf/isa2rdf-cli/src/test/resources/toxbank/json/isatab.n3) 
