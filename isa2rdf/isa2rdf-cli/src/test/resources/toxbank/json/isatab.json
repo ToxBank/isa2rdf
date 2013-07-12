@@ -1,140 +1,140 @@
 {
   "study" : {
-    "S1" : {
+    "S36" : {
       "processing" : [ {
+        "type" : "DataAcquisition",
+        "input" : "MN11",
+        "output" : "DN10"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN12",
+        "output" : "DN3"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN14",
+        "output" : "DN9"
+      }, {
         "type" : "MaterialProcessing",
-        "input" : "MN44",
-        "output" : "MN50",
+        "input" : "MN15",
+        "output" : "MN16",
+        "applies" : "PA1"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN15",
+        "output" : "MN12",
+        "applies" : "PA2"
+      }, {
+        "type" : "DataAcquisition",
+        "input" : "MN16",
+        "output" : "DN17"
+      }, {
+        "type" : "MaterialProcessing",
+        "input" : "MN2",
+        "output" : "MN8",
         "applies" : "PA3"
       }, {
         "type" : "MaterialProcessing",
-        "input" : "MN44",
-        "output" : "MN53",
+        "input" : "MN2",
+        "output" : "MN11",
         "applies" : "PA2"
       }, {
         "type" : "MaterialProcessing",
-        "input" : "MN46",
-        "output" : "MN48",
+        "input" : "MN4",
+        "output" : "MN6",
         "applies" : "PA4"
       }, {
         "type" : "MaterialProcessing",
-        "input" : "MN46",
-        "output" : "MN44",
+        "input" : "MN4",
+        "output" : "MN2",
         "applies" : "PA4"
       }, {
         "type" : "MaterialProcessing",
-        "input" : "MN46",
-        "output" : "MN57",
+        "input" : "MN4",
+        "output" : "MN15",
         "applies" : "PA4"
       }, {
         "type" : "MaterialProcessing",
-        "input" : "MN48",
-        "output" : "MN56",
+        "input" : "MN6",
+        "output" : "MN14",
         "applies" : "PA1"
       }, {
         "type" : "MaterialProcessing",
-        "input" : "MN48",
-        "output" : "MN49",
+        "input" : "MN6",
+        "output" : "MN7",
         "applies" : "PA2"
       }, {
         "type" : "DataAcquisition",
-        "input" : "MN49",
-        "output" : "DN47"
+        "input" : "MN7",
+        "output" : "DN5"
       }, {
         "type" : "DataAcquisition",
-        "input" : "MN50",
-        "output" : "DN55"
-      }, {
-        "type" : "DataAcquisition",
-        "input" : "MN53",
-        "output" : "DN52"
-      }, {
-        "type" : "DataAcquisition",
-        "input" : "MN54",
-        "output" : "DN45"
-      }, {
-        "type" : "DataAcquisition",
-        "input" : "MN56",
-        "output" : "DN51"
-      }, {
-        "type" : "MaterialProcessing",
-        "input" : "MN57",
-        "output" : "MN58",
-        "applies" : "PA1"
-      }, {
-        "type" : "MaterialProcessing",
-        "input" : "MN57",
-        "output" : "MN54",
-        "applies" : "PA2"
-      }, {
-        "type" : "DataAcquisition",
-        "input" : "MN58",
-        "output" : "DN59"
+        "input" : "MN8",
+        "output" : "DN13"
       } ],
       "nodes" : {
-        "MN44" : {
+        "MN11" : {
           "type" : "MaterialNode",
-          "material" : "M78"
+          "material" : "generic_assay66"
         },
-        "MN50" : {
-          "type" : "MaterialNode",
-          "material" : "M80"
-        },
-        "MN53" : {
-          "type" : "MaterialNode",
-          "material" : "M74"
-        },
-        "MN46" : {
-          "type" : "MaterialNode",
-          "material" : "M86"
-        },
-        "MN48" : {
-          "type" : "MaterialNode",
-          "material" : "M64"
-        },
-        "MN57" : {
-          "type" : "MaterialNode",
-          "material" : "M88"
-        },
-        "MN56" : {
-          "type" : "MaterialNode",
-          "material" : "M66"
-        },
-        "MN49" : {
-          "type" : "MaterialNode",
-          "material" : "M72"
-        },
-        "DN47" : {
+        "DN10" : {
           "type" : "DataNode",
-          "data" : "D84"
+          "data" : "D72"
         },
-        "DN55" : {
-          "type" : "DataNode",
-          "data" : "D82"
-        },
-        "DN52" : {
-          "type" : "DataNode",
-          "data" : "D76"
-        },
-        "MN54" : {
+        "MN12" : {
           "type" : "MaterialNode",
-          "material" : "M90"
+          "material" : "generic_assay68"
         },
-        "DN45" : {
+        "DN3" : {
           "type" : "DataNode",
-          "data" : "D92"
+          "data" : "D78"
         },
-        "DN51" : {
-          "type" : "DataNode",
-          "data" : "D94"
-        },
-        "MN58" : {
+        "MN14" : {
           "type" : "MaterialNode",
-          "material" : "M68"
+          "material" : "generic_assay65"
         },
-        "DN59" : {
+        "DN9" : {
           "type" : "DataNode",
-          "data" : "D70"
+          "data" : "D79"
+        },
+        "MN15" : {
+          "type" : "MaterialNode",
+          "material" : "sample77"
+        },
+        "MN16" : {
+          "type" : "MaterialNode",
+          "material" : "generic_assay67"
+        },
+        "DN17" : {
+          "type" : "DataNode",
+          "data" : "D71"
+        },
+        "MN2" : {
+          "type" : "MaterialNode",
+          "material" : "sample73"
+        },
+        "MN8" : {
+          "type" : "MaterialNode",
+          "material" : "generic_assay64"
+        },
+        "MN4" : {
+          "type" : "MaterialNode",
+          "material" : "source76"
+        },
+        "MN6" : {
+          "type" : "MaterialNode",
+          "material" : "sample70"
+        },
+        "MN7" : {
+          "type" : "MaterialNode",
+          "material" : "generic_assay69"
+        },
+        "DN5" : {
+          "type" : "DataNode",
+          "data" : "D75"
+        },
+        "DN13" : {
+          "type" : "DataNode",
+          "data" : "D74"
         }
       },
       "protocols" : {
@@ -148,21 +148,22 @@
         }
       },
       "protocolApplications" : {
-        "PA3" : {
+        "PA1" : {
           "protocol" : "https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1",
           "parameters" : {
             "PMV4" : {
               "parameter" : "cellular component",
               "value" : "nucleus",
-              "term" : "http://purl.obolibrary.org/obo/GO_0005634"
+              "term" : "http://purl.obolibrary.org/go/0005634"
+            },
+            "PMV2" : {
+              "parameter" : "dye",
+              "value" : "2'-(4-ethoxyphenyl)-5-(4-methylpiperazin-1-yl)-2,5'-bibenzimidazole",
+              "term" : "http://purl.obolibrary.org/chebi/CHEBI:51232"
             },
             "PMV1" : {
               "parameter" : "Reagents kit",
               "value" : "oxidative stress staining kit"
-            },
-            "PMV9" : {
-              "parameter" : "dye",
-              "value" : "Hoechst 33342"
             },
             "PMV5" : {
               "parameter" : "software",
@@ -188,7 +189,7 @@
             "PMV8" : {
               "parameter" : "cellular component",
               "value" : "reactive oxygen species",
-              "term" : "http://purl.obolibrary.org/obo/CHEBI_26523"
+              "term" : "http://purl.obolibrary.org/chebi/26523"
             },
             "PMV5" : {
               "parameter" : "software",
@@ -197,6 +198,32 @@
             "PMV6" : {
               "parameter" : "dye",
               "value" : "DHE"
+            }
+          }
+        },
+        "PA3" : {
+          "protocol" : "https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1",
+          "parameters" : {
+            "PMV4" : {
+              "parameter" : "cellular component",
+              "value" : "nucleus",
+              "term" : "http://purl.obolibrary.org/go/0005634"
+            },
+            "PMV1" : {
+              "parameter" : "Reagents kit",
+              "value" : "oxidative stress staining kit"
+            },
+            "PMV9" : {
+              "parameter" : "dye",
+              "value" : "Hoechst 33342"
+            },
+            "PMV5" : {
+              "parameter" : "software",
+              "value" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
+            },
+            "PMV3" : {
+              "parameter" : "emission wavelength",
+              "value" : "461 nm"
             }
           }
         },
@@ -224,76 +251,19 @@
               "value" : "37 C"
             }
           }
-        },
-        "PA1" : {
-          "protocol" : "https://services.toxbank.net/toxbank/protocol/SEURAT-Protocol-82-1",
-          "parameters" : {
-            "PMV4" : {
-              "parameter" : "cellular component",
-              "value" : "nucleus",
-              "term" : "http://purl.obolibrary.org/obo/GO_0005634"
-            },
-            "PMV2" : {
-              "parameter" : "dye",
-              "value" : "2'-(4-ethoxyphenyl)-5-(4-methylpiperazin-1-yl)-2,5'-bibenzimidazole",
-              "term" : "http://purl.obolibrary.org/obo/CHEBI_51232"
-            },
-            "PMV1" : {
-              "parameter" : "Reagents kit",
-              "value" : "oxidative stress staining kit"
-            },
-            "PMV5" : {
-              "parameter" : "software",
-              "value" : "Cellomics ArrayScan vti; target Activation Bioapplication v.4 from Cellomics Scan Software"
-            },
-            "PMV3" : {
-              "parameter" : "emission wavelength",
-              "value" : "461 nm"
-            }
-          }
         }
       },
       "materials" : {
-        "M78" : {
-          "acc" : "exp1-A1-C2",
-          "factors" : {
-            "FV4" : {
-              "concentration" : "5.0E-4"
-            },
-            "FV2" : {
-              "compound" : "paracetamol",
-              "term" : "http://purl.obolibrary.org/obo/CHEBI_46195"
-            },
-            "FV1" : {
-              "duration of exposure" : "72"
-            }
-          }
-        },
-        "M80" : {
-          "acc" : "exp1-A1-C2-Ch1"
-        },
-        "M74" : {
+        "generic_assay66" : {
           "acc" : "exp1-A1-C2-Ch2"
         },
-        "M86" : {
-          "acc" : "ROS_exp1"
+        "generic_assay68" : {
+          "acc" : "exp1-E8-C1-Ch2"
         },
-        "M64" : {
-          "acc" : "exp1-A1-C1",
-          "factors" : {
-            "FV3" : {
-              "concentration" : "0.0010"
-            },
-            "FV2" : {
-              "compound" : "paracetamol",
-              "term" : "http://purl.obolibrary.org/obo/CHEBI_46195"
-            },
-            "FV1" : {
-              "duration of exposure" : "72"
-            }
-          }
+        "generic_assay65" : {
+          "acc" : "exp1-A1-C1-Ch1"
         },
-        "M88" : {
+        "sample77" : {
           "acc" : "exp1-E8-C1",
           "factors" : {
             "FV6" : {
@@ -308,37 +278,67 @@
             }
           }
         },
-        "M66" : {
-          "acc" : "exp1-A1-C1-Ch1"
-        },
-        "M72" : {
-          "acc" : "exp1-A1-C1-Ch2"
-        },
-        "M90" : {
-          "acc" : "exp1-E8-C1-Ch2"
-        },
-        "M68" : {
+        "generic_assay67" : {
           "acc" : "exp1-E8-C1-Ch1"
+        },
+        "sample73" : {
+          "acc" : "exp1-A1-C2",
+          "factors" : {
+            "FV4" : {
+              "concentration" : "5.0E-4"
+            },
+            "FV2" : {
+              "compound" : "paracetamol",
+              "term" : "http://purl.obolibrary.org/chebi/CHEBI:46195"
+            },
+            "FV1" : {
+              "duration of exposure" : "72"
+            }
+          }
+        },
+        "generic_assay64" : {
+          "acc" : "exp1-A1-C2-Ch1"
+        },
+        "source76" : {
+          "acc" : "ROS_exp1"
+        },
+        "sample70" : {
+          "acc" : "exp1-A1-C1",
+          "factors" : {
+            "FV3" : {
+              "concentration" : "0.0010"
+            },
+            "FV2" : {
+              "compound" : "paracetamol",
+              "term" : "http://purl.obolibrary.org/chebi/CHEBI:46195"
+            },
+            "FV1" : {
+              "duration of exposure" : "72"
+            }
+          }
+        },
+        "generic_assay69" : {
+          "acc" : "exp1-A1-C1-Ch2"
         }
       },
       "data" : {
-        "D84" : {
-          "acc" : "data_ROS_experiment1_Ch2.txt (exp1-A1-C1-Ch2)"
-        },
-        "D82" : {
-          "acc" : "data_ROS_experiment1_Ch1.txt (exp1-A1-C2-Ch1)"
-        },
-        "D76" : {
+        "D72" : {
           "acc" : "data_ROS_experiment1_Ch2.txt (exp1-A1-C2-Ch2)"
         },
-        "D92" : {
+        "D78" : {
           "acc" : "data_ROS_experiment1_Ch2.txt (exp1-E8-C1-Ch2)"
         },
-        "D94" : {
+        "D79" : {
           "acc" : "data_ROS_experiment1_Ch1.txt (exp1-A1-C1-Ch1)"
         },
-        "D70" : {
+        "D71" : {
           "acc" : "data_ROS_experiment1_Ch1.txt (exp1-E8-C1-Ch1)"
+        },
+        "D75" : {
+          "acc" : "data_ROS_experiment1_Ch2.txt (exp1-A1-C1-Ch2)"
+        },
+        "D74" : {
+          "acc" : "data_ROS_experiment1_Ch1.txt (exp1-A1-C2-Ch1)"
         }
       },
       "parameters" : {
@@ -357,7 +357,7 @@
         "PMV4" : {
           "parameter" : "cellular component",
           "value" : "nucleus",
-          "term" : "http://purl.obolibrary.org/obo/GO_0005634"
+          "term" : "http://purl.obolibrary.org/go/0005634"
         },
         "PMV14" : {
           "parameter" : "cell culture medium",
@@ -370,7 +370,7 @@
         "PMV2" : {
           "parameter" : "dye",
           "value" : "2'-(4-ethoxyphenyl)-5-(4-methylpiperazin-1-yl)-2,5'-bibenzimidazole",
-          "term" : "http://purl.obolibrary.org/obo/CHEBI_51232"
+          "term" : "http://purl.obolibrary.org/chebi/CHEBI:51232"
         },
         "PMV12" : {
           "parameter" : "Performer",
@@ -399,7 +399,7 @@
         "PMV8" : {
           "parameter" : "cellular component",
           "value" : "reactive oxygen species",
-          "term" : "http://purl.obolibrary.org/obo/CHEBI_26523"
+          "term" : "http://purl.obolibrary.org/chebi/26523"
         },
         "PMV5" : {
           "parameter" : "software",
