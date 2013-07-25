@@ -210,7 +210,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (pv.getOntologyTerms()!=null)
 				for (Object ot: pv.getOntologyTerms()) {
 					OntologyTerm term = (OntologyTerm) ot;
-					if ((term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0)) {
+					if ((term!=null) && (term.getAcc()!=null) && (term.getSource().getAcc()!=null) && (term.getAcc().indexOf("NULL-")<0) && (term.getSource().getAcc().indexOf("NULL-")<0)) {
 					Resource xot = getResource(term, ISA.OntologyTerm);
 					if (xot!=null)
 						getModel().add(resource,ISA.HASONTOLOGYTERM,xot);
@@ -317,9 +317,11 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				
 				//System.out.println(ar);
 				//System.out.println(ar.getData());
+				/*
 				for (BioEntity bioentity : ar.getBioEntities()) {
 					System.out.println("Bioentity" + bioentity.getDescription());
 				}
+				*/
 				/*
 				for (FactorValue fv : ar.getFactorValues()) {
 					System.out.println(fv.getType().getValue() + "=" + fv.getValue());
@@ -334,7 +336,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 						a.append(assay.getAcc());
 						a.append("|");
 					}
-					
+					/*
 					System.out.println(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
 							ar.getStudy().getAcc(),a,
 							(ar.getData()==null?"":ar.getData().getName()),
@@ -346,6 +348,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 							fv.getValue(), 
 							(fv.getUnit()==null?"":fv.getUnit().getValue()))
 							);
+							*/
 				}				
 /*
 				for (Assay fv : ar.getAssays()) {
