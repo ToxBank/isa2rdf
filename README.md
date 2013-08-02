@@ -22,6 +22,10 @@ ISA-TAB to RDF conversion
 
 ##Download 
 
+### [isa2rdf-0.0.7.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.7~~)
+
+   * Fixed NPE when an ontology source is incomplete
+    
 ### [isa2rdf-0.0.6.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.6~~)
    
    * Dependency upgraded to Apache [jena 2.10.1](http://jena.apache.org/download/index.html) (faster RDF input/output)
