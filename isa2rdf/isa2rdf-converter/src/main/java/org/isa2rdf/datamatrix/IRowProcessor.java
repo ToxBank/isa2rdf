@@ -1,5 +1,7 @@
 package org.isa2rdf.datamatrix;
 
 public interface IRowProcessor<ROW> {
-	void process(ROW row);
+	ROW process(ROW row) throws Exception;
+	void footer(ROW row) throws Exception;
+	void header(ROW row) throws Exception;
 }
