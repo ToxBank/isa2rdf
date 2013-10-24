@@ -65,9 +65,16 @@
 <dependency>
 	<groupId>org.codehaus.jackson</groupId>
 	<artifactId>jackson-mapper-asl</artifactId>
-	<version>1.9.12</version>
-	<scope>test</scope>
+	<version>${jackson.version}</version>
 </dependency>
+<!--
+    <dependency>
+      <groupId>ambit</groupId>
+      <artifactId>ambit2-base</artifactId>
+      <version>${ambit.version}</version>
+      <type>jar</type>
+    </dependency>
+-->
 </dependencies>  
 <description>ISA-TAB to RDF conversion</description>
   <organization>

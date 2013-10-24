@@ -86,6 +86,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>4.8.1</junit.version>
+    <ambit.version>2.5.0</ambit.version>
+    <jackson.version>1.9.12</jackson.version>
   </properties>
   <dependencies>
     <dependency>
