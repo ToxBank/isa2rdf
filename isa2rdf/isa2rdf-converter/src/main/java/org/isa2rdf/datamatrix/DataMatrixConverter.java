@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import net.idea.opentox.cli.csv.QuotedTokenizer;
 
@@ -20,20 +21,22 @@ public class DataMatrixConverter {
 		for (String arg: args) {
 			DataMatrixConverter q = new DataMatrixConverter();
 			try {
-				q.parse(arg,new IRowProcessor<DataMatrix>() {
+				DataMatrix matrix = q.parse(arg,new IRowProcessor<DataMatrix>() {
 					
 					@Override
 					public void process(DataMatrix row) {
-						System.out.println(row.getValues());
+						System.out.print(".");
 					}
 				});
+				System.out.println();
+				System.out.println(matrix);
 			} catch (Exception x) {
 				x.printStackTrace();
 				System.exit(-1);
 			}
 		}	
 	}
-	public int parse(String arg, IRowProcessor<DataMatrix> processor ) throws Exception {
+	public DataMatrix parse(String arg, IRowProcessor<DataMatrix> processor ) throws Exception {
 		BufferedReader reader = null ;
 		try {
 			String line;
@@ -42,10 +45,8 @@ public class DataMatrixConverter {
 			reader = new BufferedReader(new FileReader(file));
 			
 			//read config
-			ObjectMapper m = new ObjectMapper();
 			InputStream in = getClass().getClassLoader().getResourceAsStream("org/isa2rdf/data/transcriptomics/datamatrix.json");
-			DataMatrix headers = new DataMatrix((ObjectNode)m.readTree(in));
-			in.close();
+			DataMatrix matrix = new DataMatrix(in);
 			
 			//read config completed
 			ArrayList<String> header = new ArrayList<String>();
@@ -53,8 +54,8 @@ public class DataMatrixConverter {
 			
 			int row = 0;
 			while ((line = reader.readLine()) != null) {
-				ObjectNode genes =  headers.getGene();
-				ObjectNode values =  headers.getValues();
+				ObjectNode genes =  matrix.getGene();
+				ObjectNode values =  matrix.getValues();
 				genes.removeAll(); values.removeAll();
 				
 				QuotedTokenizer st = new QuotedTokenizer(line,'\t');
@@ -69,36 +70,34 @@ public class DataMatrixConverter {
 							lookupValue = value.substring(0,quote);
 							sampleName = value.substring(quote+1,value.length()-1);
 						}					
-						ObjectNode column = headers.getColumn(lookupValue);
+						ObjectNode column = matrix.getColumn(lookupValue);
 						header.add(column==null?null:lookupValue);
 						samples.add(sampleName);
+						matrix.createFeatureURI(lookupValue, sampleName, UUID.randomUUID().toString());
+						
 					} else {
-						ObjectNode column = headers.getColumn(header.get(col));
-						if (column !=null) {
+						String feature = matrix.getFeatureURI(header.get(col), samples.get(col));
+						if (feature != null) {
+							ObjectNode column = matrix.getColumn(header.get(col));
 							if (isProcessedData(column)) {
-								ObjectNode sample = (ObjectNode)values.get(samples.get(col));
-								if (sample==null) {
-									sample = m.createObjectNode();
-									values.put(samples.get(col), sample);
-								}
 								try {
-									sample.put(header.get(col),Double.parseDouble(value));
+									values.put(feature,Double.parseDouble(value));
 								} catch (Exception x) {
-									sample.put(header.get(col),value);	
+									values.put(header.get(col),value);	
 								}
 							} else {
 								ObjectNode gene = (ObjectNode)genes;
-								gene.put(header.get(col),value);
+								gene.put(feature,value);
 							}
 						}
 					}
 					col++;	
 				}
-				if (processor!=null) processor.process(headers);
+				if (processor!=null) processor.process(matrix);
 				row++;
 			}
 			
-			return row;
+			return matrix;
 		} catch (Exception x) {
 			throw x;
 		} finally {

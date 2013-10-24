@@ -65,60 +65,67 @@
         },
         "Stop": {
             "Annotation": true
-        },        
+        },
         "Total probes": {
             "Annotation": true
         },
         "Log-average expression": {
             "Description": "Average log intensity of signal value for a probe ID",
-            "Processed data": true
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/Log_average_expression",
+            "samples" : {}
         },
         "FC": {
             "Description": "Log2 fold change",
             "Processed data": true,
-            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000193"
+            "sameAs": "http://onto.toxbank.net/isa/FC",
+            "ontoURI": "http://www.bioassayontology.org/bao#BAO_0000193",
+            "samples" : {}
         },
         "t-score ": {
-            "Processed data": true
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/tscore",
+            "samples" : {}
         },
         "p-value": {
             "Description": "p-value",
             "Processed data": true,
-            "sameAs": "http://purl.obolibrary.org/obo/OBI_0000175"
+            "sameAs": "http://onto.toxbank.net/isa/pvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0000175",
+            "samples" : {}
         },
         "q-value": {
             "Description": "q-value (adjusted)",
             "Processed data": true,
-            "sameAs": "http://purl.obolibrary.org/obo/OBI_0001442"
+            "sameAs": "http://onto.toxbank.net/isa/qvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0001442",
+            "samples" : {}
         },
         "F-test": {
             "Processed data": true,
-            "sameAs": "http://www.ebi.ac.uk/efo/swo/SWO_0000531"
+            "sameAs": "http://onto.toxbank.net/isa/Ftest",
+            "ontoURI": "http://www.ebi.ac.uk/efo/swo/SWO_0000531",
+            "samples" : {}
         },
         "ANOVA p-value": {
             "Description": "p-value",
-            "Processed data": true
+            "sameAs": "http://onto.toxbank.net/isa/ANOVA_pvalue",
+            "Processed data": true,
+            "samples" : {}
         },
         "ANOVA q-value": {
             "Description": "q-value (adjusted)",
-            "Processed data": true
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/ANOVA_pvalue",
+            "samples" : {}
         }
     },
     "row": {
         "gene": {
-            "Symbol": "C10orf46",
-            "Entrez": 143384,
-            "Name": "chromosome 10 open reading frame 46"
         },
         "values": {
-            "20-0 vs 0-0": {
-                "FC": -1.364,
-                "p-value": "0.006015162"
-            },
-            "5-15 vs 5-5": {
-                "FC": -1.0111,
-                "p-value": 0.872808542
-            }
         }
+    },
+    "feature": {
     }
 }
