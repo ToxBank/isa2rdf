@@ -1,0 +1,124 @@
+{
+    "columns": {
+        "Affymetrix": {
+            "Description": "Affymetrix probeset_id",
+            "Identifier": true
+        },
+        "Illumina": {
+            "Description": "Illumina probeset_id",
+            "Identifier": true
+        },
+        "Agilent": {
+            "Description": "Agilent probeset_id",
+            "Identifier": true
+        },
+        "Seqname": {
+            "Annotation": true
+        },
+        "Symbol": {
+            "Description": "Gene symbol",
+            "Identifier": true
+        },
+        "Entrez": {
+            "Description": "Entrez gene id / NCBI_GeneID",
+            "Identifier": true
+        },
+        "Ensemble": {
+            "Description": "Ensemble id",
+            "Identifier": true
+        },
+        "KeggGenes": {
+            "Description": "KeggGenes",
+            "Identifier": true
+        },
+        "Uniprot": {
+            "Description": "Uniprot",
+            "Identifier": true
+        },
+        "Unigene": {
+            "Description": "Unigene id",
+            "Identifier": true
+        },
+        "SwissProt": {
+            "Description": "SwissProt id",
+            "Identifier": true
+        },
+        "RefSeq": {
+            "Description": "RefSeq Protein id",
+            "Identifier": true
+        },
+        "Name": {
+            "Description": "Gene name or title",
+            "Annotation": true
+        },
+        "Chromosomal location": {
+            "Annotation": true
+        },
+        "Unigene cluster type": {
+            "Annotation": true
+        },
+        "Strand": {
+            "Annotation": true
+        },
+        "Start": {
+            "Annotation": true
+        },
+        "Stop": {
+            "Annotation": true
+        },        
+        "Total probes": {
+            "Annotation": true
+        },
+        "Log-average expression": {
+            "Description": "Average log intensity of signal value for a probe ID",
+            "Processed data": true
+        },
+        "FC": {
+            "Description": "Log2 fold change",
+            "Processed data": true,
+            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000193"
+        },
+        "t-score ": {
+            "Processed data": true
+        },
+        "p-value": {
+            "Description": "p-value",
+            "Processed data": true,
+            "sameAs": "http://purl.obolibrary.org/obo/OBI_0000175"
+        },
+        "q-value": {
+            "Description": "q-value (adjusted)",
+            "Processed data": true,
+            "sameAs": "http://purl.obolibrary.org/obo/OBI_0001442"
+        },
+        "F-test": {
+            "Processed data": true,
+            "sameAs": "http://www.ebi.ac.uk/efo/swo/SWO_0000531"
+        },
+        "ANOVA p-value": {
+            "Description": "p-value",
+            "Processed data": true
+        },
+        "ANOVA q-value": {
+            "Description": "q-value (adjusted)",
+            "Processed data": true
+        }
+    },
+    "row": {
+        "gene": {
+            "Symbol": "C10orf46",
+            "Entrez": 143384,
+            "Name": "chromosome 10 open reading frame 46"
+        },
+        "values": {
+            "20-0 vs 0-0": {
+                "FC": -1.364,
+                "p-value": "0.006015162"
+            },
+            "5-15 vs 5-5": {
+                "FC": -1.0111,
+                "p-value": 0.872808542
+            }
+        }
+    }
+}
