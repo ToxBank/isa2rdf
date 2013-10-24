@@ -1,4 +1,4 @@
-package org.isa2rdf.test;
+package org.isa2rdf.datamatrix;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,7 +20,7 @@ public class DataMatrixConverter {
 		for (String arg: args) {
 			DataMatrixConverter q = new DataMatrixConverter();
 			try {
-				q.run(arg,new IRowProcessor<DataMatrix>() {
+				q.parse(arg,new IRowProcessor<DataMatrix>() {
 					
 					@Override
 					public void process(DataMatrix row) {
@@ -33,7 +33,7 @@ public class DataMatrixConverter {
 			}
 		}	
 	}
-	public int run(String arg, IRowProcessor<DataMatrix> processor ) throws Exception {
+	public int parse(String arg, IRowProcessor<DataMatrix> processor ) throws Exception {
 		BufferedReader reader = null ;
 		try {
 			String line;

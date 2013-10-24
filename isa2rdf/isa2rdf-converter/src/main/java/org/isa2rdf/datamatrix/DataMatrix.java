@@ -1,4 +1,4 @@
-package org.isa2rdf.test;
+package org.isa2rdf.datamatrix;
 
 import org.codehaus.jackson.node.ObjectNode;
 
