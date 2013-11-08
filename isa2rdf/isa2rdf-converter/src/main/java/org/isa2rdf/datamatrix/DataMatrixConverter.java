@@ -17,7 +17,6 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.isa2rdf.data.stax.DatasetRDFWriter;
 
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 
 public class DataMatrixConverter {
 
@@ -75,7 +74,7 @@ public class DataMatrixConverter {
 		XMLStreamWriter writer = null;
 		try {
 			XMLOutputFactory factory      =  XMLOutputFactory.newInstance();
-			writer  = new IndentingXMLStreamWriter(factory.createXMLStreamWriter(out,"UTF-8"));
+			writer  = factory.createXMLStreamWriter(out,"UTF-8");
 			return writer;
 		} catch (Exception  x) {
 			throw x;
