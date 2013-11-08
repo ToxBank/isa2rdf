@@ -298,10 +298,17 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 			
 			List<Annotation> uri = contact.getAnnotation(TB_author_uri);
 			if ((uri==null) || (uri.size()<1)) continue;
-			List<Annotation> ref = contact.getAnnotation(TB_author_termref);
-			if ((ref==null) || (ref.size()<1)) continue;
-			List<Annotation> title = contact.getAnnotation(TB_author_term);
-			if ((title==null) || (title.size()<1)) continue;
+			
+			String authorURI = uri.get(0).getText();
+			int delimiter = authorURI.indexOf(":");
+			if (delimiter<=0) { // ISACreator 1.6 stores ontology uri in a separate field
+				List<Annotation> ref = contact.getAnnotation(TB_author_termref);
+				if ((ref==null) || (ref.size()<1)) continue;
+				List<Annotation> title = contact.getAnnotation(TB_author_term);
+				if ((title==null) || (title.size()<1)) continue;
+			} else {
+				authorURI = authorURI.substring(delimiter+1);
+			}
 			//m/b smth is wrong with comments; why they come as separate annotations and  freetext types?
 			/*
 			System.out.println(uri.get(0).getText());
@@ -309,7 +316,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 			System.out.println(title.get(0).getText());
 			*/
 
-			User tbUser = new User( new URL(String.format("%s%s/%s",TB_URI,Resources.user, uri.get(0).getText())));
+			User tbUser = new User( new URL(String.format("%s%s/%s",TB_URI,Resources.user, authorURI)));
 			Resource  resource = userIO.objectToJena(getModel(),tbUser);
 			getModel().add(resource, RDF.type, TOXBANK.USER); //should be a ToxBank user
 			getModel().add(investigationResource,TOXBANK.HASAUTHOR,resource);			
