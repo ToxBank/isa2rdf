@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javanet.staxutils.IndentingXMLStreamWriter;
+
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 
@@ -74,7 +76,7 @@ public class DataMatrixConverter {
 		XMLStreamWriter writer = null;
 		try {
 			XMLOutputFactory factory      =  XMLOutputFactory.newInstance();
-			writer  = factory.createXMLStreamWriter(out,"UTF-8");
+			writer  = new IndentingXMLStreamWriter(factory.createXMLStreamWriter(out,"UTF-8"));
 			return writer;
 		} catch (Exception  x) {
 			throw x;
