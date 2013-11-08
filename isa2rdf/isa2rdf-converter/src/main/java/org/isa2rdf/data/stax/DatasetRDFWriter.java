@@ -97,7 +97,7 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 					
 					getOutput().writeStartElement(OT.NS,"feature"); //feature
 					
-					String featureURI = createFeatureURI(feature.getKey());
+					String featureURI = createFeatureURI(feature);
 					getOutput().writeAttribute(RDF.getURI(),"resource",featureURI);
 		
 					getOutput().writeEndElement(); //feature
@@ -193,7 +193,7 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			if ((f==null)  || !f.asBoolean()) continue;			
 			try {
 				getOutput().writeStartElement(OT.NS,"Feature"); //feature
-				getOutput().writeAttribute(RDF.getURI(),"about",createFeatureURI(feature.getKey()));
+				getOutput().writeAttribute(RDF.getURI(),"about",createFeatureURI(feature));
 				JsonNode isnumeric= feature.getValue().get("isNumeric");
 				if (isnumeric!=null && isnumeric.asBoolean()) {
 					//NominalFeature
@@ -275,7 +275,7 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 		protected String createGeneURI(DataMatrix matrix,String gene) {
 			return String.format("%s%s/%s", ISA.URI,gene,matrix.getGene().get(gene).asText());
 		}
-		protected String createFeatureURI(String key) {
-			return String.format("http://example.org/%s", key);
+		protected String createFeatureURI(Entry<String,JsonNode> feature) {
+			return String.format("%s/%s", feature.getValue().get("sameAs").asText(),feature.getKey());
 		}		
 }
