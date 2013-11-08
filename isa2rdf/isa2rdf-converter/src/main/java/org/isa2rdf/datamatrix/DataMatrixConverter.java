@@ -115,8 +115,8 @@ public class DataMatrixConverter {
 						String sampleName = null;
 						int quote = value.indexOf('\'');
 						if (quote>0) {
-							lookupValue = value.substring(0,quote);
-							sampleName = value.substring(quote+1,value.length()-1);
+							lookupValue = value.substring(0,quote).trim();
+							sampleName = value.substring(quote+1,value.length()-1).trim();
 						}					
 						ObjectNode column = matrix.getColumn(lookupValue);
 						header.add(column==null?null:lookupValue);
