@@ -197,7 +197,7 @@
     <dependency>
 	<groupId>org.codehaus.jackson</groupId>
 	<artifactId>jackson-core-lgpl</artifactId>
-	<version>1.9.12</version>
+	<version>${jackson.version}</version>
 	<scope>test</scope>
 </dependency>
 <dependency>

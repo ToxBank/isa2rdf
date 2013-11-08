@@ -27,6 +27,22 @@
       <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/toxbank-releases</url>
     </repository>
   </distributionManagement>
+  <repositories>
+   <repository>
+      <id>ambit-plovdiv-releases</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>ambit-plovdiv-snapshots</id>
+      <url>http://ambit.uni-plovdiv.bg:8083/nexus/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 <dependencies>
     <dependency>
 		<groupId>org.apache.jena</groupId>
@@ -36,9 +52,8 @@
     <dependency>
     	<groupId>ambit</groupId>
     	<artifactId>opentox-client</artifactId>
-    	<version>1.0.3-SNAPSHOT</version>
+    	<version>1.0.4-SNAPSHOT</version>
     	<type>jar</type>
-    	<scope>test</scope>
     </dependency>
     <dependency>
 	<groupId>org.codehaus.jackson</groupId>
@@ -49,9 +64,16 @@
 <dependency>
 	<groupId>org.codehaus.jackson</groupId>
 	<artifactId>jackson-mapper-asl</artifactId>
-	<version>1.9.12</version>
-	<scope>test</scope>
+	<version>${jackson.version}</version>
 </dependency>
+<!--
+    <dependency>
+      <groupId>ambit</groupId>
+      <artifactId>ambit2-base</artifactId>
+      <version>${ambit.version}</version>
+      <type>jar</type>
+    </dependency>
+-->
 </dependencies>  
 <description>ISA-TAB to RDF conversion</description>
   <organization>

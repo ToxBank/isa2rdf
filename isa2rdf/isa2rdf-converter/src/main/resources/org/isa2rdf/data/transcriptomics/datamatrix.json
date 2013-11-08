@@ -1,0 +1,132 @@
+{
+
+    "columns": {
+        "Affymetrix": {
+            "Description": "Affymetrix probeset_id",
+            "Identifier": true
+        },
+        "Illumina": {
+            "Description": "Illumina probeset_id",
+            "Identifier": true
+        },
+        "Agilent": {
+            "Description": "Agilent probeset_id",
+            "Identifier": true
+        },
+        "Seqname": {
+            "Annotation": true
+        },
+        "Symbol": {
+            "Description": "Gene symbol",
+            "Identifier": true
+        },
+        "Entrez": {
+            "Description": "Entrez gene id / NCBI_GeneID",
+            "Identifier": true
+        },
+        "Ensemble": {
+            "Description": "Ensemble id",
+            "Identifier": true
+        },
+        "KeggGenes": {
+            "Description": "KeggGenes",
+            "Identifier": true
+        },
+        "Uniprot": {
+            "Description": "Uniprot",
+            "Identifier": true
+        },
+        "Unigene": {
+            "Description": "Unigene id",
+            "Identifier": true
+        },
+        "SwissProt": {
+            "Description": "SwissProt id",
+            "Identifier": true
+        },
+        "RefSeq": {
+            "Description": "RefSeq Protein id",
+            "Identifier": true
+        },
+        "Name": {
+            "Description": "Gene name or title",
+            "Annotation": true
+        },
+        "Chromosomal location": {
+            "Annotation": true
+        },
+        "Unigene cluster type": {
+            "Annotation": true
+        },
+        "Strand": {
+            "Annotation": true
+        },
+        "Start": {
+            "Annotation": true
+        },
+        "Stop": {
+            "Annotation": true
+        },
+        "Total probes": {
+            "Annotation": true
+        },
+        "Log-average expression": {
+            "Description": "Average log intensity of signal value for a probe ID",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/Log_average_expression",
+            "samples" : {}
+        },
+        "FC": {
+            "Description": "Log2 fold change",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/FC",
+            "ontoURI": "http://www.bioassayontology.org/bao#BAO_0000193",
+            "samples" : {}
+        },
+        "t-score ": {
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/tscore",
+            "samples" : {}
+        },
+        "p-value": {
+            "Description": "p-value",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/pvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0000175",
+            "samples" : {}
+        },
+        "q-value": {
+            "Description": "q-value (adjusted)",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/qvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0001442",
+            "samples" : {}
+        },
+        "F-test": {
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/Ftest",
+            "ontoURI": "http://www.ebi.ac.uk/efo/swo/SWO_0000531",
+            "samples" : {}
+        },
+        "ANOVA p-value": {
+            "Description": "p-value",
+            "sameAs": "http://onto.toxbank.net/isa/ANOVA_pvalue",
+            "Processed data": true,
+            "samples" : {}
+        },
+        "ANOVA q-value": {
+            "Description": "q-value (adjusted)",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/ANOVA_pvalue",
+            "samples" : {}
+        }
+    },
+    "row": {
+        "gene": {
+        },
+        "values": {
+        }
+    },
+    "feature": {
+    }
+}
