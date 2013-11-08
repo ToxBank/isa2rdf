@@ -3,14 +3,17 @@
     "columns": {
         "Affymetrix": {
             "Description": "Affymetrix probeset_id",
+            "type" : "probe",
             "Identifier": true
         },
         "Illumina": {
             "Description": "Illumina probeset_id",
+            "type" : "probe",
             "Identifier": true
         },
         "Agilent": {
             "Description": "Agilent probeset_id",
+            "type" : "probe",
             "Identifier": true
         },
         "Seqname": {
@@ -18,34 +21,42 @@
         },
         "Symbol": {
             "Description": "Gene symbol",
+            "type" : "gene",
             "Identifier": true
         },
         "Entrez": {
             "Description": "Entrez gene id / NCBI_GeneID",
+            "type" : "gene",
             "Identifier": true
         },
         "Ensemble": {
             "Description": "Ensemble id",
+            "type" : "gene",
             "Identifier": true
         },
         "KeggGenes": {
             "Description": "KeggGenes",
+            "type" : "gene",
             "Identifier": true
         },
         "Uniprot": {
             "Description": "Uniprot",
+            "type" : "gene",
             "Identifier": true
         },
         "Unigene": {
             "Description": "Unigene id",
+            "type" : "gene",
             "Identifier": true
         },
         "SwissProt": {
             "Description": "SwissProt id",
+            "type" : "gene",
             "Identifier": true
         },
         "RefSeq": {
             "Description": "RefSeq Protein id",
+            "type" : "gene",
             "Identifier": true
         },
         "Name": {
@@ -124,8 +135,12 @@
         }
     },
     "row": {
+        "probe" : {
+        },
         "gene": {
         },
+        "annotation": {
+        },        
         "values": {
         }
     },

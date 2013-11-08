@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.node.ObjectNode;
 import org.isa2rdf.data.OT;
 import org.isa2rdf.data.OT.DataProperty;
 import org.isa2rdf.data.OT.OTClass;
@@ -21,6 +20,7 @@ import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implements IRowProcessor<DataMatrix>{
+	
 	protected static Logger logger = Logger.getLogger("DatasetRDFWriter");
 	/**
 	 * 
@@ -64,14 +64,25 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			getOutput().writeStartElement(OT.NS,"dataEntry"); //property
 			getOutput().writeStartElement(OT.NS,"DataEntry");  //object
 			
-			getOutput().writeStartElement(ISA.URI,"hasProbe"); //property
-			getOutput().writeStartElement(ISA.URI,"MicroarrayProbe"); //property
+			Iterator<String> probes = item.getProbe().getFieldNames();
+			while (probes.hasNext()) {
+				String uri = createProbeURI(item,probes.next());
+				getOutput().writeStartElement(ISA.URI,"hasProbe"); //property
+				getOutput().writeStartElement(ISA.URI,"MicroarrayProbe"); //property
+				getOutput().writeAttribute(RDF.getURI(),"about",uri);
+				getOutput().writeEndElement();
+				getOutput().writeEndElement();
+			}
 			
-			String uri = createCompoundURI(item);
-					
-			getOutput().writeAttribute(RDF.getURI(),"about",uri);
-			getOutput().writeEndElement();
-			getOutput().writeEndElement();
+			Iterator<String> genes = item.getGene().getFieldNames();
+			while (genes.hasNext()) {
+				String uri = createGeneURI(item,genes.next());
+				getOutput().writeStartElement(SKOS,"closeMatch"); //property
+				getOutput().writeStartElement(ISA.URI,"Gene"); //todo
+				getOutput().writeAttribute(RDF.getURI(),"about",uri);
+				getOutput().writeEndElement();
+				getOutput().writeEndElement();
+			}			
 
 			Iterator<Entry<String,JsonNode>> features = item.getFeatures().getFields();
 			while (features.hasNext()) {
@@ -256,8 +267,13 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			return String.format("http://example.org/%s", UUID.randomUUID().toString());
 		}
 		
-		protected String createCompoundURI(DataMatrix matrix) {
-			return String.format("http://example.org/%s", UUID.randomUUID().toString());
+		protected String createProbeURI(DataMatrix matrix,String probeType) {
+			return String.format("%s%s/%s", ISA.URI,probeType,matrix.getProbe().get(probeType).asText());
+		}
+		
+
+		protected String createGeneURI(DataMatrix matrix,String gene) {
+			return String.format("%s%s/%s", ISA.URI,gene,matrix.getGene().get(gene).asText());
 		}
 		protected String createFeatureURI(String key) {
 			return String.format("http://example.org/%s", key);

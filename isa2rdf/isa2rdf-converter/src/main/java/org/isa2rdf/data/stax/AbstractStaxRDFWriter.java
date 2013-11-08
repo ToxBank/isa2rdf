@@ -23,6 +23,8 @@ public abstract class AbstractStaxRDFWriter<INPUT>  {
 	protected final static String dcterms = "dcterms";
 	protected final static String owl = "owl";
 	protected final static String isa = "isa";
+	protected final static String skos = "skos";
+	public static final String SKOS ="http://www.w3.org/2004/02/skos/core#";
 	/*
 	protected QueryURIReporter<INPUT,RESULTSET, IQueryRetrieval<INPUT,RESULTSET>> uriReporter;
 	
@@ -88,6 +90,7 @@ xml:base="http://apps.ideaconsult.net:8080/ambit2/">
 			writer.setPrefix(dc, DC.getURI());
 			writer.setPrefix(dcterms, DCTerms.getURI());
 			writer.setPrefix(isa, ISA.URI);
+			writer.setPrefix(skos, SKOS);
 			
 		    writer.writeNamespace(ot, OT.NS);
 			writer.writeNamespace(rdf, RDF.getURI());
@@ -95,6 +98,7 @@ xml:base="http://apps.ideaconsult.net:8080/ambit2/">
 			writer.writeNamespace(dc, DC.getURI());
 			writer.writeNamespace(dcterms, DCTerms.getURI());
 			writer.writeNamespace(isa, ISA.URI);
+			writer.writeNamespace(skos, SKOS);
 		    writer.setDefaultNamespace(ot);
 		} catch (Exception x) {
 			

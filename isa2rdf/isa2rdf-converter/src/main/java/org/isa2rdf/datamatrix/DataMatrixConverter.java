@@ -44,12 +44,10 @@ public class DataMatrixConverter {
 			DataMatrix matrix = parse(file,new IRowProcessor<DataMatrix>() {
 				@Override
 				public void header(DataMatrix row) throws Exception {
-					//System.out.println(row);
 					rdfwriter.header(writer);
 				}
 				@Override
 				public DataMatrix process(DataMatrix row) throws Exception {
-				//	System.out.print(".");
 					rdfwriter.process(row);	
 					return row;
 				}
@@ -103,8 +101,11 @@ public class DataMatrixConverter {
 			
 			int row = 0;
 			while ((line = reader.readLine()) != null) {
+				ObjectNode probes =  matrix.getProbe();
 				ObjectNode genes =  matrix.getGene();
+				ObjectNode annotations =  matrix.getAnnotation();
 				ObjectNode values =  matrix.getValues();
+				
 				genes.removeAll(); values.removeAll();
 				
 				QuotedTokenizer st = new QuotedTokenizer(line,'\t');
@@ -135,8 +136,17 @@ public class DataMatrixConverter {
 									values.put(header.get(col),value);	
 								}
 							} else {
-								ObjectNode gene = (ObjectNode)genes;
-								gene.put(feature,value);
+								String columnType = column.get("type")==null?null:column.get("type").asText();
+								if ("probe".equals(columnType)) {
+									ObjectNode probe = (ObjectNode)probes;
+									probe.put(feature,value);
+								} else if ("gene".equals(columnType)) {
+									ObjectNode gene = (ObjectNode)genes;
+									gene.put(feature,value);
+								} else {
+									ObjectNode annotation = (ObjectNode)annotations;
+									annotation.put(feature,value);
+								}
 							}
 						}
 					}

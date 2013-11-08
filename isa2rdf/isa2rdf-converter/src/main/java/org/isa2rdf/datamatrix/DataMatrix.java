@@ -26,9 +26,15 @@ public class DataMatrix {
 	public ObjectNode getValues() {
 		return (ObjectNode)json.get("row").get("values");
 	}
+	public ObjectNode getProbe() {
+		return (ObjectNode)json.get("row").get("probe");
+	}	
 	public ObjectNode getGene() {
 		return (ObjectNode)json.get("row").get("gene");
 	}	
+	public ObjectNode getAnnotation() {
+		return (ObjectNode)json.get("row").get("annotation");
+	}		
 	public ObjectNode getFeatures() {
 		return (ObjectNode)json.get("feature");
 	}	
