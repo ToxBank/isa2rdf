@@ -28,14 +28,14 @@ public class DataMatrixConverter {
 		for (String arg: args) {
 			DataMatrixConverter q = new DataMatrixConverter();
 			try {
-				q.writeRDF(arg);
+				q.writeRDF(arg,3);
 			} catch (Exception x) {
 				x.printStackTrace();
 			}
 		}	
 	}
 	
-	public void writeRDF(String file) throws Exception {
+	public void writeRDF(String file,final int maxrows) throws Exception {
 		final DatasetRDFWriter rdfwriter = new DatasetRDFWriter();
 		final XMLStreamWriter writer = initWriter(System.out);
 		rdfwriter.setOutput(writer);
@@ -44,6 +44,7 @@ public class DataMatrixConverter {
 			DataMatrix matrix = parse(file,new IRowProcessor<DataMatrix>() {
 				@Override
 				public void header(DataMatrix row) throws Exception {
+					//System.out.println(row);
 					rdfwriter.header(writer);
 				}
 				@Override
@@ -56,7 +57,7 @@ public class DataMatrixConverter {
 				public void footer(DataMatrix row) throws Exception {
 					rdfwriter.footer(writer);	
 				}
-			});
+			},maxrows);
 			//System.out.println();
 			//System.out.println(matrix);
 					
@@ -84,7 +85,7 @@ public class DataMatrixConverter {
 		}
 	}
 	
-	public DataMatrix parse(String arg, IRowProcessor<DataMatrix> processor ) throws Exception {
+	public DataMatrix parse(String arg, IRowProcessor<DataMatrix> processor , int maxrows) throws Exception {
 		BufferedReader reader = null ;
 		try {
 			String line;
@@ -145,6 +146,7 @@ public class DataMatrixConverter {
 					if (row==0) processor.header(matrix);
 					else processor.process(matrix);
 				row++;
+				if (row>maxrows) break;
 			}
 			if (processor!=null) processor.footer(matrix);
 			return matrix;

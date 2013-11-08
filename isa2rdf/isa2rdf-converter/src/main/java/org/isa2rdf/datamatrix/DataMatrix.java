@@ -65,6 +65,8 @@ public class DataMatrix {
 					source.put("URI", sampleName);
 					source.put("type", "AssayName");
 					feature.put("source",source);
+					JsonNode export = column.get("export");
+					feature.put("export",export==null?Boolean.FALSE:export.getBooleanValue());					
 					features.put(URI,feature);
 					return URI; 
 				}

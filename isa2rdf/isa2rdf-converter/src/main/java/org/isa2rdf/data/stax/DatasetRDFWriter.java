@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.isa2rdf.data.OT;
 import org.isa2rdf.data.OT.DataProperty;
 import org.isa2rdf.data.OT.OTClass;
@@ -74,7 +75,8 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			Iterator<Entry<String,JsonNode>> features = item.getFeatures().getFields();
 			while (features.hasNext()) {
 				Entry<String,JsonNode> feature = features.next();
-
+				JsonNode f = (feature.getValue()).get("export");
+				if ((f==null)  || !f.asBoolean()) continue;
 				JsonNode value = item.getValues().get(feature.getKey());
 				if (value == null) continue;
 				try {
@@ -175,11 +177,13 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 		Iterator<Entry<String,JsonNode>> features = matrix.getFeatures().getFields();
 		while (features.hasNext()) {
 			Entry<String,JsonNode> feature = features.next();
+			JsonNode f = (feature.getValue()).get("export");
+			if ((f==null)  || !f.asBoolean()) continue;			
 			try {
 				getOutput().writeStartElement(OT.NS,"Feature"); //feature
 				getOutput().writeAttribute(RDF.getURI(),"about",createFeatureURI(feature.getKey()));
-
-				if (feature.getValue().get("isNumeric").asBoolean()) {
+				JsonNode isnumeric= feature.getValue().get("isNumeric");
+				if (isnumeric!=null && isnumeric.asBoolean()) {
 					//NominalFeature
 					getOutput().writeStartElement(RDF.getURI(),"type"); //feature
 					getOutput().writeAttribute(RDF.getURI(),"resource","http://www.opentox.org/api/1.1#NumericFeature");
