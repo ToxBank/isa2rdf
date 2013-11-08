@@ -81,26 +81,28 @@
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/FC",
             "ontoURI": "http://www.bioassayontology.org/bao#BAO_0000193",
-            "samples" : {}
+            "samples" : {},
+            "export": true
         },
         "t-score ": {
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/tscore",
             "samples" : {}
         },
-        "p-value": {
+        "p": {
             "Description": "p-value",
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/pvalue",
             "ontoURI": "http://purl.obolibrary.org/obo/OBI_0000175",
             "samples" : {}
         },
-        "q-value": {
+        "q": {
             "Description": "q-value (adjusted)",
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/qvalue",
             "ontoURI": "http://purl.obolibrary.org/obo/OBI_0001442",
-            "samples" : {}
+            "samples" : {},
+            "export": true
         },
         "F-test": {
             "Processed data": true,
