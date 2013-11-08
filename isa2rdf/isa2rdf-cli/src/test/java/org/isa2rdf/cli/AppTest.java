@@ -93,26 +93,44 @@ public class AppTest  {
 	}
 	
 	@org.junit.Test
-	public void testRDF_LCMSMS() throws Exception {
-		Model model = testRDF("toxbank//LCMSMS_archive");
-		testKeywords(model, 8);
+	public void testRDF_LCMSMS3d() throws Exception {
+		Model model = testRDF(new File("D://src-toxbank//isa-tab-files//NOTOXLCMSMS-VPA-2D3D_archive"));
+		//Model model = testRDF("toxbank//LCMSMS_archive");
+		testKeywords(model, 4);
 		testTitleAndAbstract(model);
-		testToxBankResources(model,2);
+		testToxBankResources(model,1);
 		//testRetrieveAllToxbankProtocols(model);
 		//testRetrieveAllProtocols(model,10);
 		//testRetrieveAllStudiesAndProtocols(model);
 		//testToxbankHasProtocol(model,11);
-		//testToxbankHasAuthor(model,1);
-		testToxbankHasProject(model,2);
+		testToxbankHasAuthor(model,1);
+		testToxbankHasProject(model,1);
 		
 		model.close();
 	}
 	
 	@org.junit.Test
+	public void testRDF_LCMSMS() throws Exception {
+		Model model = testRDF(new File("D://src-toxbank//isa-tab-files//NOTOXLCMSMS_archive"));
+		//Model model = testRDF("toxbank//LCMSMS_archive");
+		testKeywords(model, 8);
+		testTitleAndAbstract(model);
+		testToxBankResources(model,1);
+		//testRetrieveAllToxbankProtocols(model);
+		//testRetrieveAllProtocols(model,10);
+		//testRetrieveAllStudiesAndProtocols(model);
+		//testToxbankHasProtocol(model,11);
+		//testToxbankHasAuthor(model,1);
+		testToxbankHasProject(model,1);
+		JsonNode root = testGraph(model, 14,"toxbank//LCMSMS");
+		model.close();
+	}
+	
+	@org.junit.Test
 	public void testRDF_qHTS() throws Exception {
-		//Model model = testRDF(new File("D:/src-isatab//qHTS"));
+		Model model = testRDF(new File("D://src-toxbank//isa-tab-files//qHTS"));
 		String dir = "toxbank//qHTS";
-		Model model = testRDF(dir);
+		//Model model = testRDF(dir);
 		testKeywords(model, 14);
 		testTitleAndAbstract(model);
 		testToxBankResources(model,1);
@@ -125,6 +143,24 @@ public class AppTest  {
 		//testToxbankHasAuthor(model,1);
 		testToxbankHasProject(model,1);
 		
+		model.close();
+
+
+	}
+	
+	
+	@org.junit.Test
+	public void testRDF_NTAP() throws Exception {
+		Model model = testRDF(new File("D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx"));
+		testKeywords(model, 4);
+		//testTitleAndAbstract(model);
+		testToxBankResources(model);
+		testRetrieveAllToxbankProtocols(model);
+		testRetrieveAllProtocols(model,10);
+		testRetrieveAllStudiesAndProtocols(model,2);
+		testToxbankHasProtocol(model,11);
+		testToxbankHasAuthor(model,1);
+		JsonNode root = testGraph(model, 14,"toxbank//NOTOX-APAP-Tx");
 		model.close();
 	}
 	
