@@ -14,6 +14,7 @@ import org.isa2rdf.data.OT.OTClass;
 import org.isa2rdf.data.OT.OTProperty;
 import org.isa2rdf.datamatrix.DataMatrix;
 import org.isa2rdf.datamatrix.IRowProcessor;
+import org.isa2rdf.model.ISA;
 
 import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.OWL;
@@ -63,8 +64,8 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			getOutput().writeStartElement(OT.NS,"dataEntry"); //property
 			getOutput().writeStartElement(OT.NS,"DataEntry");  //object
 			
-			getOutput().writeStartElement(OT.NS,"compound"); //property
-			getOutput().writeStartElement(OT.NS,"Compound"); //property
+			getOutput().writeStartElement(ISA.URI,"hasProbe"); //property
+			getOutput().writeStartElement(ISA.URI,"MicroarrayProbe"); //property
 			
 			String uri = createCompoundURI(item);
 					

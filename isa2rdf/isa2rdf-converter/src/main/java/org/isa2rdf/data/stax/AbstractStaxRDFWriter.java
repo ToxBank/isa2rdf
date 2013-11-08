@@ -4,6 +4,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.isa2rdf.data.OT;
 import org.isa2rdf.data.OT.OTClass;
+import org.isa2rdf.model.ISA;
 
 import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.DCTerms;
@@ -21,6 +22,7 @@ public abstract class AbstractStaxRDFWriter<INPUT>  {
 	protected final static String dc = "dc";
 	protected final static String dcterms = "dcterms";
 	protected final static String owl = "owl";
+	protected final static String isa = "isa";
 	/*
 	protected QueryURIReporter<INPUT,RESULTSET, IQueryRetrieval<INPUT,RESULTSET>> uriReporter;
 	
@@ -85,12 +87,14 @@ xml:base="http://apps.ideaconsult.net:8080/ambit2/">
 			writer.setPrefix(owl, OWL.getURI());
 			writer.setPrefix(dc, DC.getURI());
 			writer.setPrefix(dcterms, DCTerms.getURI());
+			writer.setPrefix(isa, ISA.URI);
 			
 		    writer.writeNamespace(ot, OT.NS);
 			writer.writeNamespace(rdf, RDF.getURI());
 			writer.writeNamespace(owl, OWL.getURI());
 			writer.writeNamespace(dc, DC.getURI());
-			writer.writeNamespace(dcterms, DCTerms.getURI());		
+			writer.writeNamespace(dcterms, DCTerms.getURI());
+			writer.writeNamespace(isa, ISA.URI);
 		    writer.setDefaultNamespace(ot);
 		} catch (Exception x) {
 			
