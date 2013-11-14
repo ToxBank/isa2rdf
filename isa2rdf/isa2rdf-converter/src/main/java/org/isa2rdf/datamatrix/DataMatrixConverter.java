@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -28,20 +29,22 @@ public class DataMatrixConverter {
 		for (String arg: args) {
 			DataMatrixConverter q = new DataMatrixConverter();
 			try {
-				q.writeRDF(arg,3);
+				File file = new File(arg);
+				String experimentname= file.getName().replace(".csv", "");				
+				q.writeRDF(new FileReader(file),experimentname,5,System.out);
 			} catch (Exception x) {
 				x.printStackTrace();
 			}
 		}	
 	}
 	
-	public void writeRDF(String file,final int maxrows) throws Exception {
+	public void writeRDF(Reader reader,String experimentname, final int maxrows, OutputStream out) throws Exception {
 		final DatasetRDFWriter rdfwriter = new DatasetRDFWriter();
-		final XMLStreamWriter writer = initWriter(System.out);
+		final XMLStreamWriter writer = initWriter(out);
 		rdfwriter.setOutput(writer);
 		try {
 			
-			DataMatrix matrix = parse(file,new IRowProcessor<DataMatrix>() {
+			DataMatrix matrix = parse(reader,experimentname, new IRowProcessor<DataMatrix>() {
 				@Override
 				public void header(DataMatrix row) throws Exception {
 					rdfwriter.header(writer);
@@ -83,13 +86,12 @@ public class DataMatrixConverter {
 		}
 	}
 	
-	public DataMatrix parse(String arg, IRowProcessor<DataMatrix> processor , int maxrows) throws Exception {
-		BufferedReader reader = null ;
+	public DataMatrix parse(Reader reader, String experimentname, IRowProcessor<DataMatrix> processor , int maxrows) throws Exception {
+		BufferedReader breader = null ;
 		try {
 			String line;
-			File file = new File(arg);
-			String experimentname= file.getName().replace(".csv", "");
-			reader = new BufferedReader(new FileReader(file));
+
+			breader = new BufferedReader(reader);
 			
 			//read config
 			InputStream in = getClass().getClassLoader().getResourceAsStream("org/isa2rdf/data/transcriptomics/datamatrix.json");
@@ -100,7 +102,7 @@ public class DataMatrixConverter {
 			ArrayList<String> samples = new ArrayList<String>();
 			
 			int row = 0;
-			while ((line = reader.readLine()) != null) {
+			while ((line = breader.readLine()) != null) {
 				ObjectNode probes =  matrix.getProbe();
 				ObjectNode genes =  matrix.getGene();
 				ObjectNode annotations =  matrix.getAnnotation();
@@ -163,7 +165,7 @@ public class DataMatrixConverter {
 		} catch (Exception x) {
 			throw x;
 		} finally {
-			try {reader.close();} catch (Exception x) {}
+			try {breader.close();} catch (Exception x) {}
 		}
 	}
 	
