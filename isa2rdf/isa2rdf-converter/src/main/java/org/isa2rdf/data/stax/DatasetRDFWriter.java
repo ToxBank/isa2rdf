@@ -77,6 +77,7 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			Iterator<String> genes = item.getGene().getFieldNames();
 			while (genes.hasNext()) {
 				String uri = createGeneURI(item,genes.next());
+				if (uri==null) continue;
 				getOutput().writeStartElement(SKOS,"closeMatch"); //property
 				getOutput().writeStartElement(ISA.URI,"Gene"); //todo
 				getOutput().writeAttribute(RDF.getURI(),"about",uri);
@@ -273,7 +274,14 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 		
 
 		protected String createGeneURI(DataMatrix matrix,String gene) {
-			return String.format("%s%s/%s", ISA.URI,gene,matrix.getGene().get(gene).asText());
+			String geneID = matrix.getGene().get(gene).asText();
+			if ((geneID==null) || "".equals(geneID) || "---".equals(geneID)) return null;
+			
+			JsonNode URIroot = matrix.getColumn(gene).get("URIroot");
+			if (URIroot!=null) {
+				return String.format("%s%s", URIroot.asText(),geneID);
+			} else
+				return String.format("%s%s/%s", ISA.URI,gene,geneID);
 		}
 		protected String createFeatureURI(Entry<String,JsonNode> feature) {
 			return String.format("%s/%s", feature.getValue().get("sameAs").asText(),feature.getKey());
