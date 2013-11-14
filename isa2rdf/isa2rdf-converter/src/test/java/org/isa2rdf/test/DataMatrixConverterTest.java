@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.nio.charset.Charset;
+import java.util.Hashtable;
 
 import org.isa2rdf.datamatrix.DataMatrixConverter;
 import org.junit.Test;
@@ -15,7 +15,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 public class DataMatrixConverterTest {
 	@Test
 	public void test() throws Exception {
-		DataMatrixConverter conv = new DataMatrixConverter();
+		Hashtable<String, String> lookup = new Hashtable<String, String>();
+		lookup.put("20-5 vs 5-5", "http://example.org/X1");
+		lookup.put("5-15 vs 5-5", "http://example.org/X2");
+		lookup.put("20-0 vs 0-0", "http://example.org/X3");
+		DataMatrixConverter conv = new DataMatrixConverter(lookup);
 		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx/NOTOX_PILOT_APAP_DerivedTxDataMatrix.txt";
 		File rdf = File.createTempFile("isa",".rdf");
 		rdf.deleteOnExit();
@@ -27,7 +31,7 @@ public class DataMatrixConverterTest {
 			fr = new FileReader(file);
 			out = new FileOutputStream(rdf);
 			conv.writeRDF(fr,"test", 5, out);
-			//test 
+
 
 		} catch (Exception x) {
 			throw x;
@@ -41,6 +45,8 @@ public class DataMatrixConverterTest {
 			in = new FileInputStream(rdf);
 			model = ModelFactory.createDefaultModel();
   			model.read(in, "http://example.org", "RDF/XML");
+  			model.write(System.out,"N3");
+  			DataMatrixConverter.getDataMatrix(model);
 		} catch (Exception x) {
 			throw x;
 		} finally {

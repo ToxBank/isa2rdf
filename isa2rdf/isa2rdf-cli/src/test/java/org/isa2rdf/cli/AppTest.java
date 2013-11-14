@@ -1,18 +1,24 @@
 package org.isa2rdf.cli;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
+import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.isa2rdf.cli.IsaClient._option;
+import org.isa2rdf.datamatrix.DataMatrixConverter;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.tablib.mapping.properties.PropertyMappingHelper;
@@ -113,6 +119,8 @@ public class AppTest  {
 	public void testRDF_LCMSMS() throws Exception {
 		Model model = testRDF(new File("D://src-toxbank//isa-tab-files//NOTOXLCMSMS_archive"));
 		//Model model = testRDF("toxbank//LCMSMS_archive");
+		
+		
 		testKeywords(model, 8);
 		testTitleAndAbstract(model);
 		testToxBankResources(model,1);
@@ -123,6 +131,27 @@ public class AppTest  {
 		//testToxbankHasAuthor(model,1);
 		testToxbankHasProject(model,1);
 		JsonNode root = testGraph(model, 14,"toxbank//LCMSMS");
+		model.close();
+	}
+	
+	@org.junit.Test
+	public void testRDF_NOTOX() throws Exception {
+		String file = "D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx";
+		Model model = testRDF(new File(file));
+		
+		
+		//Model model = testRDF("toxbank//LCMSMS_archive");
+		testKeywords(model, 4);
+		//testTitleAndAbstract(model);
+		//testToxBankResources(model,1);
+		//testRetrieveAllToxbankProtocols(model);
+		//testRetrieveAllProtocols(model,10);
+		//testRetrieveAllStudiesAndProtocols(model);
+		//testToxbankHasProtocol(model,11);
+		//testToxbankHasAuthor(model,1);
+		//testToxbankHasProject(model,1);
+		//JsonNode root = testGraph(model, 14,"toxbank//NOTOX-APAP-Tx");
+		//model.write(System.out,"N3");
 		model.close();
 	}
 	
@@ -814,11 +843,39 @@ public class AppTest  {
 		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
 		Model model = cli.process(filesDir.getAbsolutePath());
 
+		Hashtable<String,Hashtable<String,String>> lookup = cli.getDataEntries(model, "http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data");
+		
+		Enumeration<String> keys = lookup.keys();
+		while (keys.hasMoreElements()) {
+			String fileName = keys.nextElement();
+			DataMatrixConverter matrix = new DataMatrixConverter(lookup.get(fileName));
+			FileReader reader = null;
+			FileOutputStream out = null;
+			try {
+				File file = new File(filesDir.getAbsoluteFile(),fileName);
+				File outFile = new File(FilenameUtils.removeExtension(file.getAbsolutePath())+".rdf");
+				out = new FileOutputStream(outFile);
+				if (file.exists()) {
+					reader = new FileReader(file);
+					matrix.writeRDF(reader, fileName , 0, out);
+				}	else throw new FileNotFoundException(file.getAbsolutePath());
+			} catch (Exception x) {
+				x.printStackTrace();
+			} finally {
+				try {if (reader!=null)reader.close();} catch (Exception x) {}
+				try {if (out!=null) out.close();} catch (Exception x) {}
+			}
+		}
+
+		System.out.println(lookup);
+		
+		/*
 		System.err.println("triples " + model.size());
 		File out = new File(filesDir,"isatab.n3");
 		FileOutputStream output = new FileOutputStream(out);
 		IsaClient.writeStream(model, output, "text/n3", false);
 		output.close();
+		*/
 
 		/*
 		Model test = ModelFactory.createOntologyModel();
@@ -826,12 +883,12 @@ public class AppTest  {
 		test.read(reader,null);
 		reader.close();
 		*/
-		
+		/*
 		out = new File(filesDir,"isatab.rdf");
 		output = new FileOutputStream(out);
 		IsaClient.writeStream(model, output, "application/rdf+xml", false);
 		output.close();
-	
+		*/
 		print(model);
 		return model;
 

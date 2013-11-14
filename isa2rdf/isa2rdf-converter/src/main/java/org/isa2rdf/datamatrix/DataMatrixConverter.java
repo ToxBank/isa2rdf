@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.UUID;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
@@ -18,11 +19,28 @@ import net.idea.opentox.cli.csv.QuotedTokenizer;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.isa2rdf.data.OT;
 import org.isa2rdf.data.stax.DatasetRDFWriter;
+import org.isa2rdf.model.ISA;
+
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 
 public class DataMatrixConverter {
-
+	protected Hashtable<String,String> lookup;
+	public DataMatrixConverter(Hashtable<String,String> lookup) {
+		this.lookup = lookup;
+	}
+	public DataMatrixConverter() {
+		this(null);
+	}
 	public static void main(String[] args) {
 		if (args.length<1) return;
 		
@@ -39,7 +57,7 @@ public class DataMatrixConverter {
 	}
 	
 	public void writeRDF(Reader reader,String experimentname, final int maxrows, OutputStream out) throws Exception {
-		final DatasetRDFWriter rdfwriter = new DatasetRDFWriter();
+		final DatasetRDFWriter rdfwriter = new DatasetRDFWriter(lookup);
 		final XMLStreamWriter writer = initWriter(out);
 		rdfwriter.setOutput(writer);
 		try {
@@ -96,6 +114,7 @@ public class DataMatrixConverter {
 			//read config
 			InputStream in = getClass().getClassLoader().getResourceAsStream("org/isa2rdf/data/transcriptomics/datamatrix.json");
 			DataMatrix matrix = new DataMatrix(in);
+
 			
 			//read config completed
 			ArrayList<String> header = new ArrayList<String>();
@@ -172,5 +191,39 @@ public class DataMatrixConverter {
 	protected boolean isProcessedData(JsonNode column) {
 		JsonNode node = column.get("Processed data");
 		return node==null?false:node.asBoolean();
+	}
+	
+	public static Hashtable<String,Hashtable<String,String>> getDataMatrix(Model model) {
+		String sparqlQuery = String.format(
+				"PREFIX ot:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?node ?feature ?title ?value where {\n" +
+				"	?node rdf:type isa:Data." +
+				"	?feature ot:hasSource ?node." +
+				"	?feature dcterms:title ?title." +
+				"	?fv ot:feature ?feature." +
+				"	?fv ot:value ?value." +
+				"} ORDER by ?node ?sample \n",
+				OT.NS,
+				ISA.URI);
+
+		Hashtable<String,Hashtable<String,String>> lookup = new Hashtable<String, Hashtable<String,String>>();
+		
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode node = qs.get("node");
+			RDFNode feature = qs.get("feature");
+			RDFNode title = qs.get("title");
+			RDFNode value = qs.get("value");
+			System.out.println(node + "\t" + feature + "\t" + title + "\t" + value.asLiteral().getDouble());
+		}	
+		return lookup;
 	}
 }
