@@ -158,7 +158,7 @@ public class DataMatrixConverter {
 					if (row==0) processor.header(matrix);
 					else processor.process(matrix);
 				row++;
-				if (row>maxrows) break;
+				if ((maxrows>0) && (row>maxrows)) break;
 			}
 			if (processor!=null) processor.footer(matrix);
 			return matrix;
