@@ -1,0 +1,95 @@
+{
+
+    "columns": {
+        "database_identifier": {
+        	"datatype" : ["metabolomics"],
+            "Identifier": true
+        },
+        "chemical_formula": {
+        	"datatype" : ["metabolomics"],
+            "Identifier": true
+        },
+        "Smiles": {
+        	"datatype" : ["metabolomics"],
+            "Identifier": true
+        },   
+        "Inchi": {
+        	"datatype" : ["metabolomics"],
+            "Identifier": true
+        },                           
+        "metabolite_identification": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },
+        "chemical_shift": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },
+        "multiplicity": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },
+        "Taxid": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },    
+        "species": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        }, 
+        "database": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },          
+        "database_version": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },    
+        "reliability": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },     
+        "Uri": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },     
+        "search_engine": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },     
+        "search_engine_score": {
+        	"datatype" : ["metabolomics"],
+            "Annotation": true
+        },     
+        "smallmolecule_abundance_sub": {
+        	"datatype" : ["metabolomics"],
+            "Processed data": true,
+            "samples" : {},
+            "export": true
+        },
+        "smallmolecule_abundance_stdev_sub": {
+        	"datatype" : ["metabolomics"],
+            "Processed data": true,
+            "samples" : {},
+            "export": true
+        },
+        "smallmolecule_abundance_std_error_sub": {
+        	"datatype" : ["metabolomics"],
+            "Processed data": true,
+            "samples" : {},
+            "export": true
+        }            
+    },
+    "row": {
+        "probe" : {
+        },
+        "gene": {
+        },
+        "annotation": {
+        },        
+        "values": {
+        }
+    },
+    "feature": {
+    }
+}
