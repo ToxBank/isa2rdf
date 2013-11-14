@@ -7,7 +7,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Hashtable;
 import java.util.Set;
+
+import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -28,7 +31,14 @@ import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Identifiable;
 
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 
 public class IsaClient {
@@ -401,4 +411,50 @@ class uk.ac.ebi.bioinvindex.model.Contact
     		}
     	}
     }
+    
+	/**
+	 * 
+	 * @param model
+	 * @param datatype  e.g. <http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data>
+	 * @return
+	 */
+	public Hashtable<String,Hashtable<String,String>> getDataEntries(Model model,String datatype) {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?node ?file ?accession where {\n" +
+				"	?node isa:hasOntologyTerm  <%s>." +
+				"   ?node rdfs:seeAlso ?file."+
+				"   ?node isa:hasAccessionID ?accession."+
+				"} ORDER by ?input \n",
+				TOXBANK.URI,
+				ISA.URI,datatype);
+
+		Hashtable<String,Hashtable<String,String>> lookup = new Hashtable<String, Hashtable<String,String>>();
+		
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode node = qs.get("node");
+			RDFNode accession = qs.get("accession");
+			RDFNode file = qs.get("file");
+			System.out.println(node + "\t" + file + "\t" + accession);
+			
+			Hashtable<String,String> map = lookup.get(file.asLiteral().getString());
+			if (map==null) {
+				map = new Hashtable<String, String>();
+				lookup.put(file.asLiteral().getString(),map);
+			}
+			map.put(accession.asLiteral().getString(), node.asResource().getURI());
+		}	
+		return lookup;
+	}
+
+
 }
