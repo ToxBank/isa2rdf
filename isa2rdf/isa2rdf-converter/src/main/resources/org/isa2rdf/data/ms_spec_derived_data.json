@@ -1,0 +1,129 @@
+{
+
+    "columns": {
+        "Symbol": {
+        	"datatype" : ["proteomics"],
+            "Description": "Gene symbol",
+            "type" : "gene",
+            "Identifier": true
+        },
+        "Name": {
+            "Description": "Name of the protein",
+            "datatype" : ["proteomics"],
+            "Identifier": true
+        },        
+        "Entrez": {
+        	"datatype" : ["epigenetics","proteomics"],
+            "Description": "Entrez gene id / NCBI_GeneID",
+            "type" : "gene",
+            "Identifier": true
+        },
+        "Ensemble": {
+            "Description": "Ensemble id",
+            "datatype" : ["epigenetics","proteomics"],
+            "type" : "gene",
+            "Identifier": true,
+            "query" : "http://www.ensembl.org/Multi/Search/Results?q="
+        },
+        "KeggGenes": {
+            "Description": "KeggGenes",
+            "datatype" : ["epigenetics","proteomics"],
+            "type" : "gene",
+            "Identifier": true
+        },
+        "Uniprot": {
+            "Description": "UniProt",
+            "datatype" : ["epigenetics","proteomics"],
+            "type" : "gene",
+            "Identifier": true,
+            "URIroot" : "http://purl.uniprot.org/uniprot/",
+            "query" : "http://purl.uniprot.org/uniprot/"
+        },
+        "Unigene": {
+            "Description": "Unigene id",
+            "datatype" : ["epigenetics","proteomics"],
+            "type" : "gene",
+            "Identifier": true
+        },
+        "SwissProt": {
+            "Description": "SwissProt id",
+            "datatype" : ["proteomics"],
+            "type" : "gene",
+            "Identifier": true
+        },
+        "RefSeq": {
+            "Description": "RefSeq Protein id",
+            "datatype" : ["proteomics"],
+            "type" : "gene",
+            "Identifier": true
+        },
+        "NCBI": {
+            "Description": "NCBI protein acc. no.",
+            "datatype" : ["proteomics"],
+            "type" : "gene",
+            "Identifier": true
+        },
+        "MW": {
+        	"Description" : "Molecular weight",
+            "Annotation": true
+        },
+
+        "FC": {
+        	"datatype" : ["proteomics"],
+            "Description": "Log2 fold change",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/FC",
+            "ontoURI": "http://www.bioassayontology.org/bao#BAO_0000193",
+            "samples" : {},
+            "export": true
+        },
+        "p": {
+            "Description": "p-value",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/pvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0000175",
+            "samples" : {},
+            "datatype" : ["proteomics"],
+            "export": true            
+        },
+        "q": {
+            "Description": "q-value (adjusted)",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/qvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0001442",
+            "samples" : {},
+            "datatype" : ["proteomics"],		
+            "export": true
+        },
+        "p-value": {
+            "Description": "p-value",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/pvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0000175",
+            "samples" : {},
+            "datatype" : ["proteomics"],
+            "export": true            
+        },
+        "q-value": {
+            "Description": "q-value (adjusted)",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/qvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0001442",
+            "samples" : {},
+            "datatype" : ["proteomics"],		
+            "export": true
+        }        
+    },
+    "row": {
+        "probe" : {
+        },
+        "gene": {
+        },
+        "annotation": {
+        },        
+        "values": {
+        }
+    },
+    "feature": {
+    }
+}
