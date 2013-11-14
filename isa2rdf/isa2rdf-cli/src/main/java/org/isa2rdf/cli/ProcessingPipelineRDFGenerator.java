@@ -96,7 +96,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	        		getModel().add(xref,DCTerms.description,xs.getDescription());
 	        	if (xs.getVersion() != null)
 	        		getModel().add(xref,DCTerms.hasVersion,xs.getVersion());
-	        	if (xs.getUrl()!=null)
+	        	if ((xs.getUrl()!=null) && !"".equals(xs.getUrl()))
 	        		getModel().add(xref,RDFS.seeAlso,xs.getUrl());
 	        	references.put(xs.getName(),xs);
 	      }		

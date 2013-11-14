@@ -266,7 +266,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			Data data = (Data) node;
 			resource.addProperty(ISA.hasAccessionID, data.getName());
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
-			if (data.getDataMatrixUrl()!=null) resource.addProperty(RDFS.seeAlso, data.getUrl());
+			if (data.getDataMatrixUrl()!=null && !"".equals(data.getDataMatrixUrl())) 
+				resource.addProperty(RDFS.seeAlso, data.getDataMatrixUrl());
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
 			}
@@ -395,7 +396,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			}
 			if (assaygroup.getPlatform()!=null)
 				resource.addProperty(ISA.USESPLATFORM,assaygroup.getPlatform());
-			resource.addProperty(RDFS.seeAlso,assaygroup.getFilePath());
+			if (assaygroup.getFilePath()!=null && !"".equals(assaygroup.getFilePath()))
+				?sresource.addProperty(RDFS.seeAlso,assaygroup.getFilePath());
 			Resource endpoint = getResource(assaygroup.getMeasurement(),ISA.OntologyTerm);
 			resource.addProperty(ISA.HASENDPOINT,endpoint);
 			for (Assay assay : assaygroup.getAssays()) {
@@ -431,7 +433,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				for (Protocol protocol : study.getProtocols()) {
 					
 					Resource protocolResource = getResourceID(protocol,ISA.Protocol);
-					if (protocol.getUri()!=null)
+					if ((protocol.getUri()!=null) && !"".equals(protocol.getUri()))
 						getModel().add(protocolResource,RDFS.seeAlso,protocol.getUri());
 					if (protocol.getDescription()!=null)
 						getModel().add(protocolResource,DCTerms.description,protocol.getDescription());
