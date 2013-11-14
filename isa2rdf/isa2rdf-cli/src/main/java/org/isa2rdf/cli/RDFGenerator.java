@@ -270,7 +270,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			 * Data
 			 */
 			Data data = (Data) node;
-			resource.addProperty(ISA.hasAccessionID, data.getName());
+			if (data.getName()!=null && !"".equals(data.getName()))
+				resource.addProperty(ISA.hasAccessionID, data.getName());
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
 				getModel().add(resource,ISA.HASONTOLOGYTERM,oe);
@@ -294,7 +295,8 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			 */
 			Material data = (Material) node;
 			//resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
-			resource.addProperty(ISA.hasAccessionID, data.getName());
+			if (data.getName()!=null && !"".equals(data.getName()))
+				resource.addProperty(ISA.hasAccessionID, data.getName());
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
