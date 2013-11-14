@@ -4,44 +4,53 @@
         "Affymetrix": {
             "Description": "Affymetrix probeset_id",
             "type" : "probe",
-            "Identifier": true
+            "Identifier": true,
+            "datatype" : ["epigenetics","transcriptomics"]
         },
         "Illumina": {
             "Description": "Illumina probeset_id",
+            "datatype" : ["epigenetics","transcriptomics"],
             "type" : "probe",
             "Identifier": true
-        },
+        },            
         "Agilent": {
             "Description": "Agilent probeset_id",
+            "datatype" : ["epigenetics","transcriptomics"],
             "type" : "probe",
             "Identifier": true
         },
         "Seqname": {
+        	"datatype" : ["epigenetics","transcriptomics"],
             "Annotation": true
         },
         "Symbol": {
+        	"datatype" : ["epigenetics","transcriptomics"],
             "Description": "Gene symbol",
             "type" : "gene",
             "Identifier": true
         },
         "Entrez": {
+        	"datatype" : ["epigenetics","transcriptomics"],
             "Description": "Entrez gene id / NCBI_GeneID",
             "type" : "gene",
             "Identifier": true
         },
         "Ensemble": {
             "Description": "Ensemble id",
+            "datatype" : ["epigenetics","transcriptomics"],
             "type" : "gene",
             "Identifier": true,
             "query" : "http://www.ensembl.org/Multi/Search/Results?q="
         },
         "KeggGenes": {
             "Description": "KeggGenes",
+            "datatype" : ["epigenetics","transcriptomics"],
             "type" : "gene",
             "Identifier": true
         },
         "Uniprot": {
             "Description": "UniProt",
+            "datatype" : ["epigenetics","transcriptomics"],
             "type" : "gene",
             "Identifier": true,
             "URIroot" : "http://purl.uniprot.org/uniprot/",
@@ -49,48 +58,60 @@
         },
         "Unigene": {
             "Description": "Unigene id",
+            "datatype" : ["epigenetics","transcriptomics"],
             "type" : "gene",
             "Identifier": true
         },
         "SwissProt": {
             "Description": "SwissProt id",
+            "datatype" : ["transcriptomics"],
             "type" : "gene",
             "Identifier": true
         },
         "RefSeq": {
             "Description": "RefSeq Protein id",
+            "datatype" : ["transcriptomics"],
             "type" : "gene",
             "Identifier": true
         },
         "Name": {
             "Description": "Gene name or title",
+            "datatype" : ["transcriptomics"],
             "Annotation": true
         },
         "Chromosomal location": {
+        	"datatype" : ["transcriptomics"],
             "Annotation": true
         },
         "Unigene cluster type": {
+        	"datatype" : ["transcriptomics"],
             "Annotation": true
         },
         "Strand": {
+        	"datatype" : ["transcriptomics"],
             "Annotation": true
         },
         "Start": {
+        	"datatype" : ["transcriptomics"],
             "Annotation": true
         },
         "Stop": {
+        	"datatype" : ["transcriptomics"],
             "Annotation": true
         },
         "Total probes": {
+        	"datatype" : ["transcriptomics"],
             "Annotation": true
         },
         "Log-average expression": {
+        	"datatype" : ["transcriptomics"],
             "Description": "Average log intensity of signal value for a probe ID",
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/Log_average_expression",
             "samples" : {}
         },
         "FC": {
+        	"datatype" : ["transcriptomics"],
             "Description": "Log2 fold change",
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/FC",
@@ -99,6 +120,7 @@
             "export": true
         },
         "t-score ": {
+        	"datatype" : ["transcriptomics"],
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/tscore",
             "samples" : {}
@@ -108,7 +130,9 @@
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/pvalue",
             "ontoURI": "http://purl.obolibrary.org/obo/OBI_0000175",
-            "samples" : {}
+            "samples" : {},
+            "datatype" : ["epigenetics","transcriptomics"],
+            "export": true            
         },
         "q": {
             "Description": "q-value (adjusted)",
@@ -116,26 +140,173 @@
             "sameAs": "http://onto.toxbank.net/isa/qvalue",
             "ontoURI": "http://purl.obolibrary.org/obo/OBI_0001442",
             "samples" : {},
+            "datatype" : ["epigenetics","transcriptomics"],		
             "export": true
         },
+        "p-value": {
+            "Description": "p-value",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/pvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0000175",
+            "samples" : {},
+            "datatype" : ["epigenetics","transcriptomics"],
+            "export": true            
+        },
+        "q-value": {
+            "Description": "q-value (adjusted)",
+            "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/qvalue",
+            "ontoURI": "http://purl.obolibrary.org/obo/OBI_0001442",
+            "samples" : {},
+            "datatype" : ["epigenetics","transcriptomics"],		
+            "export": true
+        },          
         "F-test": {
+        	"datatype" : ["transcriptomics"],
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/Ftest",
             "ontoURI": "http://www.ebi.ac.uk/efo/swo/SWO_0000531",
             "samples" : {}
         },
         "ANOVA p-value": {
+        	"datatype" : ["transcriptomics"],
             "Description": "p-value",
             "sameAs": "http://onto.toxbank.net/isa/ANOVA_pvalue",
             "Processed data": true,
             "samples" : {}
         },
         "ANOVA q-value": {
+        	"datatype" : ["transcriptomics"],
             "Description": "q-value (adjusted)",
             "Processed data": true,
             "sameAs": "http://onto.toxbank.net/isa/ANOVA_pvalue",
             "samples" : {}
-        }
+        },
+		"TargetID": {
+			"datatype" : ["epigenetics"],
+            "Description": "TargetID (e.g. cg00000029)",
+            "type" : "probe",
+            "Identifier": true,
+            "export": true            
+        },        
+		"ProbeID_A": {
+			"datatype" : ["epigenetics"],
+            "Description": "ProbeID_A (e.g. 14782418)",
+            "Identifier": true
+        },
+		"ProbeID_B": {
+			"datatype" : ["epigenetics"],		
+            "Description": "ProbeID_B (e.g. 14782418, some probes come in pairs for separate methylated and un-methylated probes others do not )",
+            "type" : "probe",
+            "Identifier": true
+        },
+		"ILMNID": {
+			"datatype" : ["epigenetics"],		
+            "Description": "ILMNID (e.g. cg00000029)",
+            "type" : "probe",
+            "Identifier": true
+        },
+		"ADDRESSA": {
+			"datatype" : ["epigenetics"],		
+            "Description": "ADDRESSA_ID (e.g. 14782418)",
+            "type" : "probe",
+            "Identifier": true
+        },           
+        "position start": {
+        	"datatype" : ["epigenetics"],
+            "Annotation": true,
+            "Identifier": true
+        },
+        "position start": {
+        	"datatype" : ["epigenetics"],
+            "Annotation": true,
+            "Identifier": true
+        },                
+        "CHR": {
+        	"datatype" : ["epigenetics"],
+        	"Description" : "CHR (e.g. 16)",
+            "Annotation": true
+        },  
+		"MAPINFO": {
+			"datatype" : ["epigenetics"],		
+            "Description": "MAPINFO (e.g. 53468112)",
+            "Annotation": true
+        },
+		"COORDINATE_36": {
+			"datatype" : ["epigenetics"],		
+            "Description": "COORDINATE_36 (e.g. 52025613, genomic start co-ordinate in a specific genome annotation version)",
+            "Annotation": true
+        },
+		"STRAND": {
+			"datatype" : ["epigenetics"],		
+            "Description": "STRAND (e.g. F)",
+            "Annotation": true
+        },  
+		"METHYL27_LOCI": {
+			"datatype" : ["epigenetics"],		
+            "Description": "METHYL27_LOCI (e.g. FALSE, TRUE for probes that also on earlier generation array)",
+            "Annotation": true
+        },  
+		"UCSC_REFGENE_NAME": {
+			"datatype" : ["epigenetics"],		
+            "Description": "UCSC_REFGENE_NAME (RBL2, closest gene to probe, based on a certain genome version)",
+            "Annotation": true
+        },                                                                                            
+		"UCSC_REFGENE_ACCESSION": {
+			"datatype" : ["epigenetics"],		
+            "Description": "UCSC_REFGENE_ACCESSION (NM_005611)",
+            "Annotation": true
+        },
+		"UCSC_REFGENE_GROUP": {
+			"datatype" : ["epigenetics"],		
+            "Description": "UCSC_REFGENE_GROUP (TSS1500, could be more than one = gene is within 1500 bp of its closes gene’s transcription start site)",
+            "Annotation": true
+        },      
+		"UCSC_CPG_ISLANDS_NAME ": {
+			"datatype" : ["epigenetics"],		
+            "Description": "UCSC_CPG_ISLANDS_NAME (chr16:53468284-53469209, which CpG rich island the probe is part of)",
+            "Annotation": true
+        },   
+		"RELATION_TO_UCSC_CPG_ISLAND": {
+			"datatype" : ["epigenetics"],		
+            "Description": "RELATION_TO_UCSC_CPG_ISLAND (N_Shore, = North Shore, which part of the island the probe is in)",
+            "Annotation": true
+        },   
+		"ENHANCER": {
+			"datatype" : ["epigenetics"],		
+            "Description": "ENHANCER (e.g. FALSE, is probe associated with an enhancer element)",
+            "Annotation": true
+        },      
+		"REGULATORY_FEATURE_NAME": {
+			"datatype" : ["epigenetics"],		
+            "Description": "REGULATORY_FEATURE_NAME(e.g. 16:53467838-53469685, identifier for a regulatory feature)",
+            "Annotation": true
+        },                                             
+		"REGULATORY_FEATURE_GROUP": {
+			"datatype" : ["epigenetics"],		
+            "Description": "REGULATORY_FEATURE_GROUP (e.g. Promoter)",
+            "Annotation": true
+        },
+		"beta-values": {
+			"datatype" : ["epigenetics"],		
+            "Description": "beta-values (non-normalized)",
+            "Annotation": true
+        },
+		"Normalized_beta-values": {
+			"datatype" : ["epigenetics"],		
+            "Description": "normalized beta-values (quantile normalization such as SWAN from minfi package preferred)",
+            "Annotation": true
+        },                        
+		"Normalized_M-values": {
+			"datatype" : ["epigenetics"],		
+            "Description": "normalized M-values (transformed normalized beta-values, can be useful",
+            "Annotation": true
+        },    
+		"beta-value_differences": {
+			"datatype" : ["epigenetics"],		
+            "Description": "beta-value differences (analogous to log2 fold change values)",
+            "Annotation": true
+        }                                   
     },
     "row": {
         "probe" : {
