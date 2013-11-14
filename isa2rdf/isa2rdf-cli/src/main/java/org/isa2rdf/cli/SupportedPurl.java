@@ -1,5 +1,7 @@
 package org.isa2rdf.cli;
 
+import org.isa2rdf.model.ISA;
+
 
 public enum SupportedPurl {
 	GO,
@@ -30,6 +32,25 @@ public enum SupportedPurl {
 		public String getPURL() {
 			return "http://purl.bioontology.org/ontology/QIBO";
 		}
+	},
+	OBI {
+		@Override
+		public String getPURL() {
+			return "http://purl.org/obo/owl/OBI#";
+		}
+		public String getEntry( String source_acc, String acc) {
+			return String.format("%s%s",getPURL(),acc.replace("obo:",""));
+		}
+	},	
+	
+	bii {
+		@Override
+		public String getPURL() {
+			return ISA.URI;
+		}
+		public String getEntry( String source_acc, String acc) {
+			return String.format("%sbii/%s/%s",getPURL(),source_acc,acc.replace("bii:",""));
+		}		
 	}
 	;
 	public String getPURL() {

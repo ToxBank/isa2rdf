@@ -14,7 +14,6 @@ import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Accessible;
 import uk.ac.ebi.bioinvindex.model.AssayResult;
-import uk.ac.ebi.bioinvindex.model.BioEntity;
 import uk.ac.ebi.bioinvindex.model.Contact;
 import uk.ac.ebi.bioinvindex.model.Data;
 import uk.ac.ebi.bioinvindex.model.Identifiable;
@@ -138,9 +137,16 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			String purl = "http://purl.obolibrary.org/obo";
 			String uri = null;
 			try {
-				SupportedPurl sp = SupportedPurl.valueOf(term.getSource().getAcc());
+				String lookup = term.getSource().getAcc();
+				String s_acc = term.getSource().getAcc();;
+				int x = lookup.indexOf(":");
+				if (x >0) { 
+					s_acc = lookup.substring(x+1);
+					lookup = lookup.substring(0,x);  
+				}
+				SupportedPurl sp = SupportedPurl.valueOf(lookup);//just for the lookup
 				purl = sp.getPURL();
-				return sp.getEntry(term.getSource().getAcc(), term.getAcc()); 
+				return sp.getEntry(s_acc, term.getAcc()); 
 			} catch (Exception x) {	
 				uri = mintOntologyURI(purl,term, null);
 			}
@@ -265,6 +271,10 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			 */
 			Data data = (Data) node;
 			resource.addProperty(ISA.hasAccessionID, data.getName());
+			if (data.getType()!=null) { //ontlogy entry
+				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
+				getModel().add(resource,ISA.HASONTOLOGYTERM,oe);
+			}			
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getDataMatrixUrl()!=null && !"".equals(data.getDataMatrixUrl())) 
 				resource.addProperty(RDFS.seeAlso, data.getDataMatrixUrl());
@@ -288,6 +298,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
+				getModel().add(resource,ISA.HASONTOLOGYTERM,oe);
 			}
 			if (data.getFactorValues()!=null)
 				for (FactorValue fv : data.getFactorValues()) {
@@ -397,7 +408,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			if (assaygroup.getPlatform()!=null)
 				resource.addProperty(ISA.USESPLATFORM,assaygroup.getPlatform());
 			if (assaygroup.getFilePath()!=null && !"".equals(assaygroup.getFilePath()))
-				?sresource.addProperty(RDFS.seeAlso,assaygroup.getFilePath());
+				resource.addProperty(RDFS.seeAlso,assaygroup.getFilePath());
 			Resource endpoint = getResource(assaygroup.getMeasurement(),ISA.OntologyTerm);
 			resource.addProperty(ISA.HASENDPOINT,endpoint);
 			for (Assay assay : assaygroup.getAssays()) {
