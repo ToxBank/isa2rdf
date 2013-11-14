@@ -32,7 +32,8 @@
         "Ensemble": {
             "Description": "Ensemble id",
             "type" : "gene",
-            "Identifier": true
+            "Identifier": true,
+            "query" : "http://www.ensembl.org/Multi/Search/Results?q="
         },
         "KeggGenes": {
             "Description": "KeggGenes",
@@ -40,9 +41,11 @@
             "Identifier": true
         },
         "Uniprot": {
-            "Description": "Uniprot",
+            "Description": "UniProt",
             "type" : "gene",
-            "Identifier": true
+            "Identifier": true,
+            "URIroot" : "http://purl.uniprot.org/uniprot/",
+            "query" : "http://purl.uniprot.org/uniprot/"
         },
         "Unigene": {
             "Description": "Unigene id",
