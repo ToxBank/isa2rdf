@@ -136,7 +136,9 @@ public class AppTest  {
 	
 	@org.junit.Test
 	public void testRDF_NOTOX() throws Exception {
-		String file = "D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx";
+		//String file = "D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx";
+		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx";
+		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex 12-nov-2013/NOTOX-APAP-Ex";
 		Model model = testRDF(new File(file));
 		
 		
@@ -843,12 +845,13 @@ public class AppTest  {
 		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
 		Model model = cli.process(filesDir.getAbsolutePath());
 
-		Hashtable<String,Hashtable<String,String>> lookup = cli.getDataEntries(model, "http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data");
+		final String datatype = "http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data";
+		Hashtable<String,Hashtable<String,String>> lookup = cli.getDataEntries(model, datatype);
 		
 		Enumeration<String> keys = lookup.keys();
 		while (keys.hasMoreElements()) {
 			String fileName = keys.nextElement();
-			DataMatrixConverter matrix = new DataMatrixConverter(lookup.get(fileName));
+			DataMatrixConverter matrix = new DataMatrixConverter(datatype,lookup.get(fileName));
 			FileReader reader = null;
 			FileOutputStream out = null;
 			try {
@@ -869,13 +872,12 @@ public class AppTest  {
 
 		System.out.println(lookup);
 		
-		/*
+
 		System.err.println("triples " + model.size());
 		File out = new File(filesDir,"isatab.n3");
 		FileOutputStream output = new FileOutputStream(out);
 		IsaClient.writeStream(model, output, "text/n3", false);
 		output.close();
-		*/
 
 		/*
 		Model test = ModelFactory.createOntologyModel();
@@ -883,12 +885,11 @@ public class AppTest  {
 		test.read(reader,null);
 		reader.close();
 		*/
-		/*
+
 		out = new File(filesDir,"isatab.rdf");
 		output = new FileOutputStream(out);
 		IsaClient.writeStream(model, output, "application/rdf+xml", false);
 		output.close();
-		*/
 		print(model);
 		return model;
 

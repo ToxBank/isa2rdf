@@ -34,12 +34,19 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 
 public class DataMatrixConverter {
+	private static final String prefix = "http://onto.toxbank.net/isa/bii/data_types/";
 	protected Hashtable<String,String> lookup;
-	public DataMatrixConverter(Hashtable<String,String> lookup) {
+	protected String datatype;
+	public DataMatrixConverter(String datatype,Hashtable<String,String> lookup) {
 		this.lookup = lookup;
+		if (datatype!=null) {
+			int p = datatype.indexOf(prefix);
+			if (p>=0) datatype = datatype.substring(prefix.length());
+			this.datatype = datatype;
+		}
 	}
 	public DataMatrixConverter() {
-		this(null);
+		this("microarray_derived_data",null);
 	}
 	public static void main(String[] args) {
 		if (args.length<1) return;
@@ -112,7 +119,8 @@ public class DataMatrixConverter {
 			breader = new BufferedReader(reader);
 			
 			//read config
-			InputStream in = getClass().getClassLoader().getResourceAsStream("org/isa2rdf/data/transcriptomics/datamatrix.json");
+			InputStream in = getClass().getClassLoader().getResourceAsStream(String.format("org/isa2rdf/data/%s.json",datatype));
+			if (in==null) throw new Exception("Unsupported data type "+ datatype); 
 			DataMatrix matrix = new DataMatrix(in);
 
 			
