@@ -19,7 +19,6 @@ public abstract class AbstractStaxRDFWriter<INPUT>  {
 	protected XMLStreamWriter output = null;
 	protected final static String ot = "ot";
 	protected final static String rdf = "rdf";
-	protected final static String dc = "dc";
 	protected final static String dcterms = "dcterms";
 	protected final static String owl = "owl";
 	protected final static String isa = "isa";
@@ -87,7 +86,6 @@ xml:base="http://apps.ideaconsult.net:8080/ambit2/">
 			writer.writeStartElement(RDF.getURI(),"RDF");
 			writer.setPrefix(ot, OT.NS);
 			writer.setPrefix(owl, OWL.getURI());
-			writer.setPrefix(dc, DC.getURI());
 			writer.setPrefix(dcterms, DCTerms.getURI());
 			writer.setPrefix(isa, ISA.URI);
 			writer.setPrefix(skos, SKOS);
@@ -95,7 +93,6 @@ xml:base="http://apps.ideaconsult.net:8080/ambit2/">
 		    writer.writeNamespace(ot, OT.NS);
 			writer.writeNamespace(rdf, RDF.getURI());
 			writer.writeNamespace(owl, OWL.getURI());
-			writer.writeNamespace(dc, DC.getURI());
 			writer.writeNamespace(dcterms, DCTerms.getURI());
 			writer.writeNamespace(isa, ISA.URI);
 			writer.writeNamespace(skos, SKOS);
