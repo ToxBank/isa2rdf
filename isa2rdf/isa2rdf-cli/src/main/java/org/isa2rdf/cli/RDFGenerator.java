@@ -13,6 +13,7 @@ import org.isatools.isatab.mapping.AssayGroup;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Accessible;
+import uk.ac.ebi.bioinvindex.model.Annotation;
 import uk.ac.ebi.bioinvindex.model.AssayResult;
 import uk.ac.ebi.bioinvindex.model.Contact;
 import uk.ac.ebi.bioinvindex.model.Data;
@@ -280,7 +281,9 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			/**
 			 * Data
 			 */
+			
 			Data data = (Data) node;
+
 			if (data.getName()!=null && !"".equals(data.getName()))
 				resource.addProperty(ISA.hasAccessionID, data.getName());
 			if (data.getType()!=null) { //ontlogy entry
@@ -290,6 +293,10 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
 			if (data.getDataMatrixUrl()!=null && !"".equals(data.getDataMatrixUrl())) 
 				resource.addProperty(RDFS.seeAlso, data.getDataMatrixUrl());
+			
+			if (data.getUrl()!=null && !"".equals(data.getUrl())) 
+				resource.addProperty(RDFS.seeAlso, data.getUrl());
+			
 			if (data.getType()!=null) { //ontlogy entry
 				Resource oe = getResourceID(data.getType(), ISA.OntologyTerm);
 			}
@@ -298,7 +305,11 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 					Resource xfv = getResource(fv, ISA.FactorValue);
 					getModel().add(resource,ISA.HASFACTORVALUE,xfv);
 				}
+			for (Annotation a : data.getAnnotations()) {
+				if ("proteinsFile".equals(a.getType().getValue()))
+						resource.addProperty(RDFS.seeAlso, a.getText());
 
+			}
 			
 		} if (node instanceof Material) {
 			/**
@@ -306,6 +317,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			 */
 			Material data = (Material) node;
 			//resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
+
 			if (data.getName()!=null && !"".equals(data.getName()))
 				resource.addProperty(ISA.hasAccessionID, data.getName());
 			//if (data.getName()!=null) resource.addProperty(DCTerms.title, data.getName());
