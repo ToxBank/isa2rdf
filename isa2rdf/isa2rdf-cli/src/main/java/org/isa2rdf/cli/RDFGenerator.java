@@ -208,6 +208,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 		if ((node instanceof Accessible) && ((Accessible) node).getAcc()!=null) {
 			//resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
 		}
+
 		if (node instanceof Protocol) {
 			resource.addProperty(ISA.hasAccessionID, ((Accessible) node).getAcc());
 		} else if (node instanceof Property) { //factor/char/params are descendant
@@ -243,6 +244,16 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				Resource xt = getResource(pv.getType(),r);
 				getModel().add(resource,p,xt);
 			}
+			
+			if (pv.getUnit()!=null) {
+				if (pv.getUnit().getSingleOntologyTerm()!= null) {
+					Resource uo = getResource(pv.getUnit().getSingleOntologyTerm(), ISA.OntologyTerm);
+					resource.addProperty(ISA.HASUNIT,uo);
+				} else {
+					resource.addLiteral(ISA.HASUNITVALUE,pv.getUnit().getValue());
+				}
+			}
+
 			
 		} else if (node instanceof OntologyTerm) {
 			OntologyTerm term = (OntologyTerm) node;
@@ -350,7 +361,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 						a.append(assay.getAcc());
 						a.append("|");
 					}
-					/*
+/*
 					System.out.println(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
 							ar.getStudy().getAcc(),a,
 							(ar.getData()==null?"":ar.getData().getName()),

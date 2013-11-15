@@ -151,6 +151,8 @@ public class ISA {
     public static final Property HASPARAMETER = property("hasParameter");
     //Contacts can be Investigation or Study owners
     public static final Property HASOWNER = property("hasOwner");
+    public static final Property HASUNITVALUE = property("hasUnitValue");
+    public static final Property HASUNIT = property("hasUnit");
 
     public static final Property HASENDPOINT = property("hasEndpoint");
     public static final Property USESTECHNOLOGY = property("usesTechnology");
