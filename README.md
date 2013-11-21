@@ -23,7 +23,7 @@ ISA-TAB to RDF conversion
 ##Download 
 
 ### [isa2rdf-0.0.9-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.9-SNAPSHOT~~)
-D:\src-toxbank\isa-tab-files>java -jar isa2rdf-0.0.9-SNAPSHOT.jar
+>java -jar isa2rdf-0.0.9-SNAPSHOT.jar
 
    * Converts microarray, mass spec and protein assignment data files to RDF/XML
    * The data file conversion is triggered by specifying the output directory for converted data files (option -a ) 
