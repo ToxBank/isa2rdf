@@ -27,7 +27,7 @@ ISA-TAB to RDF conversion
 
    * Converts microarray, mass spec and protein assignment data files to RDF/XML
    * The data file conversion is triggered by specifying the output directory for converted data files (option -a ) 
-   * The data RDF is an extension of OpenTox Dataset RDF, defined by [OpenTox ontology](http://opentox.org/api/1.2/opentox.owl).
+   * The [data RDF](https://github.com/ToxBank/isa2rdf/tree/master/isa2rdf/isa2rdf-converter) is an extension of OpenTox Dataset RDF, defined by [OpenTox ontology](http://opentox.org/api/1.2/opentox.owl).
     
 ````   
 ISA-TAB to RDF conversion
