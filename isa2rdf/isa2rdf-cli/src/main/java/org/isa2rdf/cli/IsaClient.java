@@ -1,12 +1,16 @@
 package org.isa2rdf.cli;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -19,8 +23,10 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.isa2rdf.datamatrix.DataMatrixConverter;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.ISATABValidator;
 import org.isatools.isatab.gui_invokers.GUIInvokerResult;
@@ -44,19 +50,60 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class IsaClient {
 	protected String dir;
 	protected String outfile;
+	protected String outDatafilesDir;
+
 	protected String toxbankuri;
 	
 	public void  processAndSave() throws Exception {
 		Model model = process(dir);
 		Writer writer = null;
-		if (outfile==null) writer = new OutputStreamWriter(System.out);
-		else {
-			File out = new File(outfile);
-			writer = new FileWriter(out);
+		try {
+			if (outfile==null) writer = new OutputStreamWriter(System.out);
+			else {
+				File out = new File(outfile);
+				writer = new FileWriter(out);
+			}
+			IsaClient.write(model, writer, (outfile==null)||outfile.endsWith(".n3")?"text/n3":
+							 (outfile.endsWith(".nt")?"text/n-triples":"application/rdf+xml"), true);
+			
+			writer.close(); writer = null;
+		
+			if (outDatafilesDir!=null) {
+				final String[] supported_datatype = {
+							"http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data",
+							"http://onto.toxbank.net/isa/bii/data_types/ms_spec_derived_data.json"
+						};
+				for (String datatype: supported_datatype) {
+					Hashtable<String,Hashtable<String,String>> lookup = getDataEntries(model, datatype);
+					
+					Enumeration<String> keys = lookup.keys();
+					while (keys.hasMoreElements()) {
+						String fileName = keys.nextElement();
+						DataMatrixConverter matrix = new DataMatrixConverter(datatype,lookup.get(fileName));
+						FileReader reader = null;
+						FileOutputStream out = null;
+						try {
+							File file = new File(outDatafilesDir,fileName);
+							File outFile = new File(FilenameUtils.removeExtension(file.getAbsolutePath())+".rdf");
+							out = new FileOutputStream(outFile);
+							if (file.exists()) {
+								reader = new FileReader(file);
+								matrix.writeRDF(reader, fileName , 3, out);
+							}	else throw new FileNotFoundException(file.getAbsolutePath());
+						} catch (Exception x) {
+							x.printStackTrace();
+						} finally {
+							try {if (reader!=null)reader.close();} catch (Exception x) {}
+							try {if (out!=null) out.close();} catch (Exception x) {}
+						}
+					}
+			}
+			}
+		} catch (Exception x) {
+			throw x;
+		} finally {
+			if (writer!=null) try { writer.close(); } catch (Exception x) {}
 		}
-		IsaClient.write(model, writer, (outfile==null)||outfile.endsWith(".n3")?"text/n3":
-						 (outfile.endsWith(".nt")?"text/n-triples":"application/rdf+xml"), true);
-		writer.close();
 		
 	}
 	public Model process() throws Exception {
@@ -231,6 +278,38 @@ class uk.ac.ebi.bioinvindex.model.Contact
 			}
 			
 		},	
+		outdatafilesdir {
+
+			@Override
+			public String getArgName() {
+				return "dir";
+			}
+
+			@Override
+			public String getDescription() {
+				return "Directory to write the data files converted to RDF";
+			}
+
+			@Override
+			public String getShortName() {
+				return "a";
+			}
+			@Override
+			public String getDefaultValue() {
+				return null;
+			}
+			public Option createOption() {
+		    	Option option   = OptionBuilder.withLongOpt(name())
+		    	.withArgName(getArgName())
+		        .withDescription(getDescription())
+		        .hasArg()
+		        .create(getShortName());
+
+		    	return option;
+			}
+			
+			
+		},		
 		toxbankuri {
 
 			@Override

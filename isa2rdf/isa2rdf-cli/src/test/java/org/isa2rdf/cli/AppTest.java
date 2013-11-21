@@ -77,7 +77,7 @@ public class AppTest  {
 		testToxBankResources(model);
 		testRetrieveAllToxbankProtocols(model);
 		testRetrieveAllProtocols(model,1);
-		testRetrieveAllStudiesAndProtocols(model,2);
+		testRetrieveAllStudiesAndProtocols(model,1);
 		testToxbankHasProtocol(model,1);
 		testToxbankHasAuthor(model,1);
 
@@ -137,8 +137,9 @@ public class AppTest  {
 	@org.junit.Test
 	public void testRDF_NOTOX() throws Exception {
 		//String file = "D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx";
-		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx";
+		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx";
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex 12-nov-2013/NOTOX-APAP-Ex";
+		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Px 12-nov-2013/NOTOX-APAP-Px";
 		Model model = testRDF(new File(file));
 		
 		
@@ -843,35 +844,8 @@ public class AppTest  {
 
 		IsaClient cli = new IsaClient();
 		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
+		cli.setOption(_option.outdatafilesdir, filesDir.getAbsolutePath());
 		Model model = cli.process(filesDir.getAbsolutePath());
-
-		final String datatype = "http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data";
-		Hashtable<String,Hashtable<String,String>> lookup = cli.getDataEntries(model, datatype);
-		
-		Enumeration<String> keys = lookup.keys();
-		while (keys.hasMoreElements()) {
-			String fileName = keys.nextElement();
-			DataMatrixConverter matrix = new DataMatrixConverter(datatype,lookup.get(fileName));
-			FileReader reader = null;
-			FileOutputStream out = null;
-			try {
-				File file = new File(filesDir.getAbsoluteFile(),fileName);
-				File outFile = new File(FilenameUtils.removeExtension(file.getAbsolutePath())+".rdf");
-				out = new FileOutputStream(outFile);
-				if (file.exists()) {
-					reader = new FileReader(file);
-					matrix.writeRDF(reader, fileName , 0, out);
-				}	else throw new FileNotFoundException(file.getAbsolutePath());
-			} catch (Exception x) {
-				x.printStackTrace();
-			} finally {
-				try {if (reader!=null)reader.close();} catch (Exception x) {}
-				try {if (out!=null) out.close();} catch (Exception x) {}
-			}
-		}
-
-		System.out.println(lookup);
-		
 
 		System.err.println("triples " + model.size());
 		File out = new File(filesDir,"isatab.n3");
