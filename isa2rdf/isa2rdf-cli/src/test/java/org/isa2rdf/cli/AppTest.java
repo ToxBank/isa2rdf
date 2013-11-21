@@ -845,7 +845,8 @@ public class AppTest  {
 		IsaClient cli = new IsaClient();
 		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
 		cli.setOption(_option.outdatafilesdir, filesDir.getAbsolutePath());
-		Model model = cli.process(filesDir.getAbsolutePath());
+		cli.setOption(_option.dir, filesDir.getAbsolutePath());
+		Model model = cli.processAndSave();
 
 		System.err.println("triples " + model.size());
 		File out = new File(filesDir,"isatab.n3");

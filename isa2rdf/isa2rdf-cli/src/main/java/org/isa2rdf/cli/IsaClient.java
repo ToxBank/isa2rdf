@@ -26,6 +26,7 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.log4j.Logger;
 import org.isa2rdf.datamatrix.DataMatrixConverter;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.ISATABValidator;
@@ -48,13 +49,14 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 
 public class IsaClient {
+	private Logger logger = Logger.getLogger(IsaClient.class);
 	protected String dir;
 	protected String outfile;
 	protected String outDatafilesDir;
 
 	protected String toxbankuri;
 	
-	public void  processAndSave() throws Exception {
+	public Model  processAndSave() throws Exception {
 		Model model = process(dir);
 		Writer writer = null;
 		try {
@@ -67,14 +69,17 @@ public class IsaClient {
 							 (outfile.endsWith(".nt")?"text/n-triples":"application/rdf+xml"), true);
 			
 			writer.close(); writer = null;
-		
+			
+			
 			if (outDatafilesDir!=null) {
+				logger.info("Converted data files will be written to "+outDatafilesDir);
 				final String[] supported_datatype = {
 							"http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data",
-							"http://onto.toxbank.net/isa/bii/data_types/ms_spec_derived_data.json"
+							"http://onto.toxbank.net/isa/bii/data_types/ms_spec_derived_data"
 						};
 				for (String datatype: supported_datatype) {
 					Hashtable<String,Hashtable<String,String>> lookup = getDataEntries(model, datatype);
+					logger.info(String.format("%s data files of type ",(lookup!=null && lookup.size()>0)?"Found ":"Not found ",datatype));
 					
 					Enumeration<String> keys = lookup.keys();
 					while (keys.hasMoreElements()) {
@@ -83,22 +88,26 @@ public class IsaClient {
 						FileReader reader = null;
 						FileOutputStream out = null;
 						try {
-							File file = new File(outDatafilesDir,fileName);
-							File outFile = new File(FilenameUtils.removeExtension(file.getAbsolutePath())+".rdf");
+							File file = new File(dir,fileName);
+							File outFile = new File(outDatafilesDir,FilenameUtils.removeExtension(file.getName())+".rdf");
 							out = new FileOutputStream(outFile);
 							if (file.exists()) {
 								reader = new FileReader(file);
 								matrix.writeRDF(reader, fileName , 3, out);
 							}	else throw new FileNotFoundException(file.getAbsolutePath());
+							logger.info("Converted data files written to "+outfile);
 						} catch (Exception x) {
-							x.printStackTrace();
+							logger.error(x);
 						} finally {
 							try {if (reader!=null)reader.close();} catch (Exception x) {}
 							try {if (out!=null) out.close();} catch (Exception x) {}
 						}
 					}
+					
 			}
-			}
+			} else 
+				logger.info("-a or --outdatafilesdir not specified, skipping data files processing ");
+			return model;
 		} catch (Exception x) {
 			throw x;
 		} finally {
@@ -404,6 +413,10 @@ class uk.ac.ebi.bioinvindex.model.Contact
 			this.outfile = argument;
 			break;			
 		}
+		case outdatafilesdir: {
+			this.outDatafilesDir = argument;
+			break;
+		}
 		case toxbankuri: {
 			this.toxbankuri = argument;
 			break;
@@ -523,7 +536,7 @@ class uk.ac.ebi.bioinvindex.model.Contact
 			RDFNode node = qs.get("node");
 			RDFNode accession = qs.get("accession");
 			RDFNode file = qs.get("file");
-			System.out.println(node + "\t" + file + "\t" + accession);
+			logger.info(node + "\t" + file + "\t" + accession);
 			
 			Hashtable<String,String> map = lookup.get(file.asLiteral().getString());
 			if (map==null) {
