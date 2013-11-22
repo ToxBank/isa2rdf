@@ -34,7 +34,7 @@ ISA-TAB to RDF conversion
 ISA-TAB to RDF conversion
 usage: org.isa2rdf.cli.IsaClient
  -a,--outdatafilesdir <dir>                             Directory to write
-                                                        the data files converted to RDF
+                                                        the data files converted to RDF/XML
  -d,--dir <dir>                                         Directory with  ISA-TAB files
  -h,--help                                              ISA2RDF client
  -o,--output <output file>                              Output file
