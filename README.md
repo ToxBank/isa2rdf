@@ -22,11 +22,12 @@ ISA-TAB to RDF conversion
 
 ##Download 
 
-### [isa2rdf-0.0.9-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.9-SNAPSHOT~~)
->java -jar isa2rdf-0.0.9-SNAPSHOT.jar
+### [isa2rdf-1.0.0-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~1.0.0-SNAPSHOT~~)
+>java -jar isa2rdf-1.0.0-SNAPSHOT.jar
 
    * Converts microarray, mass spec and protein assignment data files to RDF/XML
    * The data file conversion is triggered by specifying the output directory for converted data files (option -a ) 
+   * The investigation URI to be assigned (option -i)
    * The [data RDF](https://github.com/ToxBank/isa2rdf/tree/master/isa2rdf/isa2rdf-converter) is an extension of OpenTox Dataset RDF, defined by [OpenTox ontology](http://opentox.org/api/1.2/opentox.owl).
     
 ````   
@@ -39,6 +40,8 @@ usage: org.isa2rdf.cli.IsaClient
  -o,--output <output file>                              Output file
                                                         .n3|.rdf|.nt
  -t,--toxbankuri <ToxBank protocol service root URI >   ToxBank protocol service root URI 
+ -i,--investigationuri <URI>                            URI to be assigned
+                                                        to this investigation e.g. http://services.toxbank.net/investigation/12345
 ````
 
 ### [isa2rdf-0.0.8.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~0.0.8~~)
