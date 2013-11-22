@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.UUID;
 
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
@@ -846,6 +847,7 @@ public class AppTest  {
 		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
 		cli.setOption(_option.outdatafilesdir, filesDir.getAbsolutePath());
 		cli.setOption(_option.dir, filesDir.getAbsolutePath());
+		cli.setOption(_option.investigationuri, "https://services.toxbank.net/investigation/"+UUID.randomUUID().toString());
 		Model model = cli.processAndSave();
 
 		System.err.println("triples " + model.size());

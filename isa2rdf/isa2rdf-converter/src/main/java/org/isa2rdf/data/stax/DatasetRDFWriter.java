@@ -16,10 +16,10 @@ import org.isa2rdf.datamatrix.DataMatrix;
 import org.isa2rdf.datamatrix.IRowProcessor;
 import org.isa2rdf.model.ISA;
 
-import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implements IRowProcessor<DataMatrix>{
 	
@@ -30,10 +30,13 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 	private static final long serialVersionUID = -1825074197173628894L;
 	protected String datasetIndividual = null;
 	protected Hashtable<String,String> lookup;
+	protected String investigationURI;
 	protected DataMatrix matrix;
-	public DatasetRDFWriter(Hashtable<String,String> lookup) {
+	
+	public DatasetRDFWriter(String investigationURI, Hashtable<String,String> lookup) {
 		super();
 		this.lookup = lookup;
+		this.investigationURI = investigationURI==null?("http://example.org/investigation/"+UUID.randomUUID().toString()):investigationURI;
 		datasetIndividual = null;
 	}
 	public String getDatasetIndividual() {
@@ -58,7 +61,14 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			getOutput().writeStartElement(OT.NS,"Dataset");
 			datasetIndividual = createDatasetURI(item);
 			if (datasetIndividual!= null) getOutput().writeAttribute(RDF.getURI(),"about",datasetIndividual);
+			
+			getOutput().writeStartElement(DCTerms.getURI(),"source"); //investigation uri
+			getOutput().writeCharacters(investigationURI);
+			getOutput().writeEndElement();
 
+			getOutput().writeStartElement(RDFS.getURI(),"seeAlso"); //file
+			getOutput().writeCharacters(item.getFilename());
+			getOutput().writeEndElement();
 		} catch (Exception x) {
 			logger.log(Level.WARNING,x.getMessage(),x);
 		}
@@ -274,7 +284,9 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 		}
 		
 		protected String createDatasetURI(DataMatrix matrix) {
-			return String.format("http://example.org/%s", UUID.randomUUID().toString());
+			return 	investigationURI+
+					(investigationURI.endsWith("/")?"":"/")+
+					"dataset/"+UUID.randomUUID().toString();
 		}
 		
 		protected String createProbeURI(DataMatrix matrix,String probeType) {

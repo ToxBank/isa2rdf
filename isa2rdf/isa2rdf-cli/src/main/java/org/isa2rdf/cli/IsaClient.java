@@ -53,7 +53,7 @@ public class IsaClient {
 	protected String dir;
 	protected String outfile;
 	protected String outDatafilesDir;
-
+	protected String investigationURI;
 	protected String toxbankuri;
 	
 	public Model  processAndSave() throws Exception {
@@ -80,11 +80,11 @@ public class IsaClient {
 				for (String datatype: supported_datatype) {
 					Hashtable<String,Hashtable<String,String>> lookup = getDataEntries(model, datatype);
 					logger.info(String.format("%s data files of type ",(lookup!=null && lookup.size()>0)?"Found ":"Not found ",datatype));
-					
+					logger.info(lookup);
 					Enumeration<String> keys = lookup.keys();
 					while (keys.hasMoreElements()) {
 						String fileName = keys.nextElement();
-						DataMatrixConverter matrix = new DataMatrixConverter(datatype,lookup.get(fileName));
+						DataMatrixConverter matrix = new DataMatrixConverter(datatype,lookup.get(fileName),investigationURI);
 						FileReader reader = null;
 						FileOutputStream out = null;
 						try {
@@ -176,7 +176,15 @@ class uk.ac.ebi.bioinvindex.model.Contact
 
          */
         File file = new File(filesPath);
-        String prefix = String.format("%s%s",ISA.URI,file.getName().replace("-","").replace(" ","").trim());
+        String prefix = null;
+        if (investigationURI==null) 
+        	prefix = String.format("%s%s",ISA.URI,file.getName().replace("-","").replace(" ","").trim());
+        else {
+        	if (investigationURI.startsWith("http"))
+        		prefix = investigationURI;
+        	else
+        		throw new Exception("Invalid investigation URI "+investigationURI);
+        }	
         ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(
         		toxbankuri==null?"http://toxbanktest1.opentox.org:8080/toxbank":toxbankuri,prefix,store);
         gen.setTempIdCounter(tempIdCounter);
@@ -350,6 +358,37 @@ class uk.ac.ebi.bioinvindex.model.Contact
 			}
 			
 		},				
+		investigationuri {
+
+			@Override
+			public String getArgName() {
+				return "URI";
+			}
+
+			@Override
+			public String getDescription() {
+				return "URI to be assigned to this investigation e.g. http://services.toxbank.net/investigation/efdb21bb-e79f-3286-a988-b6f6944d3734";
+			}
+
+			@Override
+			public String getShortName() {
+				return "i";
+			}
+			@Override
+			public String getDefaultValue() {
+				return null;
+			}
+			public Option createOption() {
+		    	Option option   = OptionBuilder.withLongOpt(name())
+		    	.withArgName(getArgName())
+		        .withDescription(getDescription())
+		        .hasArg()
+		        .create(getShortName());
+
+		    	return option;
+			}
+			
+		},			
 		help {
 			@Override
 			public String getArgName() {
@@ -421,7 +460,10 @@ class uk.ac.ebi.bioinvindex.model.Contact
 			this.toxbankuri = argument;
 			break;
 		}
-	
+		case investigationuri: {
+			this.investigationURI = argument;
+			break;
+		}	
 		default: 
 		}
 	}

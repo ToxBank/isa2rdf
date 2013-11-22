@@ -11,8 +11,18 @@ import org.codehaus.jackson.node.ObjectNode;
 public class DataMatrix {
 	protected ObjectNode json;
 	protected ObjectMapper m;
+	protected String filename;
+	
+	public String getFilename() {
+		return filename;
+	}
 
-	public DataMatrix(InputStream in) throws JsonProcessingException, IOException {
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public DataMatrix(String filename,InputStream in ) throws JsonProcessingException, IOException {
+		this.filename = filename;
 		m = new ObjectMapper();
 		this.json = (ObjectNode)m.readTree(in);
 		in.close();

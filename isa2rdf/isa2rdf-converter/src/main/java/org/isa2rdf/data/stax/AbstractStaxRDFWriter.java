@@ -6,10 +6,10 @@ import org.isa2rdf.data.OT;
 import org.isa2rdf.data.OT.OTClass;
 import org.isa2rdf.model.ISA;
 
-import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 public abstract class AbstractStaxRDFWriter<INPUT>  {
 	/**
@@ -19,6 +19,7 @@ public abstract class AbstractStaxRDFWriter<INPUT>  {
 	protected XMLStreamWriter output = null;
 	protected final static String ot = "ot";
 	protected final static String rdf = "rdf";
+	protected final static String rdfs = "rdfs";
 	protected final static String dcterms = "dcterms";
 	protected final static String owl = "owl";
 	protected final static String isa = "isa";
@@ -92,6 +93,7 @@ xml:base="http://apps.ideaconsult.net:8080/ambit2/">
 			
 		    writer.writeNamespace(ot, OT.NS);
 			writer.writeNamespace(rdf, RDF.getURI());
+			writer.writeNamespace(rdfs, RDFS.getURI());
 			writer.writeNamespace(owl, OWL.getURI());
 			writer.writeNamespace(dcterms, DCTerms.getURI());
 			writer.writeNamespace(isa, ISA.URI);

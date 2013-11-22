@@ -37,7 +37,9 @@ public class DataMatrixConverter {
 	private static final String prefix = "http://onto.toxbank.net/isa/bii/data_types/";
 	protected Hashtable<String,String> lookup;
 	protected String datatype;
-	public DataMatrixConverter(String datatype,Hashtable<String,String> lookup) {
+	protected String investigationURI;
+	public DataMatrixConverter(String datatype,Hashtable<String,String> lookup,String investigationURI) {
+		this.investigationURI = investigationURI;
 		this.lookup = lookup;
 		if (datatype!=null) {
 			int p = datatype.indexOf(prefix);
@@ -45,18 +47,19 @@ public class DataMatrixConverter {
 			this.datatype = datatype;
 		}
 	}
-	public DataMatrixConverter() {
-		this("microarray_derived_data",null);
-	}
+	
 	public static void main(String[] args) {
 		if (args.length<1) return;
 		
 		for (String arg: args) {
-			DataMatrixConverter q = new DataMatrixConverter();
+			DataMatrixConverter q = new DataMatrixConverter(
+										"http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data",
+										null,
+										"http://example.org/investigation/123");
 			try {
 				File file = new File(arg);
-				String experimentname= file.getName().replace(".csv", "");				
-				q.writeRDF(new FileReader(file),experimentname,5,System.out);
+			
+				q.writeRDF(new FileReader(file),file.getName(),5,System.out);
 			} catch (Exception x) {
 				x.printStackTrace();
 			}
@@ -64,7 +67,7 @@ public class DataMatrixConverter {
 	}
 	
 	public void writeRDF(Reader reader,String experimentname, final int maxrows, OutputStream out) throws Exception {
-		final DatasetRDFWriter rdfwriter = new DatasetRDFWriter(lookup);
+		final DatasetRDFWriter rdfwriter = new DatasetRDFWriter(investigationURI, lookup);
 		final XMLStreamWriter writer = initWriter(out);
 		rdfwriter.setOutput(writer);
 		try {
@@ -111,7 +114,7 @@ public class DataMatrixConverter {
 		}
 	}
 	
-	public DataMatrix parse(Reader reader, String experimentname, IRowProcessor<DataMatrix> processor , int maxrows) throws Exception {
+	public DataMatrix parse(Reader reader, String filename, IRowProcessor<DataMatrix> processor , int maxrows) throws Exception {
 		BufferedReader breader = null ;
 		try {
 			String line;
@@ -121,7 +124,7 @@ public class DataMatrixConverter {
 			//read config
 			InputStream in = getClass().getClassLoader().getResourceAsStream(String.format("org/isa2rdf/data/%s.json",datatype));
 			if (in==null) throw new Exception("Unsupported data type "+ datatype); 
-			DataMatrix matrix = new DataMatrix(in);
+			DataMatrix matrix = new DataMatrix(filename,in);
 
 			
 			//read config completed
