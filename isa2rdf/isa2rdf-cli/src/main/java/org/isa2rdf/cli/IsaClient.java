@@ -367,7 +367,7 @@ class uk.ac.ebi.bioinvindex.model.Contact
 
 			@Override
 			public String getDescription() {
-				return "URI to be assigned to this investigation e.g. http://services.toxbank.net/investigation/efdb21bb-e79f-3286-a988-b6f6944d3734";
+				return "URI to be assigned to this investigation e.g. http://services.toxbank.net/investigation/12345";
 			}
 
 			@Override
