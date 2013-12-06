@@ -3,11 +3,11 @@
   <parent>
     <artifactId>isa2rdf</artifactId>
     <groupId>net.toxbank</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
   <groupId>net.toxbank</groupId>
   <artifactId>isa2rdf-converter</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>isa2rdf converter</name>
       <licenses>
   <license>
