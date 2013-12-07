@@ -93,7 +93,7 @@ public class IsaClient {
 							out = new FileOutputStream(outFile);
 							if (file.exists()) {
 								reader = new FileReader(file);
-								matrix.writeRDF(reader, fileName , 3, out);
+								matrix.writeRDF(reader, fileName , -1, out);
 							}	else throw new FileNotFoundException(file.getAbsolutePath());
 							logger.info("Converted data files written to "+outfile);
 						} catch (Exception x) {
