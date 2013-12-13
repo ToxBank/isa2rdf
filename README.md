@@ -170,3 +170,8 @@ isa:Node  rdfs:subClassOf  isa:GraphElement .
 
 
 <output skipped> See the full output in [N3](https://github.com/ToxBank/isa2rdf/tree/master/isa2rdf/isa2rdf-cli/src/test/resources/toxbank/json/isatab.n3) 
+
+
+## ISA-TAB RDF classes and properties
+
+<a href='https://github.com/ToxBank/isa2rdf/blob/master/isa2rdf/isa2rdf-cli/isa2rdf_clases_properties.n3'><img src='https://github.com/ToxBank/isa2rdf/blob/master/isa2rdf/isa2rdf-cli/isa2rdf_clases_properties.svg' alt = 'ISA-TAB RDF classes and properties' title='ISA2RDF'></a>
