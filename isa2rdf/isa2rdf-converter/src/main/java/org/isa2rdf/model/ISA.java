@@ -1,5 +1,7 @@
 package org.isa2rdf.model;
 
+import org.isa2rdf.data.OT;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -16,8 +18,21 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 public class ISA {
 	final public static String TBKeywordsNS = "http://www.owl-ontologies.com/toxbank.owl/";
 	public static final String URI ="http://onto.toxbank.net/isa/";
+	public static final String URI_ENTREZ = "http://onto.toxbank.net/isa/Entrez/";
+	public static final String URI_GENESYMBOL = "http://onto.toxbank.net/isa/Symbol/";
+	public static final String URI_REFSEQ = "http://onto.toxbank.net/isa/RefSeq/";
+	public static final String URI_UniGene = "http://onto.toxbank.net/isa/Unigene/";
+	public static final String URI_Uniprot = "http://purl.uniprot.org/uniprot/";
+	
 	public static String FOAF = "http://xmlns.com/foaf/0.1/";
 
+	private static final Resource otresource(String local) {
+	        return ResourceFactory.createResource(String.format("%s%s",OT.getURI(),local));
+	}
+    private static final Property otproperty(String local) {
+        return ResourceFactory.createProperty(String.format("%s%s",OT.getURI(), local));
+    }
+	
     private static final Resource resource(String local) {
         return ResourceFactory.createResource(String.format("%s%s",URI,local));
     }
@@ -159,6 +174,8 @@ public class ISA {
     public static final Property USESTECHNOLOGY = property("usesTechnology");
     public static final Property USESPLATFORM= property("usesPlatform");
     
+    public static final Property HASPROBE= property("hasProbe");
+    
     public static void init(Model model) {
     	 resourceWithParent(model,ANNOTATABLE,IDENTIFIABLE);
     	 resourceWithParent(model,ACCESSIBLE,ANNOTATABLE);
@@ -266,8 +283,10 @@ public class ISA {
     	propertyWithDomainRange(model,USESPLATFORM,Assay,OntologyTerm,OWL.ObjectProperty,false);
     	
 
+    	propertyWithDomainRange(model,HASPROBE,otresource(OT.OTClass.DataEntry.name()),null,OWL.ObjectProperty,false);
+    	//OpenTox dataset
+    	
     }
-    
     public static void main(String[] args) {
     	Model model = ModelFactory.createDefaultModel();
     	init(model);
