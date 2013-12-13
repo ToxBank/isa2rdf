@@ -140,7 +140,8 @@ public class AppTest  {
 		//String file = "D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx";
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx";
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex 12-nov-2013/NOTOX-APAP-Ex";
-		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Px 12-nov-2013/NOTOX-APAP-Px";
+		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Px 12-nov-2013/NOTOX-APAP-Px";
+		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex_archive 6-dec-2013";
 		Model model = testRDF(new File(file));
 		
 		
