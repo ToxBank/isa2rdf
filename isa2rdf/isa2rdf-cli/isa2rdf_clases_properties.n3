@@ -1,0 +1,188 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix isa:   <http://onto.toxbank.net/isa/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+isa:Node  rdfs:subClassOf  isa:GraphElement .
+
+isa:hasProtocol  a   owl:ObjectProperty ;
+        rdfs:domain  isa:Study ;
+        rdfs:range   isa:Protocol .
+
+isa:FreeTextTerm  rdfs:subClassOf  isa:Annotatable .
+
+isa:hasSampleField  a  owl:FunctionalProperty , owl:DatatypeProperty ;
+        rdfs:domain  isa:Node .
+
+isa:GraphElement  rdfs:subClassOf  isa:Accessible .
+
+isa:Data  rdfs:subClassOf  isa:Accessible .
+
+isa:hasOntologyTerm  a  owl:ObjectProperty ;
+        rdfs:domain  isa:FreeTextTerm ;
+        rdfs:range   isa:OntologyTerm .
+
+isa:appliesProtocol  a  owl:FunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain  isa:ProtocolApplication ;
+        rdfs:range   isa:Protocol .
+
+isa:hasValue  a      owl:DatatypeProperty ;
+        rdfs:domain  isa:PropertyValue .
+
+isa:Contact  rdfs:subClassOf  isa:Annotatable .
+
+isa:hasStudy  a      owl:ObjectProperty ;
+        rdfs:domain  isa:Investigation ;
+        rdfs:range   isa:Study .
+
+isa:Characteristic  rdfs:subClassOf  isa:Property .
+
+isa:hasUnit  a       owl:ObjectProperty ;
+        rdfs:domain  isa:PropertyValue ;
+        rdfs:range   isa:OntologyTerm .
+
+isa:Annotatable  rdfs:subClassOf  isa:Identifiable .
+
+dcterms:hasVersion  a  owl:AnnotationProperty .
+
+dcterms:created  a  owl:AnnotationProperty .
+
+isa:hasInputNode  a  owl:ObjectProperty ;
+        rdfs:domain  isa:Processing ;
+        rdfs:range   isa:Node .
+
+dcterms:title  a  owl:AnnotationProperty .
+
+isa:hasCharacteristicValue
+        a            owl:ObjectProperty ;
+        rdfs:domain  isa:Material ;
+        rdfs:range   isa:CharacteristicValue .
+
+rdfs:isDefinedBy  a  owl:AnnotationProperty .
+
+isa:hasAccessionID  a  owl:FunctionalProperty , owl:DatatypeProperty ;
+        rdfs:domain  isa:Accessible .
+
+dcterms:abstract  a  owl:AnnotationProperty .
+
+isa:hasMaterial  a   owl:FunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain  isa:MaterialNode ;
+        rdfs:range   isa:Material .
+
+isa:hasOutputNode  a  owl:ObjectProperty ;
+        rdfs:domain  isa:Processing ;
+        rdfs:range   isa:Node .
+
+isa:usesPlatform  a  owl:ObjectProperty ;
+        rdfs:domain  isa:Assay ;
+        rdfs:range   isa:OntologyTerm .
+
+isa:HASREFERENCES  rdfs:subClassOf  isa:Accessible .
+
+isa:OntologyTerm  rdfs:subClassOf  isa:Annotatable .
+
+isa:hasAssay  a      owl:ObjectProperty ;
+        rdfs:domain  isa:Study ;
+        rdfs:range   isa:Assay .
+
+isa:Property  rdfs:subClassOf  isa:FreeTextTerm .
+
+isa:Accessible  rdfs:subClassOf  isa:Annotatable .
+
+isa:usesTechnology  a  owl:ObjectProperty ;
+        rdfs:domain  isa:Assay ;
+        rdfs:range   isa:OntologyTerm .
+
+isa:hasParameter  a  owl:ObjectProperty ;
+        rdfs:domain  isa:ParameterValue ;
+        rdfs:range   isa:Parameter .
+
+isa:Protocol  rdfs:subClassOf  isa:Accessible .
+
+isa:ProtocolApplication
+        rdfs:subClassOf  isa:Accessible .
+
+isa:Factor  rdfs:subClassOf  isa:Property .
+
+isa:MaterialNode  rdfs:subClassOf  isa:Node .
+
+isa:DataAcquisition  rdfs:subClassOf  isa:Processing .
+
+isa:hasAssayFields  a  owl:DatatypeProperty ;
+        rdfs:domain  isa:Node .
+
+isa:Study  rdfs:subClassOf  isa:HASREFERENCES .
+
+isa:Unit  rdfs:subClassOf  isa:FreeTextTerm .
+
+isa:hasData  a       owl:FunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain  isa:DataNode ;
+        rdfs:range   isa:Data .
+
+isa:ParameterValue  rdfs:subClassOf  isa:PropertyValue .
+
+isa:Design  rdfs:subClassOf  isa:FreeTextTerm .
+
+isa:Parameter  rdfs:subClassOf  isa:Property .
+
+isa:Investigation  rdfs:subClassOf  isa:HASREFERENCES .
+
+isa:PropertyValue  rdfs:subClassOf  isa:FreeTextTerm .
+
+isa:DataNode  rdfs:subClassOf  isa:Node .
+
+isa:hasOwner  a     owl:AnnotationProperty ;
+        rdfs:range  isa:Contact .
+
+isa:Processing  rdfs:subClassOf  isa:GraphElement .
+
+isa:hasUnitValue  a  owl:DatatypeProperty ;
+        rdfs:domain  isa:PropertyValue .
+
+dcterms:description  a  owl:AnnotationProperty .
+
+isa:MaterialProcessing
+        rdfs:subClassOf  isa:Processing .
+
+isa:hasParameterValue
+        a            owl:ObjectProperty ;
+        rdfs:domain  isa:ProtocolApplication ;
+        rdfs:range   isa:ParameterValue .
+
+isa:FactorValue  rdfs:subClassOf  isa:PropertyValue .
+
+isa:Material  rdfs:subClassOf  isa:Accessible .
+
+isa:DataProcessing  rdfs:subClassOf  isa:Processing .
+
+isa:ReferenceSources  rdfs:subClassOf  isa:Accessible .
+
+isa:CharacteristicValue
+        rdfs:subClassOf  isa:PropertyValue .
+
+isa:hasProtocolApplication
+        a            owl:ObjectProperty ;
+        rdfs:domain  isa:Processing ;
+        rdfs:range   isa:ProtocolApplication .
+
+isa:hasProperty  a   owl:ObjectProperty ;
+        rdfs:domain  isa:PropertyValue ;
+        rdfs:range   isa:Property .
+
+isa:Assay  rdfs:subClassOf  isa:HASREFERENCES .
+
+isa:UnitValue  rdfs:subClassOf  isa:FreeTextTerm .
+
+isa:hasFactor  a     owl:FunctionalProperty , owl:ObjectProperty ;
+        rdfs:domain  isa:FactorValue ;
+        rdfs:range   isa:Factor .
+
+isa:hasEndpoint  a   owl:ObjectProperty ;
+        rdfs:domain  isa:Assay ;
+        rdfs:range   isa:OntologyTerm .
+
+isa:hasFactorValue  a  owl:ObjectProperty ;
+        rdfs:domain  isa:Data ;
+        rdfs:range   isa:FactorValue .
