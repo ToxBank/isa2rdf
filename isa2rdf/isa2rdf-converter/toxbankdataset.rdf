@@ -1,0 +1,146 @@
+<?xml version="1.0" ?>
+<rdf:RDF xmlns:ot="http://www.opentox.org/api/1.1#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:isa="http://onto.toxbank.net/isa/" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <owl:Class rdf:about="http://www.opentox.org/api/1.1#Dataset"></owl:Class>
+  <owl:Class rdf:about="http://www.opentox.org/api/1.1#DataEntry"></owl:Class>
+  <owl:Class rdf:about="http://www.opentox.org/api/1.1#Feature"></owl:Class>
+  <owl:Class rdf:about="http://www.opentox.org/api/1.1#FeatureValue"></owl:Class>
+  <owl:Class rdf:about="http://www.opentox.org/api/1.1#Compound"></owl:Class>
+  <owl:ObjectProperty rdf:about="http://www.opentox.org/api/1.1#compound"></owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.opentox.org/api/1.1#dataEntry"></owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.opentox.org/api/1.1#values"></owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.opentox.org/api/1.1#feature"></owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.opentox.org/api/1.1#hasSource"></owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://www.opentox.org/api/1.1#acceptValue"></owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="http://www.opentox.org/api/1.1#units"></owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://www.opentox.org/api/1.1#value"></owl:DatatypeProperty>
+  <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"></owl:AnnotationProperty>
+  <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"></owl:AnnotationProperty>
+  <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/type"></owl:AnnotationProperty>
+  <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"></owl:AnnotationProperty>
+  <ot:Dataset rdf:about="https://services.toxbank.net/investigation/0eada139/dataset/79a384dc">
+    <dcterms:source>https://services.toxbank.net/investigation/0eada139</dcterms:source>
+    <rdfs:seeAlso>DATAFILENAME</rdfs:seeAlso>
+    <ot:dataEntry>
+      <ot:DataEntry>
+        <isa:hasProbe>
+          <isa:MicroarrayProbe rdf:about="http://onto.toxbank.net/isa/TargetID/cg00000029"></isa:MicroarrayProbe>
+        </isa:hasProbe>
+ 				<skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/Entrez/143384"></isa:Gene>
+        </skos:closeMatch>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://purl.uniprot.org/uniprot/Q86Y37"></isa:Gene>
+        </skos:closeMatch>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/Unigene/Hs.420024"></isa:Gene>
+        </skos:closeMatch>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/Symbol/C10orf46"></isa:Gene>
+        </skos:closeMatch>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/RefSeq/NM_153810"></isa:Gene>
+        </skos:closeMatch>        
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/pvalue/cecd0530"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.13</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/qvalue/ac0831bb"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.362424606</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/pvalue/dc384660"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.18</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/qvalue/8d4be9f2"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.39</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+      </ot:DataEntry>
+    </ot:dataEntry>
+<ot:dataEntry>
+      <ot:DataEntry>
+        <isa:hasProbe>
+          <isa:MicroarrayProbe rdf:about="http://onto.toxbank.net/isa/TargetID/rs9839873"></isa:MicroarrayProbe>
+          </isa:hasProbe>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/Entrez/22947"></isa:Gene>
+        </skos:closeMatch>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/Unigene/Hs.553518"></isa:Gene>
+        </skos:closeMatch>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/Symbol/DUX4"></isa:Gene>
+        </skos:closeMatch>
+        <skos:closeMatch>
+          <isa:Gene rdf:about="http://onto.toxbank.net/isa/RefSeq/NM_033178"></isa:Gene>
+        </skos:closeMatch>          
+        
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/pvalue/cecd0530"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.434</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/qvalue/ac0831bb"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.73</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/pvalue/dc384660"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.12</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+        <ot:values>
+          <ot:FeatureValue>
+            <ot:feature rdf:resource="http://onto.toxbank.net/isa/qvalue/8d4be9f2"></ot:feature>
+            <ot:value rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.351</ot:value>
+          </ot:FeatureValue>
+        </ot:values>
+      </ot:DataEntry>
+    </ot:dataEntry>    
+</ot:Dataset>    
+  <ot:Feature rdf:about="http://onto.toxbank.net/isa/pvalue/cecd0530">
+    <rdf:type rdf:resource="http://www.opentox.org/api/1.1#NumericFeature"></rdf:type>
+    <ot:hasSource>
+      <isa:Data rdf:about="https://services.toxbank.net/investigation/0eada139/D212"></isa:Data>
+    </ot:hasSource>
+    <owl:sameAs rdf:resource="http://onto.toxbank.net/isa/pvalue"></owl:sameAs>
+    <dcterms:title>p-value[mycompound.vs.no]</dcterms:title>
+  </ot:Feature>
+  <ot:Feature rdf:about="http://onto.toxbank.net/isa/qvalue/ac0831bb">
+    <rdf:type rdf:resource="http://www.opentox.org/api/1.1#NumericFeature"></rdf:type>
+    <ot:hasSource>
+      <isa:Data rdf:about="https://services.toxbank.net/investigation/0eada139/D212"></isa:Data>
+    </ot:hasSource>
+    <owl:sameAs rdf:resource="http://onto.toxbank.net/isa/qvalue"></owl:sameAs>
+    <dcterms:title>q-value[mycompound.vs.no]</dcterms:title>
+  </ot:Feature>
+  <ot:Feature rdf:about="http://onto.toxbank.net/isa/pvalue/dc384660">
+    <rdf:type rdf:resource="http://www.opentox.org/api/1.1#NumericFeature"></rdf:type>
+    <ot:hasSource>
+      <isa:Data rdf:about="https://services.toxbank.net/investigation/0eada139/D211"></isa:Data>
+    </ot:hasSource>
+    <owl:sameAs rdf:resource="http://onto.toxbank.net/isa/pvalue"></owl:sameAs>
+    <dcterms:title>p-value[culivated.vs.nonc]</dcterms:title>
+  </ot:Feature>
+  <ot:Feature rdf:about="http://onto.toxbank.net/isa/qvalue/8d4be9f2">
+    <rdf:type rdf:resource="http://www.opentox.org/api/1.1#NumericFeature"></rdf:type>
+    <ot:hasSource>
+      <isa:Data rdf:about="https://services.toxbank.net/investigation/0eada139/D211"></isa:Data>
+    </ot:hasSource>
+    <owl:sameAs rdf:resource="http://onto.toxbank.net/isa/qvalue"></owl:sameAs>
+    <dcterms:title>q-value[culivated.vs.nonc]</dcterms:title>
+  </ot:Feature>    
+  </rdf:RDF>
