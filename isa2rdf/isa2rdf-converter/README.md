@@ -2,7 +2,7 @@
 
 <img src='toxbank-dataset.png'></img>
 
-### Example in [RDF/XML](toxbank-dataset.rdf)
+### Example in [RDF/XML](toxbankdataset.rdf)
 
 Classes to convert tab-delimited processed data matrix to RDF (example N3 output below).
 
