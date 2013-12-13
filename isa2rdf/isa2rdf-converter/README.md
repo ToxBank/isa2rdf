@@ -1,5 +1,8 @@
+## ToxBank processed RDF dataset conversion
 
-Java class defining ISA2RDF OWL classes and properties.
+<img src='toxbank-dataset.png'></img>
+
+### Example in [RDF/XML](toxbank-dataset.rdf)
 
 Classes to convert tab-delimited processed data matrix to RDF (example N3 output below).
 
@@ -54,3 +57,8 @@ Classes to convert tab-delimited processed data matrix to RDF (example N3 output
         owl:sameAs    isa:qvalue .
 
 ````
+
+
+## Java class defining ISA2RDF OWL classes and properties.
+
+### ISA.java  
