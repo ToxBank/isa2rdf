@@ -1,6 +1,7 @@
 package org.isa2rdf.model;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -141,7 +142,7 @@ public class ISA {
     //FreeTextTerms
     public static final Property HASONTOLOGYTERM = property("hasOntologyTerm");
     
-    public static final Property HASPROPERTYVALUE = property("hasPropertyValue");
+    //public static final Property HASPROPERTYVALUE = property("hasPropertyValue"); //x
     public static final Property HASFACTORVALUE = property("hasFactorValue");
     public static final Property HASCHARACTERISTICVALUE = property("hasCharacteristicValue");
     public static final Property HASPARAMVALUE = property("hasParameterValue");
@@ -238,6 +239,7 @@ public class ISA {
     	propertyWithDomainRange(model,HASONTOLOGYTERM,FreeTextTerm,OntologyTerm,OWL.ObjectProperty,false);
     	
     	propertyWithDomainRange(model,HASFACTORVALUE,Data,FactorValue,OWL.ObjectProperty,false);
+    	propertyWithDomainRange(model,HASCHARACTERISTICVALUE,Material,CharacteristicValue,OWL.ObjectProperty,false);
     	propertyWithDomainRange(model,HASPARAMVALUE,ProtocolApplication,ParameterValue,OWL.ObjectProperty,false);
     	propertyWithDomainRange(model,HASVALUE,PropertyValue,null,OWL.DatatypeProperty,false);
     	propertyWithDomainRange(model,HASPROPERTY,PropertyValue,Property,OWL.ObjectProperty,false);
@@ -255,6 +257,27 @@ public class ISA {
     	propertyWithDomainRange(model,RDFS.isDefinedBy,null,null,OWL.AnnotationProperty,false);
     	
     	propertyWithDomainRange(model,HASOWNER,null,Contact,OWL.AnnotationProperty,false);
+    	
+    	propertyWithDomainRange(model,HASUNITVALUE,PropertyValue,null,OWL.DatatypeProperty,false);
+    	propertyWithDomainRange(model,HASUNIT,PropertyValue,OntologyTerm,OWL.ObjectProperty,false);
+    	
+    	propertyWithDomainRange(model,HASENDPOINT,Assay,OntologyTerm,OWL.ObjectProperty,false);
+    	propertyWithDomainRange(model,USESTECHNOLOGY,Assay,OntologyTerm,OWL.ObjectProperty,false);
+    	propertyWithDomainRange(model,USESPLATFORM,Assay,OntologyTerm,OWL.ObjectProperty,false);
+    	
 
+    }
+    
+    public static void main(String[] args) {
+    	Model model = ModelFactory.createDefaultModel();
+    	init(model);
+		model.setNsPrefix("isa", ISA.URI);
+		model.setNsPrefix("dcterms", DCTerms.NS);
+		model.setNsPrefix("foaf", ISA.FOAF);
+		model.setNsPrefix("rdfs", RDFS.getURI());
+		model.setNsPrefix("rdf", RDF.getURI());
+		model.setNsPrefix("owl", OWL.getURI());
+		//model.setNsPrefix("tb", TOXBANK.URI);
+    	model.write(System.out,"N3");
     }
 }
