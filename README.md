@@ -174,4 +174,5 @@ isa:Node  rdfs:subClassOf  isa:GraphElement .
 
 ## ISA-TAB RDF classes and properties
 
-<a href='https://github.com/ToxBank/isa2rdf/blob/master/isa2rdf/isa2rdf-cli/isa2rdf_clases_properties.n3'><img src='https://github.com/ToxBank/isa2rdf/blob/master/isa2rdf/isa2rdf-cli/isa2rdf_clases_properties.svg' alt = 'ISA-TAB RDF classes and properties' title='ISA2RDF'></a>
+<a href='https://github.com/ToxBank/isa2rdf/blob/master/isa2rdf/isa2rdf-cli/isa2rdf_clases_properties.n3'>
+<object type="image/svg+xml" data="https://github.com/ToxBank/isa2rdf/blob/master/isa2rdf/isa2rdf-cli/isa2rdf_clases_properties.svg" alt = 'ISA-TAB RDF classes and properties' title='ISA2RDF'>Your browser does not suppport SVG</object></a>
