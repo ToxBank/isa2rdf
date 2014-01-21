@@ -1,0 +1,159 @@
+{
+
+    "columns": {
+        "chemical_formula": {
+            "Description": "Chemical Formula",
+            "Identifier": true,
+			"type" : "compound",
+            "datatype" : ["dose_response"]
+        },
+        "CAS": {
+            "Description": "CAS RN",
+            "Identifier": true,
+			"type" : "compound",            
+            "datatype" : ["dose_response"]
+        },        
+        "SMILES": {
+            "Description": "Simplified molecular-input line-entry system",
+            "Identifier": true,
+			"type" : "compound",            
+            "datatype" : ["dose_response"]
+        },  
+        "PubChem SID": {
+            "Description": "PubChem Substance ID",
+            "Identifier": true,
+			"type" : "compound",            
+            "datatype" : ["dose_response"]
+        },  
+        "NCGC Unique ID": {
+            "Identifier": true,
+			"type" : "compound",            
+            "datatype" : ["dose_response"]
+        },  
+        "Tox21 ID": {
+            "Identifier": true,
+			"type" : "compound",            
+            "datatype" : ["dose_response"]
+        },                                  
+        "ChemBL ID": {
+            "Identifier": true,
+			"type" : "compound",            
+            "datatype" : ["dose_response"]
+        },
+        "InChI": {
+            "Identifier": true,
+			"type" : "compound",            
+            "datatype" : ["dose_response"]
+        },
+        "Compound Name": {
+            "datatype" : ["dose_response"],
+			"type" : "compound",            
+            "Annotation": true
+        },
+        "Assay Name": {
+            "datatype" : ["dose_response"],
+            "Annotation": true
+        },
+        "Assay Gene Name": {
+            "datatype" : ["dose_response"],
+			"type" : "gene",            
+            "Annotation": true
+        },
+        "Assay Gene ID": {
+            "datatype" : ["dose_response"],
+			"type" : "gene",            
+            "Annotation": true
+        },
+        "IC50 (uM)": {
+            "datatype" : ["dose_response"],
+            "Description": "The effective concentration of an inhibitor, which produces 50% of the maximum possible response for that inhibitor.",
+            "Processed data": true,
+            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000190",
+            "samples" : {}
+        },
+        "IC20 (uM)": {
+            "datatype" : ["dose_response"],
+            "Description": "The effective concentration of an inhibitor, which produces 20% of the maximum possible response for that inhibitor.",
+            "Processed data": true,
+            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000190",
+            "samples" : {}
+        },
+        "IC10 (uM)": {
+            "datatype" : ["dose_response"],
+            "Description": "The effective concentration of an inhibitor, which produces 10% of the maximum possible response for that inhibitor.",
+            "Processed data": true,
+            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000190",
+            "samples" : {}
+        },
+        "Tox21 Curve Class": {
+            "datatype" : ["dose_response"],
+            "Processed data": true,
+            "samples" : {}
+        },
+		"Tox21 Curve Class2": {
+            "datatype" : ["dose_response"],
+            "Processed data": true,
+            "samples" : {}
+        },
+        "AC50 (uM)": {
+            "datatype" : ["dose_response"],
+            "Description": "The effective concentration of a perturbagen, which produces 50% of the maximal possible response, which could mean either activation (EC50) or inhibition (IC50) for that perturbagen.",
+            "Processed data": true,
+            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000186",
+            "samples" : {}
+        },    
+        "LogAC50": {
+            "datatype" : ["dose_response"],
+            "Description": "log(effective concentration) of a perturbagen, which produces 50% of the maximal possible response, which could mean either activation (EC50) or inhibition (IC50) for that perturbagen.",
+            "Processed data": true,
+            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000186",
+            "samples" : {}
+        },       
+        "Hill Coef ": {
+            "datatype" : ["dose_response"],
+            "Description": "The Hill equation is commonly used to estimate the number of ligand molecules that are required to bind to a receptor to produce a functional effect. The Hill coefficient can be considered as an interaction coefficient, reflecting the extent of cooperativity among multiple ligand binding sites.",
+            "Processed data": true,
+            "sameAs": "http://www.bioassayontology.org/bao#BAO_0000435",
+            "samples" : {}
+        }, 
+        "NOEL (mg/Kg)": {
+            "datatype" : ["dose_response"],
+            "Description": "No-Observed-Effect Level",
+            "Processed data": true,
+            "samples" : {}
+        }, 
+        "NOAEL (mg/Kg)": {
+            "datatype" : ["dose_response"],
+            "Description": "No-Observed-Adverse-Effect Level",
+            "Processed data": true,
+            "sameAs": "http://purl.bioontology.org/ontology/MSH/D019055",
+            "samples" : {}
+        },         
+        "LOEL (mg/Kg)": {
+            "datatype" : ["dose_response"],
+            "Description": "Lowest-Observed-Effect Level",
+            "Processed data": true,
+            "samples" : {}
+        }, 
+        "LOAEL (mg/Kg)": {
+            "datatype" : ["dose_response"],
+            "Description": "Lowest-Observed-Adverse-Effect Level",
+            "Processed data": true,
+            "samples" : {}
+        }                              
+    },
+    "row": {
+        "probe" : {
+        },    
+        "compound" : {
+        },
+        "gene": {
+        },
+        "annotation": {
+        },        
+        "values": {
+        }
+    },
+    "feature": {
+    }
+}
