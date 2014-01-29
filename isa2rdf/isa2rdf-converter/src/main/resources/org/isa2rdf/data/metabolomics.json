@@ -78,13 +78,21 @@
             "Processed data": true,
             "samples" : {},
             "export": true
-        }            
+        },
+        "": {
+			"datatype" : ["metabolomics"],
+            "Processed data": true,
+            "samples" : {},
+            "export": true        
+        }
     },
     "row": {
         "probe" : {
         },
         "gene": {
         },
+		"compound": {
+		},                
         "annotation": {
         },        
         "values": {
