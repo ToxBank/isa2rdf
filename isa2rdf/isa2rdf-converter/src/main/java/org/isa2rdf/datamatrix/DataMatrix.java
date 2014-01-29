@@ -38,6 +38,9 @@ public class DataMatrix {
 	}
 	public ObjectNode getProbe() {
 		return (ObjectNode)json.get("row").get("probe");
+	}
+	public ObjectNode getCompound() {
+		return (ObjectNode)json.get("row").get("compound");
 	}	
 	public ObjectNode getGene() {
 		return (ObjectNode)json.get("row").get("gene");
