@@ -72,7 +72,7 @@ public class AbstractDataMatrixConverter {
 	}
 
 	
-	public static Hashtable<String,Hashtable<String,String>> getDataMatrix(Model model) {
+	public static int getDataMatrix(Model model) {
 		String sparqlQuery = String.format(
 				"PREFIX ot:<%s>\n"+
 				"PREFIX isa:<%s>\n"+
@@ -89,20 +89,21 @@ public class AbstractDataMatrixConverter {
 				OT.NS,
 				ISA.URI);
 
-		Hashtable<String,Hashtable<String,String>> lookup = new Hashtable<String, Hashtable<String,String>>();
+		//Hashtable<String,Hashtable<String,String>> lookup = new Hashtable<String, Hashtable<String,String>>();
 		
 		Query query = QueryFactory.create(sparqlQuery);
 		QueryExecution qe = QueryExecutionFactory.create(query,model);
 		ResultSet rs = qe.execSelect();
-
+		int row = 0;
 		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
 			RDFNode node = qs.get("node");
 			RDFNode feature = qs.get("feature");
 			RDFNode title = qs.get("title");
 			RDFNode value = qs.get("value");
+			row++;
 			System.out.println(node + "\t" + feature + "\t" + title + "\t" + value.asLiteral().getDouble());
 		}	
-		return lookup;
+		return row;//lookup;
 	}	
 }

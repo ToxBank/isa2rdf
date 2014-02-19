@@ -4,17 +4,18 @@
         "database_identifier": {
         	"datatype" : ["metabolomics"],
         	"type": "compound",
-            "Identifier": true
+            "Identifier": true,
+            "export": true     
         },
         "chemical_formula": {
         	"datatype" : ["metabolomics"],
             "Identifier": true
         },
-        "Smiles": {
+        "smiles": {
         	"datatype" : ["metabolomics"],
             "Identifier": true
         },   
-        "Inchi": {
+        "inchi": {
         	"datatype" : ["metabolomics"],
             "Identifier": true
         },                           
@@ -30,13 +31,14 @@
         	"datatype" : ["metabolomics"],
             "Annotation": true
         },
-        "Taxid": {
+        "taxid": {
         	"datatype" : ["metabolomics"],
             "Annotation": true
         },    
         "species": {
         	"datatype" : ["metabolomics"],
-            "Annotation": true
+            "Annotation": true,
+            "export": true
         }, 
         "database": {
         	"datatype" : ["metabolomics"],
@@ -50,7 +52,7 @@
         	"datatype" : ["metabolomics"],
             "Annotation": true
         },     
-        "Uri": {
+        "uri": {
         	"datatype" : ["metabolomics"],
             "Annotation": true
         },     
@@ -83,9 +85,10 @@
         "": {
 			"datatype" : ["metabolomics"],
             "Processed data": true,
+            "sameAs": "http://onto.toxbank.net/isa/metaboliteintensity",
             "samples" : {},
             "export": true        
-        }            
+        }                    
     },
     "row": {
         "probe" : {

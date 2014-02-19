@@ -79,6 +79,7 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			getOutput().writeStartElement(OT.NS,"DataEntry");  //object
 			
 			Iterator<String> probes = item.getProbe().getFieldNames();
+			if (probes!=null)
 			while (probes.hasNext()) {
 				String uri = createProbeURI(item,probes.next());
 				getOutput().writeStartElement(ISA.URI,"hasProbe"); //property
@@ -87,6 +88,20 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 				getOutput().writeEndElement();
 				getOutput().writeEndElement();
 			}
+			
+			if (item.getCompound()!=null) {
+				Iterator<String> compounds = item.getCompound().getFieldNames();
+				if (compounds!=null)
+				while (compounds.hasNext()) {
+					String uri = createCompoundURI(item,compounds.next());
+					getOutput().writeStartElement(OT.NS,"compound"); //property
+					getOutput().writeStartElement(OT.NS,"Compound"); //property
+					getOutput().writeAttribute(RDF.getURI(),"about",uri);
+					getOutput().writeEndElement();
+					getOutput().writeEndElement();
+				}
+			}
+			
 			
 			Iterator<String> genes = item.getGene().getFieldNames();
 			while (genes.hasNext()) {
@@ -205,7 +220,9 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 		while (features.hasNext()) {
 			Entry<String,JsonNode> feature = features.next();
 			JsonNode f = (feature.getValue()).get("export");
-			if ((f==null)  || !f.asBoolean()) continue;			
+			if ((f==null)  || !f.asBoolean()) continue;
+			JsonNode sameAs = feature.getValue().get("sameAs");
+			//if (sameAs.isNull()) continue; //if sameAs is null, there will be no link to data nodes (which define isa-tab metadata)
 			try {
 				getOutput().writeStartElement(OT.NS,"Feature"); //feature
 				getOutput().writeAttribute(RDF.getURI(),"about",createFeatureURI(feature));
@@ -219,9 +236,11 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 		
 				writeHasSource(feature);
 				
-				getOutput().writeStartElement(OWL.getURI(),"sameAs"); //feature
-				getOutput().writeAttribute(RDF.getURI(), "resource",feature.getValue().get("sameAs").asText());
-				getOutput().writeEndElement();						
+				if (!sameAs.isNull()) {
+					getOutput().writeStartElement(OWL.getURI(),"sameAs"); //feature
+					getOutput().writeAttribute(RDF.getURI(), "resource",sameAs.asText());
+					getOutput().writeEndElement();
+				}
 				/*
 				if (p.getUnits()!=null) {
 					getOutput().writeStartElement(OT.NS,"units"); //feature
@@ -293,6 +312,10 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			return String.format("%s%s/%s", ISA.URI,probeType,matrix.getProbe().get(probeType).asText());
 		}
 		
+		
+		protected String createCompoundURI(DataMatrix matrix,String compound) {
+			return String.format("%s%s/%s", OT.NS,"/compound",UUID.randomUUID().toString());
+		}		
 
 		protected String createGeneURI(DataMatrix matrix,String gene) {
 			String geneID = matrix.getGene().get(gene).asText();
@@ -305,6 +328,7 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 				return String.format("%s%s/%s", ISA.URI,gene,geneID);
 		}
 		protected String createFeatureURI(Entry<String,JsonNode> feature) {
-			return String.format("%s/%s", feature.getValue().get("sameAs").asText(),feature.getKey());
+			JsonNode sameAs = feature.getValue().get("sameAs");
+			return String.format("%s/%s", (sameAs.isNull()?"feature":sameAs.asText()),feature.getKey());
 		}		
 }

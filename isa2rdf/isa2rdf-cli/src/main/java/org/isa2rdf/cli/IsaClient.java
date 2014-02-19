@@ -56,6 +56,11 @@ public class IsaClient {
 	protected String investigationURI;
 	protected String toxbankuri;
 	
+	private final static String microarray_derived_data = "http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data";
+	private final static String ms_spec_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/ms_spec_derived_data";
+	private final static String nmr_spec_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/nmr_spec_derived_data";
+	private final static String generic_assay_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/generic_assay_derived_data";
+	
 	public Model  processAndSave() throws Exception {
 		Model model = process(dir);
 		Writer writer = null;
@@ -74,11 +79,17 @@ public class IsaClient {
 			if (outDatafilesDir!=null) {
 				logger.info("Converted data files will be written to "+outDatafilesDir);
 				final String[] supported_datatype = {
-							"http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data",
-							"http://onto.toxbank.net/isa/bii/data_types/ms_spec_derived_data"
+							microarray_derived_data,
+							ms_spec_derived_data,
+							nmr_spec_derived_data,
+							generic_assay_derived_data
 						};
 				for (String datatype: supported_datatype) {
-					Hashtable<String,Hashtable<String,String>> lookup = getDataEntries(model, datatype);
+					Hashtable<String,Hashtable<String,String>> lookup = null;
+					if (nmr_spec_derived_data.equals(datatype)) {//metabolite files are linked to sample nodes, not data nodes! 
+						lookup = getMaterialEntries(model, datatype);
+					} else 
+						lookup = getDataEntries(model, datatype);
 					logger.info(String.format("%s data files of type ",(lookup!=null && lookup.size()>0)?"Found ":"Not found ",datatype));
 					logger.info(lookup);
 					Enumeration<String> keys = lookup.keys();
@@ -563,7 +574,7 @@ class uk.ac.ebi.bioinvindex.model.Contact
 				"	?node isa:hasOntologyTerm  <%s>." +
 				"   ?node rdfs:seeAlso ?file."+
 				"   ?node isa:hasAccessionID ?accession."+
-				"} ORDER by ?input \n",
+				"} \n",
 				TOXBANK.URI,
 				ISA.URI,datatype);
 
@@ -590,5 +601,60 @@ class uk.ac.ebi.bioinvindex.model.Contact
 		return lookup;
 	}
 
+	/**
+	 * Returns all sample entries
+	 * @param model
+	 * @param datatype
+	 * @return
+	 */
+	public Hashtable<String,Hashtable<String,String>> getMaterialEntries(Model model,String datatype) {
+		String sparqlQuery = String.format(
+				"PREFIX tb:<%s>\n"+
+				"PREFIX isa:<%s>\n"+
+				"PREFIX dcterms:<http://purl.org/dc/terms/>\n"+
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+				"SELECT ?m ?file ?accession ?compound where {\n" +
+				"	?d isa:hasOntologyTerm  <%s>." +
+				"   ?d rdfs:seeAlso ?file."+
+				"	?dnode isa:hasData ?d." +
+				"	?dnode isa:hasStudy ?study." +
+				"	?mnode isa:hasStudy ?study." +
+				"	?mnode isa:hasMaterial ?m." +
+				"	?m rdf:type isa:Material." +
+				"	?m isa:hasOntologyTerm  <http://onto.toxbank.net/isa/bii/roles/sample>." +
+				"   ?m isa:hasAccessionID ?accession."+
+				"   ?m isa:hasFactorValue ?fv."+
+				"   ?fv isa:hasFactor ?factor."+
+				"   ?factor dcterms:title ?ftype."+				
+				"   ?fv isa:hasOntologyTerm ?compound."+
+				//"   ?f isa:hasOntologyTerm <http://purl.obolibrary.org/chebi/CHEBI:24431>."+ same as the filter below
+				"   FILTER (str(?ftype) = 'compound')"+
+				"} \n",
+				TOXBANK.URI,
+				ISA.URI,datatype);
 
+		Hashtable<String,Hashtable<String,String>> lookup = new Hashtable<String, Hashtable<String,String>>();
+		
+		Query query = QueryFactory.create(sparqlQuery);
+		QueryExecution qe = QueryExecutionFactory.create(query,model);
+		ResultSet rs = qe.execSelect();
+
+		while (rs.hasNext()) {
+			QuerySolution qs = rs.next();
+			RDFNode compound = qs.get("compound");
+			RDFNode node = qs.get("m");
+			RDFNode accession = qs.get("accession");
+			RDFNode file = qs.get("file");
+			logger.info(node + "\t" + file + "\t" + accession);
+			System.err.println(node + "\t" + file + "\t" + accession + "\t"+ compound);
+			Hashtable<String,String> map = lookup.get(file.asLiteral().getString());
+			if (map==null) {
+				map = new Hashtable<String, String>();
+				lookup.put(file.asLiteral().getString(),map);
+			}
+			map.put(accession.asLiteral().getString(), node.asResource().getURI());
+		}	
+		return lookup;
+	}
 }

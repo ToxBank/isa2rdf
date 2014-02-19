@@ -96,13 +96,16 @@ public class DataMatrixConverter extends AbstractDataMatrixConverter {
 						String sampleName = null;
 						int quote = value.indexOf('\'');
 						if (quote>0) {
+							
 							lookupValue = value.substring(0,quote).trim();
 							sampleName = value.substring(quote+1,value.length()-1).trim();
-						} else if (matrix.getColumn("")!=null) {
-							lookupValue = "";
-							sampleName = value;
 						}
 						ObjectNode column = matrix.getColumn(lookupValue);
+						if ((column==null) && (matrix.getColumn("")!=null)) {
+							lookupValue = "";
+							sampleName = value;
+							column = matrix.getColumn(lookupValue);
+						}
 						header.add(column==null?null:lookupValue);
 						samples.add(sampleName);
 						matrix.createFeatureURI(lookupValue, sampleName, UUID.randomUUID().toString());
