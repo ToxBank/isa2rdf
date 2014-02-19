@@ -308,8 +308,10 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			for (Annotation a : data.getAnnotations()) {
 				if ("proteinsFile".equals(a.getType().getValue()))
 						resource.addProperty(RDFS.seeAlso, a.getText());
-				else if ("metaboliteFile".equals(a.getType().getValue()))
+				else if ("metaboliteFile".equals(a.getType().getValue())) {
 					resource.addProperty(RDFS.seeAlso, a.getText());
+					resource.addProperty(RDF.type,ISA.MetabolightsData);
+				}	
 
 			}
 			

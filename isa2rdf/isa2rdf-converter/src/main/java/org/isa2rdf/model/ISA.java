@@ -80,6 +80,7 @@ public class ISA {
     public static final Resource ProtocolApplication = resource("ProtocolApplication");
     public static final Resource Material = resource("Material"); 
     public static final Resource Data = resource("Data");
+    public static final Resource MetabolightsData = resource("MetabolightsData");
     public static final Resource AssayResult = resource("AssayResult");
     /**
      * TODO : replace with ToxBank User object or FOAF: Person

@@ -56,6 +56,7 @@ public class IsaClient {
 	protected String investigationURI;
 	protected String toxbankuri;
 	
+	private final static String metabolomics = "http://onto.toxbank.net/isa/bii/data_types/metabolomics";
 	private final static String microarray_derived_data = "http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data";
 	private final static String ms_spec_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/ms_spec_derived_data";
 	private final static String nmr_spec_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/nmr_spec_derived_data";
@@ -85,9 +86,13 @@ public class IsaClient {
 							generic_assay_derived_data
 						};
 				for (String datatype: supported_datatype) {
+					String mdatatype = datatype;
 					Hashtable<String,Hashtable<String,String>> lookup = null;
-					if (nmr_spec_derived_data.equals(datatype)) {//metabolite files are linked to sample nodes, not data nodes! 
+					if (nmr_spec_derived_data.equals(datatype) || ms_spec_derived_data.equals(datatype)) {//metabolite files are linked to sample nodes, not data nodes! 
 						lookup = getMaterialEntries(model, datatype);
+						if (lookup.size()==0)
+							lookup = getDataEntries(model, datatype);
+						else mdatatype = "metabolomics"; 
 					} else 
 						lookup = getDataEntries(model, datatype);
 					logger.info(String.format("%s data files of type ",(lookup!=null && lookup.size()>0)?"Found ":"Not found ",datatype));
@@ -95,7 +100,7 @@ public class IsaClient {
 					Enumeration<String> keys = lookup.keys();
 					while (keys.hasMoreElements()) {
 						String fileName = keys.nextElement();
-						DataMatrixConverter matrix = new DataMatrixConverter(datatype,lookup.get(fileName),investigationURI);
+						DataMatrixConverter matrix = new DataMatrixConverter(mdatatype,lookup.get(fileName),investigationURI);
 						FileReader reader = null;
 						FileOutputStream out = null;
 						try {
@@ -615,6 +620,7 @@ class uk.ac.ebi.bioinvindex.model.Contact
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"+
 				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
 				"SELECT ?m ?file ?accession ?compound where {\n" +
+				"   ?d rdf:type isa:MetabolightsData."+				
 				"	?d isa:hasOntologyTerm  <%s>." +
 				"   ?d rdfs:seeAlso ?file."+
 				"	?dnode isa:hasData ?d." +
@@ -630,7 +636,7 @@ class uk.ac.ebi.bioinvindex.model.Contact
 				"   ?fv isa:hasOntologyTerm ?compound."+
 				//"   ?f isa:hasOntologyTerm <http://purl.obolibrary.org/chebi/CHEBI:24431>."+ same as the filter below
 				"   FILTER (str(?ftype) = 'compound')"+
-				"} \n",
+				"} GROUP BY ?m ?file ?accession ?compound \n",
 				TOXBANK.URI,
 				ISA.URI,datatype);
 
@@ -639,21 +645,25 @@ class uk.ac.ebi.bioinvindex.model.Contact
 		Query query = QueryFactory.create(sparqlQuery);
 		QueryExecution qe = QueryExecutionFactory.create(query,model);
 		ResultSet rs = qe.execSelect();
-
+		
+		int row =0;
 		while (rs.hasNext()) {
 			QuerySolution qs = rs.next();
+			RDFNode dnode = qs.get("dnode");
+			RDFNode mnode = qs.get("mnode");
+			
 			RDFNode compound = qs.get("compound");
 			RDFNode node = qs.get("m");
 			RDFNode accession = qs.get("accession");
 			RDFNode file = qs.get("file");
-			logger.info(node + "\t" + file + "\t" + accession);
-			System.err.println(node + "\t" + file + "\t" + accession + "\t"+ compound);
+			logger.debug(  node + "\t" + file + "\t" + accession + "\t"+ compound);
 			Hashtable<String,String> map = lookup.get(file.asLiteral().getString());
 			if (map==null) {
 				map = new Hashtable<String, String>();
 				lookup.put(file.asLiteral().getString(),map);
 			}
 			map.put(accession.asLiteral().getString(), node.asResource().getURI());
+			row++;
 		}	
 		return lookup;
 	}
