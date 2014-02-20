@@ -90,15 +90,17 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			}
 			
 			if (item.getCompound()!=null) {
-				Iterator<String> compounds = item.getCompound().getFieldNames();
-				if (compounds!=null)
-				while (compounds.hasNext()) {
-					String uri = createCompoundURI(item,compounds.next());
+				JsonNode compound = item.getCompound();
+				try {
+					String dbid = compound.get("database_identifier").asText();
+					String uri = createCompoundURI(item,dbid);
 					getOutput().writeStartElement(OT.NS,"compound"); //property
 					getOutput().writeStartElement(OT.NS,"Compound"); //property
 					getOutput().writeAttribute(RDF.getURI(),"about",uri);
 					getOutput().writeEndElement();
-					getOutput().writeEndElement();
+					getOutput().writeEndElement();					
+				} catch (Exception x) {
+					//if no db identifier, skip
 				}
 			}
 			
@@ -313,8 +315,14 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 		}
 		
 		
-		protected String createCompoundURI(DataMatrix matrix,String compound) {
-			return String.format("%s%s/%s", OT.NS,"/compound",UUID.randomUUID().toString());
+		protected String createCompoundURI(DataMatrix matrix,String dbid) {
+			String udbid = dbid.toUpperCase();
+			if (udbid.startsWith("CHEBI:"))
+				return String.format("http://purl.obolibrary.org/chebi/%s",udbid);
+			else if (udbid.startsWith("CID")) //pubchem
+				return String.format("https://rdf.ncbi.nlm.nih.gov/pubchem/compound/%s",udbid);
+			else 
+				return String.format("%s%s/%s", OT.NS,"/compound",dbid);
 		}		
 
 		protected String createGeneURI(DataMatrix matrix,String gene) {

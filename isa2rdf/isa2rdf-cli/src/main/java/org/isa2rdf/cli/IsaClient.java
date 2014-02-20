@@ -29,6 +29,7 @@ import org.apache.jena.riot.RDFFormat;
 import org.apache.log4j.Logger;
 import org.isa2rdf.datamatrix.DataMatrixConverter;
 import org.isa2rdf.model.ISA;
+import org.isa2rdf.model.ISADataTypes;
 import org.isatools.isatab.ISATABValidator;
 import org.isatools.isatab.gui_invokers.GUIInvokerResult;
 import org.isatools.isatab_v1.ISATABLoader;
@@ -56,11 +57,6 @@ public class IsaClient {
 	protected String investigationURI;
 	protected String toxbankuri;
 	
-	private final static String metabolomics = "http://onto.toxbank.net/isa/bii/data_types/metabolomics";
-	private final static String microarray_derived_data = "http://onto.toxbank.net/isa/bii/data_types/microarray_derived_data";
-	private final static String ms_spec_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/ms_spec_derived_data";
-	private final static String nmr_spec_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/nmr_spec_derived_data";
-	private final static String generic_assay_derived_data =  "http://onto.toxbank.net/isa/bii/data_types/generic_assay_derived_data";
 	
 	public Model  processAndSave() throws Exception {
 		Model model = process(dir);
@@ -79,28 +75,24 @@ public class IsaClient {
 			
 			if (outDatafilesDir!=null) {
 				logger.info("Converted data files will be written to "+outDatafilesDir);
-				final String[] supported_datatype = {
-							microarray_derived_data,
-							ms_spec_derived_data,
-							nmr_spec_derived_data,
-							generic_assay_derived_data
-						};
-				for (String datatype: supported_datatype) {
-					String mdatatype = datatype;
+				
+				for (ISADataTypes datatype: ISADataTypes.values()) {
+					if (!datatype.isNative()) continue;
+					ISADataTypes mdatatype = datatype;
 					Hashtable<String,Hashtable<String,String>> lookup = null;
-					if (nmr_spec_derived_data.equals(datatype) || ms_spec_derived_data.equals(datatype)) {//metabolite files are linked to sample nodes, not data nodes! 
-						lookup = getMaterialEntries(model, datatype);
+					if (ISADataTypes.nmr_spec_derived_data.equals(datatype) || ISADataTypes.ms_spec_derived_data.equals(datatype)) {//metabolite files are linked to sample nodes, not data nodes! 
+						lookup = getMaterialEntries(model, datatype.toString());
 						if (lookup.size()==0)
-							lookup = getDataEntries(model, datatype);
-						else mdatatype = "metabolomics"; 
+							lookup = getDataEntries(model, datatype.toString());
+						else mdatatype = ISADataTypes.metabolomics; 
 					} else 
-						lookup = getDataEntries(model, datatype);
+						lookup = getDataEntries(model, datatype.toString());
 					logger.info(String.format("%s data files of type ",(lookup!=null && lookup.size()>0)?"Found ":"Not found ",datatype));
 					logger.info(lookup);
 					Enumeration<String> keys = lookup.keys();
 					while (keys.hasMoreElements()) {
 						String fileName = keys.nextElement();
-						DataMatrixConverter matrix = new DataMatrixConverter(mdatatype,lookup.get(fileName),investigationURI);
+						DataMatrixConverter matrix = new DataMatrixConverter(mdatatype.toString(),lookup.get(fileName),investigationURI);
 						FileReader reader = null;
 						FileOutputStream out = null;
 						try {
