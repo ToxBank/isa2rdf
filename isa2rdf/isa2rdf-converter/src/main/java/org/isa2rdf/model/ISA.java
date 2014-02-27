@@ -169,7 +169,7 @@ public class ISA {
     //Contacts can be Investigation or Study owners
     public static final Property HASOWNER = property("hasOwner");
     public static final Property HASORDERDAUTHOR = property("hasOrderedAuthor");
-    public static final Property HASORDER = property("hasOrderedAuthor");
+    public static final Property HASORDER = property("hasOrder");
     public static final Property HASUNITVALUE = property("hasUnitValue");
     public static final Property HASUNIT = property("hasUnit");
 
