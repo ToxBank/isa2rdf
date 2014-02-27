@@ -293,6 +293,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 				}
 			}
 		}
+		int order = 0;
 		
 		for (Contact contact: investigation.getContacts()) {
 			
@@ -324,6 +325,10 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 				getModel().add(resource, OWL.sameAs, getResourceID(contact, ISA.Contact)); 
 			} catch (Exception x) {}
 			
+			Resource orderedAuthor = getModel().createResource();
+			getModel().add(investigationResource,ISA.HASORDERDAUTHOR,orderedAuthor);
+			getModel().add(orderedAuthor,TOXBANK.HASAUTHOR,resource);
+			getModel().addLiteral(orderedAuthor,ISA.HASORDER,++order);
 		}
 		/**
 		 * CiTO
