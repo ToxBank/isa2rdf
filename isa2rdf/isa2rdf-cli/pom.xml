@@ -5,11 +5,11 @@
   <parent>
     <artifactId>isa2rdf</artifactId>
     <groupId>net.toxbank</groupId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <groupId>net.toxbank</groupId>
   <artifactId>isa2rdf-cli</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <name>isa2rdf-cli</name>
   <description>ISA-TAB to RDF conversion</description>
   <url>http://maven.apache.org</url>
