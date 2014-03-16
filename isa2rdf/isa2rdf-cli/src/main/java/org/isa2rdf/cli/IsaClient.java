@@ -16,8 +16,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
 
-import junit.framework.Assert;
-
 import net.toxbank.client.io.rdf.TOXBANK;
 
 import org.apache.commons.cli.CommandLine;
