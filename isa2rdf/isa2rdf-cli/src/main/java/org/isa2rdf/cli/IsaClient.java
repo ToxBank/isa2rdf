@@ -1,11 +1,13 @@
 package org.isa2rdf.cli;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -13,6 +15,8 @@ import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
+
+import junit.framework.Assert;
 
 import net.toxbank.client.io.rdf.TOXBANK;
 
@@ -24,8 +28,20 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.jena.atlas.lib.Sink;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.riot.RDFLanguages;
+import org.apache.jena.riot.RiotReader;
+import org.apache.jena.riot.lang.LangRIOT;
+import org.apache.jena.riot.out.SinkTripleOutput;
+import org.apache.jena.riot.system.ErrorHandler;
+import org.apache.jena.riot.system.ErrorHandlerFactory;
+import org.apache.jena.riot.system.ParserProfile;
+import org.apache.jena.riot.system.RiotLib;
+import org.apache.jena.riot.system.StreamRDF;
+import org.apache.jena.riot.system.StreamRDFLib;
+import org.apache.jena.riot.system.SyntaxLabels;
 import org.apache.log4j.Logger;
 import org.isa2rdf.datamatrix.DataMatrixConverter;
 import org.isa2rdf.model.ISA;
@@ -39,6 +55,7 @@ import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Identifiable;
 
+import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -95,10 +112,12 @@ public class IsaClient {
 						DataMatrixConverter matrix = new DataMatrixConverter(mdatatype.toString(),lookup.get(fileName),investigationURI);
 						FileReader reader = null;
 						FileOutputStream out = null;
+						File file = new File(dir,fileName);
+						File rdfFile = new File(outDatafilesDir,FilenameUtils.removeExtension(file.getName())+".rdf");
+						File ntriplesFile = new File(outDatafilesDir,FilenameUtils.removeExtension(file.getName())+".nt");
+				        long now = System.currentTimeMillis();
 						try {
-							File file = new File(dir,fileName);
-							File outFile = new File(outDatafilesDir,FilenameUtils.removeExtension(file.getName())+".rdf");
-							out = new FileOutputStream(outFile);
+							out = new FileOutputStream(rdfFile);
 							if (file.exists()) {
 								reader = new FileReader(file);
 								matrix.writeRDF(reader, fileName , -1, out);
@@ -107,7 +126,19 @@ public class IsaClient {
 						} catch (Exception x) {
 							logger.error(x);
 						} finally {
+							logger.info(".rdf file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
 							try {if (reader!=null)reader.close();} catch (Exception x) {}
+							try {if (out!=null) out.close();} catch (Exception x) {}
+						}
+				        now = System.currentTimeMillis();
+						InputStream in = null;
+						try {
+							in = new FileInputStream(rdfFile);
+							out = new FileOutputStream(ntriplesFile);
+							IsaClient.rdfxml2ntriples(in,out);
+							logger.info(".nt file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
+						} finally {
+							try {if (in!=null) in.close();} catch (Exception x) {}
 							try {if (out!=null) out.close();} catch (Exception x) {}
 						}
 					}
@@ -659,4 +690,21 @@ class uk.ac.ebi.bioinvindex.model.Contact
 		}	
 		return lookup;
 	}
+	public static void rdfxml2ntriples(InputStream in, OutputStream out) throws Exception {
+		
+        Sink<Triple> output = new SinkTripleOutput(out, null, SyntaxLabels.createNodeToLabel()) ;
+        StreamRDF sink = StreamRDFLib.sinkTriples(output);
+        String baseURI = "http://example/base" ;
+		LangRIOT parser = RiotReader.createParser(in, RDFLanguages.RDFXML, baseURI, sink) ;
+        // Parser to first error or warning.
+        ErrorHandler errHandler = ErrorHandlerFactory.errorHandlerStrict ;
+        // Now enable stricter checking, even N-TRIPLES must have absolute URIs. 
+        ParserProfile profile = RiotLib.profile("http", true, true, errHandler) ;
+        // Just set the error handler.
+        //parser.getProfile().setHandler(errHandler) ;
+        // Or replace the whole parser profile.
+        parser.setProfile(profile) ;
+        // Do the work.
+        parser.parse() ;
+	}	
 }
