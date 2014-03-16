@@ -1,29 +1,26 @@
 package org.isa2rdf.cli;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.UUID;
 
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
-import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.isa2rdf.cli.IsaClient._option;
-import org.isa2rdf.datamatrix.DataMatrixConverter;
 import org.isa2rdf.model.ISA;
 import org.isatools.isatab.isaconfigurator.ISAConfigurationSet;
 import org.isatools.tablib.mapping.properties.PropertyMappingHelper;
 import org.isatools.tablib.utils.BIIObjectStore;
+import org.junit.Test;
 
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -42,7 +39,6 @@ import com.hp.hpl.jena.vocabulary.DCTerms;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
-
 
 
 /**
@@ -138,15 +134,41 @@ public class AppTest  {
 	@org.junit.Test
 	public void testRDF_NOTOX() throws Exception {
 		//String file = "D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx";
-		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx";
+		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx";
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex 12-nov-2013/NOTOX-APAP-Ex";
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Px 12-nov-2013/NOTOX-APAP-Px";
-		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex_archive 6-dec-2013";
+		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex_archive 6-dec-2013";
+		//String file = "D:/src-toxbank/isa-tab-files/TG-GATES_archive";
+		//String file = "D:/src-toxbank/isa-tab-files/D-IMU-1_archive";
+		
 		Model model = testRDF(new File(file));
 		
 		
 		//Model model = testRDF("toxbank//LCMSMS_archive");
 		testKeywords(model, 4);
+		//testTitleAndAbstract(model);
+		//testToxBankResources(model,1);
+		//testRetrieveAllToxbankProtocols(model);
+		//testRetrieveAllProtocols(model,10);
+		//testRetrieveAllStudiesAndProtocols(model);
+		//testToxbankHasProtocol(model,11);
+		//testToxbankHasAuthor(model,1);
+		//testToxbankHasProject(model,1);
+		//JsonNode root = testGraph(model, 14,"toxbank//NOTOX-APAP-Tx");
+		//model.write(System.out,"N3");
+		model.close();
+	}
+
+	
+	@org.junit.Test
+	public void testRDF_DIMU() throws Exception {
+		String file = "D:/src-toxbank/isa-tab-files/D-IMU-1_archive";
+		
+		Model model = testRDF(new File(file));
+		
+		
+		//Model model = testRDF("toxbank//LCMSMS_archive");
+		testKeywords(model, 8);
 		//testTitleAndAbstract(model);
 		//testToxBankResources(model,1);
 		//testRetrieveAllToxbankProtocols(model);
@@ -872,6 +894,22 @@ public class AppTest  {
 		return model;
 
 	}
+	
+	@Test
+	public void testRIOT() throws Exception {
+		InputStream in = new FileInputStream(
+				//new File("D:/src-toxbank/isa-tab-files/NOTOX-APAP-Px 12-nov-2013/NOTOX-APAP-Px/NOTOX_APAP_Px_Protein_Assignment_File.rdf"));
+				new File("D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx/NOTOX_PILOT_APAP_DerivedTxDataMatrix.rdf"));
+		Assert.assertNotNull(in);
+		FileOutputStream out = new FileOutputStream(new File("D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx/NOTOX_PILOT_APAP_DerivedTxDataMatrix.ntriples"));
+        long now = System.currentTimeMillis();
+		IsaClient.rdfxml2ntriples(in,out,"http://example.com");
+        System.out.println((System.currentTimeMillis()-now)/1000+ " sec");
+		in.close();
+		out.close();
+	}
+	
+
 	
 	protected void print(Model model) throws Exception {
 		Model newModel = ModelFactory.createDefaultModel();

@@ -102,7 +102,6 @@ public class AbstractDataMatrixConverter {
 			RDFNode title = qs.get("title");
 			RDFNode value = qs.get("value");
 			row++;
-			System.out.println(node + "\t" + feature + "\t" + title + "\t" + value.asLiteral().getDouble());
 		}	
 		return row;//lookup;
 	}	

@@ -76,6 +76,7 @@ public class IsaClient {
 	public Model  processAndSave() throws Exception {
 		Model model = process(dir);
 		Writer writer = null;
+		long now = System.currentTimeMillis();
 		try {
 			if (outfile==null) writer = new OutputStreamWriter(System.out);
 			else {
@@ -86,7 +87,7 @@ public class IsaClient {
 							 (outfile.endsWith(".nt")?"text/n-triples":"application/rdf+xml"), true);
 			
 			writer.close(); writer = null;
-			
+			logger.info(outfile +" file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
 			
 			if (outDatafilesDir!=null) {
 				logger.info("Converted data files will be written to "+outDatafilesDir);
@@ -113,7 +114,7 @@ public class IsaClient {
 						File file = new File(dir,fileName);
 						File rdfFile = new File(outDatafilesDir,FilenameUtils.removeExtension(file.getName())+".rdf");
 						File ntriplesFile = new File(outDatafilesDir,FilenameUtils.removeExtension(file.getName())+".nt");
-				        long now = System.currentTimeMillis();
+				        now = System.currentTimeMillis();
 						try {
 							out = new FileOutputStream(rdfFile);
 							if (file.exists()) {
@@ -124,21 +125,25 @@ public class IsaClient {
 						} catch (Exception x) {
 							logger.error(x);
 						} finally {
-							logger.info(".rdf file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
+							logger.warn(".rdf file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
 							try {if (reader!=null)reader.close();} catch (Exception x) {}
 							try {if (out!=null) out.close();} catch (Exception x) {}
 						}
 				        now = System.currentTimeMillis();
-						InputStream in = null;
-						try {
-							in = new FileInputStream(rdfFile);
-							out = new FileOutputStream(ntriplesFile);
-							IsaClient.rdfxml2ntriples(in,out);
-							logger.info(".nt file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
-						} finally {
-							try {if (in!=null) in.close();} catch (Exception x) {}
-							try {if (out!=null) out.close();} catch (Exception x) {}
-						}
+				        if ((outfile==null) || outfile.endsWith(".nt")) {
+							InputStream in = null;
+							try {
+								in = new FileInputStream(rdfFile);
+								out = new FileOutputStream(ntriplesFile);
+								IsaClient.rdfxml2ntriples(in,out,investigationURI);
+								logger.warn(".nt file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
+							} finally {
+								try {if (in!=null) in.close();} catch (Exception x) {}
+								try {if (out!=null) out.close();} catch (Exception x) {}
+							}
+							if (outfile!=null)
+								rdfFile.delete();
+				        }
 					}
 					
 			}
@@ -688,11 +693,10 @@ class uk.ac.ebi.bioinvindex.model.Contact
 		}	
 		return lookup;
 	}
-	public static void rdfxml2ntriples(InputStream in, OutputStream out) throws Exception {
+	public static void rdfxml2ntriples(InputStream in, OutputStream out,String baseURI) throws Exception {
 		
         Sink<Triple> output = new SinkTripleOutput(out, null, SyntaxLabels.createNodeToLabel()) ;
         StreamRDF sink = StreamRDFLib.sinkTriples(output);
-        String baseURI = "http://example/base" ;
 		LangRIOT parser = RiotReader.createParser(in, RDFLanguages.RDFXML, baseURI, sink) ;
         // Parser to first error or warning.
         ErrorHandler errHandler = ErrorHandlerFactory.errorHandlerStrict ;

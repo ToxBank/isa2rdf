@@ -353,21 +353,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 			for (AssayResult ar : study.getAssayResults()) {
 				Resource rData = getResourceID(ar.getData(), ISA.Data);
 				rData.addProperty(RDF.type, ISA.AssayResult);
-				
-		
-				
-				//System.out.println(ar);
-				//System.out.println(ar.getData());
-				/*
-				for (BioEntity bioentity : ar.getBioEntities()) {
-					System.out.println("Bioentity" + bioentity.getDescription());
-				}
-				*/
-				/*
-				for (FactorValue fv : ar.getFactorValues()) {
-					System.out.println(fv.getType().getValue() + "=" + fv.getValue());
-				}
-				*/
+	
 				
 				for (PropertyValue fv : ar.getCascadedPropertyValues()) {
 					if (fv==null) continue;
@@ -487,12 +473,7 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 					getModel().add(studyResource,ISA.HASOWNER,contactResource);
 				}
 			}
-				
-			/*
-			for (AssayResult ar : study.getAssayResults()) {
-				System.out.println(ar);
-			}
-			*/
+
 		}		
 		
 		//GraphElement
@@ -501,26 +482,6 @@ public abstract class RDFGenerator<NODE extends Identifiable,MODEL extends Model
 				resource.addProperty(ISA.HASSTUDY, getResourceID(((GraphElement) node).getStudy(),ISA.Study));
 		}
 
-		//Node
-		/**FIXME something is wrong, owl gets broken ... perhaps consider assayfields as resources not literals
-		if (node instanceof Node) {
-
-			if (((Node) node).getSampleFileId()!=null)
-				resource.addProperty(ISA.HASSAMPLEFIELD,((Node) node).getSampleFileId() );
-	
-			
-			if (((Node) node).getAssayFileIds()!=null) {
-				Iterator assayFields = ((Node) node).getAssayFileIds().iterator();
-				while (assayFields.hasNext()) {
-					String assayField = assayFields.next().toString();
-					resource.addLiteral(ISA.HASASSAYFIELD,assayField);
-					System.out.println(node.getClass().getName() + " " + resource.getURI() + " "+ assayField);
-				}
-			}
-			
-		}		
-	*/
-	
 		return resource;
 	}
 	

@@ -36,7 +36,6 @@ public class DataMatrixConverter extends AbstractDataMatrixConverter {
 				}
 				@Override
 				public DataMatrix process(DataMatrix row) throws Exception {
-					//System.out.println(row);
 					rdfwriter.process(row);	
 					return row;
 				}
@@ -45,9 +44,6 @@ public class DataMatrixConverter extends AbstractDataMatrixConverter {
 					rdfwriter.footer(writer);	
 				}
 			},maxrows);
-			//System.out.println();
-			//System.out.println(matrix);
-					
 				
 		} catch (Exception x) {
 			x.printStackTrace();
