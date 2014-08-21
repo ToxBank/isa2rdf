@@ -289,6 +289,7 @@ public class DatasetRDFWriter extends AbstractStaxRDFWriter<DataMatrix> implemen
 			getOutput().writeStartElement(OT.NS,"hasSource"); //feature
 			
 			if (uri==null) {
+				logger.log(Level.SEVERE,"No resource link for "+label);
 				getOutput().writeCharacters(label); //TODO this is wrong, should be a resource 
 			} else {
 				getOutput().writeStartElement(namespace,otclass); //algorithm or model
