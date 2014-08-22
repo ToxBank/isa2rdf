@@ -12,9 +12,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
+
+import junit.framework.Assert;
 
 import net.toxbank.client.io.rdf.TOXBANK;
 
@@ -52,6 +56,8 @@ import org.isatools.tablib.schema.FormatSetInstance;
 import org.isatools.tablib.utils.BIIObjectStore;
 
 import uk.ac.ebi.bioinvindex.model.Identifiable;
+import uk.ac.ebi.bioinvindex.model.processing.Processing;
+import uk.ac.ebi.bioinvindex.utils.DotGraphGenerator;
 
 import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.query.Query;
@@ -71,8 +77,15 @@ public class IsaClient {
 	protected String outDatafilesDir;
 	protected String investigationURI;
 	protected String toxbankuri;
+	protected boolean generateGraph = false;
 	
 	
+	public boolean isGenerateGraph() {
+		return generateGraph;
+	}
+	public void setGenerateGraph(boolean generateGraph) {
+		this.generateGraph = generateGraph;
+	}
 	public Model  processAndSave() throws Exception {
 		Model model = process(dir);
 		Writer writer = null;
@@ -134,9 +147,13 @@ public class IsaClient {
 							InputStream in = null;
 							try {
 								in = new FileInputStream(rdfFile);
-								out = new FileOutputStream(ntriplesFile);
-								IsaClient.rdfxml2ntriples(in,out,investigationURI);
-								logger.warn(".nt file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
+								if (in!=null) {
+									out = new FileOutputStream(ntriplesFile);
+									IsaClient.rdfxml2ntriples(in,out,investigationURI);
+									logger.warn(".nt file written in " + (System.currentTimeMillis()-now)/1000+ " sec");
+								}
+							} catch (Exception x) {
+								logger.error(x);
 							} finally {
 								try {if (in!=null) in.close();} catch (Exception x) {}
 								try {if (out!=null) out.close();} catch (Exception x) {}
@@ -177,6 +194,19 @@ public class IsaClient {
 		
         BIIObjectStore store = validate(filesPath);
         
+        if (generateGraph) {
+	        Collection<Identifiable> objects = new ArrayList<Identifiable>();
+	        objects.addAll(store.values(Processing.class));
+	        Assert.assertNotNull(store);
+	        
+	        DotGraphGenerator gen = new DotGraphGenerator(objects);
+	        
+	        String dotFileName = filesPath + "/isatab.dot";
+	        gen.createGraph(dotFileName);
+	    	System.out.println("\n\nExperimental Graph written in " + dotFileName);
+	    	objects.clear();
+        }
+    	
         Set<Class<? extends Identifiable>> types = store.types();
         //add id
         long tempIdCounter = 1;
@@ -228,7 +258,7 @@ class uk.ac.ebi.bioinvindex.model.Contact
         		throw new Exception("Invalid investigation URI "+investigationURI);
         }	
         ProcessingPipelineRDFGenerator gen = new ProcessingPipelineRDFGenerator(
-        		toxbankuri==null?"http://toxbanktest1.opentox.org:8080/toxbank":toxbankuri,prefix,store);
+        		toxbankuri==null?"http://services.toxbank.net/toxbank":toxbankuri,prefix,store);
         gen.setTempIdCounter(tempIdCounter);
         return gen.createGraph();
 	}
