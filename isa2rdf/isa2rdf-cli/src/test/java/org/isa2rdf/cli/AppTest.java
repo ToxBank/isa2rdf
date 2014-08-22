@@ -10,6 +10,8 @@ import java.util.UUID;
 import junit.framework.Assert;
 import net.toxbank.client.io.rdf.TOXBANK;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
@@ -80,6 +82,25 @@ public class AppTest  {
 
 		model.close();
 	}
+	@Test
+	public void testRDF_TGGATES_analysis() throws Exception {
+
+		//File file = new File("D:/src-toxbank/isa-tab-files/TB-TG-GATES-GC-I1b");
+		File file = new File("D:/src-toxbank/isa-tab-files/GC-ToxBank-20_dev","http://toxbanktest2.toxbank.net:8080/toxbank");
+		Model model = testRDF(file);
+		//testKeywords(model, 23);
+		testTitleAndAbstract(model);
+		//testToxBankResources(model);
+		//testRetrieveAllToxbankProtocols(model);
+		//testRetrieveAllProtocols(model,1);
+		//testRetrieveAllStudiesAndProtocols(model,1);
+		//testToxbankHasProtocol(model,1);
+		//testToxbankHasAuthor(model,1);
+
+		model.close();
+		
+	}
+	
 	@org.junit.Test
 	public void testRDF_BII_I_1() throws Exception {
 		Model model = testRDF("toxbank//BII-I-1");
@@ -134,18 +155,21 @@ public class AppTest  {
 	@org.junit.Test
 	public void testRDF_NOTOX() throws Exception {
 		//String file = "D://src-toxbank//isa-tab-files//NOTOX-APAP-Tx";
-		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx 12-nov-2013/NOTOX-APAP-Tx";
+		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Tx";
+		String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-PILOT";
+		
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex 12-nov-2013/NOTOX-APAP-Ex";
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Px 12-nov-2013/NOTOX-APAP-Px";
 		//String file = "D:/src-toxbank/isa-tab-files/NOTOX-APAP-Ex_archive 6-dec-2013";
 		//String file = "D:/src-toxbank/isa-tab-files/TG-GATES_archive";
 		//String file = "D:/src-toxbank/isa-tab-files/D-IMU-1_archive";
 		
+		
 		Model model = testRDF(new File(file));
 		
 		
 		//Model model = testRDF("toxbank//LCMSMS_archive");
-		testKeywords(model, 4);
+		//testKeywords(model, 18);
 		//testTitleAndAbstract(model);
 		//testToxBankResources(model,1);
 		//testRetrieveAllToxbankProtocols(model);
@@ -159,7 +183,26 @@ public class AppTest  {
 		model.close();
 	}
 
+	@org.junit.Test
+	public void testRDF_SCRTOXSTATINS() throws Exception {
+		String file = "D://src-toxbank//isa-tab-files//ST-Statin-DP-1_archive";
+		
+		Model model = testRDF(new File(file));
+		model.close();
+	}
 	
+	
+	@org.junit.Test
+	public void testRDF_NP() throws Exception {
+		String file = "F://nina/Ideaconsult/Projects/2014 - eNanoMapper/2014/ISA-TAB-nano/ISA-TAB-Nano-1.1/EMORY_ONT-GleeACSNano2013";
+		
+		Logger logger = Logger.getLogger("org.isatools.*");
+		logger.setLevel(Level.ALL);
+		Model model = testRDF(new File(file));
+		
+		model.close();
+	}
+
 	@org.junit.Test
 	public void testRDF_DIMU() throws Exception {
 		String file = "D:/src-toxbank/isa-tab-files/D-IMU-1_archive";
@@ -169,6 +212,28 @@ public class AppTest  {
 		
 		//Model model = testRDF("toxbank//LCMSMS_archive");
 		testKeywords(model, 8);
+		//testTitleAndAbstract(model);
+		//testToxBankResources(model,1);
+		//testRetrieveAllToxbankProtocols(model);
+		//testRetrieveAllProtocols(model,10);
+		//testRetrieveAllStudiesAndProtocols(model);
+		//testToxbankHasProtocol(model,11);
+		//testToxbankHasAuthor(model,1);
+		//testToxbankHasProject(model,1);
+		//JsonNode root = testGraph(model, 14,"toxbank//NOTOX-APAP-Tx");
+		//model.write(System.out,"N3");
+		model.close();
+	}
+	
+	@org.junit.Test
+	public void testRDF_D_UKK_21() throws Exception {
+		//String file = "D:/src-toxbank/isa-tab-files/D-UKK-21_archive";
+		String file = "D:/src-toxbank/isa-tab-files/JRCHepatoxicityInvestigation(ChangedProtocolNumber)";
+		Model model = testRDF(new File(file));
+		
+		
+		//Model model = testRDF("toxbank//LCMSMS_archive");
+		testKeywords(model, 5);
 		//testTitleAndAbstract(model);
 		//testToxBankResources(model,1);
 		//testRetrieveAllToxbankProtocols(model);
@@ -203,7 +268,6 @@ public class AppTest  {
 
 
 	}
-	
 	
 	@org.junit.Test
 	public void testRDF_NTAP() throws Exception {
@@ -860,14 +924,20 @@ public class AppTest  {
 		Assert.assertNotNull(url);
 		return testRDF(new File(url.getFile()));
 	}
+	
 	public Model testRDF(File filesDir) throws Exception {
+		return testRDF(filesDir,"https://services.toxbank.net/toxbank");
+	}
+	public Model testRDF(File filesDir,String toxbankURI) throws Exception {
 		Assert.assertTrue(filesDir.isDirectory());
 		String config = getClass().getClassLoader().getResource("toxbank-config").getFile();
 		System.out.println(config);
 		ISAConfigurationSet.setConfigPath(config);
 
 		IsaClient cli = new IsaClient();
-		cli.setOption(_option.toxbankuri, "https://services.toxbank.net/toxbank");
+		cli.setGenerateGraph(true);
+		cli.setOption(_option.toxbankuri, toxbankURI==null?"https://services.toxbank.net/toxbank":toxbankURI);
+		//cli.setOption(_option.toxbankuri, "http://toxbanktest2.toxbank.net:8080/toxbank");
 		cli.setOption(_option.outdatafilesdir, filesDir.getAbsolutePath());
 		cli.setOption(_option.dir, filesDir.getAbsolutePath());
 		cli.setOption(_option.investigationuri, "https://services.toxbank.net/investigation/"+UUID.randomUUID().toString());
