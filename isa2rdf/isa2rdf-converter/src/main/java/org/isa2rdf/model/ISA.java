@@ -178,6 +178,7 @@ public class ISA {
     public static final Property USESPLATFORM= property("usesPlatform");
     
     public static final Property HASPROBE= property("hasProbe");
+    public static final Property HASRESULT= property("hasResult");
     
     public static void init(Model model) {
     	 resourceWithParent(model,ANNOTATABLE,IDENTIFIABLE);
@@ -244,8 +245,10 @@ public class ISA {
     	     * DataNode HASDATA Data
     	     */
     	propertyWithDomainRange(model,HASDATA,DataNode,Data,OWL.ObjectProperty,true);     
-    	    
+    	/*
+    	 * commented out; because nodes us ethe same hasStudy property, they are considered rdf:type isa:Investigation, when imported in triple store!     
     	propertyWithDomainRange(model,HASSTUDY,Investigation,Study,OWL.ObjectProperty,false);
+    	*/
     	propertyWithDomainRange(model,HASASSAY,Study,Assay,OWL.ObjectProperty,false);
     	
     	propertyWithDomainRange(model,HASPROTOCOL,Study,Protocol,OWL.ObjectProperty,false);
