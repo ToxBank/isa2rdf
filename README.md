@@ -26,10 +26,11 @@ ISA-TAB to RDF conversion
 
 ##Download 
 
-### [isa2rdf-1.0.2-SNAPSHOT.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~1.0.2-SNAPSHOT~~)
->java -jar isa2rdf-1.0.2-SNAPSHOT.jar
+### [isa2rdf-1.0.2.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~1.0.2~~)
+>java -jar isa2rdf-1.0.2.jar
 
    * The data file conversion generates .nt files ([N-TRIPLES](http://www.w3.org/2001/sw/RDFCore/ntriples/)) as well 
+   * Converts Comment[Investigation licence] field (investigation.txt file into dcterms:license triple.
 
 
 ### [isa2rdf-1.0.1.jar] (http://ambit.uni-plovdiv.bg:8083/nexus/index.html#nexus-search;gav~~isa2rdf-cli~1.0.1~~)
