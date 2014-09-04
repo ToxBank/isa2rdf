@@ -59,6 +59,10 @@
         <ontology id="TBK" abbreviation="TBK" name="ToxBank keywords" version="0.1" />
       </recommended-ontologies>
     </field>
+    <field header="Comment [Investigation licence]" data-type="Ontology term" is-file-field="false" is-multiple-value="true" is-required="true" is-hidden="false" is-forced-ontology="true" section="INVESTIGATION">
+      <description><![CDATA[Investigation licence.]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>    
     <field header="Investigation PubMed ID" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false" section="INVESTIGATION PUBLICATIONS">
       <description><![CDATA[The PubMed ID related to this publication (if available).]]></description>
       <default-value><![CDATA[]]></default-value>
@@ -77,7 +81,7 @@
     </field>
     <field header="Investigation Publication Status" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false" section="INVESTIGATION PUBLICATIONS">
       <description><![CDATA[The status of this publication, e.g. Published, Submitted, etc.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Comment[Investigation Person REF]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="INVESTIGATION CONTACTS">
       <description><![CDATA[a comment field to allow submitter to supply an identifier for Persons involved in the ISA Investigation. It could be an ORCID identifier for instance]]></description>
@@ -117,7 +121,7 @@
     </field>
     <field header="Investigation Person Roles" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="INVESTIGATION CONTACTS">
       <description><![CDATA[The role of the person in this investigation.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Comment [Investigation Person URI]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="true" section="INVESTIGATION CONTACTS">
       <description><![CDATA[Toxbank User URI]]></description>
@@ -176,7 +180,7 @@
     </field>
     <field header="Study Publication Status" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false" section="STUDY PUBLICATIONS">
       <description><![CDATA[The status of this publication, e.g. Published, Submitted, etc.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Comment[Study Person REF]" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY CONTACTS">
       <description><![CDATA[a comment field to allow submitter to supply an identifier for Persons involved in the ISA Study. It could be an ORCID identifier for instance]]></description>
@@ -216,7 +220,7 @@
     </field>
     <field header="Study Person Roles" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY CONTACTS">
       <description><![CDATA[The role of the person in this Study.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Study Factor Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY FACTORS">
       <description><![CDATA[The name of the Factor driving this study, e.g. Dose, Collection Time Point, Compound, and so forth]]></description>
@@ -224,11 +228,11 @@
     </field>
     <field header="Study Factor Type" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY FACTORS">
       <description><![CDATA[The type of the Factor driving this study, e.g. EFO:Dose (from Ontology), or Dose if the Factor name is something related to Dose as well, etc.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Study Design Type" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY DESIGN DESCRIPTORS">
       <description><![CDATA[The type of study design being employed, e.g. Observation, Intervention, Cross-Over, etc.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Study Assay Measurement Type" data-type="List" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY ASSAYS">
       <description><![CDATA[The measurement being observed in this assay, e.g. Transcription Profiling, Metabolite Profiling]]></description>
@@ -252,7 +256,7 @@
     </field>
     <field header="Study Protocol Type" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY PROTOCOLS">
       <description><![CDATA[The type of the protocol, preferably coming from an Ontology, e.g. Extraction Protocol]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
       <recommended-ontologies>
         <ontology id="TBP" abbreviation="TBP" name="ToxBank protocols" version="0.1" />
       </recommended-ontologies>
@@ -271,7 +275,7 @@
     </field>
     <field header="Study Protocol Parameters Name" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY PROTOCOLS">
       <description><![CDATA[The parameters used when executing this protocol.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Study Protocol Components Name" data-type="String" is-file-field="false" is-multiple-value="true" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY PROTOCOLS">
       <description><![CDATA[The components used when carrying out this protocol.]]></description>
@@ -279,7 +283,7 @@
     </field>
     <field header="Study Protocol Components Type" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false" section="STUDY PROTOCOLS">
       <description><![CDATA[The type of Components used in this Protocol.]]></description>
-      <default-value></default-value>
+      <default-value><![CDATA[]]></default-value>
     </field>
     <field header="Comment [Protocol URI]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="true" section="STUDY PROTOCOLS">
       <description><![CDATA[Toxbank Protocol URI]]></description>

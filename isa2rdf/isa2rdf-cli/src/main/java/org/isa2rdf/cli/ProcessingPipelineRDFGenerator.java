@@ -244,6 +244,7 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 	final static String TB_organisation = "comment:Owning Organisation URI";
 	final static String TB_user = "comment:Owner URI";
 	final static String TB_keywords = "comment:Investigation keywords";
+	final static String TB_licence = "comment:Investigation licence";
 
 	
 	final static String TB_author_uri = "comment:Investigation Person URI";
@@ -290,6 +291,8 @@ public class ProcessingPipelineRDFGenerator<NODE extends Identifiable>  extends 
 						//may be consider keywords resources, not literals? and update the Protocol RDF IO as well
 						investigationResource.addLiteral(TOXBANK.HASKEYWORD, String.format("%s%s",ISA.TBKeywordsNS,uri[1]));
 					}
+				} else if (TB_licence.equals(annotation.getType().getValue())) {
+					investigationResource.addLiteral(DCTerms.license, multiEntry);
 				}
 			}
 		}

@@ -16,6 +16,7 @@ Comment [Consortium URI]	"TBC:G2"
 Comment [Owner URI]	"TBU:U10"
 Comment [Investigation keywords]	"TBK:K148;TBK:K69;TBK:K130"
 Comment [Last opened with configuration]	""
+Comment [Investigation licence]	"http://dbarchive.biosciencedbc.jp/en/open-tggates/lic.html"
 INVESTIGATION PUBLICATIONS
 Investigation PubMed ID	"17439666"
 Investigation Publication DOI	"doi:10.1186/jbiol54"
