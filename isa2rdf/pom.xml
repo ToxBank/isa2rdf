@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.toxbank</groupId>
   <artifactId>isa2rdf</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.2</version>
   <packaging>pom</packaging>
   <name>isa2rdf</name>
   <url>https://github.com/ToxBank/isa2rdf</url>
@@ -190,5 +190,8 @@
     <module>isa2rdf-converter</module>
     <module>isa2rdf-cli</module>
     <module>isa-rest</module>
+<!--
+    <module>isa2json</module>
+-->
   </modules>
 </project>
