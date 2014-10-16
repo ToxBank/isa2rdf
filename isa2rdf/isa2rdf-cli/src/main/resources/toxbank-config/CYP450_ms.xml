@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<isatab-config-file xmlns="http://www.ebi.ac.uk/bii/isatab_configuration#">
+  <isatab-configuration table-name="Concentration_CYP450_ms" isatab-assay-type="generic_assay" isatab-conversion-target="generic">
+    <measurement term-label="CYP450 product concentration" term-accession="obo:CYP450_products" source-abbreviation="OBI" />
+    <technology term-label="Chromatographic separation and quantification with MS" term-accession="obo:OBI_CSQMS" source-abbreviation="OBI" />
+    <field header="Sample Name" data-type="String" is-file-field="false" is-multiple-value="true" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[Samples represent major outputs resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.]]></description>
+      <default-value><![CDATA[]]></default-value>
+      <generated-value-template>[INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT]
+            </generated-value-template>
+    </field>
+    <protocol-field protocol-type="Chromatographic separation and quantification with MS" />
+    <field header="Parameter Value[instrument]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description>the name of the instrument</description>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="" abbreviation="" name="" version="" />
+      </recommended-ontologies>
+    </field>
+    <field header="Parameter Value[enzyme]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description>the name of the enzyme</description>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="" abbreviation="" name="" version="49685" />
+      </recommended-ontologies>
+    </field>
+    <field header="Parameter Value[substrate]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description>the name of the substrate</description>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="1105" abbreviation="MS" name="Mass spectrometry" version="49685" />
+      </recommended-ontologies>
+    </field>
+    <field header="Parameter Value[injection volume]" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description></description>
+      <default-value></default-value>
+    </field>
+    <unit-field data-type="Ontology term" is-multiple-value="false" is-required="false" is-forced-ontology="false">
+      <description>unit</description>
+      <recommended-ontologies>
+        <ontology id="1112" abbreviation="UO" name="Units of measurement" version="49778" />
+      </recommended-ontologies>
+    </unit-field>
+    <field header="Parameter Value[flow rate]" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description></description>
+      <default-value></default-value>
+    </field>
+    <unit-field data-type="Ontology term" is-multiple-value="false" is-required="false" is-forced-ontology="false">
+      <description>unit</description>
+      <recommended-ontologies>
+        <ontology id="1112" abbreviation="UO" name="Units of measurement" version="49778" />
+      </recommended-ontologies>
+    </unit-field>
+    <field header="Parameter Value[mobile phase A]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description></description>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="" abbreviation="" name="" version="49685" />
+      </recommended-ontologies>
+    </field>
+    <field header="Parameter Value[mobile phase B]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description></description>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="" abbreviation="" name="" version="49685" />
+      </recommended-ontologies>
+    </field>
+    <field header="Parameter Value[ionization source]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description></description>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="" abbreviation="" name="" version="49685" />
+      </recommended-ontologies>
+    </field>
+    <field header="Parameter Value[multiple reaction monitoring]" data-type="Ontology term" is-file-field="false" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description></description>
+      <default-value></default-value>
+      <recommended-ontologies>
+        <ontology id="" abbreviation="" name="" version="" />
+      </recommended-ontologies>
+    </field>
+    <field header="Assay Name" data-type="String" is-file-field="false" is-multiple-value="false" is-required="true" is-hidden="false" is-forced-ontology="false">
+      <description>User-defined name for an assay.</description>
+      <default-value><![CDATA[]]></default-value>
+      <generated-value-template>
+                [INSTITUTION].Group-[GROUP_NO].Subject-[SUBJECT_NO].[SAMPLE_EXTRACT].Extract-[EXTRACT_COUNT].LE-[LABEL_COUNT].MSASSAY-[HYB_COUNT]
+            </generated-value-template>
+    </field>
+    <protocol-field protocol-type="data transformation" />
+    <field header="Data Transformation Name" data-type="String" is-file-field="false" is-multiple-value="true" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description><![CDATA[User-defined name for each data transformation applied]]></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+    <field header="Derived Data File" data-type="String" is-file-field="true" is-multiple-value="false" is-required="false" is-hidden="false" is-forced-ontology="false">
+      <description></description>
+      <default-value><![CDATA[]]></default-value>
+    </field>
+  </isatab-configuration>
+</isatab-config-file>
