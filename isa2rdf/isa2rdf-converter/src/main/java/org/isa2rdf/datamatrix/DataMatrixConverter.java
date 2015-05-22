@@ -18,6 +18,7 @@ import org.isa2rdf.data.stax.DatasetRDFWriter;
 
 
 public class DataMatrixConverter extends AbstractDataMatrixConverter {
+	
 	public DataMatrixConverter(String datatype,Hashtable<String,String> lookup,String investigationURI) {
 		super(datatype,lookup,investigationURI);
 	}
@@ -112,7 +113,7 @@ public class DataMatrixConverter extends AbstractDataMatrixConverter {
 							ObjectNode column = matrix.getColumn(header.get(col));
 							if (isProcessedData(column)) {
 								try {
-									values.put(feature,Double.parseDouble(value));
+									values.put(feature,((Number) nf.parse(value)).doubleValue());
 								} catch (Exception x) {
 									values.put(header.get(col),value);	
 								}

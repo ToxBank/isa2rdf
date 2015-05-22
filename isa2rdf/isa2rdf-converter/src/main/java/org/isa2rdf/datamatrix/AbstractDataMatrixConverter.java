@@ -3,6 +3,9 @@ package org.isa2rdf.datamatrix;
 import java.io.File;
 import java.io.FileReader;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Hashtable;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
@@ -27,6 +30,7 @@ public class AbstractDataMatrixConverter {
 	protected Hashtable<String,String> lookup;
 	protected String datatype;
 	protected String investigationURI;
+	protected DecimalFormat nf;
 	
 	public AbstractDataMatrixConverter(String datatype,Hashtable<String,String> lookup,String investigationURI) {
 		this.investigationURI = investigationURI;
@@ -36,6 +40,11 @@ public class AbstractDataMatrixConverter {
 			if (p>=0) datatype = datatype.substring(prefix.length());
 			this.datatype = datatype;
 		}
+		nf = new DecimalFormat();
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+		symbols.setDecimalSeparator('.');
+		symbols.setGroupingSeparator(' ');
+		nf.setDecimalFormatSymbols(symbols);
 	}
 	
 	protected XMLStreamWriter initWriter(OutputStream out) throws Exception {
