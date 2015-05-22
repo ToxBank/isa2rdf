@@ -85,6 +85,9 @@ public class IsaClient {
 		this.generateGraph = generateGraph;
 	}
 	public Model  processAndSave() throws Exception {
+		return processAndSave(-1);
+	}
+	public Model  processAndSave(int maxrows) throws Exception {
 		Model model = process(dir);
 		Writer writer = null;
 		long now = System.currentTimeMillis();
@@ -130,7 +133,7 @@ public class IsaClient {
 							out = new FileOutputStream(rdfFile);
 							if (file.exists()) {
 								reader = new FileReader(file);
-								matrix.writeRDF(reader, fileName , -1, out);
+								matrix.writeRDF(reader, fileName , maxrows, out);
 							}	else throw new FileNotFoundException(file.getAbsolutePath());
 							logger.info("Converted data files written to "+outfile);
 						} catch (Exception x) {
